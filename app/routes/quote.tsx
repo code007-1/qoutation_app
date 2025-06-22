@@ -15,12 +15,12 @@ export type QuotationData = {
     date: string;
     items: Record<string, QuoteItems>;
     intro: string;
-    terms: string[];
-    additionalInfo: string[];
+    terms: string;
+    additionalInfo: string;
     from: string;
-    fromAddress: string[];
+    fromAddress: string;
     to: string;
-    toAddress: string[];
+    toAddress: string;
     tax: number;
     discount: number;
 };
@@ -75,11 +75,11 @@ export default function Quote() {
                     <div className="flex space-x-10 my-10 mx-20 w-full">
                         <div className="w-full space-y-4">
                             <input key={"frist"} type="text" placeholder="Enter First Party Name" className="border p-2 w-full" value={data.from} onChange={e => setData(pre => { return { ...pre, from: e.target.value } })} />
-                            <textarea rows={5} placeholder="Enter First Party Address" className="p-2 border rounded w-full" value={data.fromAddress} onChange={e => setData(pre => { return { ...pre, fromAddress: e.target.value.split(",") } })} />
+                            <textarea rows={5} placeholder="Enter First Party Address" className="p-2 border rounded w-full" value={data.fromAddress} onChange={e => setData(pre => { return { ...pre, fromAddress: e.target.value } })} />
                         </div>
                         <div className="w-full space-y-4">
                             <input key={"second"} type="text" placeholder="Enter Second Party Name" className="border p-2 w-full" value={data.to} onChange={e => setData(pre => { return { ...pre, to: e.target.value } })} />
-                            <textarea rows={5} placeholder="Enter Second Party Address" className="p-2 border rounded w-full" value={data.toAddress} onChange={e => setData(pre => { return { ...pre, toAddress: e.target.value.split(",") } })} />
+                            <textarea rows={5} placeholder="Enter Second Party Address" className="p-2 border rounded w-full" value={data.toAddress} onChange={e => setData(pre => { return { ...pre, toAddress: e.target.value } })} />
                         </div>
                     </div>
                     <div className="flex justify-center space-x-4">
@@ -126,8 +126,8 @@ export default function Quote() {
                 </div>
                 <div className="mx-10 my-10 flex flex-col items-center h-screen space-y-10">
                     <div className="flex w-full space-x-10">
-                        <textarea rows={5} placeholder="Enter Terms and Conditions.....each line should be comma seperated" className="p-2 border rounded w-full" value={data.terms} onChange={e => setData(pre => { return { ...pre, terms: e.target.value.split(",") } })} />
-                        <textarea rows={5} placeholder="Enter Additional Information.....each line should be comma seperated" className="p-2 border rounded w-full" value={data.additionalInfo} onChange={e => setData(pre => { return { ...pre, additionalInfo: e.target.value.split("\n") } })} />
+                        <textarea rows={5} placeholder="Enter Terms and Conditions.....each line should be comma seperated" className="p-2 border rounded w-full" value={data.terms} onChange={e => setData(pre => { return { ...pre, terms: e.target.value } })} />
+                        <textarea rows={5} placeholder="Enter Additional Information.....each line should be comma seperated" className="p-2 border rounded w-full" value={data.additionalInfo} onChange={e => setData(pre => { return { ...pre, additionalInfo: e.target.value } })} />
                     </div>
                     <div className="flex justify-center space-x-4">
                         <button onClick={() => setStep(2)} className="bg-blue-500 text-white px-4 py-2 mt-4 text-lg">

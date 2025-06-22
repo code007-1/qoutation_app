@@ -10,7 +10,7 @@ export const action: ActionFunction = async ({ request, params }) => {
     // Fetch the data you need for the PDF
 
     // render the PDF as a stream so you do it async
-    let stream = await renderToStream(<PDFDocument additionalInfo={[data.additionalInfo]} date={data.date} discount={data.discount} from={data.from} fromAddress={[data.fromAddress]} intro={data.intro} items={data.items} no={data.no} tax={data.tax} terms={[data.terms]} to={data.to} toAddress={[data.toAddress]} />);
+    let stream = await renderToStream(<PDFDocument additionalInfo={data.additionalInfo} date={data.date} discount={data.discount} from={data.from} fromAddress={data.fromAddress} intro={data.intro} items={data.items} no={data.no} tax={data.tax} terms={data.terms} to={data.to} toAddress={data.toAddress} />);
 
     // and transform it to a Buffer to send in the Response
     let body: Buffer = await new Promise((resolve, reject) => {

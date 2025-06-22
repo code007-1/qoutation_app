@@ -82,13 +82,13 @@ export default function PDFDocument(data: QuotationData) {
                         <Text style={styles.fromto}>Qoutation by</Text>
                         <Text style={styles.newline}>{"\n"}</Text>
                         <Text style={styles.bold}>{data.from}</Text>
-                        {data.fromAddress.map(t => { return <Text>{t}</Text> })}
+                        <Text>{data.fromAddress}</Text>
                     </View>
                     <View style={styles.paragraph}>
                         <Text style={styles.fromto}>Qoutation to{"\n"}</Text>
                         <Text style={styles.newline}>{"\n"}</Text>
                         <Text style={styles.bold}>{data.to}</Text>
-                        {data.toAddress.map(t => { return <Text>{t}</Text> })}
+                        <Text>{data.toAddress}</Text>
                     </View>
                 </View>
                 <Text style={styles.newline}>{"\n\n\n"}</Text>
@@ -117,13 +117,13 @@ export default function PDFDocument(data: QuotationData) {
                 <View >
                     <Text style={styles.fromto}>Note</Text>
                     <Text style={styles.newline}>{"\n"}</Text>
-                    {data.additionalInfo.map((e, i) => { return (<Text style={styles.terms}>{e}</Text>); })}
+                    <Text style={styles.terms}>{data.additionalInfo}</Text>
                 </View>
                 <Text style={styles.newline}>{"\n\n"}</Text>
                 <View >
                     <Text style={styles.fromto}>Terms and Conditions</Text>
                     <Text style={styles.newline}>{"\n"}</Text>
-                    {data.terms.map((e, i) => { return (<Text style={styles.terms}>{i + 1}. {e}</Text>); })}
+                    <Text style={styles.terms}>{data.terms} {"\n"}</Text>
                 </View>
                 <Text style={styles.pageNumber} render={({ pageNumber }) => `Page ${pageNumber}`} />
             </Page>
