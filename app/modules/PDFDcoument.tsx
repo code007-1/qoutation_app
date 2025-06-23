@@ -1,4 +1,4 @@
-import { Document, Page, Text, View, StyleSheet, Image } from "@react-pdf/renderer";
+import { Document, Page, Text, View, StyleSheet, Image, Link } from "@react-pdf/renderer";
 import { Watermark } from "./Watermark";
 import { QuotationData } from "~/routes/quote";
 import { useGlobalContext } from "./gcontext";
@@ -20,12 +20,13 @@ const styles = StyleSheet.create({
     tableRowEven: { flexDirection: "row", backgroundColor: "#FFFFFF" },
     tableRowOdd: { flexDirection: "row", backgroundColor: "#FFEFDF" },
     tableCellHeader: { flexGrow: 1, flexBasis: 0, padding: 8, backgroundColor: "#FF7900", textAlign: "left", fontSize: 14, color: "white" },
+    tableCellHeaderName: { width: "40%", padding: 8, backgroundColor: "#FF7900", textAlign: "left", fontSize: 14, color: "white" },
+    tableCellName: { width: "40%", padding: 8, textAlign: "left", fontSize: 12, color: "black", textDecoration: "none", fontWeight: "bold" },
     tableCell: { flexGrow: 1, flexBasis: 0, padding: 8, textAlign: "left", fontSize: 12 },
     newline: { lineHeight: 0.25 },
     terms: { textAlign: "justify", fontSize: 11, lineHeight: 1.25 },
     bold: { fontWeight: "bold" },
     qoutationDetails: { textAlign: "justify", fontSize: 11, lineHeight: 1.25, fontWeight: "bold" }
-
 });
 
 export default function PDFDocument(data: QuotationData) {
@@ -97,7 +98,7 @@ export default function PDFDocument(data: QuotationData) {
                 < View style={styles.tableContainer}>
                     <View style={styles.tableRowEven}>
                         <Text style={styles.tableCellHeader}>S.No.</Text>
-                        <Text style={styles.tableCellHeader}>Item</Text>
+                        <Text style={styles.tableCellHeaderName}>Item</Text>
                         <Text style={styles.tableCellHeader}>Price</Text>
                         <Text style={styles.tableCellHeader}>Quantity</Text>
                         <Text style={styles.tableCellHeader}>Amount</Text>
@@ -107,7 +108,7 @@ export default function PDFDocument(data: QuotationData) {
                         return (
                             <View style={i % 2 === 0 ? styles.tableRowEven : styles.tableRowOdd}>
                                 <Text style={styles.tableCell}>{i + 1}</Text>
-                                <Text style={styles.tableCell}>{e[1].name}</Text>
+                                <Link style={styles.tableCellName} src={e[1].link || "#"}>{e[1].name}</Link>
                                 <Text style={styles.tableCell}>Rs.{e[1].price}</Text>
                                 <Text style={styles.tableCell}>{e[1].quantity}</Text>
                                 <Text style={styles.tableCell}>Rs.{e[1].price * e[1].quantity}</Text>

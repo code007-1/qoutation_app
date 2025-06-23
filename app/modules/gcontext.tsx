@@ -25,7 +25,7 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
         items: items,
         intro: "This is about our earlier discussions with you regarding your requirement for the Matrix Digital IP-PBXS System. Please find below our best offer for the same.",
         terms: "1. Payment Terms: 100% advance.\n2. Delivery Schedule: Within 1-2 days after receiving the PO along with the Advance.\n3. 12 Months off-site warranty from the OEM, as per their terms.\n4. Validity: This offer is valid for 30 days.",
-        additionalInfo: "Online UPS supply and Network Rack with Accessories like Fan, AC Socket, and networking etc. requirements would be fulfilled by customer.",
+        additionalInfo: "Online UPS supply and Network Rack with accessories, such as fans, AC Sockets, and networking requirements, will be fulfilled by the customer.",
         from: "Teen Telecommunication Pvt. Ltd.",
         fromAddress: "G-57, Vikas Marg, Near Metro Pillar No.41, \nDelhi - 110092",
         to: "",

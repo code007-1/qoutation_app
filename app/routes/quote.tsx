@@ -8,6 +8,7 @@ export type QuoteItems = {
     price: number;
     quantity: number;
     description?: string;
+    link?: string;
 };
 
 export type QuotationData = {
@@ -58,10 +59,20 @@ export default function Quote() {
                 <div className="mb-10 text-lg py-4 px-10 bg-slate-100">Qoutation Details</div>
                 <div className="flex flex-col items-center h-screen">
                     <div className="flex justify-center">
-                        <input type="text" placeholder="Qoutation No." className="border p-4 mb-5 mr-5 w-25" value={data.no} onChange={e => setData((pre) => { return { ...pre, no: e.target.value }; })} />
-                        <input type="date" name="date" id="date" pattern="\d{4}-\d{2}-\d{2}" placeholder="Date" className="border w-25 h-14" value={data.date} onChange={e => setData(pre => { return { ...pre, date: e.target.value } })} />
+                        <div className="flex flex-col">
+                            <label className="text-sm">Qoutation No.</label>
+                            <input type="text" name="no" placeholder="Enter Qoutation No." className="border p-4 mb-5 mr-5 w-25" value={data.no} onChange={e => setData((pre) => { return { ...pre, no: e.target.value }; })} />
+                        </div>
+                        <div className="flex flex-col">
+                            <label className="text-sm">Date</label>
+                            <input type="date" name="date" id="date" pattern="\d{4}-\d{2}-\d{2}" placeholder="Date" className="border w-25 h-14" value={data.date} onChange={e => setData(pre => { return { ...pre, date: e.target.value } })} />
+                        </div>
+
                     </div>
-                    <textarea rows={5} placeholder="Enter Introductory Text" className="p-2 border rounded w-3/4 mb-5" value={data.intro} onChange={e => setData(pre => { return { ...pre, intro: e.target.value } })} />
+                    <div className="w-3/4">
+                        <label className="text-sm">Introductory text</label>
+                        <textarea rows={5} placeholder="Enter Introductory Text" className="p-2 border rounded w-full mb-5" value={data.intro} onChange={e => setData(pre => { return { ...pre, intro: e.target.value } })} />
+                    </div>
                     <button onClick={() => setStep(1)} className="bg-blue-500 text-white px-4 py-2 mt-4 text-lg">
                         Next
                     </button>
@@ -74,12 +85,24 @@ export default function Quote() {
                 <div className="mx-10 flex flex-col items-center h-screen">
                     <div className="flex space-x-10 my-10 mx-20 w-full">
                         <div className="w-full space-y-4">
-                            <input key={"frist"} type="text" placeholder="Enter First Party Name" className="border p-2 w-full" value={data.from} onChange={e => setData(pre => { return { ...pre, from: e.target.value } })} />
-                            <textarea rows={5} placeholder="Enter First Party Address" className="p-2 border rounded w-full" value={data.fromAddress} onChange={e => setData(pre => { return { ...pre, fromAddress: e.target.value } })} />
+                            <div>
+                                <label className="text-sm">First Party Name</label>
+                                <input key={"frist"} type="text" placeholder="Enter First Party Name" className="border p-2 w-full" value={data.from} onChange={e => setData(pre => { return { ...pre, from: e.target.value } })} />
+                            </div>
+                            <div>
+                                <label className="text-sm">First Party Address</label>
+                                <textarea rows={5} placeholder="Enter First Party Address" className="p-2 border rounded w-full" value={data.fromAddress} onChange={e => setData(pre => { return { ...pre, fromAddress: e.target.value } })} />
+                            </div>
                         </div>
                         <div className="w-full space-y-4">
-                            <input key={"second"} type="text" placeholder="Enter Second Party Name" className="border p-2 w-full" value={data.to} onChange={e => setData(pre => { return { ...pre, to: e.target.value } })} />
-                            <textarea rows={5} placeholder="Enter Second Party Address" className="p-2 border rounded w-full" value={data.toAddress} onChange={e => setData(pre => { return { ...pre, toAddress: e.target.value } })} />
+                            <div>
+                                <label className="text-sm">Second Party Name</label>
+                                <input key={"second"} type="text" placeholder="Enter Second Party Name" className="border p-2 w-full" value={data.to} onChange={e => setData(pre => { return { ...pre, to: e.target.value } })} />
+                            </div>
+                            <div>
+                                <label className="text-sm">Second Party Address</label>
+                                <textarea rows={5} placeholder="Enter Second Party Address" className="p-2 border rounded w-full" value={data.toAddress} onChange={e => setData(pre => { return { ...pre, toAddress: e.target.value } })} />
+                            </div>
                         </div>
                     </div>
                     <div className="flex justify-center space-x-4">
@@ -100,12 +123,22 @@ export default function Quote() {
                     <button onClick={addItem} className="bg-blue-500 text-white p-2 text-lg">
                         Add Item
                     </button>
-                    <div className="space-y-4 overflow-y-auto h-[calc(100vh-300px)] w-full">
+                    <div className="space-y-4 overflow-y-auto h-[calc(100vh-400px)] w-full">
                         {Object.keys(items).map((key) => {
                             return <>
                                 <AutocompleteSearch key={key} index={key} />
                             </>;
                         })}
+                    </div>
+                    <div className="flex space-x-5">
+                        <div className="flex flex-col">
+                            <label className="text-sm">Tax (%)</label>
+                            <input type="number" placeholder="Enter Tax Percentage" className="border p-2 w-25" value={data.tax} onChange={e => setData(pre => { return { ...pre, tax: parseFloat(e.target.value) } })} />
+                        </div>
+                        <div className="flex flex-col">
+                            <label className="text-sm">Discount (%)</label>
+                            <input type="number" placeholder="Enter Discount Percentage" className="border p-2 w-25" value={data.discount} onChange={e => setData(pre => { return { ...pre, discount: parseFloat(e.target.value) } })} />
+                        </div>
                     </div>
                     <div className="flex justify-center space-x-4">
                         <button onClick={() => setStep(1)} className="bg-blue-500 text-white px-4 py-2 mt-4 text-lg">
@@ -126,8 +159,14 @@ export default function Quote() {
                 </div>
                 <div className="mx-10 my-10 flex flex-col items-center h-screen space-y-10">
                     <div className="flex w-full space-x-10">
-                        <textarea rows={5} placeholder="Enter Terms and Conditions.....each line should be comma seperated" className="p-2 border rounded w-full" value={data.terms} onChange={e => setData(pre => { return { ...pre, terms: e.target.value } })} />
-                        <textarea rows={5} placeholder="Enter Additional Information.....each line should be comma seperated" className="p-2 border rounded w-full" value={data.additionalInfo} onChange={e => setData(pre => { return { ...pre, additionalInfo: e.target.value } })} />
+                        <div className="w-full">
+                            <label className="text-sm">Terms and Conditions</label>
+                            <textarea rows={5} placeholder="Enter Terms and Conditions....." className="p-2 border rounded w-full" value={data.terms} onChange={e => setData(pre => { return { ...pre, terms: e.target.value } })} />
+                        </div>
+                        <div className="w-full">
+                            <label className="text-sm">Additional Information</label>
+                            <textarea rows={5} placeholder="Enter Additional Information....." className="p-2 border rounded w-full" value={data.additionalInfo} onChange={e => setData(pre => { return { ...pre, additionalInfo: e.target.value } })} />
+                        </div>
                     </div>
                     <div className="flex justify-center space-x-4">
                         <button onClick={() => setStep(2)} className="bg-blue-500 text-white px-4 py-2 mt-4 text-lg">

@@ -68,7 +68,7 @@ export default function AutocompleteSearch({ index }: { index: string }) {
         //setInput(suggestion.label);
         setItems({
             ...items,
-            [index]: { id: suggestion.id, name: suggestion.name, price: suggestion.price, quantity: 1, description: suggestion.description || "" }
+            [index]: { id: suggestion.id, name: suggestion.name, price: suggestion.price, quantity: 1, description: suggestion.description || "", link: suggestion.link || "#" }
         });
         setShowSuggestions(false);
     };
@@ -101,7 +101,7 @@ export default function AutocompleteSearch({ index }: { index: string }) {
             setItems(
                 {
                     ...items,
-                    [index]: { id: filtered[highlighted].id, name: filtered[highlighted].name, price: filtered[highlighted].price, quantity: 1, description: filtered[highlighted].description || "" }
+                    [index]: { id: filtered[highlighted].id, name: filtered[highlighted].name, price: filtered[highlighted].price, quantity: 1, description: filtered[highlighted].description || "", link: filtered[highlighted].link || "#" }
                 });
         } else if (e.key === "Escape") {
             setShowSuggestions(false);
