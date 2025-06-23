@@ -1,10 +1,10 @@
-import { Document, Page, Text, View, StyleSheet, Image, Link } from "@react-pdf/renderer";
+import { Document, Page, Text, View, StyleSheet, Image, Link, Font } from "@react-pdf/renderer";
 import { Watermark } from "./Watermark";
 import { QuotationData } from "~/routes/quote";
-import { useGlobalContext } from "./gcontext";
+
 
 const styles = StyleSheet.create({
-    page: { padding: 30, display: "flex", flexDirection: "column", },
+    page: { padding: 30, display: "flex", flexDirection: "column", fontFamily: "Times-Roman", fontStyle: "normal" },
     title: { fontSize: 20, fontWeight: "bold", textAlign: "center", color: "#FF7900" },
     backgroundImage: {},
     header: { display: "flex", flexDirection: "column", justifyContent: "space-between" },
@@ -12,21 +12,30 @@ const styles = StyleSheet.create({
     rowContainer: { flexDirection: "row", justifyContent: "flex-end", gap: 20 },
     columnContainer: { flexDirection: "column", justifyContent: "space-between" },
     footer: { fontSize: 16, color: "gray", marginBottom: 0, marginTop: "auto" },
-    paragraph: { width: "48%", textAlign: "justify", fontSize: 11, backgroundColor: "#FFEFDF", padding: 10, borderRadius: 10, lineHeight: 1.75 },
+    paragraph: { width: "48%", textAlign: "justify", fontSize: 11, backgroundColor: "#FFEFDF", padding: 10, borderRadius: 5, lineHeight: 1.25 },
     pageNumber: { position: "absolute", bottom: 20, right: 40, fontSize: 12 },
-    fromto: { fontSize: 14, fontWeight: "bold", color: "#FF7800" },
+    fromto: { fontSize: 11, color: "#FF7800" },
     companyDetails: { fontSize: 11, textAlign: "center", fontWeight: "bold" },
+    intro: { textAlign: "justify", fontSize: 10, lineHeight: 1.25, },
+    terms: { textAlign: "justify", fontSize: 10, lineHeight: 1.25, color: "#6E6E6E" },
+    bold: { fontSize: 9, fontWeight: "bold" },
+    qoutationDetails: { textAlign: "justify", fontSize: 10, lineHeight: 1.25, fontWeight: "bold" },
+    newline: { lineHeight: 0.25 },
+    address: { fontSize: 9 },
+
     tableContainer: { width: "100%", marginVertical: 10 },
     tableRowEven: { flexDirection: "row", backgroundColor: "#FFFFFF" },
     tableRowOdd: { flexDirection: "row", backgroundColor: "#FFEFDF" },
-    tableCellHeader: { flexGrow: 1, flexBasis: 0, padding: 8, backgroundColor: "#FF7900", textAlign: "left", fontSize: 14, color: "white" },
-    tableCellHeaderName: { width: "40%", padding: 8, backgroundColor: "#FF7900", textAlign: "left", fontSize: 14, color: "white" },
-    tableCellName: { width: "40%", padding: 8, textAlign: "left", fontSize: 12, color: "black", textDecoration: "none", fontWeight: "bold" },
-    tableCell: { flexGrow: 1, flexBasis: 0, padding: 8, textAlign: "left", fontSize: 12 },
-    newline: { lineHeight: 0.25 },
-    terms: { textAlign: "justify", fontSize: 11, lineHeight: 1.25 },
-    bold: { fontWeight: "bold" },
-    qoutationDetails: { textAlign: "justify", fontSize: 11, lineHeight: 1.25, fontWeight: "bold" }
+    tableCellHeader: { flexGrow: 1, flexBasis: 0, padding: 8, backgroundColor: "#FF7900", textAlign: "left", fontSize: 11, color: "white" },
+    tableCellHeaderName: { width: "40%", padding: 8, backgroundColor: "#FF7900", textAlign: "left", fontSize: 11, color: "white" },
+    tableCellHeaderSno: { width: "8%", padding: 8, backgroundColor: "#FF7900", textAlign: "left", fontSize: 11, color: "white" },
+    tableCellBox: { width: "40%", padding: 8, textAlign: "left" },
+    tableCellName: { fontSize: 10, color: "#384388", fontStyle: "italic", textDecoration: "none" },
+    tableCellNameContent: { fontSize: 10, color: "#6E6E6E" },
+    tableCell: { flexGrow: 1, flexBasis: 0, padding: 8, textAlign: "left", fontSize: 10 },
+    tableCellSno: { width: "8%", padding: 8, textAlign: "left", fontSize: 10, color: "#505050" },
+    tableCellTotalsName: { width: "40%", padding: 8, textAlign: "left", fontSize: 10, color: "#505050", textDecoration: "none", fontStyle: "italic", fontWeight: "bold" },
+    tableCellTotals: { flexGrow: 1, flexBasis: 0, padding: 8, textAlign: "left", fontSize: 10, fontWeight: "bold", color: "#505050" },
 });
 
 export default function PDFDocument(data: QuotationData) {
@@ -50,7 +59,8 @@ export default function PDFDocument(data: QuotationData) {
         discount: 5
     };*/
     //<Image src="D:\code\react\HelpDesk\remix\helpdesk1\public\headerlogo.png" style={styles.backgroundImage} />
-    console.log("data is : ", data);
+    const totalAmount = Object.entries(data.items).reduce((acc, [_, item]) => acc + (item.price * item.quantity), 0);
+
     return (
         <Document title="Quotation" author="Saurav" subject="Business Quotation" >
             <Page size="A4" style={styles.page}>
@@ -58,22 +68,22 @@ export default function PDFDocument(data: QuotationData) {
                 <Text style={styles.title}>Teen Telecommunication Pvt. Ltd.</Text>
                 <Text style={styles.newline}>{"\n"}</Text>
                 <Text>
-                    <Text style={styles.companyDetails}>Contact No.</Text>
-                    <Text style={styles.terms}>+91 7065577059/60</Text>
-                    <Text style={styles.companyDetails}>     Website:</Text>
-                    <Text style={styles.terms}>https://teentelecommunication.com</Text>
+                    <Text style={styles.companyDetails}>Contact No: </Text>
+                    <Text style={{ fontSize: 10 }}>+91 7065577059/60</Text>
+                    <Text style={styles.companyDetails}>     Website: </Text>
+                    <Link style={{ fontSize: 11, textDecoration: "underline", color: "#384388" }}>https://teentelecommunication.com</Link>
                 </Text>
                 <Text style={styles.newline}>{"\n\n\n"}</Text>
                 <View style={styles.rowContainer}>
-
+                    <Image src="D:\Projects\unnamed\public\logo-dark.png" />
                     <View style={styles.columnContainer}>
                         <Text>
                             <Text style={styles.qoutationDetails}>Qoutation No.</Text>
-                            <Text style={styles.terms}>{data.no}</Text>
+                            <Text style={styles.intro}>{data.no}</Text>
                         </Text>
                         <Text>
                             <Text style={styles.qoutationDetails}>Date - </Text>
-                            <Text style={styles.terms}>{data.date}</Text>
+                            <Text style={styles.intro}>{data.date}</Text>
                         </Text>
                     </View>
                 </View>
@@ -83,21 +93,21 @@ export default function PDFDocument(data: QuotationData) {
                         <Text style={styles.fromto}>Qoutation by</Text>
                         <Text style={styles.newline}>{"\n"}</Text>
                         <Text style={styles.bold}>{data.from}</Text>
-                        <Text>{data.fromAddress}</Text>
+                        <Text style={styles.address}>{data.fromAddress}</Text>
                     </View>
                     <View style={styles.paragraph}>
                         <Text style={styles.fromto}>Qoutation to{"\n"}</Text>
                         <Text style={styles.newline}>{"\n"}</Text>
                         <Text style={styles.bold}>{data.to}</Text>
-                        <Text>{data.toAddress}</Text>
+                        <Text style={styles.address}>{data.toAddress}</Text>
                     </View>
                 </View>
                 <Text style={styles.newline}>{"\n\n\n"}</Text>
-                <Text style={styles.terms}>{data.intro}</Text>
+                <Text style={styles.intro}>{data.intro}</Text>
                 <Text style={styles.newline}>{"\n"}</Text>
                 < View style={styles.tableContainer}>
                     <View style={styles.tableRowEven}>
-                        <Text style={styles.tableCellHeader}>S.No.</Text>
+                        <Text style={styles.tableCellHeaderSno}>S.No.</Text>
                         <Text style={styles.tableCellHeaderName}>Item</Text>
                         <Text style={styles.tableCellHeader}>Price</Text>
                         <Text style={styles.tableCellHeader}>Quantity</Text>
@@ -107,13 +117,37 @@ export default function PDFDocument(data: QuotationData) {
                     {Object.entries(data.items).map((e, i) => {
                         return (
                             <View style={i % 2 === 0 ? styles.tableRowEven : styles.tableRowOdd}>
-                                <Text style={styles.tableCell}>{i + 1}</Text>
-                                <Link style={styles.tableCellName} src={e[1].link || "#"}>{e[1].name}</Link>
+                                <Text style={styles.tableCellSno}>{i + 1}</Text>
+                                <View style={styles.tableCellBox}>
+                                    <Link style={styles.tableCellName} src={e[1].link || "#"}>{e[1].name}</Link>
+                                    <Text style={styles.tableCellNameContent}>{e[1].description}</Text>
+                                </View>
                                 <Text style={styles.tableCell}>Rs.{e[1].price}</Text>
                                 <Text style={styles.tableCell}>{e[1].quantity}</Text>
                                 <Text style={styles.tableCell}>Rs.{e[1].price * e[1].quantity}</Text>
                             </View>);
                     })}
+                    <View style={Object.entries(data.items).length % 2 === 0 ? styles.tableRowEven : styles.tableRowOdd}>
+                        <Text style={styles.tableCellSno}></Text>
+                        <Text style={styles.tableCellTotalsName}>Tax @ {data.tax}%</Text>
+                        <Text style={styles.tableCell}></Text>
+                        <Text style={styles.tableCell}></Text>
+                        <Text style={styles.tableCellTotals}>Rs.{(totalAmount * data.tax / 100).toFixed(2)}</Text>
+                    </View>
+                    <View style={Object.entries(data.items).length % 2 === 0 ? styles.tableRowOdd : styles.tableRowEven}>
+                        <Text style={styles.tableCellSno}></Text>
+                        <Text style={styles.tableCellTotalsName}>Discount @ {data.discount}%</Text>
+                        <Text style={styles.tableCell}></Text>
+                        <Text style={styles.tableCell}></Text>
+                        <Text style={styles.tableCellTotals}>Rs.{(totalAmount * (1 + data.tax / 100) * data.discount / 100).toFixed(2)}</Text>
+                    </View>
+                    <View style={Object.entries(data.items).length % 2 === 0 ? styles.tableRowEven : styles.tableRowOdd}>
+                        <Text style={styles.tableCellSno}></Text>
+                        <Text style={styles.tableCellTotalsName}>Total Amount</Text>
+                        <Text style={styles.tableCell}></Text>
+                        <Text style={styles.tableCell}></Text>
+                        <Text style={styles.tableCellTotals}>Rs.{(totalAmount * (1 + data.tax / 100) * (1 - data.discount / 100)).toFixed(2)}</Text>
+                    </View>
                 </View>
                 <View >
                     <Text style={styles.fromto}>Note</Text>

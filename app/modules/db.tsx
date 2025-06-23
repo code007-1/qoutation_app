@@ -1,3 +1,6 @@
+const username = "spttcpl";
+const password = "9ziRq5mLRppCobx8";
+import { cli } from "@remix-run/dev";
 /*import { MongoClient } from "mongodb";
 
 const uri = "mongodb+srv://ttcplhelpdesk:<db_password>@cluster0.fvsd2fl.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
@@ -10,32 +13,70 @@ export async function searchItems(query: string) {
     return await collection.find({ name: { $regex: query, $options: "i" } }).limit(10).toArray();
 }*/
 
-import fs from "fs";
-import csv from 'csv-parser';
-export const rows: any = [];
 
-function LoadData() {
-    /*if (!fs.existsSync('./app/modules/data.csv')) {
-        console.error("CSV file not found. Please ensure 'data.csv' exists in the current directory.");
-        return;
-    }*/
+//const { MongoClient, ServerApiVersion } = require('mongodb');
+import { MongoClient, ServerApiVersion } from "mongodb";
+import { QuotationData } from "~/routes/quote";
 
-    if (rows.length > 0) {
-        console.log("CSV file already processed. Rows:", rows.length);
-        return;
+const uri = "mongodb+srv://spttcpl:9ziRq5mLRppCobx8@cluster0.bbixzsn.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+
+// Create a MongoClient with a MongoClientOptions object to set the Stable API version
+const client = new MongoClient(uri, {
+    serverApi: {
+        version: ServerApiVersion.v1,
+        strict: true,
+        deprecationErrors: true,
     }
+});
 
-    else {
-        fs.createReadStream('./app/modules/data.csv') // Replace 'file.csv' with your file path
-            .pipe(csv())
-            .on('data', (row) => {
-                //console.log(row); // Each row is an object
-                rows.push(row);
-            })
-            .on('end', () => {
-                console.log('CSV file successfully processed.');
-                console.log(rows);
-            });
+async function run() {
+    try {
+        // Connect the client to the server	(optional starting in v4.7)
+        await client.connect();
+        // Send a ping to confirm a successful connection
+        await client.db("unnamed").command({ ping: 1 });
+        console.log("Pinged your deployment. You successfully connected to MongoDB!");
+    } finally {
+        // Ensures that the client will close when you finish/error
+        await client.close();
     }
 }
-LoadData();
+run().catch(console.dir);
+
+export async function searchItems(query: string) {
+    return await client.db("unnamed").collection("items").find({ name: { $regex: query, $options: "i" } }).limit(10).toArray();
+}
+
+export async function insertQoutation(data: QuotationData) {
+    client.connect().then(async (e) => {
+        const result = await client.db("unnamed").collection("qoutations").insertOne(data);
+        console.log(`New item created with the following id: ${result.insertedId} : ${result}`);
+    }).catch(console.error);
+    client.close();
+}
+
+
+/*export const QuoteItemsSchema = new Schema({
+    id: { type: Number, required: true },
+    name: { type: String, required: true },
+    price: { type: Number, required: true },
+    quantity: { type: Number, required: true },
+    description: { type: String },
+    link: { type: String }
+}, { _id: false });
+
+export const QuotationDataSchema = new Schema({
+    no: { type: String, required: true },
+    date: { type: String, required: true },
+    items: { type: Map, of: QuoteItemsSchema, required: true },
+    intro: { type: String, required: true },
+    terms: { type: String, required: true },
+    additionalInfo: { type: String, required: true },
+    from: { type: String, required: true },
+    fromAddress: { type: String, required: true },
+    to: { type: String, required: true },
+    toAddress: { type: String, required: true },
+    tax: { type: Number, required: true },
+    discount: { type: Number, required: true }
+});
+*/
