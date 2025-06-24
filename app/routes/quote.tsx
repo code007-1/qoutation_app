@@ -57,7 +57,7 @@ export default function Quote() {
         {step === 0 &&
             <div>
                 <div className="mb-10 text-lg py-4 px-10 bg-slate-100">Qoutation Details</div>
-                <div className="flex flex-col items-center h-screen mx-10">
+                <div className="flex flex-col items-center mx-10">
                     <div className="flex justify-center">
                         <div className="flex flex-col">
                             <label className="text-sm font-semibold">Qoutation No.</label>
