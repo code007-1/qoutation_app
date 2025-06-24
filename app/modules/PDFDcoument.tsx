@@ -1,20 +1,46 @@
 import { Document, Page, Text, View, StyleSheet, Image, Link, Font } from "@react-pdf/renderer";
 import { Watermark } from "./Watermark";
 import { QuotationData } from "~/routes/quote";
+import font from "./../fonts/Katerlin/Katerlin.ttf"
+const hue = "360";
 
-
+Font.register({
+    family: 'Open Sans',
+    fonts: [
+        {
+            src: 'https://fonts.gstatic.com/s/opensans/v17/mem8YaGs126MiZpBA-UFVZ0e.ttf',
+            fontWeight: 400,
+            fontStyle: 'normal'
+        },
+        {
+            src: 'https://fonts.gstatic.com/s/opensans/v17/mem5YaGs126MiZpBA-UN7rgOUuhpKKSTjw.ttf',
+            fontWeight: 700,
+            fontStyle: 'normal'
+        },
+        {
+            src: 'https://fonts.gstatic.com/s/opensans/v17/mem6YaGs126MiZpBA-UFUK0Zdc1AAOhie8k.ttf',
+            fontWeight: 400,
+            fontStyle: 'italic'
+        },
+        {
+            src: 'https://fonts.gstatic.com/s/opensans/v17/mem4YaGs126MiZpBA-UFUIhie8k.ttf',
+            fontWeight: 700,
+            fontStyle: 'italic'
+        }
+    ]
+});
 const styles = StyleSheet.create({
-    page: { padding: 30, display: "flex", flexDirection: "column", fontFamily: "Times-Roman", fontStyle: "normal" },
-    title: { fontSize: 20, fontWeight: "bold", textAlign: "center", color: "#FF7900" },
+    page: { padding: 30, display: "flex", flexDirection: "column", fontFamily: "Open Sans", fontStyle: "normal" },
+    title: { fontSize: 20, fontWeight: "bold", textAlign: "center", color: `hsl(${hue} 100% 50%)` },
     backgroundImage: {},
     header: { display: "flex", flexDirection: "column", justifyContent: "space-between" },
     bodyText: { fontSize: 40, fontStyle: "italic", fontWeight: "bold", marginVertical: 20 },
     rowContainer: { flexDirection: "row", justifyContent: "flex-end", gap: 20 },
     columnContainer: { flexDirection: "column", justifyContent: "space-between" },
     footer: { fontSize: 16, color: "gray", marginBottom: 0, marginTop: "auto" },
-    paragraph: { width: "48%", textAlign: "justify", fontSize: 11, backgroundColor: "#FFEFDF", padding: 10, borderRadius: 5, lineHeight: 1.25 },
+    paragraph: { width: "48%", textAlign: "justify", fontSize: 11, backgroundColor: `hsl(${hue} 100% 94%)`, padding: 10, borderRadius: 5, lineHeight: 1.25 },
     pageNumber: { position: "absolute", bottom: 20, right: 40, fontSize: 12 },
-    fromto: { fontSize: 11, color: "#FF7800" },
+    fromto: { fontSize: 11, color: `hsl(${hue} 100% 50%)` },
     companyDetails: { fontSize: 11, textAlign: "center", fontWeight: "bold" },
     intro: { textAlign: "justify", fontSize: 10, lineHeight: 1.25, },
     terms: { textAlign: "justify", fontSize: 10, lineHeight: 1.25, color: "#6E6E6E" },
@@ -25,10 +51,10 @@ const styles = StyleSheet.create({
 
     tableContainer: { width: "100%", marginVertical: 10 },
     tableRowEven: { flexDirection: "row", backgroundColor: "#FFFFFF" },
-    tableRowOdd: { flexDirection: "row", backgroundColor: "#FFEFDF" },
-    tableCellHeader: { flexGrow: 1, flexBasis: 0, padding: 8, backgroundColor: "#FF7900", textAlign: "left", fontSize: 11, color: "white" },
-    tableCellHeaderName: { width: "40%", padding: 8, backgroundColor: "#FF7900", textAlign: "left", fontSize: 11, color: "white" },
-    tableCellHeaderSno: { width: "8%", padding: 8, backgroundColor: "#FF7900", textAlign: "left", fontSize: 11, color: "white" },
+    tableRowOdd: { flexDirection: "row", backgroundColor: `hsl(${hue} 100% 94%)` },
+    tableCellHeader: { flexGrow: 1, flexBasis: 0, padding: 8, backgroundColor: `hsl(${hue} 100% 50%)`, textAlign: "left", fontSize: 11, color: "white" },
+    tableCellHeaderName: { width: "40%", padding: 8, backgroundColor: `hsl(${hue} 100% 50%)`, textAlign: "left", fontSize: 11, color: "white" },
+    tableCellHeaderSno: { width: "8%", padding: 8, backgroundColor: `hsl(${hue} 100% 50%)`, textAlign: "left", fontSize: 11, color: "white" },
     tableCellBox: { width: "40%", padding: 8, textAlign: "left" },
     tableCellName: { fontSize: 10, color: "#384388", fontStyle: "italic", textDecoration: "none" },
     tableCellNameContent: { fontSize: 10, color: "#6E6E6E" },
