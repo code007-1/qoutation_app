@@ -28,7 +28,7 @@ export type QuotationData = {
 
 export default function Quote() {
     const { items, setItems } = useGlobalContext();
-    const [step, setStep] = useState<number>(0);
+    const [step, setStep] = useState<number>(2);
     const { data, setData } = useGlobalContext();
 
     function addItem() {

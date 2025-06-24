@@ -1,51 +1,5 @@
-/*import { Document, Page, PDFViewer, StyleSheet, Text, View } from '@react-pdf/renderer';
-import ReactDOM from 'react-dom';
-import { useGlobalContext } from '~/modules/gcontext';
-import PDFDocument from '~/modules/PDFDcoument';
-import { useEffect } from 'react';
-
-export default function PDF1() {
-    //const { data } = useGlobalContext();
-
-    // Create styles
-    const styles = StyleSheet.create({
-        page: {
-            flexDirection: 'row',
-            backgroundColor: '#E4E4E4'
-        },
-        section: {
-            margin: 10,
-            padding: 10,
-            flexGrow: 1
-        }
-    });
-
-    // Create Document Component
-    const MyDocument = () => (
-        <Document>
-            <Page size="A4" style={styles.page}>
-                <View style={styles.section}>
-                    <Text>Section #1</Text>
-                </View>
-                <View style={styles.section}>
-                    <Text>Section #2</Text>
-                </View>
-            </Page>
-        </Document>
-    );
-
-    return (
-        <div>
-            <PDFViewer>
-                <MyDocument />
-            </PDFViewer>
-        </div>
-    ); // You return nothing since rendering is handled manually
-}
-*/
-
 import { ActionFunction, LoaderFunction } from "@remix-run/node";
-import { rows } from "~/modules/db";
+import { rows } from "~/modules/loadCSV";
 
 
 export const action: ActionFunction = async ({ request, params }) => {

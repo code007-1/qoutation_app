@@ -6,7 +6,7 @@ const path =
 
 export function Watermark() {
     const paint = (doc: any) =>
-        doc.path(path).opacity(0.2).strokeColor('#64748b').stroke();
+        doc.path(path).opacity(0.15).strokeColor('#64748b').stroke();
 
     return (
         <View

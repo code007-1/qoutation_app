@@ -44,12 +44,6 @@ export default function AutocompleteSearch({ index }: { index: string }) {
                     .catch((err) => {
                         console.error("Error fetching suggestions:", err);
                     });
-                const filteredList = SUGGESTIONS.filter(s =>
-                    s.name.toLowerCase().includes(items[index].name.toLowerCase())
-                );
-                setFiltered(filteredList);
-                setShowSuggestions(filteredList.length > 0);
-                setHighlighted(-1);
             }
         }
     }, [items[index].name]);
