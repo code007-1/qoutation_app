@@ -56,22 +56,21 @@ export default function Quote() {
     return (<>
         {step === 0 &&
             <div>
-                <div className="mb-10 text-lg py-4 px-10 bg-slate-100">Qoutation Details</div>
-                <div className="flex flex-col items-center mx-10">
+                <div className="mb-4 text-lg py-4 px-10 bg-slate-100">Qoutation Details</div>
+                <div className="flex flex-col items-center h-screen mx-10">
                     <div className="flex justify-center">
                         <div className="flex flex-col">
                             <label className="text-sm font-semibold">Qoutation No.</label>
-                            <input type="text" name="no" placeholder="Enter Qoutation No." className="border p-4 mb-5 mr-5 w-25" value={data.no} onChange={e => setData((pre) => { return { ...pre, no: e.target.value }; })} />
+                            <input type="text" name="no" placeholder="Enter Qoutation No." className="border p-2 mb-2 mr-5 w-25" value={data.no} onChange={e => setData((pre) => { return { ...pre, no: e.target.value }; })} />
                         </div>
                         <div className="flex flex-col">
                             <label className="text-sm font-semibold">Date</label>
-                            <input type="date" name="date" id="date" pattern="\d{4}-\d{2}-\d{2}" placeholder="Date" className="border w-25 h-14" value={data.date} onChange={e => setData(pre => { return { ...pre, date: e.target.value } })} />
+                            <input type="date" name="date" id="date" pattern="\d{4}-\d{2}-\d{2}" placeholder="Date" className="border w-25 h-10" value={data.date} onChange={e => setData(pre => { return { ...pre, date: e.target.value } })} />
                         </div>
-
                     </div>
                     <div className="w-full">
                         <label className="text-sm font-semibold">Introductory text</label>
-                        <textarea rows={5} placeholder="Enter Introductory Text" className="p-2 border rounded w-full mb-5" value={data.intro} onChange={e => setData(pre => { return { ...pre, intro: e.target.value } })} />
+                        <textarea rows={5} placeholder="Enter Introductory Text" className="p-2 border rounded w-full mb-2" value={data.intro} onChange={e => setData(pre => { return { ...pre, intro: e.target.value } })} />
                     </div>
                     <div className="mx-10 flex space-x-10 w-full">
                         <div className="w-full space-y-4">
@@ -141,11 +140,11 @@ export default function Quote() {
 
         {step === 1 &&
             <div><div className="py-4 px-10 bg-slate-100 text-lg ">Product Details</div>
-                <div className="mt-5 flex flex-col items-center align-middle p-4 space-y-10">
+                <div className="flex flex-col items-center align-middle p-4 space-y-2">
                     <button onClick={addItem} className="bg-blue-500 text-white p-2 text-lg">
                         Add Item
                     </button>
-                    <div className="space-y-4 overflow-y-auto h-[calc(100vh-400px)] w-full">
+                    <div className="space-y-4 overflow-y-auto h-[calc(100vh-300px)] w-full">
                         {Object.keys(items).map((key) => {
                             return <>
                                 <AutocompleteSearch key={key} index={key} />
