@@ -163,7 +163,7 @@ export default function AutocompleteSearch({ index }: { index: string }) {
                     setItems({ ...items, [index]: { ...items[index], quantity: Number(e.target.value) } });
                 }}
             />
-            <button className="hover:bg-slate-300 bg-slate-100 p-4" onClick={(e) => {
+            <button className="hover:bg-slate-300 bg-slate-100 p-2" onClick={(e) => {
                 //setInput(index);
                 setItems(
                     Object.fromEntries(Object.entries(items).filter((value) => value[0] != index))
