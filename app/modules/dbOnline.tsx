@@ -43,7 +43,7 @@ async function run() {
 }
 run().catch(console.dir);
 
-export async function searchItems(db: string = "unnamed", collection: string = "qoutations", query: {} = {}, limit: number = 10, skip: number = 0) {
+export async function search(db: string = "unnamed", collection: string = "qoutations", query: {} = {}, limit: number = 10, skip: number = 0) {
     return await client.db(db).collection(collection).find({}).limit(limit).toArray();//{ name: { $regex: query, $options: "i" } }
 }
 
