@@ -1,33 +1,9 @@
-import type { MetaFunction } from "@remix-run/node";
 import { useFetcher, useNavigate } from "@remix-run/react";
 import { Loader } from "lucide-react";
 import { useEffect } from "react";
 import { useGlobalContext } from "~/modules/gcontext";
+import { getAccessToken, loginData } from "~/modules/utils";
 
-export const meta: MetaFunction = () => {
-  return [
-    { title: "Unnamed" },
-    { name: "description", content: "Welcome to Unnamed" },
-  ];
-};
-
-export async function getAccessToken(setAccessToken: React.Dispatch<React.SetStateAction<string | undefined>>, setUserName: React.Dispatch<React.SetStateAction<string | undefined>>) {
-  try {
-    const result = await fetch("/api/refresh");
-    if (result.status === 200) {
-      const details = await result.json();
-      setAccessToken(details.token); // Store the fetched data in state
-      setUserName(details.data?.username);
-    }
-  }
-  catch (error) {
-    console.log("error", error);
-  }
-}
-export type loginData = {
-  token?: string,
-  username?: string,
-};
 
 export default function Index() {
 
@@ -38,25 +14,34 @@ export default function Index() {
 
   useEffect(() => {
     //getAccessToken(setAccessToken, setUserName);
+    async function getAccessToken() {
+      const result = await fetch("/api/refresh/");
+      if (result.status === 200) {
+        const details = await result.json();
+        setAccessToken(details.token); // Store the fetched data in state
+        setUserName(details.data?.username);
+
+      }
+    }
+    getAccessToken();
   }, []);
 
   useEffect(() => {
     if (loginFetcher.data?.token) {
       setAccessToken(loginFetcher.data.token); // Store the fetched data in state
       setUserName(loginFetcher.data?.username);
-      console.log("logged in");
     }
   }, [loginFetcher.data]);
 
   useEffect(() => {
     if (accessToken) {
-      navigate("/dashboard");
+      navigate("/quote");
     }
   }, [accessToken]);
 
 
   return (
-    <loginFetcher.Form method="post" action="/api/login">
+    <loginFetcher.Form method="post" action="/api/login/">
       <div className="flex items-center justify-center h-screen">
 
         {/* Login Form */}
@@ -92,9 +77,7 @@ export default function Index() {
             )}
           </button>
         </div>
-
       </div>
     </loginFetcher.Form >
-
   );
 }

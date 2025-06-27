@@ -5,25 +5,7 @@ import { commitSession, getSession } from "~/modules/sessions";
 import pkg from 'jsonwebtoken';
 const { sign } = pkg;
 import bcrypt from "bcrypt";
-
-//const bcrypt = require('bcrypt');
-
-const JWT_REFRESH_KEY = "123!@#$@SDFASDAD";
-const JWT_ACCESS_KEY = "!#SDAS@#!!@XZZXC";
-
-const saltRounds = 10;
-const myPlaintextPassword = 's0/\/\P4$$w0rD';
-const someOtherPlaintextPassword = 'not_bacon';
-
-// utitlity functions
-export const refresTokenCookie = createCookie('rToken', {
-    httpOnly: true, // Prevent client-side accesss
-    //secure: true, // Only send over HTTPS
-    //sameSite: 'none', // For cross-site requests
-    sameSite: 'lax',
-    maxAge: 1000 * 60 * 60 * 24
-});
-
+import { JWT_ACCESS_KEY, JWT_REFRESH_KEY } from "~/modules/utils";
 
 export const action: ActionFunction = async ({ request, params }) => {
     const formData = await request.formData();
@@ -47,13 +29,10 @@ export const action: ActionFunction = async ({ request, params }) => {
         const refresh = sign(data, JWT_REFRESH_KEY, { expiresIn: "1d" });
         const access = sign(data, JWT_ACCESS_KEY, { expiresIn: "10m" });
 
-        const cookieValue = await refresTokenCookie.serialize(refresh);
-        console.log("logging in");
+        //const cookieValue = await refresTokenCookie.serialize(refresh);
 
         let session = await getSession();
-        //session.set("loggedIn", true);
         session.set("rToken", refresh);
-        console.log("logged in");
         return Response.json({ token: access, username: username }, { headers: { "Set-Cookie": await commitSession(session) } });
     }
     else {

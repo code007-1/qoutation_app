@@ -1,6 +1,6 @@
 import { Minus } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
-import { useGlobalContext } from "./gcontext";
+import { useGlobalContext } from "~/modules/gcontext";
 import { QuoteItems } from "~/routes/quote";
 
 const SUGGESTIONS: QuoteItems[] = [

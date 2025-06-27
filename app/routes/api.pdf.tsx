@@ -1,7 +1,7 @@
 import { renderToStream } from "@react-pdf/renderer";
 import { ActionFunction, LoaderFunction } from "@remix-run/node";
 import { useGlobalContext } from "~/modules/gcontext";
-import PDFDocument from "~/modules/PDFDcoument";
+import PDFDocument from "~/component.tsx/PDFDcoument";
 
 //export let loader: LoaderFunction = async ({ request, params }) => {
 export const action: ActionFunction = async ({ request, params }) => {
