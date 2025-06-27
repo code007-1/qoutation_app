@@ -1,7 +1,7 @@
 import { useFetcher, useNavigate } from "@remix-run/react";
 import { useEffect, useState } from "react";
 import { useGlobalContext } from "~/modules/gcontext";
-import AutocompleteSearch from "~/component.tsx/quote";
+import AutocompleteSearch from "~/component/quote";
 import { logoutData } from "~/modules/utils";
 
 export type QuoteItems = {
