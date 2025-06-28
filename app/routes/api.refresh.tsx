@@ -35,7 +35,7 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
     if (cookies) {
         const verified = await verifyRefreshToken(cookies, url.host, userAgent ? userAgent : "");
 
-        if (!verified) {
+        if (verified !== false) {
             const ip = new URL(request.url);
             const data = {
                 time: Date(),
@@ -45,7 +45,6 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
             }
 
             const access = sign(data, JWT_ACCESS_KEY, { expiresIn: "10m" });
-
             return json({ token: access, username: verified });
         }
 

@@ -8,7 +8,8 @@ import {
 import type { LinksFunction } from "@remix-run/node";
 
 import "./tailwind.css";
-import { AppProvider } from "./modules/gcontext";
+import { AppProvider, useGlobalContext } from "./modules/gcontext";
+import { useEffect } from "react";
 
 export const links: LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -24,6 +25,7 @@ export const links: LinksFunction = () => [
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {
+
   return (
     <html lang="en">
       <head>
@@ -45,5 +47,21 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
+  const { setAccessToken, setUserName } = useGlobalContext();
+
+  useEffect(() => {
+    //getAccessToken(setAccessToken, setUserName);
+    async function getAccessToken() {
+      const result = await fetch("/api/refresh/");
+      if (result.status === 200) {
+        const details = await result.json();
+        setAccessToken(details.token); // Store the fetched data in state
+        setUserName(details.username);
+        console.log("asd", details);
+      }
+    }
+    getAccessToken();
+  }, []);
+
   return <Outlet />;
 }

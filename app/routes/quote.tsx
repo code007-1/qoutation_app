@@ -30,7 +30,7 @@ export type QuotationData = {
 
 export default function Quote() {
     const { items, setItems } = useGlobalContext();
-    const [step, setStep] = useState<number>(2);
+    const [step, setStep] = useState<number>(0);
     const { data, setData, accessToken, setAccessToken } = useGlobalContext();
 
     const logoutFetcher = useFetcher<logoutData>();
@@ -43,7 +43,7 @@ export default function Quote() {
 
     useEffect(() => {
         if (accessToken === undefined) //console.log("should navigate to home page");
-            navigate("/");
+            navigate("/dashboard");
     }, [accessToken]);
 
 
@@ -71,9 +71,9 @@ export default function Quote() {
 
     return (<>
         {step === 0 &&
-            <div>
+            <div className="">
                 <div className="mb-4 text-lg py-4 px-10 bg-slate-100">Qoutation Details</div>
-                <div className="flex flex-col items-center h-screen mx-10">
+                <div className="flex flex-col items-center mx-10">
                     <div className="flex justify-center">
                         <div className="flex flex-col">
                             <label className="text-sm font-semibold">Qoutation No.</label>
@@ -194,7 +194,7 @@ export default function Quote() {
                 <div className="py-4 px-10 bg-slate-100 text-lg">
                     Terms and Conditions and Additional Information
                 </div>
-                <div className="mx-10 my-10 flex flex-col items-center h-screen space-y-10">
+                <div className="mx-10 my-10 flex flex-col items-center space-y-10">
                     <div className="flex w-full space-x-10">
                         <div className="w-full">
                             <label className="text-sm font-semibold">Terms and Conditions</label>

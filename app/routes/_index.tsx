@@ -1,5 +1,5 @@
 import { useFetcher, useNavigate } from "@remix-run/react";
-import { Loader } from "lucide-react";
+import { Loader, UserMinus } from "lucide-react";
 import { useEffect } from "react";
 import { useGlobalContext } from "~/modules/gcontext";
 import { getAccessToken, loginData } from "~/modules/utils";
@@ -10,26 +10,12 @@ export default function Index() {
   const loginFetcher = useFetcher<loginData>();
   const isSubmitting = loginFetcher.state === "submitting";
   const navigate = useNavigate();
-  const { accessToken, setAccessToken, setUserName } = useGlobalContext();
-
-  useEffect(() => {
-    //getAccessToken(setAccessToken, setUserName);
-    async function getAccessToken() {
-      const result = await fetch("/api/refresh/");
-      if (result.status === 200) {
-        const details = await result.json();
-        setAccessToken(details.token); // Store the fetched data in state
-        setUserName(details.data?.username);
-
-      }
-    }
-    getAccessToken();
-  }, []);
+  const { accessToken, setAccessToken, setUserName, userName } = useGlobalContext();
 
   useEffect(() => {
     if (loginFetcher.data?.token) {
       setAccessToken(loginFetcher.data.token); // Store the fetched data in state
-      setUserName(loginFetcher.data?.username);
+      setUserName(loginFetcher.data.username);
     }
   }, [loginFetcher.data]);
 
