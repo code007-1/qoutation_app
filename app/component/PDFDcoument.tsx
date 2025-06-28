@@ -1,7 +1,6 @@
 import { Document, Page, Text, View, StyleSheet, Image, Link, Font } from "@react-pdf/renderer";
 import { Watermark } from "./Watermark";
 import { QuotationData } from "~/routes/quote";
-import font from "./../fonts/Katerlin/Katerlin.ttf"
 
 const hue = "360";
 

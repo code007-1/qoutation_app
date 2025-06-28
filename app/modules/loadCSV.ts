@@ -22,7 +22,7 @@ function LoadData() {
             })
             .on('end', () => {
                 console.log('CSV file successfully processed.');
-                console.log(rows);
+                //console.log(rows);
             });
     }
 }

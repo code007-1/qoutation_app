@@ -11,6 +11,8 @@ interface AppContextType {
     setItems: React.Dispatch<React.SetStateAction<Record<string, QuoteItems>>>;
     data: QuotationData;
     setData: React.Dispatch<React.SetStateAction<QuotationData>>;
+    userName: string | undefined,
+    setUserName: React.Dispatch<React.SetStateAction<string | undefined>>;
 }
 
 const appContext = createContext<AppContextType | null>(null);
@@ -18,6 +20,8 @@ const appContext = createContext<AppContextType | null>(null);
 export const AppProvider = ({ children }: { children: React.ReactNode }) => {
     const [theme, setTheme] = useState("light"); // Default theme
     const [accessToken, setAccessToken] = useState<string | undefined>();
+    const [userName, setUserName] = useState<string | undefined>(undefined);
+
     const [items, setItems] = useState<Record<string, QuoteItems>>({});
     const [data, setData] = useState<QuotationData>({
         no: "1",
@@ -40,7 +44,7 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
     };
 
     return (
-        <appContext.Provider value={{ theme, toggleTheme, accessToken, setAccessToken, items, setItems, data, setData }}>
+        <appContext.Provider value={{ theme, toggleTheme, accessToken, setAccessToken, items, setItems, data, setData, userName, setUserName }}>
             {children}
         </appContext.Provider>
     );

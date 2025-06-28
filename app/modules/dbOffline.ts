@@ -1,0 +1,1 @@
+import { neboa } from 'neboa';

@@ -1,8 +1,7 @@
 import { renderToStream } from "@react-pdf/renderer";
 import { ActionFunction, LoaderFunction } from "@remix-run/node";
-import { insertQoutation } from "~/modules/db";
 import { useGlobalContext } from "~/modules/gcontext";
-import PDFDocument from "~/modules/PDFDcoument";
+import PDFDocument from "~/component/PDFDcoument";
 
 //export let loader: LoaderFunction = async ({ request, params }) => {
 export const action: ActionFunction = async ({ request, params }) => {

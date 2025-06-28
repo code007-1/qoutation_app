@@ -1,6 +1,8 @@
-import { useState } from "react";
+import { useFetcher, useNavigate } from "@remix-run/react";
+import { useEffect, useState } from "react";
 import { useGlobalContext } from "~/modules/gcontext";
-import AutocompleteSearch from "~/modules/qoute";
+import AutocompleteSearch from "~/component/quote";
+import { logoutData } from "~/modules/utils";
 
 export type QuoteItems = {
     id: number;
@@ -29,7 +31,21 @@ export type QuotationData = {
 export default function Quote() {
     const { items, setItems } = useGlobalContext();
     const [step, setStep] = useState<number>(2);
-    const { data, setData } = useGlobalContext();
+    const { data, setData, accessToken, setAccessToken } = useGlobalContext();
+
+    const logoutFetcher = useFetcher<logoutData>();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (logoutFetcher.data?.success)
+            setAccessToken(undefined);
+    }, [logoutFetcher.data]);
+
+    useEffect(() => {
+        if (accessToken === undefined) //console.log("should navigate to home page");
+            navigate("/");
+    }, [accessToken]);
+
 
     function addItem() {
         const newKey = new Date().getTime() + 1;
