@@ -81,7 +81,7 @@ export default function PDFDocument(data: QuotationData) {
                 <View style={styles.rowContainer}>
 
 
-                    <Image cache src="public\logo.png" style={styles.backgroundImage} />
+                    <Image cache src="public\ttc.png" style={styles.backgroundImage} />
 
                     <View style={styles.columnContainer}>
                         <Text>
