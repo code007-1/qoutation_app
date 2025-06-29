@@ -102,7 +102,7 @@ const TableUI: FC<TableProps> = ({
             <div className="">
                 <table className="w-full">
                     {!isFetching && getHeaderGroups().map((headerGroup) => (
-                        <tr key={headerGroup.id} className="bg-headerBackground">
+                        <tr key={headerGroup.id} className="bg-headerBackground" onClick={handleRow}>
                             {headerGroup.headers.map((header) => (
                                 <th key={header.id} className="text-left text-textSecondary p-2" >
                                     {header.isPlaceholder
@@ -116,7 +116,32 @@ const TableUI: FC<TableProps> = ({
                         </tr>
                     )
                     )}
-                    <tbody className="p-2">
+
+                </table>
+            </div>
+            {noDataFound && (
+                <div className="my-2 text-center">
+                    {EmptyText}
+                </div>
+            )}
+            {/*pageCount && page && (
+                <div
+                    count={pageCount}
+                    page={paginationPage}
+                    onChange={handlePageChange}
+                    color="primary"
+                    showFirstButton
+                    showLastButton
+                />
+            )*/}
+        </div>
+    );
+};
+
+
+export default memo(TableUI);
+
+/* <tbody className="p-2">
                         {!isFetching ? (
                             getRowModel()?.rows.map((row) => (
                                 <tr key={row.id} onClick={handleRow} className="bg-header cursor-pointer hover:bg-buttonHover">
@@ -150,31 +175,4 @@ const TableUI: FC<TableProps> = ({
                                 ))}
                             </>
                         )}
-                    </tbody>
-                </table>
-            </div>
-            {noDataFound && (
-                <div className="my-2 text-center">
-                    {EmptyText}
-                </div>
-            )}
-            {/*pageCount && page && (
-                <div
-                    count={pageCount}
-                    page={paginationPage}
-                    onChange={handlePageChange}
-                    color="primary"
-                    showFirstButton
-                    showLastButton
-                />
-            )*/}
-        </div>
-    );
-};
-
-TableUI.defaultProps = {
-    EmptyText: "No Data is found"
-}
-
-
-export default memo(TableUI);
+                    </tbody> */

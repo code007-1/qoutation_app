@@ -54,19 +54,20 @@ export default function AutocompleteSearch({ index }: { index: number }) {
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         //setInput(e.target.value);
-        setItems(
-            {
-                ...items,
-                [index]: { ...items[index], name: e.target.value }
-            });
+        setItems((pre) => {
+            return pre.map((item, i) => i === index
+                ? { ...items[index], name: e.target.value }
+                : item)
+        });
         console.log("input change", e.target.value, items[index].name);
     };
 
     const handleSuggestionClick = (suggestion: QuoteItems) => {
         //setInput(suggestion.label);
-        setItems({
-            ...items,
-            [index]: { id: suggestion.id, name: suggestion.name, price: suggestion.price, quantity: 1, description: suggestion.description || "", link: suggestion.link || "#" }
+        setItems(pre => {
+            return pre.map((item, i) => i == index
+                ? { id: suggestion.id, name: suggestion.name, price: suggestion.price, quantity: 1, description: suggestion.description || "", link: suggestion.link || "#" }
+                : item)
         });
         setShowSuggestions(false);
     };
@@ -96,11 +97,12 @@ export default function AutocompleteSearch({ index }: { index: number }) {
             //setInput(filtered[highlighted].label);
             setFiltered([filtered[highlighted]]);
             setShowSuggestions(false);
-            setItems(
-                {
-                    ...items,
-                    [index]: { id: filtered[highlighted].id, name: filtered[highlighted].name, price: filtered[highlighted].price, quantity: 1, description: filtered[highlighted].description || "", link: filtered[highlighted].link || "#" }
-                });
+            setItems(pre => {
+                return pre.map((item, i) => i === index
+                    ? { id: filtered[highlighted].id, name: filtered[highlighted].name, price: filtered[highlighted].price, quantity: 1, description: filtered[highlighted].description || "", link: filtered[highlighted].link || "#" }
+                    : item)
+            }
+            );
         } else if (e.key === "Escape") {
             setShowSuggestions(false);
         }
@@ -140,7 +142,11 @@ export default function AutocompleteSearch({ index }: { index: number }) {
                 className="border p-2 w-[40%] border-border bg-background text-textPrimary focus:outline-textPrimary"
                 value={items[index].description}
                 onChange={(e) => {
-                    setItems({ ...items, [index]: { ...items[index], description: e.target.value } });
+                    setItems(pre => {
+                        return pre.map((item, i) => i === index
+                            ? { ...items[index], description: e.target.value }
+                            : item);
+                    })
                 }}
             />
             <input
@@ -149,7 +155,11 @@ export default function AutocompleteSearch({ index }: { index: number }) {
                 className="border p-2 w-[10%] border-border bg-background text-textPrimary focus:outline-textPrimary"
                 value={items[index]?.price}
                 onChange={(e) => {
-                    setItems({ ...items, [index]: { ...items[index], price: Number(e.target.value) } });
+                    setItems(pre => {
+                        return pre.map((item, i) => i === index
+                            ? { ...items[index], price: Number(e.target.value) }
+                            : item);
+                    })
                 }}
             />
             <input
@@ -158,13 +168,17 @@ export default function AutocompleteSearch({ index }: { index: number }) {
                 className="border p-2 w-[10%] border-border bg-background text-textPrimary focus:outline-textPrimary"
                 value={items[index]?.quantity}
                 onChange={(e) => {
-                    setItems({ ...items, [index]: { ...items[index], quantity: Number(e.target.value) } });
+                    setItems(pre => {
+                        return pre.map((item, i) => i === index
+                            ? { ...items[index], quantity: Number(e.target.value) }
+                            : item);
+                    })
                 }}
             />
             <button className="hover:bg-headerBackground bg-buttonHover p-2" onClick={(e) => {
                 //setInput(index);
-                setItems(
-                    items.filter((_, i) => i != index)
+                setItems(pre =>
+                    pre.filter((_, i) => i != index)
                 );
             }}>
                 <Minus className="text-textSecondary" />

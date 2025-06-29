@@ -50,11 +50,13 @@ export default function Quote() {
 
 
     function addItem() {
-        const newKey = new Date().getTime() + 1;
-        setItems([
-            ...items,
-            { id: 0, name: "", price: 0, quantity: 0 }
-        ]);
+        //const newKey = new Date().getTime() + 1;
+        setItems(pre => {
+            return [
+                ...pre,
+                { id: 0, name: "", price: 0, quantity: 0 }
+            ]
+        });
     }
 
     useEffect(() => {
@@ -180,11 +182,12 @@ export default function Quote() {
                             Add Item
                         </button>
                         <div className="space-y-4 overflow-y-auto h-[calc(100vh-320px)] w-full">
-                            {items.map((_, index) => {
-                                return <>
-                                    <AutocompleteSearch key={index} index={index} />
-                                </>;
-                            })}
+                            {
+                                items.map((_, index) => {
+                                    return <>
+                                        <AutocompleteSearch key={index} index={index} />
+                                    </>;
+                                })}
                         </div>
                         <div className="flex justify-between w-full">
                             <div className="flex items-center">

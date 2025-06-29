@@ -60,7 +60,6 @@ export default function App() {
         const details = await result.json();
         setAccessToken(details.token); // Store the fetched data in state
         setUserName(details.username);
-        console.log("asd", details);
       }
     }
     getAccessToken();

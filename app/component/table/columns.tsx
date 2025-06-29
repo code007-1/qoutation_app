@@ -1,5 +1,4 @@
 import { ColumnDef } from "@tanstack/react-table";
-import { QuotationData } from "~/routes/dashboard.quote";
 
 export const Columns: ColumnDef<any, any>[] = [
 
