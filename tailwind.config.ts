@@ -16,6 +16,18 @@ export default {
           "Noto Color Emoji",
         ],
       },
+      colors: {
+        header: "rgba(var(--header))",
+        headerBackground: "rgba(var(--headerBackground))",
+        textPrimary: "rgba(var(--textPrimary))",
+        textSecondary: "rgba(var(--textSecondary))",
+        buttonTextPrimary: "rgba(var(--buttonTextPrimary))",
+        buttonText: "rgba(var(--buttonText))",
+        button: "rgba(var(--button))",
+        background: "rgba(var(--background))",
+        border: "rgba(var(--border))",
+        buttonHover: "rgba(var(--buttonHover))",
+      }
     },
   },
   plugins: [],

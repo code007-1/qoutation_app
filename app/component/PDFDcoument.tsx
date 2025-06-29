@@ -1,6 +1,6 @@
 import { Document, Page, Text, View, StyleSheet, Image, Link, Font } from "@react-pdf/renderer";
-import { Watermark } from "./Watermark";
-import { QuotationData } from "~/routes/quote";
+import { Watermark } from "./watermark";
+import { QuotationData } from "~/routes/dashboard.quote";
 
 const hue = "360";
 
@@ -59,9 +59,7 @@ export default function PDFDocument(data: QuotationData) {
         tax: 18,
         discount: 5
     };*/
-
-    const totalAmount = Object.entries(data.items).reduce((acc, [_, item]) => acc + (item.price * item.quantity), 0);
-
+    console.log("amount is ", data.amount);
     return (
         <Document title="Quotation" author="Saurav" subject="Business Quotation" >
             <Page wrap size="A4" style={styles.page}>
@@ -138,21 +136,21 @@ export default function PDFDocument(data: QuotationData) {
                         <Text style={styles.tableCellTotalsName}>Tax @ {data.tax}%</Text>
                         <Text style={styles.tableCell}></Text>
                         <Text style={styles.tableCell}></Text>
-                        <Text style={styles.tableCellTotals}>Rs.{(totalAmount * data.tax / 100).toFixed(2)}</Text>
+                        <Text style={styles.tableCellTotals}>Rs.{(data.amount * data.tax * 0.01).toFixed(2)}</Text>
                     </View>
                     <View style={Object.entries(data.items).length % 2 === 0 ? styles.tableRowOdd : styles.tableRowEven}>
                         <Text style={styles.tableCellSno}></Text>
                         <Text style={styles.tableCellTotalsName}>Discount @ {data.discount}%</Text>
                         <Text style={styles.tableCell}></Text>
                         <Text style={styles.tableCell}></Text>
-                        <Text style={styles.tableCellTotals}>Rs.{(totalAmount * (1 + data.tax / 100) * data.discount / 100).toFixed(2)}</Text>
+                        <Text style={styles.tableCellTotals}>Rs.{(data.amount * (1 + data.tax * 0.01) * data.discount * 0.01).toFixed(2)}</Text>
                     </View>
                     <View style={Object.entries(data.items).length % 2 === 0 ? styles.tableRowEven : styles.tableRowOdd}>
                         <Text style={styles.tableCellSno}></Text>
                         <Text style={styles.tableCellTotalsName}>Total Amount</Text>
                         <Text style={styles.tableCell}></Text>
                         <Text style={styles.tableCell}></Text>
-                        <Text style={styles.tableCellTotals}>Rs.{(totalAmount * (1 + data.tax / 100) * (1 - data.discount / 100)).toFixed(2)}</Text>
+                        <Text style={styles.tableCellTotals}>Rs.{(data.amount * (1 + data.tax * 0.01) * (1 - data.discount * 0.01)).toFixed(2)}</Text>
                     </View>
                 </View>
                 <View >

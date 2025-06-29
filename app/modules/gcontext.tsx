@@ -1,30 +1,36 @@
 // app/context/ThemeContext.jsx
-import React, { createContext, useState, useContext } from "react";
-import { QuotationData, QuoteItems } from "./../routes/quote";
+
+import { Link } from "@remix-run/react";
+import React, { createContext, useState, useContext, ReactNode } from "react";
+//import { QuotationData, QuoteItems } from "~/component/quote";
+import { QuotationData, QuoteItems } from "~/routes/dashboard.quote";
 
 interface AppContextType {
     theme: string;
     toggleTheme: () => void;
     accessToken: string | undefined;
     setAccessToken: React.Dispatch<React.SetStateAction<string | undefined>>;
-    items: Record<string, QuoteItems>;
-    setItems: React.Dispatch<React.SetStateAction<Record<string, QuoteItems>>>;
+    items: QuoteItems[];
+    setItems: React.Dispatch<React.SetStateAction<QuoteItems[]>>;
     data: QuotationData;
     setData: React.Dispatch<React.SetStateAction<QuotationData>>;
-    userName: string | undefined,
-    setUserName: React.Dispatch<React.SetStateAction<string | undefined>>;
+    userName: string,
+    setUserName: React.Dispatch<React.SetStateAction<string>>;
+    headerText: string | ReactNode
+    setHeaderText: React.Dispatch<React.SetStateAction<string | ReactNode>>;
 }
 
 const appContext = createContext<AppContextType | null>(null);
+export const createQuotation = <>< Link to={"/dashboard/quote"} className="cursor-pointer hover:bg-buttonHover w-min text-nowrap p-1" >Create Quotation</Link ></>;
 
 export const AppProvider = ({ children }: { children: React.ReactNode }) => {
     const [theme, setTheme] = useState("light"); // Default theme
     const [accessToken, setAccessToken] = useState<string | undefined>();
-    const [userName, setUserName] = useState<string | undefined>(undefined);
-
-    const [items, setItems] = useState<Record<string, QuoteItems>>({});
+    const [userName, setUserName] = useState<string>("");
+    const [headerText, setHeaderText] = useState<string | ReactNode>(createQuotation);
+    const [items, setItems] = useState<QuoteItems[]>([]);
     const [data, setData] = useState<QuotationData>({
-        no: "1",
+        no: userName[0]?.toLocaleUpperCase() + "-" + new Date().getTime(),
         date: new Date().toISOString().split("T")[0], // Default to today's date
         items: items,
         intro: "This is about our earlier discussions with you regarding your requirement for the Matrix Digital IP-PBXS System. Please find below our best offer for the same.",
@@ -35,7 +41,9 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
         to: "",
         toAddress: "",
         tax: 18,
-        discount: 5
+        discount: 5,
+        amount: 100000,
+        madeby: userName ? userName : "",
     });
 
 
@@ -44,7 +52,7 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
     };
 
     return (
-        <appContext.Provider value={{ theme, toggleTheme, accessToken, setAccessToken, items, setItems, data, setData, userName, setUserName }}>
+        <appContext.Provider value={{ theme, toggleTheme, accessToken, setAccessToken, items, setItems, data, setData, userName, setUserName, headerText, setHeaderText }}>
             {children}
         </appContext.Provider>
     );

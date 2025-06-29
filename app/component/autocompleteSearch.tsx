@@ -1,7 +1,11 @@
 import { Minus } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { useGlobalContext } from "~/modules/gcontext";
-import { QuoteItems } from "~/routes/quote";
+import { QuoteItems } from "~/routes/dashboard.quote";
+
+// advance show hide for better ui
+// dashboad intial page to show qoutation and create qoutation
+// welcome animation
 
 const SUGGESTIONS: QuoteItems[] = [
     { id: 1, name: "Apple", price: 100, quantity: 1, description: "Fresh and juicy apples" },
@@ -14,7 +18,7 @@ const SUGGESTIONS: QuoteItems[] = [
     { id: 8, name: "Guava", price: 80, quantity: 1, description: "Sweet guavas" },
 ];
 //{ deleteItem, updateItem, updatePrice, updateQuanity, index }: { deleteItem: (index: number) => void; updateItem: (index: number, id: number, label: string) => void; updatePrice: (index: number, price: number) => void; updateQuanity: (index: number, quantity: number) => void; index: string }
-export default function AutocompleteSearch({ index }: { index: string }) {
+export default function AutocompleteSearch({ index }: { index: number }) {
     const [input, setInput] = useState("");
     const [showSuggestions, setShowSuggestions] = useState(false);
     const [filtered, setFiltered] = useState<QuoteItems[]>([]);
@@ -103,7 +107,7 @@ export default function AutocompleteSearch({ index }: { index: string }) {
     };
 
     return (
-        <div className="mx-6 flex space-x-4 relative w-auto">
+        <div className="flex space-x-4 relative w-auto">
             <input
                 ref={inputRef}
                 type="text"
@@ -112,17 +116,17 @@ export default function AutocompleteSearch({ index }: { index: string }) {
                 onBlur={handleBlur}
                 onFocus={handleFocus}
                 onKeyDown={handleKeyDown}
-                className="w-[30%] border p-2"
+                className="w-[30%] p-2 border border-border bg-background text-textPrimary focus:outline-textPrimary"
                 placeholder="Search Product..."
                 autoComplete="off"
             />
             {showSuggestions && (
-                <ul className="z-10 absolute top-full -left-4 right-0 bg-white border border-gray-300 shadow-lg overflow-y-auto w-[30%]">
+                <ul className="z-10 absolute top-full -left-4 right-0 bg-buttonHover border border-border overflow-y-auto w-[30%]">
                     {filtered.map((s, idx) => (
                         <li
                             key={s.id}
                             onMouseDown={() => handleSuggestionClick(s)}
-                            className={`${idx === highlighted ? "bg-gray-100" : "bg-white"} p-2 cursor-pointer`}
+                            className={`${idx === highlighted ? "bg-buttonHover" : "bg-background"} p-2 cursor-pointer text-textSecondary`}
                             onMouseEnter={() => setHighlighted(idx)}
                         >
                             {s.name}
@@ -133,7 +137,7 @@ export default function AutocompleteSearch({ index }: { index: string }) {
             <input
                 type="text"
                 placeholder="Description...each line should be comma separated"
-                className="border p-2 w-[40%]"
+                className="border p-2 w-[40%] border-border bg-background text-textPrimary focus:outline-textPrimary"
                 value={items[index].description}
                 onChange={(e) => {
                     setItems({ ...items, [index]: { ...items[index], description: e.target.value } });
@@ -142,7 +146,7 @@ export default function AutocompleteSearch({ index }: { index: string }) {
             <input
                 type="number"
                 placeholder="Price"
-                className="border p-2 w-[10%]"
+                className="border p-2 w-[10%] border-border bg-background text-textPrimary focus:outline-textPrimary"
                 value={items[index]?.price}
                 onChange={(e) => {
                     setItems({ ...items, [index]: { ...items[index], price: Number(e.target.value) } });
@@ -151,19 +155,19 @@ export default function AutocompleteSearch({ index }: { index: string }) {
             <input
                 type="number"
                 placeholder="Quantity"
-                className="border p-2 w-[10%]"
+                className="border p-2 w-[10%] border-border bg-background text-textPrimary focus:outline-textPrimary"
                 value={items[index]?.quantity}
                 onChange={(e) => {
                     setItems({ ...items, [index]: { ...items[index], quantity: Number(e.target.value) } });
                 }}
             />
-            <button className="hover:bg-slate-300 bg-slate-100 p-2" onClick={(e) => {
+            <button className="hover:bg-headerBackground bg-buttonHover p-2" onClick={(e) => {
                 //setInput(index);
                 setItems(
-                    Object.fromEntries(Object.entries(items).filter((value) => value[0] != index))
+                    items.filter((_, i) => i != index)
                 );
             }}>
-                <Minus />
+                <Minus className="text-textSecondary" />
             </button>
         </div>
     );

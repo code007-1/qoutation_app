@@ -4,12 +4,14 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useLocation,
 } from "@remix-run/react";
 import type { LinksFunction } from "@remix-run/node";
 
 import "./tailwind.css";
 import { AppProvider, useGlobalContext } from "./modules/gcontext";
 import { useEffect } from "react";
+import { AnimatePresence, motion, Variants } from "framer-motion";
 
 export const links: LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -47,7 +49,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  const { setAccessToken, setUserName } = useGlobalContext();
+  const { setAccessToken, setUserName, theme } = useGlobalContext();
+  const location = useLocation();
 
   useEffect(() => {
     //getAccessToken(setAccessToken, setUserName);
@@ -63,5 +66,25 @@ export default function App() {
     getAccessToken();
   }, []);
 
-  return <Outlet />;
+  const slideVariants: Variants = {
+    initial: { opacity: 0 },
+    animate: { opacity: 1 },
+    exit: { opacity: 0 },
+  };
+
+  return <>
+    <AnimatePresence mode="wait">
+      <motion.div
+        key={location.pathname}
+        variants={slideVariants}
+        initial={"initial"}
+        animate={"animate"}
+        exit={"exit"}
+        transition={{ duration: 0.4 }}
+      >
+        <div className={`${theme}`}>
+          <Outlet />
+        </div>
+      </motion.div>
+    </AnimatePresence></>;
 }
