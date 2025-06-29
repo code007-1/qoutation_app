@@ -22,7 +22,7 @@ export const links: LinksFunction = () => [
   },
   {
     rel: "stylesheet",
-    href: "https://fonts.googleapis.com/css2?family=Oxanium:wght@200..800&display=swap",
+    href: "https://fonts.googleapis.com/css2?family=Calligraffitti&family=Kalam:wght@300;400;700&family=Kaushan+Script&family=Oxanium:wght@200..800&family=Playwrite+IN:wght@100..400&display=swap",
   },
 ];
 
@@ -66,9 +66,9 @@ export default function App() {
   }, []);
 
   const slideVariants: Variants = {
-    initial: { opacity: 0 },
-    animate: { opacity: 1 },
-    exit: { opacity: 0 },
+    initial: { opacity: 0, y: -50 },
+    animate: { opacity: 1, y: 0 },
+    exit: { opacity: 0, y: 50 },
   };
 
   return <>

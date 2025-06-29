@@ -15,6 +15,10 @@ export default {
           "Segoe UI Symbol",
           "Noto Color Emoji",
         ],
+        Kaushan: ["Kaushan Script"],
+        Calligraffitti: ["Calligraffitti"],
+        Playwrite: ["Playwrite IN"],
+        Kalam: ["Kalam"]
       },
       colors: {
         header: "rgba(var(--header))",

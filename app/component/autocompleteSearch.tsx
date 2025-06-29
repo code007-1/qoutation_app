@@ -3,7 +3,7 @@ import { useState, useRef, useEffect } from "react";
 import { useGlobalContext } from "~/modules/gcontext";
 import { QuoteItems } from "~/routes/dashboard.quote";
 
-// advance show hide for better ui
+// advance show hide for better ui - optimized little bit, ok for now
 // dashboad intial page to show qoutation and create qoutation
 // welcome animation
 
@@ -59,7 +59,6 @@ export default function AutocompleteSearch({ index }: { index: number }) {
                 ? { ...items[index], name: e.target.value }
                 : item)
         });
-        console.log("input change", e.target.value, items[index].name);
     };
 
     const handleSuggestionClick = (suggestion: QuoteItems) => {

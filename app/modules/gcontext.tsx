@@ -14,8 +14,8 @@ interface AppContextType {
     setItems: React.Dispatch<React.SetStateAction<QuoteItems[]>>;
     data: QuotationData;
     setData: React.Dispatch<React.SetStateAction<QuotationData>>;
-    userName: string,
-    setUserName: React.Dispatch<React.SetStateAction<string>>;
+    userName: string | undefined,
+    setUserName: React.Dispatch<React.SetStateAction<string | undefined>>;
     headerText: string | ReactNode
     setHeaderText: React.Dispatch<React.SetStateAction<string | ReactNode>>;
 }
@@ -26,11 +26,11 @@ export const createQuotation = <>< Link to={"/dashboard/quote"} className="curso
 export const AppProvider = ({ children }: { children: React.ReactNode }) => {
     const [theme, setTheme] = useState("light"); // Default theme
     const [accessToken, setAccessToken] = useState<string | undefined>();
-    const [userName, setUserName] = useState<string>("");
+    const [userName, setUserName] = useState<string | undefined>();
     const [headerText, setHeaderText] = useState<string | ReactNode>(createQuotation);
     const [items, setItems] = useState<QuoteItems[]>([]);
     const [data, setData] = useState<QuotationData>({
-        no: userName[0]?.toLocaleUpperCase() + "-" + new Date().getTime(),
+        no: (userName ? userName[0].toLocaleUpperCase() : "") + "-" + new Date().getTime().toString(),
         date: new Date().toISOString().split("T")[0], // Default to today's date
         items: items,
         intro: "This is about our earlier discussions with you regarding your requirement for the Matrix Digital IP-PBXS System. Please find below our best offer for the same.",

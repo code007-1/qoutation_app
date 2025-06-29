@@ -59,7 +59,7 @@ export default function PDFDocument(data: QuotationData) {
         tax: 18,
         discount: 5
     };*/
-    console.log("amount is ", data.amount);
+
     return (
         <Document title="Quotation" author="Saurav" subject="Business Quotation" >
             <Page wrap size="A4" style={styles.page}>

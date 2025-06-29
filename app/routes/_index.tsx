@@ -2,7 +2,7 @@ import { useFetcher, useNavigate } from "@remix-run/react";
 import { Loader, UserMinus } from "lucide-react";
 import { useEffect } from "react";
 import { useGlobalContext } from "~/modules/gcontext";
-import { getAccessToken, loginData } from "~/modules/utils";
+import { loginData } from "~/modules/utils";
 
 
 export default function Index() {
@@ -21,7 +21,7 @@ export default function Index() {
 
   useEffect(() => {
     if (accessToken) {
-      navigate("/dashboard/home");
+      navigate("/welcome");
     }
   }, [accessToken]);
 

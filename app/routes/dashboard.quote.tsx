@@ -54,7 +54,7 @@ export default function Quote() {
         setItems(pre => {
             return [
                 ...pre,
-                { id: 0, name: "", price: 0, quantity: 0 }
+                { id: 0, name: "", description: "", price: 0, quantity: 0, link: "#" }
             ]
         });
     }
@@ -71,8 +71,8 @@ export default function Quote() {
     }, [items]);
 
     useEffect(() => {
-        const no = userName[0]?.toLocaleUpperCase() + "-" + new Date().getTime()
-        setData((pre) => { return { ...pre, no: no } })
+        const no = (userName ? userName[0].toLocaleUpperCase() : "") + "-" + new Date().getTime().toString();
+        setData((pre) => { return { ...pre, no: no } });
     }, [])
 
     //updateItem={updatedItem} updatePrice={updatedPrice} updateQuanity={updatedQuanity} deleteItem={deleteItem}

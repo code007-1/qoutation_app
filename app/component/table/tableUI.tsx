@@ -102,46 +102,23 @@ const TableUI: FC<TableProps> = ({
             <div className="">
                 <table className="w-full">
                     {!isFetching && getHeaderGroups().map((headerGroup) => (
-                        <tr key={headerGroup.id} className="bg-headerBackground" onClick={handleRow}>
-                            {headerGroup.headers.map((header) => (
-                                <th key={header.id} className="text-left text-textSecondary p-2" >
-                                    {header.isPlaceholder
-                                        ? null
-                                        : flexRender(
-                                            header.column.columnDef.header,
-                                            header.getContext()
-                                        )}
-                                </th>
-                            ))}
-                        </tr>
+                        <thead>
+                            <tr key={headerGroup.id} className="bg-headerBackground">
+                                {headerGroup.headers.map((header) => (
+                                    <th key={header.id} className="text-left text-textSecondary p-2" >
+                                        {header.isPlaceholder
+                                            ? null
+                                            : flexRender(
+                                                header.column.columnDef.header,
+                                                header.getContext()
+                                            )}
+                                    </th>
+                                ))}
+                            </tr>
+                        </thead>
                     )
                     )}
-
-                </table>
-            </div>
-            {noDataFound && (
-                <div className="my-2 text-center">
-                    {EmptyText}
-                </div>
-            )}
-            {/*pageCount && page && (
-                <div
-                    count={pageCount}
-                    page={paginationPage}
-                    onChange={handlePageChange}
-                    color="primary"
-                    showFirstButton
-                    showLastButton
-                />
-            )*/}
-        </div>
-    );
-};
-
-
-export default memo(TableUI);
-
-/* <tbody className="p-2">
+                    <tbody className="p-2">
                         {!isFetching ? (
                             getRowModel()?.rows.map((row) => (
                                 <tr key={row.id} onClick={handleRow} className="bg-header cursor-pointer hover:bg-buttonHover">
@@ -175,4 +152,27 @@ export default memo(TableUI);
                                 ))}
                             </>
                         )}
-                    </tbody> */
+                    </tbody>
+                </table>
+            </div>
+            {noDataFound && (
+                <div className="my-2 text-center">
+                    {EmptyText}
+                </div>
+            )}
+            {/*pageCount && page && (
+                <div
+                    count={pageCount}
+                    page={paginationPage}
+                    onChange={handlePageChange}
+                    color="primary"
+                    showFirstButton
+                    showLastButton
+                />
+            )*/}
+        </div>
+    );
+};
+
+
+export default memo(TableUI);
