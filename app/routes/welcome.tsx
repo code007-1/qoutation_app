@@ -23,7 +23,8 @@ export default function () {
                     <div className="h-screen flex justify-center items-center align-middle ">
                         <div className="flex flex-col">
                             <div className="text-4xl font-Kaushan mb-4">
-                                {"Hi...User...kk 👋 😃"}
+                                {/*"Hi...Gunjan...Ji 👋 😃"*/}
+                                {"Hello User"}
                             </div>
                             <div className="text-3xl font-Kalam">
                                 {goodVibeThoughts[Math.floor(Math.random() * goodVibeThoughts.length)]}
