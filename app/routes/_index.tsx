@@ -1,5 +1,5 @@
 import { useFetcher, useNavigate } from "@remix-run/react";
-import { Loader, UserMinus } from "lucide-react";
+import { Loader } from "lucide-react";
 import { useEffect } from "react";
 import { useGlobalContext } from "~/modules/gcontext";
 import { loginData } from "~/modules/utils";
@@ -21,7 +21,10 @@ export default function Index() {
 
   useEffect(() => {
     if (accessToken) {
+      //if (loginFetcher.data?.username?.toLocaleLowerCase() === "gunjan")
       navigate("/welcome");
+      //else
+      //  navigate("/dashboard/quote");
     }
   }, [accessToken]);
 

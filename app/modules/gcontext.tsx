@@ -30,7 +30,7 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
     const [headerText, setHeaderText] = useState<string | ReactNode>(createQuotation);
     const [items, setItems] = useState<QuoteItems[]>([]);
     const [data, setData] = useState<QuotationData>({
-        no: (userName ? userName[0].toLocaleUpperCase() : "") + "-" + new Date().getTime().toString(),
+        no: new Date().getTime().toString(),
         date: new Date().toISOString().split("T")[0], // Default to today's date
         items: items,
         intro: "This is about our earlier discussions with you regarding your requirement for the Matrix Digital IP-PBXS System. Please find below our best offer for the same.",

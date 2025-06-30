@@ -8,14 +8,14 @@ import { QuoteItems } from "~/routes/dashboard.quote";
 // welcome animation
 
 const SUGGESTIONS: QuoteItems[] = [
-    { id: 1, name: "Apple", price: 100, quantity: 1, description: "Fresh and juicy apples" },
-    { id: 2, name: "Banana", price: 50, quantity: 1, description: "Sweet and ripe bananas" },
-    { id: 3, name: "Cherry", price: 75, quantity: 1, description: "Delicious cherries" },
-    { id: 4, name: "Date", price: 120, quantity: 1, description: "Sweet dates" },
-    { id: 5, name: "Elderberry", price: 200, quantity: 1, description: "Nutritious elderberries" },
-    { id: 6, name: "Fig", price: 90, quantity: 1, description: "Tasty figs" },
-    { id: 7, name: "Grape", price: 60, quantity: 1, description: "Fresh grapes" },
-    { id: 8, name: "Guava", price: 80, quantity: 1, description: "Sweet guavas" },
+    { id: 1, name: "Apple", price: 100, quantity: 1, description: "Fresh and juicy apples", hsn: "" },
+    { id: 2, name: "Banana", price: 50, quantity: 1, description: "Sweet and ripe bananas", hsn: "" },
+    { id: 3, name: "Cherry", price: 75, quantity: 1, description: "Delicious cherries", hsn: "" },
+    { id: 4, name: "Date", price: 120, quantity: 1, description: "Sweet dates", hsn: "" },
+    { id: 5, name: "Elderberry", price: 200, quantity: 1, description: "Nutritious elderberries", hsn: "" },
+    { id: 6, name: "Fig", price: 90, quantity: 1, description: "Tasty figs", hsn: "" },
+    { id: 7, name: "Grape", price: 60, quantity: 1, description: "Fresh grapes", hsn: "" },
+    { id: 8, name: "Guava", price: 80, quantity: 1, description: "Sweet guavas", hsn: "" },
 ];
 //{ deleteItem, updateItem, updatePrice, updateQuanity, index }: { deleteItem: (index: number) => void; updateItem: (index: number, id: number, label: string) => void; updatePrice: (index: number, price: number) => void; updateQuanity: (index: number, quantity: number) => void; index: string }
 export default function AutocompleteSearch({ index }: { index: number }) {
@@ -65,7 +65,7 @@ export default function AutocompleteSearch({ index }: { index: number }) {
         //setInput(suggestion.label);
         setItems(pre => {
             return pre.map((item, i) => i == index
-                ? { id: suggestion.id, name: suggestion.name, price: suggestion.price, quantity: 1, description: suggestion.description || "", link: suggestion.link || "#" }
+                ? { id: suggestion.id, hsn: suggestion.hsn, name: suggestion.name, price: suggestion.price, quantity: 1, description: suggestion.description || "", link: suggestion.link || "#" }
                 : item)
         });
         setShowSuggestions(false);
@@ -98,7 +98,7 @@ export default function AutocompleteSearch({ index }: { index: number }) {
             setShowSuggestions(false);
             setItems(pre => {
                 return pre.map((item, i) => i === index
-                    ? { id: filtered[highlighted].id, name: filtered[highlighted].name, price: filtered[highlighted].price, quantity: 1, description: filtered[highlighted].description || "", link: filtered[highlighted].link || "#" }
+                    ? { id: filtered[highlighted].id, hsn: filtered[highlighted].hsn, name: filtered[highlighted].name, price: filtered[highlighted].price, quantity: 1, description: filtered[highlighted].description || "", link: filtered[highlighted].link || "#" }
                     : item)
             }
             );
@@ -149,6 +149,19 @@ export default function AutocompleteSearch({ index }: { index: number }) {
                 }}
             />
             <input
+                type="string"
+                placeholder="HSN"
+                className="border p-2 w-[10%] border-border bg-background text-textPrimary focus:outline-textPrimary"
+                value={items[index]?.hsn}
+                onChange={(e) => {
+                    setItems(pre => {
+                        return pre.map((item, i) => i === index
+                            ? { ...items[index], hsn: e.target.value }
+                            : item);
+                    })
+                }}
+            />
+            <input
                 type="number"
                 placeholder="Price"
                 className="border p-2 w-[10%] border-border bg-background text-textPrimary focus:outline-textPrimary"
@@ -161,6 +174,7 @@ export default function AutocompleteSearch({ index }: { index: number }) {
                     })
                 }}
             />
+
             <input
                 type="number"
                 placeholder="Quantity"

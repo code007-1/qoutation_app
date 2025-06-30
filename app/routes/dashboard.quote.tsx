@@ -6,6 +6,7 @@ import { logoutData } from "~/modules/utils";
 
 export type QuoteItems = {
     id: number;
+    hsn: string;
     name: string;
     price: number;
     quantity: number;
@@ -45,16 +46,15 @@ export default function Quote() {
 
     useEffect(() => {
         if (accessToken === undefined) //console.log("should navigate to home page");
-            navigate("/dashboard");
+            navigate("/");
     }, [accessToken]);
-
 
     function addItem() {
         //const newKey = new Date().getTime() + 1;
         setItems(pre => {
             return [
                 ...pre,
-                { id: 0, name: "", description: "", price: 0, quantity: 0, link: "#" }
+                { id: 0, hsn: "", name: "", description: "", price: 0, quantity: 0, link: "#" }
             ]
         });
     }
@@ -71,7 +71,7 @@ export default function Quote() {
     }, [items]);
 
     useEffect(() => {
-        const no = (userName ? userName[0].toLocaleUpperCase() : "") + "-" + new Date().getTime().toString();
+        const no = new Date().getTime().toString();
         setData((pre) => { return { ...pre, no: no } });
     }, [])
 
@@ -191,6 +191,10 @@ export default function Quote() {
                         </div>
                         <div className="flex justify-between w-full">
                             <div className="flex items-center">
+                                <div className="text-sm font-semibold mr-4">Taxable Value:</div>
+                                <div className="">Rs.{data.amount}</div>
+                            </div>
+                            <div className="flex items-center">
                                 <label className="text-sm font-semibold mr-4">Tax (%)</label>
                                 <input type="number" placeholder="Enter Tax Percentage" className="border border-border p-2 w-25 bg-background" value={data.tax} onChange={e => setData(pre => { return { ...pre, tax: parseFloat(e.target.value) } })} />
                             </div>
@@ -199,15 +203,7 @@ export default function Quote() {
                                 <input type="number" placeholder="Enter Discount Percentage" className="border border-border p-2 w-25 bg-background" value={data.discount} onChange={e => setData(pre => { return { ...pre, discount: parseFloat(e.target.value) } })} />
                             </div>
                             <div className="flex items-center">
-                                <div className="text-sm font-semibold mr-4">Amount before tax and discount:</div>
-                                <div className="">Rs.{data.amount}</div>
-                            </div>
-                            <div className="flex items-center">
-                                <div className="text-sm font-semibold mr-4">Amount after tax:</div>
-                                <div className="">Rs.{(data.amount * (1 + data.tax * 0.01)).toFixed(2)}</div>
-                            </div>
-                            <div className="flex items-center">
-                                <div className="text-sm font-semibold mr-4">Amount after tax and discount:</div>
+                                <div className="text-sm font-semibold mr-4">Total:</div>
                                 <div className="">Rs.{(data.amount * (1 + data.tax * 0.01) * (1 - data.discount * 0.01)).toFixed(2)}</div>
                             </div>
                         </div>
