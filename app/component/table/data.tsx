@@ -20,10 +20,10 @@ export const dummyQuotations: QuotationData[] = [
         tax: 0
     },
     {
-        no: "QT2025-001",
+        no: "QT2025-002",
         date: "2025-06-28",
-        madeby: "Acme Corp",
-        to: "Globex Ltd",
+        madeby: "Lackme Corp",
+        to: "Axe Ltd",
         amount: 15000,
         discount: 6,
         items: [],
@@ -36,10 +36,10 @@ export const dummyQuotations: QuotationData[] = [
         tax: 0
     },
     {
-        no: "QT2025-001",
+        no: "QT2025-003",
         date: "2025-06-28",
-        madeby: "Acme Corp",
-        to: "Globex Ltd",
+        madeby: "Tecme Corp",
+        to: "bex Ltd",
         amount: 15000,
         discount: 6,
         items: [],

@@ -6,11 +6,13 @@ import { Columns } from "~/component/table/columns";
 
 import { dummyQuotations } from "~/component/table/data";
 import TableUI from "~/component/table/tableUI";
+import { createQuotation, useGlobalContext } from "~/modules/gcontext";
+import { QuotationData } from "./dashboard.quote";
 
 const StaffTable = () => {
 
     // Initiate your states
-    const [items, setItems] = useState(dummyQuotations);
+    const [items, setItems] = useState<QuotationData[]>(dummyQuotations);
     const [loading, setLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPageCount, setTotalPageCount] = useState(1);
@@ -18,6 +20,10 @@ const StaffTable = () => {
     // For pagination, define maximum of data per page
 
     const ITEMS_PER_PAGE = 10;
+
+    const { setHeaderText } = useGlobalContext();
+
+    useEffect(() => { setHeaderText(createQuotation) }, []);
 
     const handlePageChange = (page: any) => {
         setCurrentPage(page);
@@ -27,18 +33,19 @@ const StaffTable = () => {
     // handle the search here
 
     const handleSearch = (query: string) => {
-
+        query = query.toLowerCase();
         if (query.trim() === "") {
             // Restore the original data when the search query is empty
-            setItems(items);
+            setItems(dummyQuotations);
         } else {
-            const filteredData = items.filter((item: any) =>
-                item.name.toLowerCase().includes(query.toLowerCase()) ||
-                item.age.includes(query) ||
-                item.job.includes(query)
+            const filteredData = items.filter((item: QuotationData) =>
+                item.no.toLowerCase().includes(query) ||
+                item.madeby.toLowerCase().includes(query) ||
+                item.to.toLowerCase().includes(query)
             );
             setItems(filteredData || []);
         }
+        console.log("search terms is", query, query.trim() === "");
     };
 
 

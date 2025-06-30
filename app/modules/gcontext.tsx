@@ -18,6 +18,8 @@ interface AppContextType {
     setUserName: React.Dispatch<React.SetStateAction<string | undefined>>;
     headerText: string | ReactNode
     setHeaderText: React.Dispatch<React.SetStateAction<string | ReactNode>>;
+    quote: string | undefined;
+    setQuote: React.Dispatch<React.SetStateAction<string | undefined>>;
 }
 
 const appContext = createContext<AppContextType | null>(null);
@@ -29,6 +31,7 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
     const [userName, setUserName] = useState<string | undefined>();
     const [headerText, setHeaderText] = useState<string | ReactNode>(createQuotation);
     const [items, setItems] = useState<QuoteItems[]>([]);
+    const [quote, setQuote] = useState<string | undefined>();
 
     //const date = new Date().getTime().toString();
 
@@ -55,7 +58,7 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
     };
 
     return (
-        <appContext.Provider value={{ theme, toggleTheme, accessToken, setAccessToken, items, setItems, data, setData, userName, setUserName, headerText, setHeaderText }}>
+        <appContext.Provider value={{ theme, toggleTheme, accessToken, setAccessToken, items, setItems, data, setData, userName, setUserName, headerText, setHeaderText, quote, setQuote }}>
             {children}
         </appContext.Provider>
     );

@@ -9,9 +9,8 @@ import { getQoute, JWT_ACCESS_KEY, JWT_REFRESH_KEY } from "~/modules/utils";
 
 export const action: ActionFunction = async ({ request, params }) => {
     const formData = await request.formData();
-    const username = formData.get("username") as string;
+    const username = (formData.get("username") as string).trim().toLowerCase();
     const password = formData.get("password") as string;
-
     const result = await search("unnamed", "users", { username: username }, 1, 0);
 
     if (result && result.length > 0) {
@@ -34,13 +33,17 @@ export const action: ActionFunction = async ({ request, params }) => {
 
             let session = await getSession();
             session.set("rToken", refresh);
-            const qoute = await getQoute();
-            var response = { token: access, username: username, qoute: qoute };
+
+            var response = {};
+            if (username === "gunjan") {
+                const qoute = await getQoute();
+                response = { token: access, username: username, qoute: qoute };
+            }
+            else { response = { token: access, username: username }; }
+
             return Response.json(response, { headers: { "Set-Cookie": await commitSession(session) } });
         }
-        else {
-            return new Response("User not registered", { status: 401 });
-        }
+        return new Response("User not registered", { status: 401 });
     }
     return new Response("User not registered", { status: 401 });
 }

@@ -8,17 +8,6 @@ import { QuoteItems } from "~/routes/dashboard.quote";
 // welcome animation - partially done, would improve animation
 // offline online sync both mongob
 
-const SUGGESTIONS: QuoteItems[] = [
-    { id: 1, name: "Apple", price: 100, quantity: 1, description: "Fresh and juicy apples", hsn: "" },
-    { id: 2, name: "Banana", price: 50, quantity: 1, description: "Sweet and ripe bananas", hsn: "" },
-    { id: 3, name: "Cherry", price: 75, quantity: 1, description: "Delicious cherries", hsn: "" },
-    { id: 4, name: "Date", price: 120, quantity: 1, description: "Sweet dates", hsn: "" },
-    { id: 5, name: "Elderberry", price: 200, quantity: 1, description: "Nutritious elderberries", hsn: "" },
-    { id: 6, name: "Fig", price: 90, quantity: 1, description: "Tasty figs", hsn: "" },
-    { id: 7, name: "Grape", price: 60, quantity: 1, description: "Fresh grapes", hsn: "" },
-    { id: 8, name: "Guava", price: 80, quantity: 1, description: "Sweet guavas", hsn: "" },
-];
-//{ deleteItem, updateItem, updatePrice, updateQuanity, index }: { deleteItem: (index: number) => void; updateItem: (index: number, id: number, label: string) => void; updatePrice: (index: number, price: number) => void; updateQuanity: (index: number, quantity: number) => void; index: string }
 export default function AutocompleteSearch({ index }: { index: number }) {
     const [input, setInput] = useState("");
     const [showSuggestions, setShowSuggestions] = useState(false);

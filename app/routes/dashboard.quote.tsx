@@ -31,6 +31,18 @@ export type QuotationData = {
     madeby: string;
 };
 
+export async function createPdf(data: QuotationData) {
+    const response = await fetch('/api/pdf', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+    });
+
+    const blob = await response.blob();
+    const url = window.URL.createObjectURL(blob);
+    window.open(url); // or trigger download
+}
+
 export default function Quote() {
     const { items, setItems } = useGlobalContext();
     const [step, setStep] = useState<number>(0);
@@ -71,23 +83,12 @@ export default function Quote() {
     }, [items]);
 
     useEffect(() => {
+        console.log("data is 1", data);
         const no = new Date().getTime().toString();
         setData((pre) => { return { ...pre, no: no } });
     }, [])
 
     //updateItem={updatedItem} updatePrice={updatedPrice} updateQuanity={updatedQuanity} deleteItem={deleteItem}
-
-    async function handlesubmit(e: React.FormEvent<HTMLFormElement>) {
-        const response = await fetch('/api/pdf', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data),
-        });
-
-        const blob = await response.blob();
-        const url = window.URL.createObjectURL(blob);
-        window.open(url); // or trigger download
-    }
 
     return (<>
         <div className="text-textSecondary">
@@ -235,7 +236,7 @@ export default function Quote() {
                             <button onClick={() => setStep(1)} className="bg-button text-buttonTextPrimary px-4 py-1 mt-4 text-lg">
                                 Back
                             </button>
-                            <form onSubmit={(e) => { handlesubmit(e); e.preventDefault(); }}>
+                            <form onSubmit={(e) => { createPdf(data); e.preventDefault(); }}>
                                 <button className="bg-button text-buttonTextPrimary px-4 py-1 mt-4 text-lg" type="submit">Generate Qoutation PDF</button>
                             </form>
                         </div>

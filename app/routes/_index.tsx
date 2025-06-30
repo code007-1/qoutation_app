@@ -4,28 +4,28 @@ import { useEffect } from "react";
 import { useGlobalContext } from "~/modules/gcontext";
 import { loginData } from "~/modules/utils";
 
-
 export default function Index() {
 
   const loginFetcher = useFetcher<loginData>();
   const isSubmitting = loginFetcher.state === "submitting";
   const navigate = useNavigate();
-  const { accessToken, setAccessToken, setUserName } = useGlobalContext();
+  const { accessToken, setAccessToken, setUserName, setQuote } = useGlobalContext();
 
   useEffect(() => {
     if (loginFetcher.data?.token)
       setAccessToken(loginFetcher.data.token); // Store the fetched data in state
     if (loginFetcher.data?.username)
       setUserName(loginFetcher.data.username);
-    console.log("a", loginFetcher.data);
+    if (loginFetcher.data?.qoute)
+      setQuote(loginFetcher.data?.qoute);
   }, [loginFetcher.data]);
 
   useEffect(() => {
     if (accessToken) {
-      //if (loginFetcher.data?.username?.toLocaleLowerCase() === "gunjan")
-      navigate("/welcome");
-      //else
-      //  navigate("/dashboard/quote");
+      if (loginFetcher.data?.qoute)
+        navigate("/welcome");
+      else
+        navigate("/dashboard/home");
     }
   }, [accessToken]);
 
@@ -35,7 +35,6 @@ export default function Index() {
       <div className="flex items-center justify-center h-screen">
 
         {/* Login Form */}
-
         <div className="bg-white p-8 rounded-lg shadow-lg w-[25%]">
           <div className="flex justify-center font-bold text-2xl">Unnamed</div>
           <input

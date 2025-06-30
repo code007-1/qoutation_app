@@ -1,4 +1,17 @@
 import { ColumnDef } from "@tanstack/react-table";
+import { ArrowUpDown, Pencil } from "lucide-react";
+
+export const sortButton = (column: any, name: string) => {
+    return (
+        <button
+            className="-ml-4"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+            {name}
+            <ArrowUpDown className="ml-2 h-4 w-4" />
+        </button>
+    )
+}
 
 export const Columns: ColumnDef<any, any>[] = [
 
@@ -8,6 +21,9 @@ export const Columns: ColumnDef<any, any>[] = [
         cell: (user: any) => {
             return <span>{user.row.original.no}</span>
         },
+        filterFn: (row, columnId, filterValue) => {
+            return row.original[columnId].toLowerCase().includes(filterValue);
+        },
     },
 
     {
@@ -15,6 +31,9 @@ export const Columns: ColumnDef<any, any>[] = [
         header: "Made By",
         cell: (user: any) => {
             return <span>{user.row.original.madeby}</span>
+        },
+        filterFn: (row, columnId, filterValue) => {
+            return row.original[columnId].toLowerCase().includes(filterValue);
         },
     },
 
@@ -24,6 +43,9 @@ export const Columns: ColumnDef<any, any>[] = [
         cell: (user: any) => {
             return <span>{user.row.original.date}</span>
         },
+        filterFn: (row, columnId, filterValue) => {
+            return row.original[columnId].toLowerCase().includes(filterValue);
+        }
     },
 
     {
@@ -32,6 +54,9 @@ export const Columns: ColumnDef<any, any>[] = [
         cell: (user: any) => {
             return <span>{user.row.original.to}</span>
         },
+        filterFn: (row, columnId, filterValue) => {
+            return row.original[columnId].toLowerCase().includes(filterValue);
+        },
     },
 
     {
@@ -39,6 +64,9 @@ export const Columns: ColumnDef<any, any>[] = [
         header: "Discount",
         cell: (user: any) => {
             return <span>{user.row.original.discount} %</span>
+        },
+        filterFn: (row, columnId, filterValue) => {
+            return row.original[columnId] == filterValue;
         },
     },
 
@@ -49,7 +77,13 @@ export const Columns: ColumnDef<any, any>[] = [
             return <span>Rs.{user.row.original.amount}</span>
         },
     },
+    {
+        accessorKey: "edit",
+        header: "Edit",
+        cell: (user: any) => {
+            return <span><Pencil /></span>
+        },
+    },
     // You can follow the structure to display other data such as country and status
-
 
 ];

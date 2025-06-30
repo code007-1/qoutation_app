@@ -1,15 +1,11 @@
 import { useNavigate } from "@remix-run/react";
 import { AnimatePresence, motion } from "framer-motion";
-import { useEffect } from "react";
+import { useGlobalContext } from "~/modules/gcontext";
 
 export default function () {
     const navigate = useNavigate();
-    /*useEffect(() => {
-        const timeout = setTimeout(() => {
-            navigate("/dashboard/home")
-        }, 5000);
-        return () => clearTimeout(timeout);
-    }, [])*/
+    const { quote } = useGlobalContext();
+
     return (
         <>
             <AnimatePresence>
@@ -23,12 +19,10 @@ export default function () {
                     <div className="h-screen flex justify-center items-center align-middle ">
                         <div className="flex flex-col">
                             <div className="text-4xl font-Kaushan mb-4">
-                                {/*"Hi...Gunjan...Ji 👋 😃"*/}
-                                {"Hello User"}
+                                {"Hi...Gunjan...Ji 👋 😃"}
                             </div>
                             <div className="text-3xl font-Kalam">
-                                {goodVibeThoughts[Math.floor(Math.random() * goodVibeThoughts.length)]}
-
+                                {quote}
                             </div>
                             <button className="bg-blue-600 w-min text-white text-base font-mono px-2 py-1 mt-4" onClick={(e) => navigate("/dashboard/home")}>Next</button>
                         </div>

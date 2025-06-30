@@ -17,6 +17,7 @@ const refresTokenCookie = createCookie('rToken', {
 export type loginData = {
     token?: string,
     username?: string,
+    qoute?: string
 };
 
 export type logoutData = {
