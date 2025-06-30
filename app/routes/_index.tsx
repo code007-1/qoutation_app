@@ -17,6 +17,7 @@ export default function Index() {
       setAccessToken(loginFetcher.data.token); // Store the fetched data in state
     if (loginFetcher.data?.username)
       setUserName(loginFetcher.data.username);
+    console.log("a", loginFetcher.data);
   }, [loginFetcher.data]);
 
   useEffect(() => {

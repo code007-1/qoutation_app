@@ -16,7 +16,7 @@ export async function searchItems(query: string) {
 
 //const { MongoClient, ServerApiVersion } = require('mongodb');
 import { MongoClient, ServerApiVersion } from "mongodb";
-import { QuotationData } from "~/routes/quote";
+import { QuotationData } from "~/routes/dashboard.quote";
 
 const uri = "mongodb+srv://spttcpl:9ziRq5mLRppCobx8@cluster0.bbixzsn.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
@@ -41,10 +41,32 @@ async function run() {
         await client.close();
     }
 }
-run().catch(console.dir);
+//run().catch(console.dir);
 
 export async function search(db: string = "unnamed", collection: string = "qoutations", query: {} = {}, limit: number = 10, skip: number = 0) {
-    return await client.db(db).collection(collection).find({}).limit(limit).toArray();//{ name: { $regex: query, $options: "i" } }
+    try {
+        await client.connect();
+        return await client.db(db).collection(collection).find(query).limit(limit).toArray();//{ name: { $regex: query, $options: "i" } }
+    }
+    catch (error) {
+        console.log("error while saerching in db : ", error);
+    }
+    finally {
+        await client.close();
+    }
+}
+
+export async function count(db: string = "unnamed", collection: string = "qoutations", query: {} = {}) {
+    try {
+        await client.connect();
+        return await client.db(db).collection(collection).countDocuments(query);//{ name: { $regex: query, $options: "i" } }
+    }
+    catch (error) {
+        console.log("error while saerching in db : ", error);
+    }
+    finally {
+        await client.close();
+    }
 }
 
 export async function insertQoutation(data: QuotationData) {

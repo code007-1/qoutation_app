@@ -29,6 +29,9 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
     const [userName, setUserName] = useState<string | undefined>();
     const [headerText, setHeaderText] = useState<string | ReactNode>(createQuotation);
     const [items, setItems] = useState<QuoteItems[]>([]);
+
+    //const date = new Date().getTime().toString();
+
     const [data, setData] = useState<QuotationData>({
         no: new Date().getTime().toString(),
         date: new Date().toISOString().split("T")[0], // Default to today's date

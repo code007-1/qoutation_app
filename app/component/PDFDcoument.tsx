@@ -67,25 +67,20 @@ export default function PDFDocument(data: QuotationData) {
                     <Text>
                         <Text style={styles.companyDetails}>Contact No: </Text>
                         <Text style={{ fontSize: 10 }}>+91 7065577059/60</Text>
-                        <Text style={styles.companyDetails}>     Website: </Text>
-                        <Link style={{ fontSize: 11, textDecoration: "underline", color: "#384388" }}>https://teentelecommunication.com</Link>
+                        <Text style={styles.companyDetails}>     Email Id: </Text>
+                        <Link src="mailto:sales@teentelecommunication.com" style={{ fontSize: 11, textDecoration: "underline", color: "#384388" }}>sales@teentelecommunication.com</Link>
                     </Text>
                 </View>
                 <Text style={styles.newline}>{"\n\n\n"}</Text>
                 <View style={styles.rowContainer}>
-
-                    <Image cache src="public\ttc.png" style={styles.backgroundImage} />
-
-                    <View style={styles.columnContainer}>
-                        <Text>
-                            <Text style={styles.qoutationDetails}>Qoutation No:</Text>
-                            <Text style={styles.intro}>{data.no}</Text>
-                        </Text>
-                        <Text>
-                            <Text style={styles.qoutationDetails}>Qoutation Date: </Text>
-                            <Text style={styles.intro}>{data.date}</Text>
-                        </Text>
-                    </View>
+                    <Text>
+                        <Text style={styles.qoutationDetails}>Qoutation No:</Text>
+                        <Text style={styles.intro}>{data.no}</Text>
+                    </Text>
+                    <Text>
+                        <Text style={styles.qoutationDetails}>Qoutation Date: </Text>
+                        <Text style={styles.intro}>{data.date}</Text>
+                    </Text>
                 </View>
                 <Text style={styles.newline} >{"\n\n\n"}</Text>
                 <View style={styles.rowContainer}>
@@ -165,7 +160,8 @@ export default function PDFDocument(data: QuotationData) {
                     <Text style={styles.newline}>{"\n"}</Text>
                     <Text style={styles.terms}>{data.terms} {"\n"}</Text>
                 </View>
-                <Text fixed style={styles.pageNumber} render={({ pageNumber }) => `Page ${pageNumber}`} />
+
+                <Text fixed style={styles.pageNumber} render={({ pageNumber }) => `https://teentelecommunication.com                                          Page ${pageNumber}`} />
             </Page>
         </Document >
     );
