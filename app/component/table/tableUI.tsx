@@ -122,7 +122,7 @@ const TableUI: FC<TableProps> = ({
                 <Listbox value={type} onChange={setType}>
                     <div className="relative">
                         <ListboxButton className="flex items-center hover:bg-buttonHover px-2 border border-border py-2">
-                            <div className="text-textPrimary mr-2">{getType(type)}</div>
+                            <div className="text-textSecondary mr-2">{getType(type)}</div>
                             <ChevronDown className="text-textPrimary" />
                         </ListboxButton>
 

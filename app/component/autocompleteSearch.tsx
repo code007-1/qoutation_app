@@ -4,9 +4,10 @@ import { useGlobalContext } from "~/modules/gcontext";
 import { QuoteItems } from "~/routes/dashboard.quote";
 
 // advance show hide for better ui - optimized little bit, ok for now
-// dashboad intial page to show qoutation and create qoutation
 // welcome animation - partially done, would improve animation
 // offline online sync both mongob
+// user rofile edit
+// save type check while uploading to mongodb
 
 export default function AutocompleteSearch({ index }: { index: number }) {
     const [input, setInput] = useState("");

@@ -31,7 +31,7 @@ export default function MainMenu() {
 
         <MenuItems
             transition
-            className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-sm bg-background shadow-lg ring-1 ring-black/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
+            className="absolute right-10 z-10 mt-2 w-56 origin-top-right rounded-sm bg-background shadow-lg ring-1 ring-black/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
         >
             <div className="">
                 <MenuItem>
@@ -39,7 +39,7 @@ export default function MainMenu() {
                         href="#"
                         className="block px-4 py-2 text-sm text-textSecondary data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
                     >
-                        Account settings
+                        Profile settings
                     </a>
                 </MenuItem>
                 <logoutFetcher.Form method="post" action="/api/logout">
