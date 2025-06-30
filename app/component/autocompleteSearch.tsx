@@ -5,7 +5,7 @@ import { QuoteItems } from "~/routes/dashboard.quote";
 
 // advance show hide for better ui - optimized little bit, ok for now
 // dashboad intial page to show qoutation and create qoutation
-// welcome animation
+// welcome animation - partially done, would improve animation
 
 const SUGGESTIONS: QuoteItems[] = [
     { id: 1, name: "Apple", price: 100, quantity: 1, description: "Fresh and juicy apples" },
