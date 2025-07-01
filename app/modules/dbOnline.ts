@@ -69,6 +69,20 @@ export async function count(db: string = "unnamed", collection: string = "qoutat
     }
 }
 
+export async function update(db: string = "unnamed", collection: string = "users", query: {} = {}, updateDoc: {}) {
+    try {
+        await client.connect();
+        return await client.db(db).collection(collection).updateOne(query, updateDoc);//{ name: { $regex: query, $options: "i" } }
+    }
+    catch (error) {
+        console.log("error while saerching in db : ", error);
+    }
+    finally {
+        await client.close();
+    }
+}
+
+
 export async function insertQoutation(data: QuotationData) {
     client.connect().then(async (e) => {
         const result = await client.db("unnamed").collection("qoutations").insertOne(data);

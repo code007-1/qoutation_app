@@ -16,7 +16,9 @@ export default function Dashboard() {
         <>
             <div className="h-screen w-screen bg-background">
                 <Header />
-                <Outlet />
+                <div className="mx-10">
+                    <Outlet />
+                </div>
             </div>
         </>
     );

@@ -9,13 +9,13 @@ export default function Index() {
   const loginFetcher = useFetcher<loginData>();
   const isSubmitting = loginFetcher.state === "submitting";
   const navigate = useNavigate();
-  const { accessToken, setAccessToken, setUserName, setQuote } = useGlobalContext();
+  const { accessToken, setAccessToken, setProfile, setQuote } = useGlobalContext();
 
   useEffect(() => {
     if (loginFetcher.data?.token)
       setAccessToken(loginFetcher.data.token); // Store the fetched data in state
-    if (loginFetcher.data?.username)
-      setUserName(loginFetcher.data.username);
+    if (loginFetcher.data?.profile)
+      setProfile(pre => { return { ...pre, ...loginFetcher.data?.profile } });
     if (loginFetcher.data?.qoute)
       setQuote(loginFetcher.data?.qoute);
   }, [loginFetcher.data]);

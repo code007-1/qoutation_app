@@ -55,7 +55,6 @@ const StaffTable = () => {
 
     return (
         <section className="mt-5">
-
             <h3 className="text-[18px] mb-2 md:text-[24px] text-black">
 
             </h3>

@@ -2,6 +2,7 @@
 
 import { Link } from "@remix-run/react";
 import React, { createContext, useState, useContext, ReactNode } from "react";
+import { user } from "~/routes/dashboard.profile";
 //import { QuotationData, QuoteItems } from "~/component/quote";
 import { QuotationData, QuoteItems } from "~/routes/dashboard.quote";
 
@@ -20,6 +21,8 @@ interface AppContextType {
     setHeaderText: React.Dispatch<React.SetStateAction<string | ReactNode>>;
     quote: string | undefined;
     setQuote: React.Dispatch<React.SetStateAction<string | undefined>>;
+    profile: user,
+    setProfile: React.Dispatch<React.SetStateAction<user>>;
 }
 
 const appContext = createContext<AppContextType | null>(null);
@@ -32,6 +35,7 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
     const [headerText, setHeaderText] = useState<string | ReactNode>(createQuotation);
     const [items, setItems] = useState<QuoteItems[]>([]);
     const [quote, setQuote] = useState<string | undefined>();
+    const [profile, setProfile] = useState<user>({ contact: "+91 7065577059/60", address: "G-57, Vikas Marg, Near Metro Pillar No.41, \nDelhi - 110092", company: "Teen Telecommunication Pvt. Ltd.", email: "sales@teentelecommunication.com", pdfColor: 222, website: "https://teentelecommunication.com" });
 
     //const date = new Date().getTime().toString();
 
@@ -58,7 +62,7 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
     };
 
     return (
-        <appContext.Provider value={{ theme, toggleTheme, accessToken, setAccessToken, items, setItems, data, setData, userName, setUserName, headerText, setHeaderText, quote, setQuote }}>
+        <appContext.Provider value={{ theme, toggleTheme, accessToken, setAccessToken, items, setItems, data, setData, userName, setUserName, headerText, setHeaderText, quote, setQuote, profile, setProfile }}>
             {children}
         </appContext.Provider>
     );

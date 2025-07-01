@@ -1,6 +1,7 @@
 import { createCookie } from "@remix-run/node";
 import { MetaFunction } from "@remix-run/react";
 import { count, search } from "./dbOnline";
+import { user } from "~/routes/dashboard.profile";
 
 export const JWT_REFRESH_KEY = "123!@#$@SDFASDAD";
 export const JWT_ACCESS_KEY = "!#SDAS@#!!@XZZXC";
@@ -16,8 +17,8 @@ const refresTokenCookie = createCookie('rToken', {
 
 export type loginData = {
     token?: string,
-    username?: string,
     qoute?: string
+    profile: user
 };
 
 export type logoutData = {

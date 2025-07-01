@@ -30,6 +30,9 @@ export type QuotationData = {
     discount: number;
     amount: number;
     madeby: string;
+    email?: string;
+    contact?: string;
+    website?: string;
 };
 
 export async function createPdf(data: QuotationData) {
@@ -47,7 +50,7 @@ export async function createPdf(data: QuotationData) {
 export default function Quote() {
     const { items, setItems } = useGlobalContext();
     const [step, setStep] = useState<number>(0);
-    const { data, setData, userName, accessToken, setAccessToken, setHeaderText } = useGlobalContext();
+    const { data, setData, userName, accessToken, setAccessToken, setHeaderText, profile } = useGlobalContext();
 
     const logoutFetcher = useFetcher<logoutData>();
     const navigate = useNavigate();
@@ -84,9 +87,8 @@ export default function Quote() {
     }, [items]);
 
     useEffect(() => {
-        console.log("data is 1", data);
         const no = new Date().getTime().toString();
-        setData((pre) => { return { ...pre, no: no } });
+        setData((pre) => { return { ...pre, no: no, from: profile.company, fromAddress: profile.address, email: profile.email, website: profile.website, contact: profile.contact } });
     }, [])
 
     //updateItem={updatedItem} updatePrice={updatedPrice} updateQuanity={updatedQuanity} deleteItem={deleteItem}
@@ -101,7 +103,7 @@ export default function Quote() {
                 transition={{ duration: 0.4 }}
             >
                 <div className="text-textSecondary">
-                    <div className="flex space-x-4 items-center align-middle mx-10">
+                    <div className="flex space-x-4 items-center align-middle">
                         <div className="flex items-center w-1/2 mt-4">
                             <div className="text-sm font-semibold mr-2">Qoutation No.</div>
                             {/*<input type="text" name="no" placeholder="Enter Qoutation No." className="border border-border p-2 mb-2 mr-5 w-25 bg-background" value={data.no} onChange={e => setData((pre) => { return { ...pre, no: e.target.value }; })} />*/}
@@ -115,7 +117,7 @@ export default function Quote() {
                             </Link>
                         </div>
                     </div>
-                    <div className="mx-10 flex flex-col items-center space-y-2">
+                    <div className="flex flex-col items-center space-y-2">
                         {step === 0 && <>
 
                             <div className="w-full">

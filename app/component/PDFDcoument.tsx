@@ -1,6 +1,7 @@
 import { Document, Page, Text, View, StyleSheet, Image, Link, Font } from "@react-pdf/renderer";
 import { Watermark } from "./Watermark";
 import { QuotationData } from "~/routes/dashboard.quote";
+import { user } from "~/routes/dashboard.profile";
 
 const hue = "222";
 
@@ -62,13 +63,13 @@ export default function PDFDocument(data: QuotationData) {
             <Page wrap size="A4" style={styles.page}>
                 <Watermark />
                 <View fixed>
-                    <Text style={styles.title}>Teen Telecommunication Pvt. Ltd.</Text>
+                    <Text style={styles.title}>{data.from}</Text>
                     <Text style={styles.newline}>{"\n"}</Text>
                     <Text>
                         <Text style={styles.companyDetails}>Contact No: </Text>
-                        <Text style={{ fontSize: 10 }}>+91 7065577059/60</Text>
+                        <Text style={{ fontSize: 10 }}>{data.contact}</Text>
                         <Text style={styles.companyDetails}>     Email Id: </Text>
-                        <Link src="mailto:sales@teentelecommunication.com" style={{ fontSize: 11, textDecoration: "underline", color: "#384388" }}>sales@teentelecommunication.com</Link>
+                        <Link src={`mailto:${data.email}`} style={{ fontSize: 11, textDecoration: "underline", color: "#384388" }}>{data.email}</Link>
                     </Text>
                 </View>
                 <Text style={styles.newline}>{"\n\n\n"}</Text>
@@ -161,7 +162,7 @@ export default function PDFDocument(data: QuotationData) {
                     <Text style={styles.terms}>{data.terms} {"\n"}</Text>
                 </View>
 
-                <Text fixed style={styles.pageNumber} render={({ pageNumber }) => `https://teentelecommunication.com                                          Page ${pageNumber}`} />
+                <Text fixed style={styles.pageNumber} render={({ pageNumber }) => `${data.website}                                          Page ${pageNumber}`} />
             </Page>
         </Document >
     );

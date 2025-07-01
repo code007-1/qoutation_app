@@ -49,7 +49,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  const { setAccessToken, setUserName, theme } = useGlobalContext();
+  const { setAccessToken, setProfile, theme } = useGlobalContext();
   const location = useLocation();
 
   useEffect(() => {
@@ -59,7 +59,7 @@ export default function App() {
       if (result.status === 200) {
         const details = await result.json();
         setAccessToken(details.token); // Store the fetched data in state
-        setUserName(details.username);
+        setProfile(pre => { return { ...pre, ...details.profile } });
       }
     }
     getAccessToken();

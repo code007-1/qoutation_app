@@ -117,7 +117,7 @@ const TableUI: FC<TableProps> = ({
 
 
     return (
-        <div className="mx-10">
+        <div className="">
             <div className="flex space-x-4 items-center align-middle">
                 <Listbox value={type} onChange={setType}>
                     <div className="relative">

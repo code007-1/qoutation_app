@@ -2,7 +2,7 @@ import { useNavigate } from "@remix-run/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useGlobalContext } from "~/modules/gcontext";
 
-export default function () {
+export default function Welcome() {
     const navigate = useNavigate();
     const { quote } = useGlobalContext();
 
