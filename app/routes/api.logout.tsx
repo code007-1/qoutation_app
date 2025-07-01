@@ -13,7 +13,7 @@ export const action: ActionFunction = async ({ request }) => {
         return Response.json({ success: true }, { headers: { "Set-Cookie": await commitSession(session) } });
     }
     catch (error) {
-        console.log("Internal Server Error while logging out", error);
+        console.error("Internal Server Error while logging out", error);
         throw new Response("Internal server error", { status: 500 });
     }
 }

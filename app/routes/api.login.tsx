@@ -11,6 +11,7 @@ export const action: ActionFunction = async ({ request, params }) => {
     const formData = await request.formData();
     const username = (formData.get("username") as string).trim().toLowerCase();
     const password = formData.get("password") as string;
+
     try {
         const result = await search("unnamed", "users", { username: username }, 1, 0);
 
@@ -57,7 +58,7 @@ export const action: ActionFunction = async ({ request, params }) => {
         return new Response("User not registered", { status: 401 });
     }
     catch (error) {
-        console.log("error while logging in : ", error);
+        console.error("error while logging in : ", error);
         return new Response("Internal Server Error", { status: 500 });
     }
 }

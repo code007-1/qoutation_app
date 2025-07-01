@@ -44,6 +44,14 @@ export default function MainMenu() {
                                 Profile settings
                             </Link>
                         </MenuItem>
+                        <MenuItem>
+                            <Link
+                                to="/dashboard/password"
+                                className="block px-4 py-2 text-sm text-textSecondary data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
+                            >
+                                Update Password
+                            </Link>
+                        </MenuItem>
                         <logoutFetcher.Form method="post" action="/api/logout">
                             <MenuItem>
                                 <button

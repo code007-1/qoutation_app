@@ -32,27 +32,34 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
     const url = new URL(request.url);
     const userAgent = request.headers.get("user-agent");
 
-    if (cookies) {
-        const verified = await verifyRefreshToken(cookies, url.host, userAgent ? userAgent : "");
+    try {
 
-        if (verified !== false) {
-            const ip = new URL(request.url);
-            const data = {
-                time: Date(),
-                userip: ip.host,
-                userAgent: request.headers.get("user-agent"),
-                username: verified
+        if (cookies) {
+            const verified = await verifyRefreshToken(cookies, url.host, userAgent ? userAgent : "");
+
+            if (verified !== false) {
+                const ip = new URL(request.url);
+                const data = {
+                    time: Date(),
+                    userip: ip.host,
+                    userAgent: request.headers.get("user-agent"),
+                    username: verified
+                }
+
+                const access = sign(data, JWT_ACCESS_KEY, { expiresIn: "10m" });
+                return Response.json({ token: access, profile: profile });
             }
 
-            const access = sign(data, JWT_ACCESS_KEY, { expiresIn: "10m" });
-            return Response.json({ token: access, profile: profile });
+            const session = await getSession();
+            session.unset("loggedIn");
+            session.unset("rToken");
+
+            return new Response("not authorized", { status: 403, headers: { "Set-Cookie": await commitSession(session) } });
         }
-
-        const session = await getSession();
-        session.unset("loggedIn");
-        session.unset("rToken");
-
-        return new Response("not authorized", { status: 403, headers: { "Set-Cookie": await commitSession(session) } });
+        return new Response("not authorized", { status: 403 });
     }
-    return new Response("not authorized", { status: 403 });
+    catch (error) {
+        console.error("error while getting new access token using refresh token : ", error);
+        throw new Response("Internal server error", { status: 500 });
+    }
 }

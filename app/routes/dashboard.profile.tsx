@@ -25,7 +25,6 @@ export default function Profile() {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(profile),
         });
-        console.log(response);
     }
 
     return (
