@@ -33,6 +33,7 @@ export type QuotationData = {
     email?: string;
     contact?: string;
     website?: string;
+    pdfColor?: string;
 };
 
 export async function createPdf(data: QuotationData) {
@@ -88,7 +89,7 @@ export default function Quote() {
 
     useEffect(() => {
         const no = new Date().getTime().toString();
-        setData((pre) => { return { ...pre, no: no, from: profile.company, fromAddress: profile.address, email: profile.email, website: profile.website, contact: profile.contact } });
+        setData((pre) => { return { ...pre, no: no, from: profile.company, fromAddress: profile.address, email: profile.email, website: profile.website, contact: profile.contact, pdfColor: String(profile.pdfColor) } });
     }, [])
 
     //updateItem={updatedItem} updatePrice={updatedPrice} updateQuanity={updatedQuanity} deleteItem={deleteItem}

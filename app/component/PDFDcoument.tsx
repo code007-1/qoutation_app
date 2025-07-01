@@ -1,43 +1,43 @@
 import { Document, Page, Text, View, StyleSheet, Image, Link, Font } from "@react-pdf/renderer";
 import { Watermark } from "./Watermark";
 import { QuotationData } from "~/routes/dashboard.quote";
-import { user } from "~/routes/dashboard.profile";
-
-const hue = "222";
-
-const styles = StyleSheet.create({
-    page: { padding: 30, display: "flex", flexDirection: "column", fontFamily: "Times-Roman", fontStyle: "normal" },
-    title: { fontSize: 20, fontWeight: "bold", textAlign: "center", color: `hsl(${hue} 100% 72%)` },
-    backgroundImage: { height: "25px", width: "auto" },
-    header: { display: "flex", flexDirection: "column", justifyContent: "space-between" },
-    bodyText: { fontSize: 40, fontStyle: "italic", fontWeight: "bold", marginVertical: 20 },
-    rowContainer: { display: "flex", flexDirection: "row", justifyContent: "space-between", gap: 20 },
-    columnContainer: { flexDirection: "column", justifyContent: "center" },
-    footer: { fontSize: 16, color: "gray", marginBottom: 0, marginTop: "auto" },
-    paragraph: { width: "48%", textAlign: "justify", fontSize: 11, backgroundColor: `hsl(${hue} 100% 97%)`, padding: 10, borderRadius: 5, lineHeight: 1.25 },
-    pageNumber: { position: "absolute", bottom: 20, right: 40, fontSize: 12 },
-    fromto: { fontSize: 11, color: `hsl(${hue} 100% 60%)` },
-    companyDetails: { fontSize: 11, textAlign: "center", fontWeight: "bold" },
-    intro: { textAlign: "justify", fontSize: 10, lineHeight: 1.25 },
-    terms: { textAlign: "justify", fontSize: 10, lineHeight: 1.25, color: "#6E6E6E" },
-    bold: { fontSize: 9, fontWeight: "bold" },
-    qoutationDetails: { textAlign: "justify", fontSize: 10, lineHeight: 1.25, fontWeight: "bold" },
-    newline: { lineHeight: 0.25 },
-    address: { fontSize: 9 },
-
-    tableContainer: { width: "100%", marginVertical: 10 },
-    tableRowEven: { flexDirection: "row", backgroundColor: "#FFFFFF" },
-    tableRowOdd: { flexDirection: "row", backgroundColor: `hsl(${hue} 100% 97%)` },
-    tableCellHeader: { padding: 8, backgroundColor: `hsl(${hue} 100% 65%)`, textAlign: "left", fontSize: 11, color: "white" },
-    tableCellBox: { width: "40%", padding: 8, textAlign: "left" },
-    tableCellName: { fontSize: 10, color: "#384388", fontStyle: "italic", textDecoration: "none" },
-    tableCellNameContent: { fontSize: 10, color: "#6E6E6E" },
-    tableCell: { flexGrow: 1, flexBasis: 0, padding: 8, textAlign: "left", fontSize: 10 },
-    tableCellSno: { width: "8%", padding: 8, textAlign: "left", fontSize: 10, color: "#505050" },
-    tableCellTotals: { padding: 8, textAlign: "left", fontSize: 10, fontWeight: "bold", color: "#505050" },
-});
 
 export default function PDFDocument(data: QuotationData) {
+    const hue = data.pdfColor ? data.pdfColor : "222";
+    console.log(data.pdfColor);
+
+    const styles = StyleSheet.create({
+        page: { padding: 30, display: "flex", flexDirection: "column", fontFamily: "Times-Roman", fontStyle: "normal" },
+        title: { fontSize: 20, fontWeight: "bold", textAlign: "center", color: `hsl(${hue} 100% 72%)` },
+        backgroundImage: { height: "25px", width: "auto" },
+        header: { display: "flex", flexDirection: "column", justifyContent: "space-between" },
+        bodyText: { fontSize: 40, fontStyle: "italic", fontWeight: "bold", marginVertical: 20 },
+        rowContainer: { display: "flex", flexDirection: "row", justifyContent: "space-between", gap: 20 },
+        columnContainer: { flexDirection: "column", justifyContent: "center" },
+        footer: { fontSize: 16, color: "gray", marginBottom: 0, marginTop: "auto" },
+        paragraph: { width: "48%", textAlign: "justify", fontSize: 11, backgroundColor: `hsl(${hue} 100% 97%)`, padding: 10, borderRadius: 5, lineHeight: 1.25 },
+        pageNumber: { position: "absolute", bottom: 20, right: 40, fontSize: 12 },
+        fromto: { fontSize: 11, color: `hsl(${hue} 100% 60%)` },
+        companyDetails: { fontSize: 11, textAlign: "center", fontWeight: "bold" },
+        intro: { textAlign: "justify", fontSize: 10, lineHeight: 1.25 },
+        terms: { textAlign: "justify", fontSize: 10, lineHeight: 1.25, color: "#6E6E6E" },
+        bold: { fontSize: 9, fontWeight: "bold" },
+        qoutationDetails: { textAlign: "justify", fontSize: 10, lineHeight: 1.25, fontWeight: "bold" },
+        newline: { lineHeight: 0.25 },
+        address: { fontSize: 9 },
+
+        tableContainer: { width: "100%", marginVertical: 10 },
+        tableRowEven: { flexDirection: "row", backgroundColor: "#FFFFFF" },
+        tableRowOdd: { flexDirection: "row", backgroundColor: `hsl(${hue} 100% 97%)` },
+        tableCellHeader: { padding: 8, backgroundColor: `hsl(${hue} 100% 65%)`, textAlign: "left", fontSize: 11, color: "white" },
+        tableCellBox: { width: "40%", padding: 8, textAlign: "left" },
+        tableCellName: { fontSize: 10, color: "#384388", fontStyle: "italic", textDecoration: "none" },
+        tableCellNameContent: { fontSize: 10, color: "#6E6E6E" },
+        tableCell: { flexGrow: 1, flexBasis: 0, padding: 8, textAlign: "left", fontSize: 10 },
+        tableCellSno: { width: "8%", padding: 8, textAlign: "left", fontSize: 10, color: "#505050" },
+        tableCellTotals: { padding: 8, textAlign: "left", fontSize: 10, fontWeight: "bold", color: "#505050" },
+    });
+
     /*const data: QuotationData = {
         no: "1",
         date: new Date().toDateString(),
