@@ -12,14 +12,14 @@ export default function Header() {
             <div className="bg-headerBackground">
                 <div className="flex justify-between items-center align-middle mx-10 py-2">
                     <div className="w-1/3 text-xl text-textPrimary text-left">{headerText}</div>
-                    <Link to={"/dashboard/home"} className="w-1/3 text-2xl font-semibold text-textPrimary text-center">Unnamed</Link>
+                    <div className="w-1/3 text-2xl font-semibold text-textPrimary text-center">Unnamed</div>
 
                     <div className="w-1/3 flex justify-end items-center">
-
+                        <Link to={"/dashboard/home"} className="text-xl text-textPrimary mr-10 px-2 hover:bg-buttonHover">HOME</Link>
                         <MainMenu />
                         <button
                             onClick={toggleTheme}
-                            className="p-1 rounded-md border-none"
+                            className="py-1 px-2 border-none hover:bg-buttonHover"
                         >
                             <SunMoon color={`${theme === "light" ? "black" : "white"}`} />
                         </button>

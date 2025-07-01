@@ -35,7 +35,7 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
     const [headerText, setHeaderText] = useState<string | ReactNode>(createQuotation);
     const [items, setItems] = useState<QuoteItems[]>([]);
     const [quote, setQuote] = useState<string | undefined>();
-    const [profile, setProfile] = useState<user>({ contact: "+91 7065577059/60", address: "G-57, Vikas Marg, Near Metro Pillar No.41, \nDelhi - 110092", company: "Teen Telecommunication Pvt. Ltd.", email: "sales@teentelecommunication.com", pdfColor: 222, website: "https://teentelecommunication.com" });
+    const [profile, setProfile] = useState<user>({ contact: "+91 7065577059/60", address: "G-57, Vikas Marg, Near Metro Pillar No.41, \nDelhi - 110092", company: "Teen Telecommunication Pvt. Ltd.", email: "sales@teentelecommunication.com", pdfColor: "222", website: "https://teentelecommunication.com" });
 
     //const date = new Date().getTime().toString();
 

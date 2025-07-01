@@ -9,7 +9,7 @@ export type user = {
     website?: string,
     company: string,
     address: string
-    pdfColor: number
+    pdfColor: string
 }
 
 export default function Profile() {
@@ -47,7 +47,7 @@ export default function Profile() {
                     address :     <textarea rows={5} placeholder="Enter Address" className="border border-border p-2 w-full bg-background" value={profile?.address} onChange={(e) => { setProfile((pre) => { return { ...pre, address: e.target.value } }) }} />
                 </div>
                 <div>
-                    PDF Hue Color : <input max={360} min={0} type="number" name="pdfColor" placeholder="Enter Color HUE Value" className="border border-border p-2 w-full bg-background" value={profile?.pdfColor} onChange={(e) => { setProfile((pre) => { return { ...pre, pdfColor: Number(e.target.value) } }) }} />
+                    PDF Accent Color : <input max={360} min={0} type="number" name="pdfColor" placeholder="Enter Color HUE Value" className="border border-border p-2 w-full bg-background" value={profile?.pdfColor} onChange={(e) => { setProfile((pre) => { return { ...pre, pdfColor: e.target.value } }) }} />
                 </div>
             </div>
             <div className="flex justify-center ">

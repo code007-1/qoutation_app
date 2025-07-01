@@ -5,7 +5,7 @@ import { commitSession, getSession } from "~/modules/sessions";
 import pkg from 'jsonwebtoken';
 const { sign } = pkg;
 import bcrypt from "bcrypt";
-import { getQoute, JWT_ACCESS_KEY, JWT_REFRESH_KEY } from "~/modules/utils";
+import { getQoute, JWT_ACCESS_KEY, JWT_REFRESH_KEY, profile } from "~/modules/utils";
 
 export const action: ActionFunction = async ({ request, params }) => {
     const formData = await request.formData();
@@ -19,20 +19,20 @@ export const action: ActionFunction = async ({ request, params }) => {
 
             if (verified) {
                 const ip = new URL(request.url);
-                const userData = {
-                    username: username,
-                    contact: result[0].contact,
-                    email: result[0].email,
-                    website: result[0].website,
-                    company: result[0].company,
-                    address: result[0].address,
-                    pdfColor: result[0].pdfColor,
-                }
+
+                profile.username = username;
+                profile.contact = result[0].contact;
+                profile.email = result[0].email;
+                profile.website = result[0].website;
+                profile.company = result[0].company;
+                profile.address = result[0].address;
+                profile.pdfColor = result[0].pdfColor;
+
                 const data = {
                     time: Date(),
                     userip: ip.host,
                     userAgent: request.headers.get("user-agent"),
-                    ...userData
+                    username: username
                 }
 
                 const refresh = sign(data, JWT_REFRESH_KEY, { expiresIn: "1d" });
@@ -46,9 +46,9 @@ export const action: ActionFunction = async ({ request, params }) => {
                 var response = {};
                 if (username === "gunjan") {
                     const qoute = await getQoute();
-                    response = { token: access, profile: userData, qoute: qoute };
+                    response = { token: access, profile: profile, qoute: qoute };
                 }
-                else { response = { token: access, profile: userData }; }
+                else { response = { token: access, profile: profile }; }
 
                 return Response.json(response, { headers: { "Set-Cookie": await commitSession(session) } });
             }
