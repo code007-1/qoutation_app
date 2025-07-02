@@ -1,6 +1,7 @@
 import { Document, Page, Text, View, StyleSheet, Image, Link, Font } from "@react-pdf/renderer";
 import { Watermark } from "./Watermark";
 import { QuotationData } from "~/routes/dashboard.quote";
+import { style } from "framer-motion/client";
 
 export default function PDFDocument(data: QuotationData) {
     const hue = data.pdfColor ? data.pdfColor : "222";
@@ -9,14 +10,14 @@ export default function PDFDocument(data: QuotationData) {
     const styles = StyleSheet.create({
         page: { padding: 30, display: "flex", flexDirection: "column", fontFamily: "Times-Roman", fontStyle: "normal" },
         title: { fontSize: 20, fontWeight: "bold", textAlign: "center", color: `hsl(${hue} 100% 72%)` },
-        backgroundImage: { height: "25px", width: "auto" },
-        header: { display: "flex", flexDirection: "column", justifyContent: "space-between" },
+        backgroundImage: { height: "auto", width: "100%" },
+        header: { marginBottom: 15 },
         bodyText: { fontSize: 40, fontStyle: "italic", fontWeight: "bold", marginVertical: 20 },
         rowContainer: { display: "flex", flexDirection: "row", justifyContent: "space-between", gap: 20 },
         columnContainer: { flexDirection: "column", justifyContent: "center" },
         footer: { fontSize: 16, color: "gray", marginBottom: 0, marginTop: "auto" },
         paragraph: { width: "48%", textAlign: "justify", fontSize: 11, backgroundColor: `hsl(${hue} 100% 97%)`, padding: 10, borderRadius: 5, lineHeight: 1.25 },
-        pageNumber: { position: "absolute", bottom: 20, right: 40, fontSize: 12 },
+        pageNumber: { position: "absolute", bottom: 20, right: 40, fontSize: 10, color: "#6E6E6E" },
         fromto: { fontSize: 11, color: `hsl(${hue} 100% 60%)` },
         companyDetails: { fontSize: 11, textAlign: "center", fontWeight: "bold" },
         intro: { textAlign: "justify", fontSize: 10, lineHeight: 1.25 },
@@ -62,7 +63,7 @@ export default function PDFDocument(data: QuotationData) {
         <Document title="Quotation" author={data.madeby} subject="Business Quotation" >
             <Page wrap size="A4" style={styles.page}>
                 <Watermark />
-                <View fixed>
+                <View fixed style={styles.header}>
                     <Text style={styles.title}>{data.from}</Text>
                     <Text style={styles.newline}>{"\n"}</Text>
                     <Text>
@@ -72,7 +73,6 @@ export default function PDFDocument(data: QuotationData) {
                         <Link src={`mailto:${data.email}`} style={{ fontSize: 11, textDecoration: "underline", color: "#384388" }}>{data.email}</Link>
                     </Text>
                 </View>
-                <Text style={styles.newline}>{"\n\n\n"}</Text>
                 <View style={styles.rowContainer}>
                     <Text>
                         <Text style={styles.qoutationDetails}>Qoutation No:</Text>
@@ -161,8 +161,9 @@ export default function PDFDocument(data: QuotationData) {
                     <Text style={styles.newline}>{"\n"}</Text>
                     <Text style={styles.terms}>{data.terms} {"\n"}</Text>
                 </View>
-
-                <Text fixed style={styles.pageNumber} render={({ pageNumber }) => `${data.website}                                          Page ${pageNumber}`} />
+                <Text break={true} style={{ fontSize: 14, fontWeight: "bold", textAlign: "center" }}>Out Customers List</Text>
+                <Image style={styles.backgroundImage} src={"public/All.jpg"} />
+                <Text fixed style={styles.pageNumber} render={({ pageNumber }) => `${data.website}                                                              Page ${pageNumber}`} />
             </Page>
         </Document >
     );
