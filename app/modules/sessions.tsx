@@ -27,7 +27,7 @@ const { getSession, commitSession, destroySession } =
                 maxAge: 1000 * 60 * 60 * 24,
                 path: "/",
                 sameSite: "lax",
-                secrets: ["12873hsjf!@#!@#SDF@#$#@ASD"],
+                secrets: ["12873hsjf!@#!@#SDF@#$#@ASD", "1!@#2SD#sjf8723!@#&%FDG!@#@#$#@ASDF"],
                 //secure: true,
             },
         }

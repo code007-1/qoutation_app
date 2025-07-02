@@ -2,6 +2,7 @@ import { useFetcher, useNavigate } from "@remix-run/react";
 import { Loader } from "lucide-react";
 import { useEffect } from "react";
 import { useGlobalContext } from "~/modules/gcontext";
+import { useNotification } from "~/modules/notificationContext";
 import { loginData } from "~/modules/utils";
 
 export default function Index() {
@@ -10,10 +11,18 @@ export default function Index() {
   const isSubmitting = loginFetcher.state === "submitting";
   const navigate = useNavigate();
   const { accessToken, setAccessToken, setProfile, setQuote } = useGlobalContext();
+  const { addNotifications } = useNotification();
 
   useEffect(() => {
-    if (loginFetcher.data?.token)
+    if (loginFetcher.data?.token) {
       setAccessToken(loginFetcher.data.token); // Store the fetched data in state
+      addNotifications({
+        title: "Logged In...",
+        message: `Logged in successfully as ${loginFetcher.data?.profile.username?.toUpperCase()}`,
+        //duration: 5000,
+        //variant: "success"
+      });
+    }
     if (loginFetcher.data?.profile)
       setProfile(pre => { return { ...pre, ...loginFetcher.data?.profile } });
     if (loginFetcher.data?.qoute)

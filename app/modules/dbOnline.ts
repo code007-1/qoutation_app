@@ -85,10 +85,10 @@ export async function update(db: string = "unnamed", collection: string = "users
 
 export async function insertQoutation(data: QuotationData) {
     client.connect().then(async (e) => {
-        const result = await client.db("unnamed").collection("qoutations").insertOne(data);
+        const result = await client.db("unnamed").collection("quotations").insertOne(data);
         console.log(`New item created with the following id: ${result.insertedId} : ${result}`);
-    }).catch(console.error);
-    client.close();
+    }).catch(console.error).finally(() => client.close());
+
 }
 
 

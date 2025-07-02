@@ -1,5 +1,5 @@
 import { Document, Page, Text, View, StyleSheet, Image, Link, Font } from "@react-pdf/renderer";
-import { Watermark } from "./Watermark";
+import { Watermark } from "./watermark";
 import { QuotationData } from "~/routes/dashboard.quote";
 import { style } from "framer-motion/client";
 

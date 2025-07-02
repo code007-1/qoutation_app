@@ -12,6 +12,7 @@ import "./tailwind.css";
 import { AppProvider, useGlobalContext } from "./modules/gcontext";
 import { useEffect } from "react";
 import { AnimatePresence, motion, Variants } from "framer-motion";
+import { NotificationProvider } from "./modules/notificationContext";
 
 export const links: LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -66,9 +67,9 @@ export default function App() {
   }, []);
 
   const slideVariants: Variants = {
-    initial: { opacity: 0, y: -50 },
-    animate: { opacity: 1, y: 0 },
-    exit: { opacity: 0, y: 50 },
+    initial: { opacity: 0 },
+    animate: { opacity: 1 },
+    exit: { opacity: 0 },
   };
 
   return <>
@@ -82,7 +83,9 @@ export default function App() {
         transition={{ duration: 0.4 }}
       >
         <div className={`${theme}`}>
-          <Outlet />
+          <NotificationProvider>
+            <Outlet />
+          </NotificationProvider>
         </div>
       </motion.div>
     </AnimatePresence></>;

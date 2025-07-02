@@ -1,19 +1,13 @@
 import { ActionFunction } from "@remix-run/node";
 import { update } from "~/modules/dbOnline";
-import { profile } from "~/modules/utils";
+import { updateProfile } from "~/modules/utils";
 
 export const action: ActionFunction = async ({ request, params }) => {
     const data = await request.json();
     try {
         const result = await update("unnamed", "users", { username: data.username }, { $set: data });
         if (result) {
-            profile.username = data.username;
-            profile.contact = data.contact;
-            profile.email = data.email;
-            profile.website = data.website;
-            profile.company = data.company;
-            profile.address = data.address;
-            profile.pdfColor = data.pdfColor;
+            updateProfile(data);
 
             return new Response("profile updated", { status: 200 });
         }

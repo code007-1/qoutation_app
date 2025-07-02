@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useGlobalContext } from "~/modules/gcontext";
+import { useNotification } from "~/modules/notificationContext";
 
 export type user = {
     username?: string,
@@ -14,6 +15,7 @@ export type user = {
 
 export default function Profile() {
     const { setHeaderText, profile, setProfile } = useGlobalContext();
+    const { addNotifications } = useNotification();
 
     useEffect(() => {
         setHeaderText("Profile Settings");
@@ -25,6 +27,8 @@ export default function Profile() {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(profile),
         });
+        if (response.status === 200) addNotifications({ title: "Success...", message: "Profile updated successfully" });
+        else addNotifications({ title: "Failure...", message: "Fail to update profile...try gain later.." });
     }
 
     return (

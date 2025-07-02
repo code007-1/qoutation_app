@@ -9,10 +9,8 @@ export const action: ActionFunction = async ({ request, params }) => {
     const p2 = formdata.get("repeatPassword") as string;
     const username = formdata.get("username") as string;
 
-
     try {
         const result = await search("unnamed", "users", { username: username }, 1, 0);
-        console.log("result", p0, p1, p2, username, result);
 
         if (result && result.length > 0) {
             const verified = await bcrypt.compare(p0, result[0].password);

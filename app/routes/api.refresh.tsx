@@ -1,8 +1,9 @@
 import { json, LoaderFunctionArgs } from "@remix-run/node";
 import pkg, { decode } from 'jsonwebtoken';
+import { search } from "~/modules/dbOnline";
 const { sign, verify } = pkg;
 import { commitSession, getSession } from "~/modules/sessions";
-import { JWT_ACCESS_KEY, JWT_REFRESH_KEY, profile } from "~/modules/utils";
+import { JWT_ACCESS_KEY, JWT_REFRESH_KEY, profile, updateProfile } from "~/modules/utils";
 
 async function verifyRefreshToken(cookies: string, hostip: string, userAgent: string): Promise<boolean | string> {
     const session = await getSession(cookies);
@@ -46,20 +47,26 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
                     username: verified
                 }
 
+                const result = await search("unnamed", "users", { username: verified }, 1, 0);
+
+                if (result && result.length > 0)
+                    updateProfile(result[0]);
+
                 const access = sign(data, JWT_ACCESS_KEY, { expiresIn: "10m" });
                 return Response.json({ token: access, profile: profile });
             }
 
             const session = await getSession();
-            session.unset("loggedIn");
             session.unset("rToken");
 
-            return new Response("not authorized", { status: 403, headers: { "Set-Cookie": await commitSession(session) } });
+            return new Response("Not Authorized", { status: 403, headers: { "Set-Cookie": await commitSession(session) } });
         }
-        return new Response("not authorized", { status: 403 });
+        return new Response("Not Authorized", { status: 403 });
     }
     catch (error) {
         console.error("error while getting new access token using refresh token : ", error);
-        throw new Response("Internal server error", { status: 500 });
+        const session = await getSession();
+        session.unset("rToken");
+        return new Response("Internal Server Error", { status: 500, headers: { "Set-Cookie": await commitSession(session) } });
     }
 }

@@ -45,6 +45,7 @@ export async function createPdf(data: QuotationData) {
 
     const blob = await response.blob();
     const url = window.URL.createObjectURL(blob);
+
     window.open(url); // or trigger download
 }
 
@@ -98,9 +99,9 @@ export default function Quote() {
         <AnimatePresence>
             <motion.div
                 key={step}
-                initial={{ opacity: 0, y: -50 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 50 }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
                 transition={{ duration: 0.4 }}
             >
                 <div className="text-textSecondary">
@@ -112,6 +113,13 @@ export default function Quote() {
                             <div className="text-sm font-semibold ml-10 mr-2">Date</div>
                             <input type="date" color="white" name="date" id="date" pattern="\d{4}-\d{2}-\d{2}" placeholder="Date" className="border border-border w-25 h-10 bg-background" value={data.date} onChange={e => setData(pre => { return { ...pre, date: e.target.value } })} />
                         </div>
+
+                        {step === 1 &&
+                            <div className="w-1/2 flex justify-center">
+                                <button onClick={addItem} className="bg-button text-buttonTextPrimary px-4 py-1 text-lg">
+                                    Add Item
+                                </button>
+                            </div>}
                         <div className="w-1/2 flex justify-end">
                             <Link to={"/dashboard/home"} className="bg-button text-buttonTextPrimary px-4 py-1 text-lg" onClick={(e) => { setHeaderText(createQuotation); }}>
                                 Cancel
@@ -193,10 +201,7 @@ export default function Quote() {
 
                         {
                             step === 1 && <>
-                                <button onClick={addItem} className="bg-button text-buttonTextPrimary px-4 py-1 text-lg">
-                                    Add Item
-                                </button>
-                                <div className="space-y-4 overflow-y-auto h-[calc(100vh-320px)] w-full">
+                                <div className="mt-6 space-y-4 overflow-y-auto h-[calc(100vh-320px)] w-full">
                                     {
                                         items.map((_, index) => {
                                             return <>
@@ -258,6 +263,7 @@ export default function Quote() {
                         }
                     </div>
                 </div>
-            </motion.div></AnimatePresence>
+            </motion.div>
+        </AnimatePresence>
     </>);
 }
