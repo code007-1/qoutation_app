@@ -8,11 +8,11 @@ import bcrypt from "bcrypt";
 import { getQoute, JWT_ACCESS_KEY, JWT_REFRESH_KEY, profile, updateProfile } from "~/modules/utils";
 
 export const action: ActionFunction = async ({ request, params }) => {
-    const formData = await request.formData();
-    const username = (formData.get("username") as string).trim().toLowerCase();
-    const password = formData.get("password") as string;
-
     try {
+        const formData = await request.formData();
+        const username = (formData.get("username") as string).trim().toLowerCase();
+        const password = formData.get("password") as string;
+
         const result = await search("unnamed", "users", { username: username }, 1, 0);
 
         if (result && result.length > 0) {
@@ -46,9 +46,9 @@ export const action: ActionFunction = async ({ request, params }) => {
 
                 return Response.json(response, { headers: { "Set-Cookie": await commitSession(session) } });
             }
-            return new Response("User not registered", { status: 401 });
+            return new Response("Wrong password", { status: 404 });
         }
-        return new Response("User not registered", { status: 401 });
+        return new Response("User not found", { status: 404 });
     }
     catch (error) {
         console.error("error while logging in : ", error);

@@ -1,18 +1,20 @@
 import { ActionFunction } from "@remix-run/node";
 import { update } from "~/modules/dbOnline";
-import { updateProfile } from "~/modules/utils";
+import { updateProfile, verifyAccessToken } from "~/modules/utils";
 
 export const action: ActionFunction = async ({ request, params }) => {
-    const data = await request.json();
     try {
+        await verifyAccessToken(request);
+        const data = await request.json();
+
         const result = await update("unnamed", "users", { username: data.username }, { $set: data });
         if (result) {
             updateProfile(data);
 
-            return new Response("profile updated", { status: 200 });
+            return new Response("Profile updated", { status: 200 });
         }
         else
-            return new Response("not authorized", { status: 403 });
+            return new Response("Username not found", { status: 404 });
     }
     catch (error) {
         console.error("error while updating profile : ", error);

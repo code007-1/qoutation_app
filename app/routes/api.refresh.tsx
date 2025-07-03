@@ -59,9 +59,9 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
             const session = await getSession();
             session.unset("rToken");
 
-            return new Response("Not Authorized", { status: 403, headers: { "Set-Cookie": await commitSession(session) } });
+            return new Response("Not authorized", { status: 403, headers: { "Set-Cookie": await commitSession(session) } });
         }
-        return new Response("Not Authorized", { status: 403 });
+        return new Response("Not authorized", { status: 403 });
     }
     catch (error) {
         console.error("error while getting new access token using refresh token : ", error);

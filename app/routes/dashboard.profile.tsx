@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { useCentralFetcher } from "~/component/centralFetcher";
 import { useGlobalContext } from "~/modules/gcontext";
 import { useNotification } from "~/modules/notificationContext";
 
@@ -16,13 +17,14 @@ export type user = {
 export default function Profile() {
     const { setHeaderText, profile, setProfile } = useGlobalContext();
     const { addNotifications } = useNotification();
+    const fetcher = useCentralFetcher();
 
     useEffect(() => {
         setHeaderText("Profile Settings");
     }, []);
 
     async function handleSubmit() {
-        const response = await fetch('/api/profile', {
+        const response = await fetcher('/api/profile', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(profile),

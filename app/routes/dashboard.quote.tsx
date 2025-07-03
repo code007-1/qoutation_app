@@ -4,6 +4,7 @@ import { createQuotation, useGlobalContext } from "~/modules/gcontext";
 import AutocompleteSearch from "~/component/autocompleteSearch";
 import { logoutData } from "~/modules/utils";
 import { AnimatePresence, motion } from "framer-motion";
+import { useCentralFetcher } from "~/component/centralFetcher";
 
 export type QuoteItems = {
     id: number;
@@ -36,8 +37,8 @@ export type QuotationData = {
     pdfColor?: string;
 };
 
-export async function createPdf(data: QuotationData) {
-    const response = await fetch('/api/pdf', {
+export async function createPdf(data: QuotationData, fetcher: any) {
+    const response = await fetcher('/api/pdf', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
@@ -53,6 +54,7 @@ export default function Quote() {
     const { items, setItems } = useGlobalContext();
     const [step, setStep] = useState<number>(0);
     const { data, setData, userName, accessToken, setAccessToken, setHeaderText, profile } = useGlobalContext();
+    const fetcher = useCentralFetcher()
 
     const logoutFetcher = useFetcher<logoutData>();
     const navigate = useNavigate();
@@ -105,8 +107,8 @@ export default function Quote() {
                 transition={{ duration: 0.4 }}
             >
                 <div className="text-textSecondary">
-                    <div className="flex space-x-4 items-center align-middle">
-                        <div className="flex items-center w-1/2 mt-4">
+                    <div className="mt-4 flex space-x-4 items-center align-middle">
+                        <div className="flex items-center w-1/2">
                             <div className="text-sm font-semibold mr-2">Qoutation No.</div>
                             {/*<input type="text" name="no" placeholder="Enter Qoutation No." className="border border-border p-2 mb-2 mr-5 w-25 bg-background" value={data.no} onChange={e => setData((pre) => { return { ...pre, no: e.target.value }; })} />*/}
                             <div className="text-sm">{data.no}</div>
@@ -255,7 +257,7 @@ export default function Quote() {
                                     <button onClick={() => setStep(1)} className="bg-button text-buttonTextPrimary px-4 py-1 mt-4 text-lg">
                                         Back
                                     </button>
-                                    <form onSubmit={(e) => { createPdf(data); e.preventDefault(); }}>
+                                    <form onSubmit={(e) => { createPdf(data, fetcher); e.preventDefault(); }}>
                                         <button className="bg-button text-buttonTextPrimary px-4 py-1 mt-4 text-lg" type="submit">Generate Qoutation PDF</button>
                                     </form>
                                 </div>

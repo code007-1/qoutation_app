@@ -2,17 +2,20 @@ import { renderToStream } from "@react-pdf/renderer";
 import { ActionFunction, LoaderFunction } from "@remix-run/node";
 import PDFDocument from "~/component/PDFDcoument";
 import { insertQoutation } from "~/modules/dbOnline";
+import { verifyAccessToken } from "~/modules/utils";
 
 //export let loader: LoaderFunction = async ({ request, params }) => {
 export const action: ActionFunction = async ({ request, params }) => {
-    const data = await request.json();
-    //await insertQoutation(data);
-    //console.log("PDF loader called", request, params, data);
-    // Fetch the data you need for the PDF
-
-    // render the PDF as a stream so you do it async
-    //additionalInfo={data.additionalInfo} date={data.date} discount={data.discount} from={data.from} fromAddress={data.fromAddress} intro={data.intro} items={data.items} no={data.no} tax={data.tax} terms={data.terms} to={data.to} toAddress={data.toAddress} 
     try {
+        await verifyAccessToken(request);
+        const data = await request.json();
+        //await insertQoutation(data);
+        //console.log("PDF loader called", request, params, data);
+        // Fetch the data you need for the PDF
+
+        // render the PDF as a stream so you do it async
+        //additionalInfo={data.additionalInfo} date={data.date} discount={data.discount} from={data.from} fromAddress={data.fromAddress} intro={data.intro} items={data.items} no={data.no} tax={data.tax} terms={data.terms} to={data.to} toAddress={data.toAddress} 
+
         let stream = await renderToStream(<PDFDocument {...data} />);
 
         // and transform it to a Buffer to send in the Response
