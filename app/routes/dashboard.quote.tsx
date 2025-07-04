@@ -105,8 +105,8 @@ export default function Quote() {
                 transition={{ duration: 0.4 }}
             >
                 <div className="text-textSecondary">
-                    <div className="flex space-x-4 items-center align-middle">
-                        <div className="flex items-center w-1/2 mt-4">
+                    <div className="flex space-x-4 items-center align-middle mt-4">
+                        <div className="flex items-center w-1/2">
                             <div className="text-sm font-semibold mr-2">Qoutation No.</div>
                             {/*<input type="text" name="no" placeholder="Enter Qoutation No." className="border border-border p-2 mb-2 mr-5 w-25 bg-background" value={data.no} onChange={e => setData((pre) => { return { ...pre, no: e.target.value }; })} />*/}
                             <div className="text-sm">{data.no}</div>
@@ -115,16 +115,16 @@ export default function Quote() {
                         </div>
 
                         {step === 1 &&
-                            <div className="w-1/2 flex justify-center">
+                            <div className="w-1/2 flex justify-end">
                                 <button onClick={addItem} className="bg-button text-buttonTextPrimary px-4 py-1 text-lg">
                                     Add Item
                                 </button>
                             </div>}
-                        <div className="w-1/2 flex justify-end">
+                        {/*<div className="w-1/2 flex justify-end">
                             <Link to={"/dashboard/home"} className="bg-button text-buttonTextPrimary px-4 py-1 text-lg" onClick={(e) => { setHeaderText(createQuotation); }}>
                                 Cancel
                             </Link>
-                        </div>
+                        </div>*/}
                     </div>
                     <div className="flex flex-col items-center space-y-2">
                         {step === 0 && <>
