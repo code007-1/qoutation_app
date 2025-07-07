@@ -42,13 +42,13 @@ export const action: ActionFunction = async ({ request, params }) => {
                     response = { token: access, profile: profile, quote: quote };
                 }
                 else { response = { token: access, profile: profile }; }
-                await insertOnetoDb({ "by": username, "action": "logging in", "result": "succeded" }, "unnamed", "logs");
+                await insertOnetoDb({ "by": username, "action": "logging in", "result": "succeded", "when": new Date().toISOString() }, "unnamed", "logs");
                 return Response.json(response, { headers: { "Set-Cookie": await commitSession(session) } });
             }
-            await insertOnetoDb({ "by": username, "action": "logging in", "result": "wrong password" }, "unnamed", "logs");
+            await insertOnetoDb({ "by": username, "action": "logging in", "result": "wrong password", "when": new Date().toISOString() }, "unnamed", "logs");
             return new Response("Wrong password", { status: 404 });
         }
-        await insertOnetoDb({ "by": username, "action": "logging in", "result": "user not found" }, "unnamed", "logs");
+        await insertOnetoDb({ "by": username, "action": "logging in", "result": "user not found", "when": new Date().toISOString() }, "unnamed", "logs");
         return new Response("User not found", { status: 404 });
     }
     catch (error) {

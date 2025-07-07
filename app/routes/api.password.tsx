@@ -21,14 +21,14 @@ export const action: ActionFunction = async ({ request, params }) => {
                 const newPassword = await bcrypt.hash(p1, 11);
                 const result = await update("unnamed", "users", { username: username }, { $set: { password: newPassword } });
                 if (result) {
-                    await insertOnetoDb({ "by": username, "action": "password change", "result": "succeded" }, "unnamed", "logs");
+                    await insertOnetoDb({ "by": username, "action": "password change", "result": "succeded", "when": new Date().toISOString() }, "unnamed", "logs");
                     return new Response("Profile updated", { status: 200 });
                 }
             }
-            await insertOnetoDb({ "by": username, "action": "password change", "result": "wrong old password" }, "unnamed", "logs");
+            await insertOnetoDb({ "by": username, "action": "password change", "result": "wrong old password", "when": new Date().toISOString() }, "unnamed", "logs");
             return new Response("Wrong old password", { status: 404 });
         }
-        await insertOnetoDb({ "by": username, "action": "password change", "result": "username not found" }, "unnamed", "logs");
+        await insertOnetoDb({ "by": username, "action": "password change", "result": "username not found", "when": new Date().toISOString() }, "unnamed", "logs");
         return new Response("Username not found", { status: 404 });
     }
     catch (error) {

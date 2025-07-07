@@ -10,11 +10,11 @@ export const action: ActionFunction = async ({ request, params }) => {
         const result = await update("unnamed", "users", { username: data.username }, { $set: data });
         if (result) {
             updateProfile(data);
-            await insertOnetoDb({ "by": data.username, "action": "profile update", "result": "scceded" }, "unnamed", "logs");
+            await insertOnetoDb({ "by": data.username, "action": "profile update", "result": "scceded", "when": new Date().toISOString() }, "unnamed", "logs");
             return new Response("Profile updated", { status: 200 });
         }
         else {
-            await insertOnetoDb({ "by": data.username, "action": "profile update", "result": "username not found" }, "unnamed", "logs");
+            await insertOnetoDb({ "by": data.username, "action": "profile update", "result": "username not found", "when": new Date().toISOString() }, "unnamed", "logs");
             return new Response("Username not found", { status: 404 });
         }
     }
