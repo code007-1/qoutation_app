@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { useFetcher } from "react-router-dom";
 import { useGlobalContext } from "~/modules/gcontext";
 import { logoutData } from "~/modules/utils";
+import { useCentralFetcher } from "./centralFetcher";
 
 export default function MainMenu() {
     const { profile, setAccessToken } = useGlobalContext();
@@ -14,12 +15,14 @@ export default function MainMenu() {
     else text = profile.username ? profile.username?.toLocaleUpperCase() : "";
 
     const logoutFetcher = useFetcher<logoutData>();
+    const fetcher = useCentralFetcher();
 
-    useEffect(() => {
-        if (logoutFetcher.data?.success)
-            setAccessToken(undefined);
-    }, [logoutFetcher.data]);
-
+    async function handleSubmit(event: any) {
+        event.preventDefault();
+        await fetcher("/api/logout", { method: "POST" })
+            .then((result) => { result.status == 200 && setAccessToken(undefined) })
+            .catch(error => console.log("error while logging out : ", error));
+    }
 
     return (
         <>
@@ -52,7 +55,7 @@ export default function MainMenu() {
                                 Update Password
                             </Link>
                         </MenuItem>
-                        <logoutFetcher.Form method="post" action="/api/logout">
+                        <form onSubmit={handleSubmit}>
                             <MenuItem>
                                 <button
                                     type="submit"
@@ -61,7 +64,7 @@ export default function MainMenu() {
                                     Log out
                                 </button>
                             </MenuItem>
-                        </logoutFetcher.Form>
+                        </form>
                     </div>
                 </MenuItems>
             </Menu>

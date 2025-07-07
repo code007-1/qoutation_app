@@ -1,22 +1,24 @@
 import { useFetcher } from "@remix-run/react";
 import { useEffect } from "react";
+import { useCentralFetcher } from "~/component/centralFetcher";
 import { useGlobalContext } from "~/modules/gcontext";
 import { useNotification } from "~/modules/notificationContext";
 
 export default function Password() {
     const { setHeaderText, profile, setProfile } = useGlobalContext();
     const { addNotifications } = useNotification();
+    const fetcher = useCentralFetcher();
 
     useEffect(() => {
         setHeaderText("Change Password");
     }, []);
 
     async function handleSubmit(event: any) {
+        event.preventDefault();
         const formData = new FormData(event.target);
-        const response = await fetch('/api/password', {
+        const response = await fetcher('/api/password', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(formData),
+            body: formData,
         });
         if (response.status === 200) addNotifications({ title: "Success...", message: "Password updated successfully" });
         else addNotifications({ title: "Failure...", message: "Fail to update password...try gain later.." });

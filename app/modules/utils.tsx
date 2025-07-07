@@ -1,3 +1,6 @@
+import pkg from 'jsonwebtoken';
+const { sign, verify } = pkg;
+
 import { createCookie } from "@remix-run/node";
 import { MetaFunction } from "@remix-run/react";
 import { count, search } from "./dbOnline";
@@ -44,4 +47,24 @@ export async function getQoute() {
     const quote = await search("unnamed", "quotes", {}, 1, index);
     if (quote && quote.length > 0) return quote[0].quote;
     else return "";
+}
+
+export async function verifyAccessToken(request: any) {
+    const accessToken = request.headers.get("authorization")?.replace("Bearer ", "");
+
+    if (!accessToken) {
+        console.log("access token is missing: ");
+        throw new Response("user not authorized", { status: 401 });
+    }
+
+    try {
+        const verfied = verify(accessToken, JWT_ACCESS_KEY);
+        if (verfied)
+            return;
+        throw new Response("user not authorized", { status: 401 });
+    }
+    catch (error) {
+        console.log("error while checking access token : token malformed or expired");
+        throw new Response("Internal server error", { status: 500 });
+    }
 }

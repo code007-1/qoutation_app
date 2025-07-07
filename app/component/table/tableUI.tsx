@@ -17,6 +17,7 @@ import { AlignRight, ChevronDown, ChevronsUpDownIcon } from "lucide-react";
 import { ChangeEvent, FC, memo, ReactElement, useMemo, useState } from "react";
 import { useGlobalContext } from "~/modules/gcontext";
 import { createPdf, QuotationData } from "~/routes/dashboard.quote";
+import { useCentralFetcher } from "../centralFetcher";
 
 // Typescript interface
 
@@ -109,6 +110,7 @@ const TableUI: FC<TableProps> = ({
 
     const navigate = useNavigate();
     const { setData } = useGlobalContext();
+    const fetcher = useCentralFetcher();
 
     function handleEdit(row: QuotationData) {
         setData(row);
@@ -207,7 +209,7 @@ const TableUI: FC<TableProps> = ({
                                 <tr key={row.id} className="bg-header cursor-pointer hover:bg-buttonHover">
                                     {row.getVisibleCells().map((cell) => (
                                         <td
-                                            onClick={(e) => { cell.column.id === "edit" ? handleEdit(row.original) : createPdf(row.original); }}
+                                            onClick={(e) => { cell.column.id === "edit" ? handleEdit(row.original) : createPdf(row.original, fetcher); }}
                                             key={cell.id}
                                             className="text-textSecondary text-base text-left p-2"
                                         >
