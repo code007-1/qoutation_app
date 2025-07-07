@@ -1,4 +1,4 @@
-
+import packageJson from '../../package.json';
 import { SunMoon } from "lucide-react";
 import { useGlobalContext } from "~/modules/gcontext";
 import MainMenu from "./menu";
@@ -12,7 +12,7 @@ export default function Header() {
             <div className="bg-headerBackground">
                 <div className="flex justify-between items-center align-middle mx-10 py-2">
                     <div className="w-1/3 text-xl text-textPrimary text-left">{headerText}</div>
-                    <div className="w-1/3 text-2xl font-semibold text-textPrimary text-center">Unnamed</div>
+                    <div className="w-1/3 text-2xl font-semibold text-textPrimary text-center">{packageJson.name[0].toUpperCase() + packageJson.name.slice(1)}</div>
 
                     <div className="w-1/3 flex justify-end items-center">
                         <Link to={"/dashboard/home"} className="text-xl text-textPrimary mr-10 px-2 hover:bg-buttonHover">HOME</Link>

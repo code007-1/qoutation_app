@@ -1,3 +1,4 @@
+import packageJson from '../../package.json';
 import { useFetcher, useNavigate } from "@remix-run/react";
 import { Loader } from "lucide-react";
 import { useEffect } from "react";
@@ -25,13 +26,13 @@ export default function Index() {
     }
     if (loginFetcher.data?.profile)
       setProfile(pre => { return { ...pre, ...loginFetcher.data?.profile } });
-    if (loginFetcher.data?.qoute)
-      setQuote(loginFetcher.data?.qoute);
+    if (loginFetcher.data?.quote)
+      setQuote(loginFetcher.data?.quote);
   }, [loginFetcher.data]);
 
   useEffect(() => {
     if (accessToken) {
-      if (loginFetcher.data?.qoute)
+      if (loginFetcher.data?.quote)
         navigate("/welcome");
       else
         navigate("/dashboard/home");
@@ -44,8 +45,8 @@ export default function Index() {
       <div className="flex items-center justify-center h-screen">
 
         {/* Login Form */}
-        <div className="bg-white p-8 rounded-lg shadow-lg">
-          <div className="flex justify-center font-bold text-2xl">Unnamed</div>
+        <div className="bg-white p-8 rounded-lg shadow-lg w-[25%]">
+          <div className="flex justify-center font-bold text-2xl">{packageJson.name[0].toUpperCase() + packageJson.name.slice(1)}</div>
           <input
             name="username"
             type="text"

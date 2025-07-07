@@ -5,7 +5,7 @@ import { QuoteItems } from "~/routes/dashboard.quote";
 
 //- advance show hide for better ui - optimized little bit, ok for now
 //- welcome animation - partially done, would improve animation
-// offline online sync both mongob
+//- as of now only online- offline online sync both mongob
 //- done - user profile edit
 // save type check while uploading to mongodb i.e., form data validation
 //- done - notification system 

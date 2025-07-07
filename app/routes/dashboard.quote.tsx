@@ -117,14 +117,16 @@ export default function Quote() {
                         </div>
 
                         {step === 1 &&
-                            <div className="w-1/2 flex justify-center">
+                            <div className="w-1/2 flex justify-end">
                                 <button onClick={addItem} className="bg-button text-buttonTextPrimary px-4 py-1 text-lg">
                                     Add Item
                                 </button>
                             </div>}
-                        <div className="w-1/2 flex justify-end">
-
-                        </div>
+                        {/*<div className="w-1/2 flex justify-end">
+                            <Link to={"/dashboard/home"} className="bg-button text-buttonTextPrimary px-4 py-1 text-lg" onClick={(e) => { setHeaderText(createQuotation); }}>
+                                Cancel
+                            </Link>
+                        </div>*/}
                     </div>
 
                     <div className="flex flex-col items-center space-y-2">
