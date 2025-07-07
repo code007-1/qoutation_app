@@ -1,7 +1,7 @@
-import { ActionFunction } from "@remix-run/node";
+import { ActionFunction, LoaderFunction } from "@remix-run/node";
 import { commitSession, getSession } from "~/modules/sessions";
 
-export const action: ActionFunction = async ({ request }) => {
+export const loader: LoaderFunction = async ({ request }) => {
     try {
         //const refreshToken = request.headers.get("cookie");
         const url = new URL(request.url);
@@ -14,7 +14,7 @@ export const action: ActionFunction = async ({ request }) => {
         return Response.json({ status: 200 }, { headers: { "Set-Cookie": await commitSession(session) } });
     }
     catch (error) {
-        console.error("Internal Server Error while logging out", error);
+        console.error("error while logging out", error);
         throw new Response("Internal server error", { status: 500 });
     }
 }

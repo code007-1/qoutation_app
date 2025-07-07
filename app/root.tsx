@@ -54,7 +54,6 @@ export default function App() {
   const location = useLocation();
 
   useEffect(() => {
-    //getAccessToken(setAccessToken, setUserName);
     async function getAccessToken() {
       const result = await fetch("/api/refresh/");
       if (result.status === 200) {

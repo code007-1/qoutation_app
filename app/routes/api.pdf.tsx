@@ -1,7 +1,7 @@
 import { renderToStream } from "@react-pdf/renderer";
 import { ActionFunction, LoaderFunction } from "@remix-run/node";
 import PDFDocument from "~/component/PDFDcoument";
-import { insertQoutation } from "~/modules/dbOnline";
+import { insertOnetoDb } from "~/modules/dbOnline";
 import { verifyAccessToken } from "~/modules/utils";
 
 //export let loader: LoaderFunction = async ({ request, params }) => {
@@ -9,7 +9,7 @@ export const action: ActionFunction = async ({ request, params }) => {
     try {
         await verifyAccessToken(request);
         const data = await request.json();
-        //await insertQoutation(data);
+        //await insertOnetoDb(data);
         //console.log("PDF loader called", request, params, data);
         // Fetch the data you need for the PDF
 

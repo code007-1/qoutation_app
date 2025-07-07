@@ -67,6 +67,6 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
         console.error("error while getting new access token using refresh token : ", error);
         const session = await getSession();
         session.unset("rToken");
-        return new Response("Internal Server Error", { status: 500, headers: { "Set-Cookie": await commitSession(session) } });
+        return new Response("Internal server error", { status: 500, headers: { "Set-Cookie": await commitSession(session) } });
     }
 }

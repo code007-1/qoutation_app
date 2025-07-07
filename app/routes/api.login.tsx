@@ -1,5 +1,5 @@
 import { ActionFunction, createCookie, json } from "@remix-run/node";
-import { count, search } from "~/modules/dbOnline";
+import { count, insertOnetoDb, search } from "~/modules/dbOnline";
 import { commitSession, getSession } from "~/modules/sessions";
 
 import pkg from 'jsonwebtoken';
@@ -17,7 +17,6 @@ export const action: ActionFunction = async ({ request, params }) => {
 
         if (result && result.length > 0) {
             const verified = await bcrypt.compare(password, result[0].password);//"$2b$11$8lTICnLuucL1CRQXZ.g.s.xlwzpxivlUbdDcwj60oEqrapJ5k/Lde"
-
             if (verified) {
                 const ip = new URL(request.url);
 
@@ -43,11 +42,13 @@ export const action: ActionFunction = async ({ request, params }) => {
                     response = { token: access, profile: profile, qoute: qoute };
                 }
                 else { response = { token: access, profile: profile }; }
-
+                await insertOnetoDb({ "by": username, "action": "logging in", "result": "succeded" }, "unnamed", "logs");
                 return Response.json(response, { headers: { "Set-Cookie": await commitSession(session) } });
             }
+            await insertOnetoDb({ "by": username, "action": "logging in", "result": "wrong password" }, "unnamed", "logs");
             return new Response("Wrong password", { status: 404 });
         }
+        await insertOnetoDb({ "by": username, "action": "logging in", "result": "user not found" }, "unnamed", "logs");
         return new Response("User not found", { status: 404 });
     }
     catch (error) {

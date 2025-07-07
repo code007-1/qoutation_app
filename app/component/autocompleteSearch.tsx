@@ -60,7 +60,7 @@ export default function AutocompleteSearch({ index }: { index: number }) {
         //setInput(suggestion.label);
         setItems(pre => {
             return pre.map((item, i) => i == index
-                ? { id: suggestion.id, hsn: suggestion.hsn, name: suggestion.name, price: suggestion.price, quantity: 1, description: suggestion.description || "", link: suggestion.link || "#" }
+                ? { id: suggestion.id, hsn: suggestion.hsn, name: suggestion.name, price: suggestion.price, quantity: 1, description: suggestion.description || "", link: suggestion.link }
                 : item)
         });
         setShowSuggestions(false);
@@ -93,7 +93,7 @@ export default function AutocompleteSearch({ index }: { index: number }) {
             setShowSuggestions(false);
             setItems(pre => {
                 return pre.map((item, i) => i === index
-                    ? { id: filtered[highlighted].id, hsn: filtered[highlighted].hsn, name: filtered[highlighted].name, price: filtered[highlighted].price, quantity: 1, description: filtered[highlighted].description || "", link: filtered[highlighted].link || "#" }
+                    ? { id: filtered[highlighted].id, hsn: filtered[highlighted].hsn, name: filtered[highlighted].name, price: filtered[highlighted].price, quantity: 1, description: filtered[highlighted].description || "", link: filtered[highlighted].link }
                     : item)
             }
             );
@@ -117,7 +117,7 @@ export default function AutocompleteSearch({ index }: { index: number }) {
                 autoComplete="off"
             />
             {showSuggestions && (
-                <ul className="z-10 absolute top-full -left-4 right-0 bg-buttonHover border border-border overflow-y-auto w-[30%]">
+                <ul className="z-10 absolute top-full -left-4 right-0 bg-buttonHover border border-border overflow-y-auto w-[28%] max-h-96">
                     {filtered.map((s, idx) => (
                         <li
                             key={s.id}

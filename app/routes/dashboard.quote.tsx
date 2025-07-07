@@ -103,7 +103,7 @@ export default function Quote() {
                 key={step}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
+                exit={{ opacity: 1 }}
                 transition={{ duration: 0.4 }}
             >
                 <div className="text-textSecondary">
@@ -123,11 +123,10 @@ export default function Quote() {
                                 </button>
                             </div>}
                         <div className="w-1/2 flex justify-end">
-                            <Link to={"/dashboard/home"} className="bg-button text-buttonTextPrimary px-4 py-1 text-lg" onClick={(e) => { setHeaderText(createQuotation); }}>
-                                Cancel
-                            </Link>
+
                         </div>
                     </div>
+
                     <div className="flex flex-col items-center space-y-2">
                         {step === 0 && <>
 
@@ -160,47 +159,8 @@ export default function Quote() {
                             <button onClick={() => setStep(1)} className="bg-button text-buttonTextPrimary px-4 py-1 mt-4 text-lg">
                                 Next
                             </button>
-
                         </>
                         }
-                        {/*step === 1 &&
-            <div>
-                <div className="text-lg py-4 px-10 bg-slate-100">Enter Parties Details</div>
-                <div className="mx-10 flex flex-col items-center h-screen">
-                    <div className="flex space-x-10 my-10 mx-20 w-full">
-                        <div className="w-full space-y-4">
-                            <div>
-                                <label className="text-sm">First Party Name</label>
-                                <input key={"frist"} type="text" placeholder="Enter First Party Name" className="border p-2 w-full" value={data.from} onChange={e => setData(pre => { return { ...pre, from: e.target.value } })} />
-                            </div>
-                            <div>
-                                <label className="text-sm">First Party Address</label>
-                                <textarea rows={5} placeholder="Enter First Party Address" className="p-2 border rounded w-full" value={data.fromAddress} onChange={e => setData(pre => { return { ...pre, fromAddress: e.target.value } })} />
-                            </div>
-                        </div>
-                        <div className="w-full space-y-4">
-                            <div>
-                                <label className="text-sm">Second Party Name</label>
-                                <input key={"second"} type="text" placeholder="Enter Second Party Name" className="border p-2 w-full" value={data.to} onChange={e => setData(pre => { return { ...pre, to: e.target.value } })} />
-                            </div>
-                            <div>
-                                <label className="text-sm">Second Party Address</label>
-                                <textarea rows={5} placeholder="Enter Second Party Address" className="p-2 border rounded w-full" value={data.toAddress} onChange={e => setData(pre => { return { ...pre, toAddress: e.target.value } })} />
-                            </div>
-                        </div>
-                    </div>
-                    <div className="flex justify-center space-x-4">
-                        <button onClick={() => setStep(0)} className="bg-blue-500 text-white px-4 py-2 mt-4 text-lg">
-                            Back
-                        </button>
-                        <button onClick={() => setStep(2)} className="bg-blue-500 text-white px-4 py-2 mt-4 text-lg">
-                            Next
-                        </button>
-                    </div>
-                </div>
-            </div>
-        */}
-
                         {
                             step === 1 && <>
                                 <div className="mt-6 space-y-4 overflow-y-auto h-[calc(100vh-320px)] w-full">

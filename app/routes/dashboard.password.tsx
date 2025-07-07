@@ -21,7 +21,7 @@ export default function Password() {
             body: formData,
         });
         if (response.status === 200) addNotifications({ title: "Success...", message: "Password updated successfully" });
-        else addNotifications({ title: "Failure...", message: "Fail to update password...try gain later.." });
+        else addNotifications({ title: "Failure...", message: "Fail to update password...try gain later." });
     }
 
     return (

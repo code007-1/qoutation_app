@@ -44,7 +44,7 @@ export default function Index() {
       <div className="flex items-center justify-center h-screen">
 
         {/* Login Form */}
-        <div className="bg-white p-8 rounded-lg shadow-lg w-[25%]">
+        <div className="bg-white p-8 rounded-lg shadow-lg">
           <div className="flex justify-center font-bold text-2xl">Unnamed</div>
           <input
             name="username"
@@ -63,7 +63,7 @@ export default function Index() {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="bg-red-500 text-white py-2 px-4 rounded hover:bg-buttonSecond/80"
+            className="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-500/80"
           >
             {isSubmitting ? (
               <span className="flex items-center justify-center">

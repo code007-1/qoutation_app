@@ -8,9 +8,14 @@ import { dummyQuotations } from "~/component/table/data";
 import TableUI from "~/component/table/tableUI";
 import { createQuotation, useGlobalContext } from "~/modules/gcontext";
 import { QuotationData } from "./dashboard.quote";
+import { useCentralFetcher } from "~/component/centralFetcher";
+import { useLoaderData } from "@remix-run/react";
+import { useNotification } from "~/modules/notificationContext";
+
 
 const StaffTable = () => {
 
+    const data = useLoaderData();
     // Initiate your states
     const [items, setItems] = useState<QuotationData[]>(dummyQuotations);
     const [loading, setLoading] = useState(false);
@@ -22,10 +27,24 @@ const StaffTable = () => {
     const ITEMS_PER_PAGE = 10;
 
     const { setHeaderText } = useGlobalContext();
+    const { addNotifications } = useNotification();
+    const fetcher = useCentralFetcher();
 
-    useEffect(() => { setHeaderText(createQuotation) }, []);
+    useEffect(() => {
+        setHeaderText(createQuotation)
+        async function getQoutes() {
+            const response = await fetcher("/api/quotes");
+            if (response.status === 200) {
+                setItems(await response.json());
+            }
+            else {
+                addNotifications({ title: "Failure...", message: "Fail to load data." });
+            }
+        }
+        getQoutes();
+    }, []);
 
-    const handlePageChange = (page: any) => {
+    /*    const handlePageChange = (page: any) => {
         setCurrentPage(page);
     };
 
@@ -46,7 +65,7 @@ const StaffTable = () => {
             setItems(filteredData || []);
         }
         console.log("search terms is", query, query.trim() === "");
-    };
+    };*/
 
 
     const DataLength = items.length;
@@ -66,8 +85,8 @@ const StaffTable = () => {
                     EmptyText="No staff found!"
                     isFetching={loading}
                     pageCount={totalPageCount}
-                    page={handlePageChange}
-                    search={handleSearch}
+                //page={handlePageChange}
+                //search={handleSearch}
                 />
             </div>
         </section>

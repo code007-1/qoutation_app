@@ -32,7 +32,8 @@ export default function PDFDocument(data: QuotationData) {
         tableRowOdd: { flexDirection: "row", backgroundColor: `hsl(${hue} 100% 97%)` },
         tableCellHeader: { padding: 8, backgroundColor: `hsl(${hue} 100% 65%)`, textAlign: "left", fontSize: 11, color: "white" },
         tableCellBox: { width: "40%", padding: 8, textAlign: "left" },
-        tableCellName: { fontSize: 10, color: "#384388", fontStyle: "italic", textDecoration: "none" },
+        tableCellLink: { fontSize: 10, color: "#384388", fontStyle: "italic", textDecoration: "none" },
+        tableCellName: { fontSize: 10, color: "#505050", fontStyle: "italic", textDecoration: "none" },
         tableCellNameContent: { fontSize: 10, color: "#6E6E6E" },
         tableCell: { flexGrow: 1, flexBasis: 0, padding: 8, textAlign: "left", fontSize: 10 },
         tableCellSno: { width: "8%", padding: 8, textAlign: "left", fontSize: 10, color: "#505050" },
@@ -116,7 +117,12 @@ export default function PDFDocument(data: QuotationData) {
                             <View style={i % 2 === 0 ? styles.tableRowEven : styles.tableRowOdd}>
                                 <Text style={styles.tableCellSno}>{i + 1}</Text>
                                 <View style={styles.tableCellBox}>
-                                    <Link style={styles.tableCellName} src={e[1].link || "#"}>{e[1].name} : HSN - {e[1].hsn}</Link>
+                                    {
+                                        e[1].link
+                                            ? <Link style={styles.tableCellLink} src={e[1].link || "#"}>{e[1].name} : HSN - {e[1].hsn}</Link>
+                                            : <Text style={[styles.tableCellName]} >{e[1].name} : HSN - {e[1].hsn}</Text>
+                                    }
+
                                     <Text style={styles.tableCellNameContent}>{e[1].description}</Text>
                                 </View>
                                 <Text style={styles.tableCell}>{e[1].quantity}</Text>

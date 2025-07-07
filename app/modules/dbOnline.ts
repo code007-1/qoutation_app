@@ -56,6 +56,20 @@ export async function search(db: string = "unnamed", collection: string = "qouta
     }
 }
 
+export async function sortedSearch(db: string = "unnamed", collection: string = "qoutations", query: {} = {}, limit: number = 10, skip: number = 0, sortOrder: number = -1, sortKey: string = "_id") {
+    try {
+        await client.connect();
+        return await client.db(db).collection(collection).find(query).sort({ _id: -1 }).skip(skip).limit(limit).toArray();//{ name: { $regex: query, $options: "i" } }
+    }
+    catch (error) {
+        console.log("error while saerching in db : ", error);
+    }
+    finally {
+        await client.close();
+    }
+}
+
+
 export async function count(db: string = "unnamed", collection: string = "qoutations", query: {} = {}) {
     try {
         await client.connect();
@@ -83,9 +97,9 @@ export async function update(db: string = "unnamed", collection: string = "users
 }
 
 
-export async function insertQoutation(data: QuotationData) {
+export async function insertOnetoDb(data: any, db: string = "unnamed", collection: string = "quotations") {
     client.connect().then(async (e) => {
-        const result = await client.db("unnamed").collection("quotations").insertOne(data);
+        const result = await client.db(db).collection(collection).insertOne(data);
         console.log(`New item created with the following id: ${result.insertedId} : ${result}`);
     }).catch(console.error).finally(() => client.close());
 
