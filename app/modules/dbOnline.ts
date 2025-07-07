@@ -46,7 +46,7 @@ async function run() {
 export async function search(db: string = "unnamed", collection: string = "qoutations", query: {} = {}, limit: number = 10, skip: number = 0) {
     try {
         await client.connect();
-        return await client.db(db).collection(collection).find(query).limit(limit).toArray();//{ name: { $regex: query, $options: "i" } }
+        return await client.db(db).collection(collection).find(query).skip(skip).limit(limit).toArray();//{ name: { $regex: query, $options: "i" } }
     }
     catch (error) {
         console.log("error while saerching in db : ", error);

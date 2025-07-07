@@ -277,7 +277,7 @@ Your presence is the human version of a gentle hug.
 
 Thinking about you just rewired my whole day.
 
-I hope you never lose that spark that makes people feel safe.
+I hope you never lose that spark that makes people feel happy.
 
 You’re what “sweet relief” looks like in real life.
 

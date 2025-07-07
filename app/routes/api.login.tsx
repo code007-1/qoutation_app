@@ -39,8 +39,8 @@ export const action: ActionFunction = async ({ request, params }) => {
                 updateProfile(result[0]);
                 var response = {};
                 if (username === "gunjan") {
-                    const qoute = await getQoute();
-                    response = { token: access, profile: profile, qoute: qoute };
+                    const quote = await getQoute();
+                    response = { token: access, profile: profile, quote: quote };
                 }
                 else { response = { token: access, profile: profile }; }
 

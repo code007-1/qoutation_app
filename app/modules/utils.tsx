@@ -29,7 +29,7 @@ const refresTokenCookie = createCookie('rToken', {
 
 export type loginData = {
     token?: string,
-    qoute?: string
+    quote?: string
     profile: user
 };
 
@@ -41,7 +41,7 @@ export async function getQoute() {
     const len = await count("unnamed", "quotes") as number;
     var index = Math.floor(Math.random() * len);
     index = index < len ? index : len - 1
-    const qoute = await search("unnamed", "quotes", {}, 1, index);
-    if (qoute && qoute.length > 0) return qoute[0].qoute;
+    const quote = await search("unnamed", "quotes", {}, 1, index);
+    if (quote && quote.length > 0) return quote[0].quote;
     else return "";
 }
