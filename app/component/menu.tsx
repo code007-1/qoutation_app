@@ -19,8 +19,8 @@ export default function MainMenu() {
 
     async function handleSubmit(event: any) {
         event.preventDefault();
-        await fetcher("/api/logout", { method: "POST" })
-            .then((result) => { result.status == 200 && setAccessToken(undefined) })
+        await fetcher("/api/logout")
+            .then((result) => { result.status === 200 && setAccessToken(undefined) })
             .catch(error => console.log("error while logging out : ", error));
     }
 

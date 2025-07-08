@@ -23,6 +23,8 @@ interface AppContextType {
     setQuote: React.Dispatch<React.SetStateAction<string | undefined>>;
     profile: user,
     setProfile: React.Dispatch<React.SetStateAction<user>>;
+    dataCount: number;
+    setDataCount: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const appContext = createContext<AppContextType | null>(null);
@@ -34,6 +36,7 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
     const [userName, setUserName] = useState<string | undefined>();
     const [headerText, setHeaderText] = useState<string | ReactNode>(createQuotation);
     const [items, setItems] = useState<QuoteItems[]>([]);
+    const [dataCount, setDataCount] = useState<number>(0);
     const [quote, setQuote] = useState<string | undefined>();
     const [profile, setProfile] = useState<user>({ contact: "+91 7065577059/60", address: "G-57, Vikas Marg, Near Metro Pillar No.41, \nDelhi - 110092", company: "Teen Telecommunication Pvt. Ltd.", email: "sales@teentelecommunication.com", pdfColor: "222", website: "https://teentelecommunication.com" });
 
@@ -62,7 +65,7 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
     };
 
     return (
-        <appContext.Provider value={{ theme, toggleTheme, accessToken, setAccessToken, items, setItems, data, setData, userName, setUserName, headerText, setHeaderText, quote, setQuote, profile, setProfile }}>
+        <appContext.Provider value={{ theme, toggleTheme, accessToken, setAccessToken, items, setItems, data, setData, userName, setUserName, headerText, setHeaderText, quote, setQuote, profile, setProfile, dataCount, setDataCount }}>
             {children}
         </appContext.Provider>
     );

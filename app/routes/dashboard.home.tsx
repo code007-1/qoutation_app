@@ -17,7 +17,7 @@ const StaffTable = () => {
 
     const data = useLoaderData();
     // Initiate your states
-    const [items, setItems] = useState<QuotationData[]>(dummyQuotations);
+    const [items, setItems] = useState<QuotationData[]>([]);
     const [loading, setLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPageCount, setTotalPageCount] = useState(1);
@@ -26,16 +26,20 @@ const StaffTable = () => {
 
     const ITEMS_PER_PAGE = 10;
 
-    const { setHeaderText } = useGlobalContext();
+    const { setHeaderText, dataCount, setDataCount } = useGlobalContext();
     const { addNotifications } = useNotification();
     const fetcher = useCentralFetcher();
 
     useEffect(() => {
         setHeaderText(createQuotation)
         async function getQoutes() {
-            const response = await fetcher("/api/quotes");
+            const response = await fetcher(`/api/quotes?skip=${dataCount}`, {
+                method: "GET",
+            });
             if (response.status === 200) {
-                setItems(await response.json());
+                const data = await response.json()
+                setItems(data);
+                setDataCount(dataCount + data.length)
             }
             else {
                 addNotifications({ title: "Failure...", message: "Fail to load data." });
@@ -68,7 +72,7 @@ const StaffTable = () => {
     };*/
 
 
-    const DataLength = items.length;
+    //const DataLength = items.length;
 
 
 

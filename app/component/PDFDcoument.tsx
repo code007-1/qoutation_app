@@ -128,7 +128,7 @@ export default function PDFDocument(data: QuotationData) {
                                 <Text style={styles.tableCell}>{e[1].quantity}</Text>
                                 <Text style={styles.tableCell}>Rs.{e[1].price}</Text>
                                 <Text style={styles.tableCell}>{data.discount} %</Text>
-                                <Text style={styles.tableCell}>Rs.{e[1].price * e[1].quantity * (1 - data.discount * 0.01)}</Text>
+                                <Text style={styles.tableCell}>Rs.{(e[1].price * e[1].quantity * (1 - data.discount * 0.01)).toFixed(2)}</Text>
                             </View>);
                     })}
                     <View style={Object.entries(data.items).length % 2 === 0 ? styles.tableRowEven : styles.tableRowOdd}>

@@ -53,7 +53,7 @@ export async function createPdf(data: QuotationData, fetcher: any) {
 export default function Quote() {
     const { items, setItems } = useGlobalContext();
     const [step, setStep] = useState<number>(0);
-    const { data, setData, userName, accessToken, setAccessToken, setHeaderText, profile } = useGlobalContext();
+    const { data, setData, accessToken, setAccessToken, setHeaderText, profile } = useGlobalContext();
     const fetcher = useCentralFetcher()
 
     const logoutFetcher = useFetcher<logoutData>();
@@ -92,7 +92,7 @@ export default function Quote() {
 
     useEffect(() => {
         const no = new Date().getTime().toString();
-        setData((pre) => { return { ...pre, no: no, from: profile.company, fromAddress: profile.address, email: profile.email, website: profile.website, contact: profile.contact, pdfColor: String(profile.pdfColor) } });
+        setData((pre) => { return { ...pre, no: no, from: profile.company, fromAddress: profile.address, email: profile.email, website: profile.website, contact: profile.contact, pdfColor: String(profile.pdfColor), madeby: profile.username || "" } });
     }, [])
 
     //updateItem={updatedItem} updatePrice={updatedPrice} updateQuanity={updatedQuanity} deleteItem={deleteItem}
