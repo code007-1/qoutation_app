@@ -32,12 +32,12 @@ export default function PDFDocument(data: QuotationData) {
         tableRowOdd: { flexDirection: "row", backgroundColor: `hsl(${hue} 100% 97%)` },
         tableCellHeader: { padding: 8, backgroundColor: `hsl(${hue} 100% 65%)`, textAlign: "left", fontSize: 11, color: "white" },
         tableCellBox: { width: "40%", padding: 8, textAlign: "left" },
-        tableCellLink: { fontSize: 10, color: "#384388", fontStyle: "italic", textDecoration: "none" },
-        tableCellName: { fontSize: 10, color: "#505050", fontStyle: "italic", textDecoration: "none" },
-        tableCellNameContent: { fontSize: 10, color: "#6E6E6E" },
-        tableCell: { flexGrow: 1, flexBasis: 0, padding: 8, textAlign: "left", fontSize: 10 },
-        tableCellSno: { width: "8%", padding: 8, textAlign: "left", fontSize: 10, color: "#505050" },
-        tableCellTotals: { padding: 8, textAlign: "left", fontSize: 10, fontWeight: "bold", color: "#505050" },
+        tableCellLink: { fontSize: 9, color: "#384388", fontStyle: "italic", textDecoration: "none" },
+        tableCellName: { fontSize: 9, color: "#505050", fontStyle: "italic", textDecoration: "none" },
+        tableCellNameContent: { fontSize: 9, color: "#6E6E6E" },
+        tableCell: { flexGrow: 1, flexBasis: 0, padding: 8, textAlign: "left", fontSize: 9, color: "#6E6E6E" },
+        tableCellSno: { width: "8%", padding: 8, textAlign: "left", fontSize: 9, color: "#505050" },
+        tableCellTotals: { padding: 8, textAlign: "left", fontSize: 9, fontWeight: "bold", color: "#505050" },
     });
 
     /*const data: QuotationData = {

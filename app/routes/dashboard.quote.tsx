@@ -51,10 +51,9 @@ export async function createPdf(data: QuotationData, fetcher: any) {
 }
 
 export default function Quote() {
-    const { items, setItems } = useGlobalContext();
+    const { items, setItems, data, setData, accessToken, setAccessToken, setHeaderText, profile } = useGlobalContext();
     const [step, setStep] = useState<number>(0);
-    const { data, setData, accessToken, setAccessToken, setHeaderText, profile } = useGlobalContext();
-    const fetcher = useCentralFetcher()
+    const fetcher = useCentralFetcher();
 
     const logoutFetcher = useFetcher<logoutData>();
     const navigate = useNavigate();

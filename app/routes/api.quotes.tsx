@@ -8,11 +8,12 @@ export const loader: LoaderFunction = async ({ request, params }) => {
         const url = new URL(request.url);
         const limit = 100;
         const skip = Number(url.searchParams.get("skip")) || 0;
+        console.log("skip is", skip);
         const result = await sortedSearch("unnamed", "quotations", {}, limit, skip, -1, "_id");
         return Response.json(result, { status: 200 });
     }
     catch (error) {
-        console.error("error while loading data : ", error);
+        console.error("error while loading quote data : ", error);
         throw new Response("Internal server error", { status: 500 });
     }
 }
