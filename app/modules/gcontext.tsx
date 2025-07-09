@@ -25,6 +25,8 @@ interface AppContextType {
     setProfile: React.Dispatch<React.SetStateAction<user>>;
     dataCount: number;
     setDataCount: React.Dispatch<React.SetStateAction<number>>;
+    quoteData: QuotationData[];
+    setQuoteData: React.Dispatch<React.SetStateAction<QuotationData[]>>;
 }
 
 const appContext = createContext<AppContextType | null>(null);
@@ -37,7 +39,8 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
     const [headerText, setHeaderText] = useState<string | ReactNode>(createQuotation);
     const [items, setItems] = useState<QuoteItems[]>([]);
     const [dataCount, setDataCount] = useState<number>(0);
-    const [quote, setQuote] = useState<string | undefined>();
+    const [quoteData, setQuoteData] = useState<QuotationData[]>([]);
+    const [gQuote, setGQuote] = useState<string | undefined>();
     const [profile, setProfile] = useState<user>({ contact: "+91 7065577059/60", address: "G-57, Vikas Marg, Near Metro Pillar No.41, \nDelhi - 110092", company: "Teen Telecommunication Pvt. Ltd.", email: "sales@teentelecommunication.com", pdfColor: "222", website: "https://teentelecommunication.com" });
 
     //const date = new Date().getTime().toString();
@@ -65,7 +68,7 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
     };
 
     return (
-        <appContext.Provider value={{ theme, toggleTheme, accessToken, setAccessToken, items, setItems, data, setData, userName, setUserName, headerText, setHeaderText, quote, setQuote, profile, setProfile, dataCount, setDataCount }}>
+        <appContext.Provider value={{ theme, toggleTheme, accessToken, setAccessToken, items, setItems, data, setData, userName, setUserName, headerText, setHeaderText, quote: gQuote, setQuote: setGQuote, profile, setProfile, dataCount, setDataCount, quoteData, setQuoteData }}>
             {children}
         </appContext.Provider>
     );
