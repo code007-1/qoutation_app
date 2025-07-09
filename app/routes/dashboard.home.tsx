@@ -31,21 +31,8 @@ const StaffTable = () => {
     const fetcher = useCentralFetcher();
 
     useEffect(() => {
-        setHeaderText(createQuotation)
-        async function getQoutes() {
-            const response = await fetcher(`/api/quotes?skip=${dataCount}`, {
-                method: "GET",
-            });
-            if (response.status === 200) {
-                const data = await response.json()
-                setItems(data);
-                setDataCount(dataCount + data.length)
-            }
-            else {
-                addNotifications({ title: "Failure...", message: "Fail to load data." });
-            }
-        }
-        getQoutes();
+        setHeaderText(createQuotation);
+
     }, []);
 
     /*    const handlePageChange = (page: any) => {
