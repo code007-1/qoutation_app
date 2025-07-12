@@ -39,22 +39,34 @@ const StaffTable = () => {
         }
     }
 
-
-    async function handleAdvanceSearch(query: { start: string, end: string, to: string }) {
-        const response = await fetcher(`/api/quotes?start=${query.start}&end=${query.end}&to=${query.to}`);
-        if (response.status === 200) {
-            const data = await response.json()
-            setQuoteData(data);
+    async function handleAdvanceSearch(query?: { start: string, end: string, to: string }) {
+        var response;
+        if (query) {
+            response = await fetcher(`/api/quotes?start=${query.start}&end=${query.end}&to=${query.to}`);
+            if (response.status === 200) {
+                const data = await response.json();
+                setQuoteData(data);
+            }
+            else if (response.status != 200) {
+                addNotifications({ title: "Failure...", message: "Fail to load data." });
+            }
+            setDataCount(0);
         }
         else {
-            addNotifications({ title: "Failure...", message: "Fail to load data." });
+            response = await fetcher(`/api/quotes?skip=${dataCount}`);
+            if (response.status === 200) {
+                const data = await response.json();
+                setQuoteData(pre => { return [...pre, ...data] });
+                setDataCount(quoteData.length + data.length);
+            }
+            else if (response.status != 200) {
+                addNotifications({ title: "Failure...", message: "Fail to load data." });
+            }
         }
     }
 
-
     useEffect(() => {
         setHeaderText(createQuotation);
-
         if (dataCount === 0)
             getQoutes();
     }, []);
@@ -62,10 +74,10 @@ const StaffTable = () => {
     /*    const handlePageChange = (page: any) => {
         setCurrentPage(page);
     };
-
-
+    
+    
     // handle the search here
-
+    
     const handleSearch = (query: string) => {
         query = query.toLowerCase();
         if (query.trim() === "") {
@@ -88,22 +100,24 @@ const StaffTable = () => {
 
 
     return (
-        <section className="mt-5">
-            <h3 className="text-[18px] mb-2 md:text-[24px] text-black">
+        <>
+            <section className="mt-5">
+                <h3 className="text-[18px] mb-2 md:text-[24px] text-black">
 
-            </h3>
-            <div>
-                <TableUI
-                    data={quoteData}
-                    columns={Columns}
-                    searchLabel="Search by Name or job title"
-                    EmptyText="No staff found!"
-                    isFetching={loading}
-                    //page={handlePageChange}
-                    search={handleAdvanceSearch}
-                />
-            </div>
-        </section>
+                </h3>
+                <div>
+                    <TableUI
+                        data={quoteData}
+                        columns={Columns}
+                        searchLabel="Search by Name or job title"
+                        EmptyText="No staff found!"
+                        isFetching={loading}
+                        //page={handlePageChange}
+                        search={handleAdvanceSearch}
+                    />
+                </div>
+            </section>
+        </>
     );
 };
 
