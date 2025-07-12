@@ -1,9 +1,7 @@
 import Header from "~/component/header";
 import { Outlet, useNavigate } from "@remix-run/react";
 import { useEffect } from "react";
-import { createQuotation, useGlobalContext } from "~/modules/gcontext";
-import { useCentralFetcher } from "~/component/centralFetcher";
-import { useNotification } from "~/modules/notificationContext";
+import { useGlobalContext } from "~/modules/gcontext";
 
 export default function Dashboard() {
     const navigate = useNavigate();
@@ -14,12 +12,6 @@ export default function Dashboard() {
         if (accessToken === undefined)
             navigate("/");
     }, [accessToken]);
-
-
-
-    useEffect(() => {
-
-    }, []);
 
     return (
         <>
