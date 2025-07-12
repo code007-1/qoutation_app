@@ -1,6 +1,6 @@
 import packageJson from '../../package.json';
 import { useFetcher, useNavigate } from "@remix-run/react";
-import { Loader } from "lucide-react";
+import { Loader, SunMoon } from "lucide-react";
 import { useEffect } from "react";
 import { useGlobalContext } from "~/modules/gcontext";
 import { useNotification } from "~/modules/notificationContext";
@@ -11,7 +11,7 @@ export default function Index() {
   const loginFetcher = useFetcher<loginData>();
   const isSubmitting = loginFetcher.state === "submitting";
   const navigate = useNavigate();
-  const { accessToken, setAccessToken, setProfile, setQuote } = useGlobalContext();
+  const { accessToken, setAccessToken, setProfile, setQuote, theme, toggleTheme } = useGlobalContext();
   const { addNotifications } = useNotification();
 
   useEffect(() => {
@@ -39,44 +39,59 @@ export default function Index() {
     }
   }, [accessToken]);
 
-
   return (
-    <loginFetcher.Form method="post" action="/api/login/">
-      <div className="flex items-center justify-center h-screen">
-
-        {/* Login Form */}
-        <div className="bg-white p-8 rounded-lg shadow-lg w-[25%]">
-          <div className="flex justify-center font-bold text-2xl">{packageJson.name[0].toUpperCase() + packageJson.name.slice(1)}</div>
-          <input
-            name="username"
-            type="text"
-            placeholder="Username"
-            className="w-full my-3 p-3 border border-gray-100 rounded-md"
-            autoComplete="username"
-          />
-          <input
-            name="password"
-            type="password"
-            placeholder="Password"
-            className="w-full my-3 p-3 border border-gray-100 rounded-md "
-            autoComplete="password"
-          />
+    <>
+      <div className="flex bg-headerBackground py-2">
+        <div className='absolute left-1/2 -translate-x-1/2 text-2xl font-semibold text-textPrimary '>
+          {packageJson.name[0].toUpperCase() + packageJson.name.slice(1)}
+        </div>
+        <div className='mr-0 ml-auto'>
           <button
-            type="submit"
-            disabled={isSubmitting}
-            className="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-500/80"
+            onClick={toggleTheme}
+            className="py-1 px-2 border-none hover:bg-buttonHover mx-10"
           >
-            {isSubmitting ? (
-              <span className="flex items-center justify-center">
-                <Loader className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" />
-                Logging in...
-              </span>
-            ) : (
-              "Login"
-            )}
+            <SunMoon color={`${theme === "light" ? "black" : "white"}`} />
           </button>
         </div>
-      </div>
-    </loginFetcher.Form >
+      </div >
+
+      <loginFetcher.Form method="post" action="/api/login/">
+        <div className="flex items-center justify-center h-screen bg-background">
+
+          {/* Login Form */}
+          <div className="bg-headerBackground p-8 shadow-lg w-[25%]">
+            <div className="flex justify-center font-bold text-2xl text-textPrimary">Login</div>
+            <input
+              name="username"
+              type="text"
+              placeholder="Username"
+              className="w-full my-3 p-3 border border-border bg-background text-textPrimary"
+              autoComplete="username"
+            />
+            <input
+              name="password"
+              type="password"
+              placeholder="Password"
+              className="w-full my-3 p-3 border border-border bg-background text-textPrimary"
+              autoComplete="password"
+            />
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="bg-button text-buttonTextPrimary px-4 py-1 text-lg"
+            >
+              {isSubmitting ? (
+                <span className="flex items-center justify-center">
+                  <Loader className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" />
+                  Logging in...
+                </span>
+              ) : (
+                "Login"
+              )}
+            </button>
+          </div>
+        </div>
+      </loginFetcher.Form >
+    </>
   );
 }

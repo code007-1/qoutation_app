@@ -294,7 +294,7 @@ const TableUI: FC<TableProps> = ({
                 </table>
             </div>
             {noDataFound && (
-                <div className="my-2 text-center">
+                <div className="my-2 text-center text-textSecondary">
                     {EmptyText}
                 </div>
             )}
