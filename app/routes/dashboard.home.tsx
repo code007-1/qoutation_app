@@ -39,6 +39,19 @@ const StaffTable = () => {
         }
     }
 
+
+    async function handleAdvanceSearch(query: { start: string, end: string, to: string }) {
+        const response = await fetcher(`/api/quotes?start=${query.start}&end=${query.end}&to=${query.to}`);
+        if (response.status === 200) {
+            const data = await response.json()
+            setQuoteData(data);
+        }
+        else {
+            addNotifications({ title: "Failure...", message: "Fail to load data." });
+        }
+    }
+
+
     useEffect(() => {
         setHeaderText(createQuotation);
 
@@ -86,8 +99,8 @@ const StaffTable = () => {
                     searchLabel="Search by Name or job title"
                     EmptyText="No staff found!"
                     isFetching={loading}
-                //page={handlePageChange}
-                //search={handleSearch}
+                    //page={handlePageChange}
+                    search={handleAdvanceSearch}
                 />
             </div>
         </section>

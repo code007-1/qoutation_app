@@ -1,4 +1,4 @@
-import { Dialog, DialogBackdrop, DialogPanel, DialogTitle, Label, Listbox, ListboxButton, ListboxOption, ListboxOptions, Select } from "@headlessui/react";
+import { Dialog, DialogBackdrop, DialogPanel, DialogTitle, Listbox, ListboxButton, ListboxOption, ListboxOptions, Dialog, DialogBackdrop, DialogPanel, DialogTitle } from "@headlessui/react";
 import { useNavigate } from "@remix-run/react";
 import {
     Cell,
@@ -19,6 +19,7 @@ import { ChangeEvent, FC, memo, ReactElement, useMemo, useState } from "react";
 import { useGlobalContext } from "~/modules/gcontext";
 import { createPdf, QuotationData } from "~/routes/dashboard.quote";
 import { useCentralFetcher } from "../centralFetcher";
+import { useNotification } from "~/modules/notificationContext";
 
 // Typescript interface
 
@@ -31,7 +32,7 @@ interface TableProps {
     headerComponent?: JSX.Element;
     pageCount?: number;
     page?: (page: number) => void;
-    search?: (search: string) => void;
+    search: (query: { start: string, end: string, to: string }) => Promise<void>;
     onClickRow?: (cell: Cell<any, unknown>, row: Row<any>) => void;
     searchLabel?: string;
     EmptyText?: string;
@@ -64,10 +65,7 @@ const TableUI: FC<TableProps> = ({
 
     const memoizedData = useMemo(() => data, [data]);
     const memoizedColumns = useMemo(() => columns, [columns]);
-    const memoisedHeaderComponent = useMemo(
-        () => headerComponent,
-        [headerComponent]
-    );
+    const memoisedHeaderComponent = useMemo(() => headerComponent, [headerComponent]);
     const [sorting, setSorting] = useState<SortingState>([]);
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
     const [type, setType] = useState<string>("no");
@@ -110,8 +108,11 @@ const TableUI: FC<TableProps> = ({
     };
 
     const navigate = useNavigate();
-    const { setData } = useGlobalContext();
+    const { setData, setQuoteData } = useGlobalContext();
     const fetcher = useCentralFetcher();
+    const [open, setOpen] = useState(true);
+    const { addNotifications } = useNotification();
+    const [query, setQuery] = useState({ start: "", end: "", to: "" });
 
     function handleEdit(row: QuotationData) {
         setData(row);
