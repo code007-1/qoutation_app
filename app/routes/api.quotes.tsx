@@ -6,7 +6,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     try {
         await verifyAccessToken(request);
         const url = new URL(request.url);
-        const limit = 100;
+        const limit = 1000;
         const skip = Number(url.searchParams.get("skip")) || 0;
 
         const start = url.searchParams.get("start") || "";

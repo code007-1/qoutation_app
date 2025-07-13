@@ -37,8 +37,8 @@ export type QuotationData = {
     pdfColor?: string;
 };
 
-export async function createPdf(data: QuotationData, fetcher: any) {
-    const response = await fetcher('/api/pdf', {
+export async function createPdf(data: QuotationData, fetcher: any, save: boolean = true) {
+    const response = await fetcher(`/api/pdf?save=${save}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),

@@ -6,7 +6,7 @@ import { Columns } from "~/component/table/columns";
 
 import { dummyQuotations } from "~/component/table/data";
 import TableUI from "~/component/table/tableUI";
-import { createQuotation, useGlobalContext } from "~/modules/gcontext";
+import { createQuotation, initialQoutationData, useGlobalContext } from "~/modules/gcontext";
 import { QuotationData } from "./dashboard.quote";
 import { useCentralFetcher } from "~/component/centralFetcher";
 import { useLoaderData } from "@remix-run/react";
@@ -26,7 +26,7 @@ const StaffTable = () => {
 
     const ITEMS_PER_PAGE = 10;
 
-    const { quoteData, setHeaderText, dataCount, setDataCount, setQuoteData } = useGlobalContext();
+    const { quoteData, setHeaderText, dataCount, setDataCount, setQuoteData, setData, setItems } = useGlobalContext();
     async function getQoutes() {
         const response = await fetcher(`/api/quotes?skip=${dataCount}`);
         if (response.status === 200) {
@@ -56,8 +56,14 @@ const StaffTable = () => {
             response = await fetcher(`/api/quotes?skip=${dataCount}`);
             if (response.status === 200) {
                 const data = await response.json();
-                setQuoteData(pre => { return [...pre, ...data] });
-                setDataCount(quoteData.length + data.length);
+                if (dataCount == 0) {
+                    setQuoteData(data);
+                    setDataCount(data.length);
+                }
+                else {
+                    setQuoteData(pre => { return [...pre, ...data] });
+                    setDataCount(quoteData.length + data.length);
+                }
             }
             else if (response.status != 200) {
                 addNotifications({ title: "Failure...", message: "Fail to load data." });
@@ -66,6 +72,8 @@ const StaffTable = () => {
     }
 
     useEffect(() => {
+        setData(initialQoutationData);
+        setItems([]);
         setHeaderText(createQuotation);
         if (dataCount === 0)
             getQoutes();

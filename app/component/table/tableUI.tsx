@@ -1,8 +1,22 @@
 import { Listbox, ListboxButton, ListboxOption, ListboxOptions, Dialog, DialogBackdrop, DialogPanel, DialogTitle } from "@headlessui/react";
 import { useNavigate } from "@remix-run/react";
-import { Cell, ColumnDef, ColumnFiltersState, flexRender, getCoreRowModel, getFilteredRowModel, getSortedRowModel, OnChangeFn, Row, SortingState, useReactTable } from "@tanstack/react-table";
-import { ChevronDown } from "lucide-react";
-import { ChangeEvent, FC, memo, useMemo, useState } from "react";
+import {
+    Cell,
+    ColumnDef,
+    ColumnFiltersState,
+    flexRender,
+    getCoreRowModel,
+    getFilteredRowModel,
+    getPaginationRowModel,
+    getSortedRowModel,
+    OnChangeFn,
+    PaginationState,
+    Row,
+    SortingState,
+    useReactTable,
+} from "@tanstack/react-table";
+import { AlignRight, ChevronDown, ChevronLeft, ChevronRight, ChevronsUpDownIcon } from "lucide-react";
+import { ChangeEvent, FC, memo, ReactElement, useMemo, useState } from "react";
 import { useGlobalContext } from "~/modules/gcontext";
 import { createPdf, QuotationData } from "~/routes/dashboard.quote";
 import { useCentralFetcher } from "../centralFetcher";
@@ -23,8 +37,8 @@ interface TableProps {
     onClickRow?: (cell: Cell<any, unknown>, row: Row<any>) => void;
     searchLabel?: string;
     EmptyText?: string;
-    children?: React.ReactNode | React.ReactElement;
-    handleRow?: () => void;
+    children?: React.ReactNode | React.ReactElement
+    handleRow?: () => void
 
 }
 
@@ -45,10 +59,9 @@ const TableUI: FC<TableProps> = ({
     searchLabel = "Search",
     EmptyText,
     children,
-    handleRow,
+    handleRow
 
 }) => {
-    const [paginationPage, setPaginationPage] = useState(1);
 
     const memoizedData = useMemo(() => data, [data]);
     const memoizedColumns = useMemo(() => columns, [columns]);
@@ -56,6 +69,7 @@ const TableUI: FC<TableProps> = ({
     const [sorting, setSorting] = useState<SortingState>([]);
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
     const [type, setType] = useState<string>("no");
+
     function getType(type: string) {
         if (type === "no") return "Quotation #";
         else if (type === "madeby") return "Made By";
@@ -66,17 +80,24 @@ const TableUI: FC<TableProps> = ({
         else type;
     }
 
-    const { getHeaderGroups, getRowModel, getAllColumns, getColumn, firstPage, getCanPreviousPage, lastPage, previousPage, nextPage, getState, getPageCount, getCanNextPage, setPageIndex, setPageSize } = useReactTable({
+    const [pagination, setPagination] = useState<PaginationState>({ pageIndex: 0, pageSize: 10 })
+
+
+    const { getHeaderGroups, getRowModel, getAllColumns, getColumn, firstPage, getCanNextPage, getCanPreviousPage, getState, getPageCount, setPageIndex, setPageSize, lastPage, nextPage, previousPage, getRowCount } = useReactTable({
         data: memoizedData,
         columns: memoizedColumns,
         getCoreRowModel: getCoreRowModel(),
-        manualPagination: true,
+        //manualPagination: true,
         onSortingChange: setSorting,
         getSortedRowModel: getSortedRowModel(),
         onColumnFiltersChange: setColumnFilters,
         getFilteredRowModel: getFilteredRowModel(),
-        state: { sorting, columnFilters },
-        pageCount,
+        getPaginationRowModel: getPaginationRowModel(),
+        autoResetPageIndex: false,
+        state: {
+            sorting, columnFilters, pagination
+        },
+        //pageCount,
     });
 
     const skeletons = Array.from({ length: skeletonCount }, (x, i) => i);
@@ -86,109 +107,104 @@ const TableUI: FC<TableProps> = ({
     const noDataFound =
         !isFetching && (!memoizedData || memoizedData.length === 0);
 
-    const handlePageChange = (
-        event: ChangeEvent<unknown>,
-        currentPage: number
-    ) => {
-        setPaginationPage(currentPage === 0 ? 1 : currentPage);
-        page?.(currentPage === 0 ? 1 : currentPage);
-    };
-
     const navigate = useNavigate();
-    const { setData } = useGlobalContext();
+    const { setData, setItems } = useGlobalContext();
     const fetcher = useCentralFetcher();
     const [open, setOpen] = useState(false);
     const [query, setQuery] = useState({ start: "", end: "", to: "" });
 
     function handleEdit(row: QuotationData) {
         setData(row);
+        setItems(row.items);
         navigate("/dashboard/quote");
     }
 
-
     return (
         <div className="">
-            <div className="flex justify-between">
-                <div className="flex space-x-4 items-center align-middle">
-                    <Listbox value={type} onChange={setType}>
-                        <div className="relative">
-                            <ListboxButton className="flex items-center hover:bg-buttonHover px-2 border border-border py-2">
-                                <div className="text-textSecondary mr-2">{getType(type)}</div>
-                                <ChevronDown className="text-textPrimary" />
-                            </ListboxButton>
+            <div className="flex space-x-4 items-center align-middle">
 
-                            <ListboxOptions
-                                transition
-                                className="absolute -right-34 z-10 mt-2 w-56 origin-top-right rounded-sm bg-background shadow-lg ring-1 ring-black/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
+                <Listbox value={type} onChange={setType}>
+                    <div className="relative">
+                        <ListboxButton className="flex items-center hover:bg-buttonHover px-2 border border-border py-2">
+                            <div className="text-textSecondary mr-2">{getType(type)}</div>
+                            <ChevronDown className="text-textPrimary" />
+                        </ListboxButton>
+
+                        <ListboxOptions
+                            transition
+                            className="absolute -right-34 z-10 mt-2 w-56 origin-top-right rounded-sm bg-background shadow-lg ring-1 ring-black/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
+                        >
+                            <ListboxOption
+                                key={"no"}
+                                value={"no"}
+                                className="block px-4 py-2 text-sm text-textSecondary data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
                             >
-                                <ListboxOption
-                                    key={"no"}
-                                    value={"no"}
-                                    className="block px-4 py-2 text-sm text-textSecondary data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
-                                >
-                                    Quotation #
-                                </ListboxOption>
-                                <ListboxOption
-                                    key={"madeby"}
-                                    value={"madeby"}
-                                    className="block px-4 py-2 text-sm text-textSecondary data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
-                                >
-                                    Made By
-                                </ListboxOption>
-                                <ListboxOption
-                                    key={"date"}
-                                    value={"date"}
-                                    className="block px-4 py-2 text-sm text-textSecondary data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
-                                >
-                                    Date
-                                </ListboxOption>
-                                <ListboxOption
-                                    key={"to"}
-                                    value={"to"}
-                                    className="block px-4 py-2 text-sm text-textSecondary data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
-                                >
-                                    To
-                                </ListboxOption>
-                                <ListboxOption
-                                    key={"discount"}
-                                    value={"discount"}
-                                    className="block px-4 py-2 text-sm text-textSecondary data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
-                                >
-                                    Discount
-                                </ListboxOption>
-                            </ListboxOptions>
-                        </div>
-                    </Listbox>
-                    <input
-                        placeholder="Filter....."
-                        value={(getColumn(type)?.getFilterValue() as string) ?? ""}
-                        onChange={(event) =>
-                            getColumn(type)?.setFilterValue(event.target.value)
-                        }
-                        className="border p-2 w-[20%] border-border bg-background text-textPrimary focus:outline-textPrimary"
-                    />
-                    <button
-                        onClick={() => setOpen(true)}
-                        className="bg-button text-buttonTextPrimary p-2"
-                    >
-                        Advance Filter
-                    </button>
-                    <button
-                        onClick={(e) => { search() }}
-                        className="bg-button text-buttonTextPrimary p-2"
-                    >
-                        Reset Advance Filter
-                    </button>
-                </div>
-                <div>
-                    <button
-                        onClick={(e) => { search() }}
-                        className="bg-button text-buttonTextPrimary p-2"
-                    >
-                        Load More
-                    </button>
+                                Quotation #
+                            </ListboxOption>
+                            <ListboxOption
+                                key={"madeby"}
+                                value={"madeby"}
+                                className="block px-4 py-2 text-sm text-textSecondary data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
+                            >
+                                Made By
+                            </ListboxOption>
+                            <ListboxOption
+                                key={"date"}
+                                value={"date"}
+                                className="block px-4 py-2 text-sm text-textSecondary data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
+                            >
+                                Date
+                            </ListboxOption>
+                            <ListboxOption
+                                key={"to"}
+                                value={"to"}
+                                className="block px-4 py-2 text-sm text-textSecondary data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
+                            >
+                                To
+                            </ListboxOption>
+                            <ListboxOption
+                                key={"discount"}
+                                value={"discount"}
+                                className="block px-4 py-2 text-sm text-textSecondary data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
+                            >
+                                Discount
+                            </ListboxOption>
+                        </ListboxOptions>
+                    </div>
+                </Listbox>
+                <input
+                    placeholder="Filter....."
+                    value={(getColumn(type)?.getFilterValue() as string) ?? ""}
+                    onChange={(event) =>
+                        getColumn(type)?.setFilterValue(event.target.value)
+                    }
+                    className="border p-2 w-[20%] border-border bg-background text-textPrimary focus:outline-textPrimary"
+                />
+                <button
+                    onClick={() => setOpen(true)}
+                    className="bg-button text-buttonTextPrimary p-2"
+                >
+                    Advance Filter
+                </button>
+                <button
+                    onClick={() => { search() }}
+                    className="bg-button text-buttonTextPrimary p-2"
+                >
+                    Reset Advance Filter
+                </button>
+                <div className="flex-1">
+                    <div className="w-full flex justify-end">
+                        <button
+                            onClick={() => { search() }}
+                            className=" bg-button text-buttonTextPrimary p-2"
+                        >
+                            Load More
+                        </button>
+                    </div>
                 </div>
             </div>
+
+
             <div>
                 <Dialog open={open} onClose={setOpen} className="relative z-10">
                     <DialogBackdrop
@@ -208,23 +224,20 @@ const TableUI: FC<TableProps> = ({
                                             Advance Filter
                                         </DialogTitle>
                                     </div>
-                                    <div className="grid grid-cols-2">
-                                        <div>Start Date</div>
-                                        <input type="date" onChange={(e) => setQuery(pre => { return { ...pre, start: e.target.value } })} />
-                                        <div >End Date</div>
-                                        <input type="date" onChange={(e) => setQuery(pre => { return { ...pre, end: e.target.value } })} />
+                                    <div className="mt-2 grid grid-cols-2">
+                                        <div>Start</div>
+                                        <input type="date" className="p-2" onChange={(e) => { setQuery(pre => { return { ...pre, start: e.target.value } }) }} />
+                                        <div>End</div>
+                                        <input type="date" className="p-2" onChange={(e) => { setQuery(pre => { return { ...pre, end: e.target.value } }) }} />
                                         <div>To</div>
-                                        <input type="text" onChange={(e) => setQuery(pre => { return { ...pre, to: e.target.value } })} />
+                                        <input type="text" className="p-2" onChange={(e) => { setQuery(pre => { return { ...pre, to: e.target.value } }) }} />
                                     </div>
                                 </div>
                                 <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
                                     <button
                                         type="button"
-                                        onClick={() => {
-                                            setOpen(false);
-                                            search(query);
-                                        }}
-                                        className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-red-500 sm:ml-3 sm:w-auto"
+                                        onClick={() => { search(query); setOpen(false); }}
+                                        className="bg-button text-buttonTextPrimary px-4 py-1 mt-4 text-lg"
                                     >
                                         Search
                                     </button>
@@ -232,7 +245,7 @@ const TableUI: FC<TableProps> = ({
                                         type="button"
                                         data-autofocus
                                         onClick={() => setOpen(false)}
-                                        className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-xs ring-1 ring-gray-300 ring-inset hover:bg-gray-50 sm:mt-0 sm:w-auto"
+                                        className="bg-button text-buttonTextPrimary px-4 py-1 mt-4 text-lg"
                                     >
                                         Cancel
                                     </button>
@@ -245,7 +258,6 @@ const TableUI: FC<TableProps> = ({
             <div className="p-4">
                 {memoisedHeaderComponent && <div>{memoisedHeaderComponent}</div>}
             </div>
-
             <div className="">
                 <table className="w-full">
                     <thead>
@@ -270,7 +282,7 @@ const TableUI: FC<TableProps> = ({
                                 <tr key={row.id} className="bg-header cursor-pointer hover:bg-buttonHover">
                                     {row.getVisibleCells().map((cell) => (
                                         <td
-                                            onClick={(e) => { cell.column.id === "edit" ? handleEdit(row.original) : createPdf(row.original, fetcher); }}
+                                            onClick={(e) => { cell.column.id === "edit" ? handleEdit(row.original) : createPdf(row.original, fetcher, false); }}
                                             key={cell.id}
                                             className="text-textSecondary text-base text-left p-2"
                                         >
@@ -281,7 +293,8 @@ const TableUI: FC<TableProps> = ({
                                         </td>
                                     ))}
                                 </tr>
-                            ))
+                            )
+                            )
                         ) : (
                             <>
                                 {skeletons.map((skeleton) => (
@@ -299,41 +312,22 @@ const TableUI: FC<TableProps> = ({
                         )}
                     </tbody>
                 </table>
+
             </div>
-            {noDataFound && (
-                <div className="my-2 text-center text-textSecondary">
-                    {EmptyText}
-                </div>
-            )}
-            <div className="h-2" />
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 text-textSecondary mt-4">
                 <button
-                    className="border rounded p-1"
-                    onClick={() => firstPage()}
+                    className="border rounded p-1 border-border"
+                    onClick={() => setPagination({ pageIndex: pagination.pageIndex - 1, pageSize: pagination.pageSize })}
                     disabled={!getCanPreviousPage()}
                 >
-                    {'<<'}
+                    <ChevronLeft />
                 </button>
                 <button
-                    className="border rounded p-1"
-                    onClick={() => previousPage()}
-                    disabled={!getCanPreviousPage()}
-                >
-                    {'<'}
-                </button>
-                <button
-                    className="border rounded p-1"
-                    onClick={() => nextPage()}
+                    className="border rounded p-1 border-border"
+                    onClick={(e) => setPagination({ pageIndex: pagination.pageIndex + 1, pageSize: pagination.pageSize })}
                     disabled={!getCanNextPage()}
                 >
-                    {'>'}
-                </button>
-                <button
-                    className="border rounded p-1"
-                    onClick={() => lastPage()}
-                    disabled={!getCanNextPage()}
-                >
-                    {'>>'}
+                    <ChevronRight />
                 </button>
                 <span className="flex items-center gap-1">
                     <div>Page</div>
@@ -350,36 +344,39 @@ const TableUI: FC<TableProps> = ({
                         max={getPageCount()}
                         defaultValue={getState().pagination.pageIndex + 1}
                         onChange={e => {
-                            const page = e.target.value ? Number(e.target.value) - 1 : 0
-                            setPageIndex(page)
+                            const page = e.target.value ? Number(e.target.value) - 1 : 0;
+                            setPagination(pre => { return { ...pre, pageIndex: page } })
                         }}
-                        className="border p-1 rounded w-16"
+                        className="border border-border bg-header p-1 w-16"
                     />
                 </span>
-                <select
+                <select className="p-2 bg-header border border-border"
                     value={getState().pagination.pageSize}
                     onChange={e => {
                         setPageSize(Number(e.target.value))
+                        setPagination({ pageIndex: pagination.pageIndex, pageSize: Number(e.target.value) });
                     }}
                 >
-                    {[2, 4, 6, 8, 10].map(pageSize => (
+                    {[10, 20, 30, 40, 50].map(pageSize => (
                         <option key={pageSize} value={pageSize}>
                             Show {pageSize}
                         </option>
                     ))}
                 </select>
+                {/*<div>
+                    Showing {getRowModel().rows.length.toLocaleString()} of{' '}
+                    {getRowCount().toLocaleString()} Rows
+                </div>*/}
             </div>
-            {/*pageCount && page && (
-                <div
-                    count={pageCount}
-                    page={paginationPage}
-                    onChange={handlePageChange}
-                    color="primary"
-                    showFirstButton
-                    showLastButton
-                />
-            )*/}
-        </div>
+
+            {
+                noDataFound && (
+                    <div className="my-2 text-center text-textSecondary">
+                        {EmptyText}
+                    </div>
+                )
+            }
+        </div >
     );
 };
 

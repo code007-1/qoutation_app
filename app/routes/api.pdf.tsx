@@ -9,7 +9,12 @@ export const action: ActionFunction = async ({ request, params }) => {
     try {
         await verifyAccessToken(request);
         const data = await request.json();
-        await insertOnetoDb(data);
+
+        const url = new URL(request.url);
+        const save = url.searchParams.get("save") || "true";
+        if (save === "true")
+            await insertOnetoDb(data);
+
         //console.log("PDF loader called", request, params, data);
         // Fetch the data you need for the PDF
 
