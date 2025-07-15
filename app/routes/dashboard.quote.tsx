@@ -1,4 +1,4 @@
-import { Link, useFetcher, useNavigate } from "@remix-run/react";
+import { Link, useFetcher, useLocation, useNavigate } from "@remix-run/react";
 import { useEffect, useState } from "react";
 import { createQuotation, useGlobalContext } from "~/modules/gcontext";
 import AutocompleteSearch from "~/component/autocompleteSearch";
@@ -51,6 +51,9 @@ export async function createPdf(data: QuotationData, fetcher: any, save: boolean
 }
 
 export default function Quote() {
+    const location = useLocation();
+    const passedData = location.state;
+
     const { items, setItems, data, setData, accessToken, setAccessToken, setHeaderText, profile } = useGlobalContext();
     const [step, setStep] = useState<number>(0);
     const fetcher = useCentralFetcher();
@@ -90,7 +93,11 @@ export default function Quote() {
     }, [items]);
 
     useEffect(() => {
-        const no = new Date().getTime().toString();
+        var no = data.no;
+        if (passedData && passedData?.editting === "false") {
+            no = new Date().getTime().toString();
+            console.log("dasdasdsa", passedData?.editing);
+        }
         setData((pre) => { return { ...pre, no: no, from: profile.company, fromAddress: profile.address, email: profile.email, website: profile.website, contact: profile.contact, pdfColor: String(profile.pdfColor), madeby: profile.username || "" } });
     }, [])
 

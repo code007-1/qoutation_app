@@ -116,7 +116,7 @@ const TableUI: FC<TableProps> = ({
     function handleEdit(row: QuotationData) {
         setData(row);
         setItems(row.items);
-        navigate("/dashboard/quote");
+        navigate("/dashboard/quote", { state: { editing: true } });
     }
 
     return (

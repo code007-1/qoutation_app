@@ -99,8 +99,9 @@ export async function update(db: string = "unnamed", collection: string = "users
 
 export async function insertOnetoDb(data: any, db: string = "unnamed", collection: string = "quotations") {
     client.connect().then(async (e) => {
-        const result = await client.db(db).collection(collection).insertOne(data);
-        console.log(`New item created with the following id: ${result.insertedId} : ${result}`);
+        const { _id, ...restData } = data;
+        const result = await client.db(db).collection(collection).updateOne({ "no": data.no }, { $set: { ...restData } }, { upsert: true });
+        console.log(`New item created with the following id: ${result.upsertedId} : ${result}`);
     }).catch(console.error).finally(() => client.close());
 
 }

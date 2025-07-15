@@ -1,4 +1,5 @@
 import { ActionFunction, LoaderFunction } from "@remix-run/node";
+import { insertOnetoDb } from "~/modules/dbOnline";
 import { commitSession, getSession } from "~/modules/sessions";
 
 export const loader: LoaderFunction = async ({ request }) => {
@@ -10,7 +11,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 
         const session = await getSession();
         session.unset("rToken");
-
+        //await insertOnetoDb({ "by": username, "action": "logging in", "result": "succeded", "when": new Date().toISOString() }, "unnamed", "logs");
         return Response.json({ status: 200 }, { headers: { "Set-Cookie": await commitSession(session) } });
     }
     catch (error) {
