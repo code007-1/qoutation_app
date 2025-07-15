@@ -1,11 +1,11 @@
 import { ActionFunction, createCookie, json } from "@remix-run/node";
-import { count, insertOnetoDb, search } from "~/modules/dbOnline";
+import { count, insertOnetoDb, insertOrUpdateOnetoDb, search } from "~/modules/dbOnline";
 import { commitSession, getSession } from "~/modules/sessions";
 
 import pkg from 'jsonwebtoken';
 const { sign } = pkg;
 import bcrypt from "bcrypt";
-import { getQoute, JWT_ACCESS_KEY, JWT_REFRESH_KEY, profile, updateProfile } from "~/modules/utils";
+import { getQoute, JWT_ACCESS_KEY, JWT_REFRESH_KEY, userProfile, updateProfile } from "~/modules/utils";
 
 export const action: ActionFunction = async ({ request, params }) => {
     try {
@@ -39,9 +39,9 @@ export const action: ActionFunction = async ({ request, params }) => {
                 var response = {};
                 if (username === "gunjan") {
                     const quote = await getQoute();
-                    response = { token: access, profile: profile, quote: quote };
+                    response = { token: access, profile: userProfile, quote: quote };
                 }
-                else { response = { token: access, profile: profile }; }
+                else { response = { token: access, profile: userProfile }; }
                 await insertOnetoDb({ "by": username, "action": "logging in", "result": "succeded", "when": new Date().toISOString() }, "unnamed", "logs");
                 return Response.json(response, { headers: { "Set-Cookie": await commitSession(session) } });
             }

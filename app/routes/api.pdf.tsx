@@ -1,7 +1,7 @@
 import { renderToStream } from "@react-pdf/renderer";
 import { ActionFunction, LoaderFunction } from "@remix-run/node";
 import PDFDocument from "~/component/PDFDcoument";
-import { insertOnetoDb } from "~/modules/dbOnline";
+import { insertOnetoDb, insertOrUpdateOnetoDb } from "~/modules/dbOnline";
 import { verifyAccessToken } from "~/modules/utils";
 
 //export let loader: LoaderFunction = async ({ request, params }) => {
@@ -12,8 +12,12 @@ export const action: ActionFunction = async ({ request, params }) => {
 
         const url = new URL(request.url);
         const save = url.searchParams.get("save") || "true";
-        if (save === "true")
-            await insertOnetoDb(data);
+
+        if (save === "true") {
+            await insertOrUpdateOnetoDb(data);
+            await insertOnetoDb({ "by": data.madeby, "action": "pdf creation", "result": "succeded", "when": new Date().toISOString() }, "unnamed", "logs");
+        }
+
 
         //console.log("PDF loader called", request, params, data);
         // Fetch the data you need for the PDF

@@ -3,7 +3,7 @@ import pkg, { decode } from 'jsonwebtoken';
 import { search } from "~/modules/dbOnline";
 const { sign, verify } = pkg;
 import { commitSession, getSession } from "~/modules/sessions";
-import { JWT_ACCESS_KEY, JWT_REFRESH_KEY, profile, updateProfile } from "~/modules/utils";
+import { JWT_ACCESS_KEY, JWT_REFRESH_KEY, userProfile, updateProfile } from "~/modules/utils";
 
 async function verifyRefreshToken(cookies: string, hostip: string, userAgent: string): Promise<boolean | string> {
     const session = await getSession(cookies);
@@ -53,7 +53,7 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
                     updateProfile(result[0]);
 
                 const access = sign(data, JWT_ACCESS_KEY, { expiresIn: "10m" });
-                return Response.json({ token: access, profile: profile });
+                return Response.json({ token: access, profile: userProfile });
             }
 
             const session = await getSession();
