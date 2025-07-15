@@ -46,13 +46,13 @@ export default function Profile() {
                     Website : <input type="text" name="website" placeholder="abc@email.com" className="border border-border p-2 w-full bg-background" value={profile?.website} onChange={(e) => { setProfile((pre) => { return { ...pre, website: e.target.value } }) }} />
                 </div>
                 <div>
-                    company : <input type="text" name="company" placeholder="abc@email.com" className="border border-border p-2 w-full bg-background" value={profile?.company} onChange={(e) => { setProfile((pre) => { return { ...pre, company: e.target.value } }) }} />
+                    Company : <input type="text" name="company" placeholder="abc@email.com" className="border border-border p-2 w-full bg-background" value={profile?.company} onChange={(e) => { setProfile((pre) => { return { ...pre, company: e.target.value } }) }} />
                 </div>
                 <div>
-                    address :     <textarea rows={5} placeholder="Enter Address" className="border border-border p-2 w-full bg-background" value={profile?.address} onChange={(e) => { setProfile((pre) => { return { ...pre, address: e.target.value } }) }} />
+                    Address :     <textarea rows={5} placeholder="Enter Address" className="border border-border p-2 w-full bg-background" value={profile?.address} onChange={(e) => { setProfile((pre) => { return { ...pre, address: e.target.value } }) }} />
                 </div>
                 <div>
-                    PDF Accent Color : <input max={360} min={0} type="number" name="pdfColor" placeholder="Enter Color HUE Value" className="border border-border p-2 w-full bg-background" value={profile?.pdfColor} onChange={(e) => { setProfile((pre) => { return { ...pre, pdfColor: e.target.value } }) }} />
+                    PDF Accent Color : <input max={360} min={0} title="Hue Value for Color (0, 360)" type="number" name="pdfColor" placeholder="Enter Color HUE Value" className="border border-border p-2 w-full bg-background" value={profile?.pdfColor} onChange={(e) => { setProfile((pre) => { return { ...pre, pdfColor: e.target.value } }) }} />
                 </div>
             </div>
             <div className="flex justify-center ">

@@ -1,5 +1,5 @@
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown, Pencil } from "lucide-react";
+import { ArrowUpDown, Copy, Pencil } from "lucide-react";
 
 export const sortButton = (column: any, name: string) => {
     return (
@@ -74,7 +74,7 @@ export const Columns: ColumnDef<any, any>[] = [
         accessorKey: "amount",
         header: "Amount",
         cell: (user: any) => {
-            return <span>Rs.{user.row.original.amount}</span>
+            return <span>Rs.{user.row.original.amount.toLocaleString('en-US')}</span>
         },
     },
     {
@@ -82,6 +82,13 @@ export const Columns: ColumnDef<any, any>[] = [
         header: "Edit",
         cell: (user: any) => {
             return <span><Pencil /></span>
+        },
+    },
+    {
+        accessorKey: "copy",
+        header: "Copy",
+        cell: (user: any) => {
+            return <span><Copy /></span>
         },
     },
     // You can follow the structure to display other data such as country and status

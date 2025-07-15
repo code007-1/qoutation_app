@@ -93,11 +93,10 @@ export default function Quote() {
     }, [items]);
 
     useEffect(() => {
-        var no = data.no;
-        if (passedData && passedData?.editting === "false") {
-            no = new Date().getTime().toString();
-            console.log("dasdasdsa", passedData?.editing);
-        }
+        var no = new Date().getTime().toString();
+        if (passedData && passedData?.editing === true)
+            no = data.no;
+
         setData((pre) => { return { ...pre, no: no, from: profile.company, fromAddress: profile.address, email: profile.email, website: profile.website, contact: profile.contact, pdfColor: String(profile.pdfColor), madeby: profile.username || "" } });
     }, [])
 
@@ -182,7 +181,7 @@ export default function Quote() {
                                 <div className="flex justify-between w-full">
                                     <div className="flex items-center">
                                         <div className="text-sm font-semibold mr-4">Taxable Value:</div>
-                                        <div className="">Rs.{data.amount}</div>
+                                        <div className="">Rs.{data.amount.toLocaleString('en-US')}</div>
                                     </div>
                                     <div className="flex items-center">
                                         <label className="text-sm font-semibold mr-4">Tax (%)</label>
@@ -194,7 +193,7 @@ export default function Quote() {
                                     </div>
                                     <div className="flex items-center">
                                         <div className="text-sm font-semibold mr-4">Total:</div>
-                                        <div className="">Rs.{(data.amount * (1 + data.tax * 0.01) * (1 - data.discount * 0.01)).toFixed(2)}</div>
+                                        <div className="">Rs.{Number((data.amount * (1 + data.tax * 0.01) * (1 - data.discount * 0.01)).toFixed(2)).toLocaleString('en-US')}</div>
                                     </div>
                                 </div>
                                 <div className="flex justify-center space-x-4">
@@ -225,7 +224,7 @@ export default function Quote() {
                                     <button onClick={() => setStep(1)} className="bg-button text-buttonTextPrimary px-4 py-1 mt-4 text-lg">
                                         Back
                                     </button>
-                                    <form onSubmit={(e) => { createPdf(data, fetcher); e.preventDefault(); }}>
+                                    <form onSubmit={(e) => { createPdf(data, fetcher); e.preventDefault(); navigate("/dashboard/home") }}>
                                         <button className="bg-button text-buttonTextPrimary px-4 py-1 mt-4 text-lg" type="submit">Generate Qoutation PDF</button>
                                     </form>
                                 </div>

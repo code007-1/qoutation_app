@@ -15,7 +15,7 @@ export default function Header() {
                     <div className="w-1/3 text-2xl font-semibold text-textPrimary text-center">{packageJson.name[0].toUpperCase() + packageJson.name.slice(1)}</div>
 
                     <div className="w-1/3 flex justify-end items-center">
-                        <Link to={"/dashboard/home"} className="text-xl text-textPrimary mr-10 px-2 hover:bg-buttonHover">HOME</Link>
+                        <Link to={"/dashboard/home"} className="text-xl text-textPrimary mr-10 px-2 hover:bg-buttonHover">Home</Link>
                         <MainMenu />
                         <button
                             onClick={toggleTheme}

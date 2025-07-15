@@ -76,24 +76,24 @@ export default function PDFDocument(data: QuotationData) {
                 </View>
                 <View style={styles.rowContainer}>
                     <Text>
-                        <Text style={styles.qoutationDetails}>Qoutation No:</Text>
+                        <Text style={styles.qoutationDetails}>Quotation No:</Text>
                         <Text style={styles.intro}>{data.no}</Text>
                     </Text>
                     <Text>
-                        <Text style={styles.qoutationDetails}>Qoutation Date: </Text>
+                        <Text style={styles.qoutationDetails}>Quotation Date: </Text>
                         <Text style={styles.intro}>{data.date}</Text>
                     </Text>
                 </View>
                 <Text style={styles.newline} >{"\n\n\n"}</Text>
                 <View style={styles.rowContainer}>
                     <View style={styles.paragraph}>
-                        <Text style={styles.fromto}>Qoutation by</Text>
+                        <Text style={styles.fromto}>Quotation by</Text>
                         <Text style={styles.newline}>{"\n"}</Text>
                         <Text style={styles.bold}>{data.from}</Text>
                         <Text style={styles.address}>{data.fromAddress}</Text>
                     </View>
                     <View style={styles.paragraph}>
-                        <Text style={styles.fromto}>Qoutation to{"\n"}</Text>
+                        <Text style={styles.fromto}>Quotation to{"\n"}</Text>
                         <Text style={styles.newline}>{"\n"}</Text>
                         <Text style={styles.bold}>{data.to}</Text>
                         <Text style={styles.address}>{data.toAddress}</Text>
@@ -126,9 +126,9 @@ export default function PDFDocument(data: QuotationData) {
                                     <Text style={styles.tableCellNameContent}>{e[1].description}</Text>
                                 </View>
                                 <Text style={styles.tableCell}>{e[1].quantity}</Text>
-                                <Text style={styles.tableCell}>Rs.{e[1].price}</Text>
+                                <Text style={styles.tableCell}>Rs.{Number(e[1].price).toLocaleString('en-US')}</Text>
                                 <Text style={styles.tableCell}>{data.discount} %</Text>
-                                <Text style={styles.tableCell}>Rs.{(e[1].price * e[1].quantity * (1 - data.discount * 0.01)).toFixed(2)}</Text>
+                                <Text style={styles.tableCell}>Rs.{Number((e[1].price * e[1].quantity * (1 - data.discount * 0.01)).toFixed(2)).toLocaleString('en-US')}</Text>
                             </View>);
                     })}
                     <View style={Object.entries(data.items).length % 2 === 0 ? styles.tableRowEven : styles.tableRowOdd}>
@@ -137,7 +137,7 @@ export default function PDFDocument(data: QuotationData) {
                         <Text style={styles.tableCell}></Text>
                         <Text style={styles.tableCell}></Text>
                         <Text style={styles.tableCell}></Text>
-                        <Text style={[styles.tableCellTotals, { flexGrow: 1, flexBasis: 0 }]}>Rs.{(data.amount * (1 - data.discount * 0.01)).toFixed(2)}</Text>
+                        <Text style={[styles.tableCellTotals, { flexGrow: 1, flexBasis: 0 }]}>Rs.{Number((data.amount * (1 - data.discount * 0.01)).toFixed(2)).toLocaleString('en-US')}</Text>
                     </View>
                     <View style={Object.entries(data.items).length % 2 === 0 ? styles.tableRowOdd : styles.tableRowEven}>
                         <Text style={styles.tableCellSno}></Text>
@@ -145,7 +145,7 @@ export default function PDFDocument(data: QuotationData) {
                         <Text style={styles.tableCell}></Text>
                         <Text style={styles.tableCell}></Text>
                         <Text style={styles.tableCell}></Text>
-                        <Text style={[styles.tableCellTotals, { flexGrow: 1, flexBasis: 0 }]}>Rs.{(data.amount * (1 - data.discount * 0.01) * data.tax * 0.01).toFixed(2)}</Text>
+                        <Text style={[styles.tableCellTotals, { flexGrow: 1, flexBasis: 0 }]}>Rs.{Number((data.amount * (1 - data.discount * 0.01) * data.tax * 0.01).toFixed(2)).toLocaleString('en-US')}</Text>
                     </View>
                     <View style={Object.entries(data.items).length % 2 === 0 ? styles.tableRowEven : styles.tableRowOdd}>
                         <Text style={styles.tableCellSno}></Text>
@@ -153,7 +153,7 @@ export default function PDFDocument(data: QuotationData) {
                         <Text style={styles.tableCell}></Text>
                         <Text style={styles.tableCell}></Text>
                         <Text style={styles.tableCell}></Text>
-                        <Text style={[styles.tableCellTotals, { flexGrow: 1, flexBasis: 0 }]}>Rs.{(data.amount * (1 + data.tax * 0.01) * (1 - data.discount * 0.01)).toFixed(2)}</Text>
+                        <Text style={[styles.tableCellTotals, { flexGrow: 1, flexBasis: 0 }]}>Rs.{Number((data.amount * (1 + data.tax * 0.01) * (1 - data.discount * 0.01)).toFixed(2)).toLocaleString('en-US')}</Text>
                     </View>
                 </View>
                 <View >

@@ -1,6 +1,6 @@
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { Link } from "@remix-run/react";
-import { AlignRight } from "lucide-react";
+import { AlignRight, LogOut, RotateCcwKey, UserPen } from "lucide-react";
 import { useEffect } from "react";
 import { useFetcher } from "react-router-dom";
 import { useGlobalContext } from "~/modules/gcontext";
@@ -10,9 +10,10 @@ import { useCentralFetcher } from "./centralFetcher";
 export default function MainMenu() {
     const { profile, setAccessToken } = useGlobalContext();
     var text = "";
-
-    if (profile.username?.toLowerCase() === "gunjan") text = `Hi...${profile.username?.toLocaleUpperCase()} Ji...`;
-    else text = profile.username ? profile.username?.toLocaleUpperCase() : "";
+    if (profile.username) {
+        text = profile.username?.slice(0, 1).toLocaleUpperCase() + profile.username?.slice(1);
+        if (profile.username?.toLowerCase() === "gunjan") text = `Hi...${text} Ji...`;;
+    }
 
     const logoutFetcher = useFetcher<logoutData>();
     const fetcher = useCentralFetcher();
@@ -36,22 +37,24 @@ export default function MainMenu() {
 
                 <MenuItems
                     transition
-                    className="absolute right-10 z-10 mt-2 w-56 origin-top-right rounded-sm bg-background shadow-lg ring-1 ring-black/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
+                    className="absolute right-10 z-10 mt-2 w-44 origin-top-right rounded-sm bg-background shadow-lg ring-1 ring-black/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
                 >
                     <div className="">
                         <MenuItem>
                             <Link
                                 to="/dashboard/profile"
-                                className="block px-4 py-2 text-sm text-textSecondary data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
+                                className="flex px-4 py-2 text-sm text-textSecondary data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
                             >
-                                Profile settings
+                                <UserPen size={20} className="mr-2" />
+                                Profile Settings
                             </Link>
                         </MenuItem>
                         <MenuItem>
                             <Link
                                 to="/dashboard/password"
-                                className="block px-4 py-2 text-sm text-textSecondary data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
+                                className="flex px-4 py-2 text-sm text-textSecondary data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
                             >
+                                <RotateCcwKey size={20} className="mr-2" />
                                 Update Password
                             </Link>
                         </MenuItem>
@@ -59,9 +62,10 @@ export default function MainMenu() {
                             <MenuItem>
                                 <button
                                     type="submit"
-                                    className="block w-full px-4 py-2 text-left text-sm text-textSecondary data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
+                                    className="flex w-full px-4 py-2 text-left text-sm text-textSecondary data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
                                 >
-                                    Log out
+                                    <LogOut size={20} className="mr-2" />
+                                    Log Out
                                 </button>
                             </MenuItem>
                         </form>
