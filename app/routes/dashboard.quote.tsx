@@ -96,7 +96,6 @@ export default function Quote() {
         var no = data.no;
         if (passedData && passedData?.editting === "false") {
             no = new Date().getTime().toString();
-            console.log("dasdasdsa", passedData?.editing);
         }
         setData((pre) => { return { ...pre, no: no, from: profile.company, fromAddress: profile.address, email: profile.email, website: profile.website, contact: profile.contact, pdfColor: String(profile.pdfColor), madeby: profile.username || "" } });
     }, [])

@@ -83,7 +83,7 @@ export default function Index() {
               >
                 {isSubmitting ? (
                   <span className="flex items-center justify-center">
-                    <Loader className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" />
+                    <Loader className="animate-spin -ml-1 mr-3 h-5 w-5 text-buttonTextPrimary" />
                     Logging in...
                   </span>
                 ) : (
