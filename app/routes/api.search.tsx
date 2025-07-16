@@ -13,7 +13,7 @@ export const action: ActionFunction = async ({ request, params }) => {
             return row.name.toLowerCase().includes(query.toLowerCase());
         });
 
-        console.log("Filtered rows:", filteredRows);
+        //console.log("Filtered rows:", filteredRows);
         // finally create the Response with the correct Content-Type header for a PDF
         let headers = new Headers({ "Content-Type": "application/json" });
         return new Response(JSON.stringify([...filteredRows]), { status: 200, headers });

@@ -1,7 +1,7 @@
 import { renderToStream } from "@react-pdf/renderer";
 import { ActionFunction, LoaderFunction } from "@remix-run/node";
 import PDFDocument from "~/component/PDFDcoument";
-import { insertOnetoDb } from "~/modules/dbOnline";
+import { insertOnetoDb, insertOrUpdateOnetoDb } from "~/modules/dbOnline";
 import { verifyAccessToken } from "~/modules/utils";
 
 //export let loader: LoaderFunction = async ({ request, params }) => {
@@ -12,8 +12,13 @@ export const action: ActionFunction = async ({ request, params }) => {
 
         const url = new URL(request.url);
         const save = url.searchParams.get("save") || "true";
-        if (save === "true")
-            await insertOnetoDb(data);
+        const showCustomerList = url.searchParams.get("showCustomerList");
+
+        if (save === "true") {
+            await insertOrUpdateOnetoDb(data);
+            await insertOnetoDb({ "by": data.madeby, "action": "pdf creation", "result": "succeded", "when": new Date().toISOString() }, "unnamed", "logs");
+        }
+
 
         //console.log("PDF loader called", request, params, data);
         // Fetch the data you need for the PDF
@@ -21,7 +26,7 @@ export const action: ActionFunction = async ({ request, params }) => {
         // render the PDF as a stream so you do it async
         //additionalInfo={data.additionalInfo} date={data.date} discount={data.discount} from={data.from} fromAddress={data.fromAddress} intro={data.intro} items={data.items} no={data.no} tax={data.tax} terms={data.terms} to={data.to} toAddress={data.toAddress} 
 
-        let stream = await renderToStream(<PDFDocument {...data} />);
+        let stream = await renderToStream(PDFDocument({ ...data }, showCustomerList === "false" ? false : true));
 
         // and transform it to a Buffer to send in the Response
         let body: Buffer = await new Promise((resolve, reject) => {

@@ -15,10 +15,7 @@ import { useNotification } from "~/modules/notificationContext";
 
 const StaffTable = () => {
     // Initiate your states
-    //const [items, setItems] = useState<QuotationData[]>([]);
     const [loading, setLoading] = useState(false);
-    const [currentPage, setCurrentPage] = useState(1);
-    const [totalPageCount, setTotalPageCount] = useState(1);
     const { addNotifications } = useNotification();
     const fetcher = useCentralFetcher();
 
@@ -28,11 +25,11 @@ const StaffTable = () => {
 
     const { quoteData, setHeaderText, dataCount, setDataCount, setQuoteData, setData, setItems } = useGlobalContext();
     async function getQoutes() {
-        const response = await fetcher(`/api/quotes?skip=${dataCount}`);
+        const response = await fetcher(`/api/quotations`);
         if (response.status === 200) {
             const data = await response.json()
             setQuoteData(data);
-            setDataCount(dataCount + data.length)
+            setDataCount(data.length);//dataCount + 
         }
         else {
             addNotifications({ title: "Failure...", message: "Fail to load data." });
@@ -42,7 +39,7 @@ const StaffTable = () => {
     async function handleAdvanceSearch(query?: { start: string, end: string, to: string }) {
         var response;
         if (query) {
-            response = await fetcher(`/api/quotes?start=${query.start}&end=${query.end}&to=${query.to}`);
+            response = await fetcher(`/api/quotations?start=${query.start}&end=${query.end}&to=${query.to}`);
             if (response.status === 200) {
                 const data = await response.json();
                 setQuoteData(data);
@@ -53,7 +50,7 @@ const StaffTable = () => {
             setDataCount(0);
         }
         else {
-            response = await fetcher(`/api/quotes?skip=${dataCount}`);
+            response = await fetcher(`/api/quotations?skip=${dataCount}`);
             if (response.status === 200) {
                 const data = await response.json();
                 if (dataCount == 0) {
@@ -78,6 +75,7 @@ const StaffTable = () => {
         if (dataCount === 0)
             getQoutes();
     }, []);
+
 
     /*    const handlePageChange = (page: any) => {
         setCurrentPage(page);
@@ -119,6 +117,7 @@ const StaffTable = () => {
                         isFetching={loading}
                         //page={handlePageChange}
                         search={handleAdvanceSearch}
+                        refresh={getQoutes}
                     />
                 </div>
             </section>

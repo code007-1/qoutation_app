@@ -20,7 +20,6 @@ import { ChangeEvent, FC, memo, ReactElement, useMemo, useState } from "react";
 import { useGlobalContext } from "~/modules/gcontext";
 import { createPdf, QuotationData } from "~/routes/dashboard.quote";
 import { useCentralFetcher } from "../centralFetcher";
-import { useNotification } from "~/modules/notificationContext";
 
 // Typescript interface
 
@@ -38,8 +37,8 @@ interface TableProps {
     searchLabel?: string;
     EmptyText?: string;
     children?: React.ReactNode | React.ReactElement
-    handleRow?: () => void
-
+    handleRow?: () => void,
+    refresh: () => void,
 }
 
 
@@ -59,8 +58,8 @@ const TableUI: FC<TableProps> = ({
     searchLabel = "Search",
     EmptyText,
     children,
-    handleRow
-
+    handleRow,
+    refresh
 }) => {
 
     const memoizedData = useMemo(() => data, [data]);
@@ -108,7 +107,7 @@ const TableUI: FC<TableProps> = ({
         !isFetching && (!memoizedData || memoizedData.length === 0);
 
     const navigate = useNavigate();
-    const { setData, setItems } = useGlobalContext();
+    const { setData, setItems, profile } = useGlobalContext();
     const fetcher = useCentralFetcher();
     const [open, setOpen] = useState(false);
     const [query, setQuery] = useState({ start: "", end: "", to: "" });
@@ -117,6 +116,12 @@ const TableUI: FC<TableProps> = ({
         setData(row);
         setItems(row.items);
         navigate("/dashboard/quote", { state: { editing: true } });
+    }
+
+    function handleCopy(row: QuotationData) {
+        setData(row);
+        setItems(row.items);
+        navigate("/dashboard/quote");
     }
 
     return (
@@ -132,7 +137,7 @@ const TableUI: FC<TableProps> = ({
 
                         <ListboxOptions
                             transition
-                            className="absolute -right-34 z-10 mt-2 w-56 origin-top-right rounded-sm bg-background shadow-lg ring-1 ring-black/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
+                            className="absolute -right-34 z-10 mt-2 w-[136px] origin-top-right rounded-sm bg-background shadow-lg ring-1 ring-black/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
                         >
                             <ListboxOption
                                 key={"no"}
@@ -191,6 +196,12 @@ const TableUI: FC<TableProps> = ({
                     className="bg-button text-buttonTextPrimary p-2"
                 >
                     Reset Advance Filter
+                </button>
+                <button
+                    onClick={() => { refresh() }}
+                    className="bg-button text-buttonTextPrimary p-2"
+                >
+                    Refresh Data
                 </button>
                 <div className="flex-1">
                     <div className="w-full flex justify-end">
@@ -282,7 +293,11 @@ const TableUI: FC<TableProps> = ({
                                 <tr key={row.id} className="bg-header cursor-pointer hover:bg-buttonHover">
                                     {row.getVisibleCells().map((cell) => (
                                         <td
-                                            onClick={(e) => { cell.column.id === "edit" ? handleEdit(row.original) : createPdf(row.original, fetcher, false); }}
+                                            onClick={(e) => {
+                                                if (cell.column.id === "edit") handleEdit(row.original)
+                                                else if (cell.column.id === "copy") handleCopy(row.original)
+                                                else createPdf(row.original, fetcher, profile.showCustomerList);
+                                            }}
                                             key={cell.id}
                                             className="text-textSecondary text-base text-left p-2"
                                         >

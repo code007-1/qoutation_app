@@ -4,21 +4,22 @@ const { sign, verify } = pkg;
 import { createCookie } from "@remix-run/node";
 import { MetaFunction } from "@remix-run/react";
 import { count, search } from "./dbOnline";
-import { user } from "~/routes/dashboard.profile";
+import { profile } from "~/routes/dashboard.profile";
 
 export const JWT_REFRESH_KEY = "123!@#$@SDFASDAD";
 export const JWT_ACCESS_KEY = "!#SDAS@#!!@XZZXC";
 
-export var profile: user = { address: "G-57, Vikas Marg, Near Metro Pillar No.41, \nDelhi - 110092", company: "Teen Telecommunication Pvt. Ltd.", contact: "+91 7065577059/60", email: "sales@teentelecommunication.com", pdfColor: "222" }
+export var userProfile: profile = { address: "G-57, Vikas Marg, Near Metro Pillar No.41, \nDelhi - 110092", company: "Teen Telecommunication Pvt. Ltd.", contact: "+91 7065577059/60", email: "sales@teentelecommunication.com", pdfColor: "222", showCustomerList: true }
 
 export function updateProfile(result: any) {
-    profile.username = result.username;
-    profile.contact = result.contact;
-    profile.email = result.email;
-    profile.website = result.website;
-    profile.company = result.company;
-    profile.address = result.address;
-    profile.pdfColor = result.pdfColor;
+    userProfile.username = result.username;
+    userProfile.contact = result.contact;
+    userProfile.email = result.email;
+    userProfile.website = result.website;
+    userProfile.company = result.company;
+    userProfile.address = result.address;
+    userProfile.pdfColor = result.pdfColor;
+    userProfile.showCustomerList = result?.showCustomerList;
 }
 
 // utitlity functions
@@ -33,7 +34,7 @@ const refresTokenCookie = createCookie('rToken', {
 export type loginData = {
     token?: string,
     quote?: string
-    profile: user
+    profile: profile
 };
 
 export type logoutData = {
@@ -67,4 +68,45 @@ export async function verifyAccessToken(request: any) {
         console.log("error while checking access token : token malformed or expired");
         throw new Response("Internal server error", { status: 500 });
     }
+}
+
+function rgb_to_hsv(r: number, g: number, b: number) {
+
+    // R, G, B values are divided by 255
+    // to change the range from 0..255 to 0..1
+    r = r / 255.0;
+    g = g / 255.0;
+    b = b / 255.0;
+
+    // h, s, v = hue, saturation, value
+    var cmax = Math.max(r, Math.max(g, b)); // maximum of r, g, b
+    var cmin = Math.min(r, Math.min(g, b)); // minimum of r, g, b
+    var diff = cmax - cmin; // diff of cmax and cmin.
+    var h = -1, s = -1;
+
+    // if cmax and cmin are equal then h = 0
+    if (cmax == cmin)
+        h = 0;
+
+    // if cmax equals r then compute h
+    else if (cmax == r)
+        h = (60 * ((g - b) / diff) + 360) % 360;
+
+    // if cmax equals g then compute h
+    else if (cmax == g)
+        h = (60 * ((b - r) / diff) + 120) % 360;
+
+    // if cmax equals b then compute h
+    else if (cmax == b)
+        h = (60 * ((r - g) / diff) + 240) % 360;
+
+    // if cmax equals zero
+    if (cmax == 0)
+        s = 0;
+    else
+        s = (diff / cmax) * 100;
+
+    // compute v
+    var v = cmax * 100;
+    return { h: h, s: s, v: v }
 }

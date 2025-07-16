@@ -2,7 +2,7 @@
 
 import { Link } from "@remix-run/react";
 import React, { createContext, useState, useContext, ReactNode } from "react";
-import { user } from "~/routes/dashboard.profile";
+import { profile } from "~/routes/dashboard.profile";
 //import { QuotationData, QuoteItems } from "~/component/quote";
 import { QuotationData, QuoteItems } from "~/routes/dashboard.quote";
 
@@ -21,8 +21,8 @@ interface AppContextType {
     setHeaderText: React.Dispatch<React.SetStateAction<string | ReactNode>>;
     quote: string | undefined;
     setQuote: React.Dispatch<React.SetStateAction<string | undefined>>;
-    profile: user,
-    setProfile: React.Dispatch<React.SetStateAction<user>>;
+    profile: profile,
+    setProfile: React.Dispatch<React.SetStateAction<profile>>;
     dataCount: number;
     setDataCount: React.Dispatch<React.SetStateAction<number>>;
     quoteData: QuotationData[];
@@ -59,7 +59,7 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
     const [dataCount, setDataCount] = useState<number>(0);
     const [quoteData, setQuoteData] = useState<QuotationData[]>([]);
     const [gQuote, setGQuote] = useState<string | undefined>();
-    const [profile, setProfile] = useState<user>({ contact: "+91 7065577059/60", address: "G-57, Vikas Marg, Near Metro Pillar No.41, \nDelhi - 110092", company: "Teen Telecommunication Pvt. Ltd.", email: "sales@teentelecommunication.com", pdfColor: "222", website: "https://teentelecommunication.com" });
+    const [profile, setProfile] = useState<profile>({ contact: "+91 7065577059/60", address: "G-57, Vikas Marg, Near Metro Pillar No.41, \nDelhi - 110092", company: "Teen Telecommunication Pvt. Ltd.", email: "sales@teentelecommunication.com", pdfColor: "222", website: "https://teentelecommunication.com", showCustomerList: true });
 
     //const date = new Date().getTime().toString();
 

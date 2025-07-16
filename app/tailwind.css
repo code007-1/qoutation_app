@@ -38,7 +38,7 @@ body {
   --textSecondary: 173, 173, 173;
   --buttonTextPrimary: 0, 0, 0;
   --button: 220, 220, 220;
+  --buttonHover: 50, 50, 50;
   --background: 35, 35, 35;
   --border: 75, 75, 75;
-  --buttonHover: 50, 50, 50;
 }
