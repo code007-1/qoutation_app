@@ -32,10 +32,11 @@ export default function Index() {
 
   useEffect(() => {
     if (accessToken) {
-      if (loginFetcher.data?.quote)
+      navigate("/dashboard/home");
+      /*if (loginFetcher.data?.quote)
         navigate("/welcome");
       else
-        navigate("/dashboard/home");
+        navigate("/dashboard/home");*/
     }
   }, [accessToken]);
 

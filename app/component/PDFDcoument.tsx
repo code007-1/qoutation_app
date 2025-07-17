@@ -118,8 +118,8 @@ export default function PDFDocument(data: QuotationData, showCustomerList: boole
                                 <View style={styles.tableCellBox}>
                                     {
                                         e[1].link
-                                            ? <Link style={styles.tableCellLink} src={e[1].link || "#"}>{e[1].name} : HSN - {e[1].hsn}</Link>
-                                            : <Text style={[styles.tableCellName]} >{e[1].name} : HSN - {e[1].hsn}</Text>
+                                            ? <Link style={styles.tableCellLink} src={e[1].link || "#"}>{e[1].name} {e[1].hsn != "" && <> : HSN - {e[1].hsn}</>}</Link>
+                                            : <Text style={[styles.tableCellName]} >{e[1].name} {e[1].hsn != "" && <>: HSN - {e[1].hsn}</>}</Text>
                                     }
 
                                     <Text style={styles.tableCellNameContent}>{e[1].description}</Text>

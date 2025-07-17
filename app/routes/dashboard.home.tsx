@@ -113,7 +113,7 @@ const StaffTable = () => {
                         data={quoteData}
                         columns={Columns}
                         searchLabel="Search by Name or job title"
-                        EmptyText="No staff found!"
+                        EmptyText="No Quotations Found!"
                         isFetching={loading}
                         //page={handlePageChange}
                         search={handleAdvanceSearch}
