@@ -42,3 +42,39 @@ body {
   --background: 35, 35, 35;
   --border: 75, 75, 75;
 }
+
+.sunsetGlow {
+  --header: 255, 244, 229;
+  --headerBackground: 252, 222, 194;
+  --textPrimary: 85, 44, 0;
+  --textSecondary: 138, 73, 16;
+  --buttonTextPrimary: 255, 255, 255;
+  --button: 205, 95, 43;
+  --buttonHover: 243, 179, 108;
+  --background: 255, 238, 221;
+  --border: 234, 210, 183;
+}
+
+.galacticNight {
+  --header: 25, 32, 45;
+  --headerBackground: 18, 24, 38;
+  --textPrimary: 220, 225, 230;
+  --textSecondary: 155, 165, 180;
+  --buttonTextPrimary: 255, 255, 255;
+  --button: 88, 101, 242;
+  --buttonHover: 61, 73, 160;
+  --background: 12, 18, 30;
+  --border: 46, 54, 76;
+}
+
+.mintyFresh {
+  --header: 240, 255, 252;
+  --headerBackground: 225, 250, 245;
+  --textPrimary: 34, 85, 73;
+  --textSecondary: 92, 135, 122;
+  --buttonTextPrimary: 255, 255, 255;
+  --button: 59, 190, 170;
+  --buttonHover: 185, 235, 225;
+  --background: 235, 252, 248;
+  --border: 210, 235, 230;
+}
