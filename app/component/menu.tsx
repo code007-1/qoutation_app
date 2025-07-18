@@ -12,7 +12,7 @@ export default function MainMenu() {
     var text = "";
     if (profile.username) {
         text = profile.username?.slice(0, 1).toLocaleUpperCase() + profile.username?.slice(1);
-        //if (profile.username?.toLowerCase() === "gunjan") text = `Hi...${text} Ji...`;;
+        if (profile.username?.toLowerCase() === "gunjan") text = `Hi...${text} Ji...`;;
     }
 
     const logoutFetcher = useFetcher<logoutData>();

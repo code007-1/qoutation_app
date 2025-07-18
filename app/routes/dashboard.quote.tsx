@@ -1,6 +1,6 @@
-import { Link, useFetcher, useLocation, useNavigate } from "@remix-run/react";
+import { useFetcher, useLocation, useNavigate } from "@remix-run/react";
 import { useEffect, useState } from "react";
-import { createQuotation, useGlobalContext } from "~/modules/gcontext";
+import { useGlobalContext } from "~/modules/gcontext";
 import AutocompleteSearch from "~/component/autocompleteSearch";
 import { logoutData } from "~/modules/utils";
 import { AnimatePresence, motion } from "framer-motion";
@@ -97,7 +97,7 @@ export default function Quote() {
         if (passedData && passedData?.editing === true)
             no = data.no;
 
-        setData((pre) => { return { ...pre, no: no, from: profile.company, fromAddress: profile.address, email: profile.email, website: profile.website, contact: profile.contact, pdfColor: String(profile.pdfColor), madeby: profile.username || "" } });
+        setData((pre) => { return { ...pre, no: no, from: profile.company, fromAddress: profile.address, email: profile.email, website: profile.website, contact: profile.contact, pdfColor: String(profile.pdfColor), madeby: profile.username || "", date: new Date().toISOString().split("T")[0] } });
     }, [])
 
     //updateItem={updatedItem} updatePrice={updatedPrice} updateQuanity={updatedQuanity} deleteItem={deleteItem}
@@ -170,7 +170,7 @@ export default function Quote() {
                         }
                         {
                             step === 1 && <>
-                                <div className="mt-6 space-y-4 overflow-y-auto h-[calc(100vh-320px)] w-full">
+                                <div className="mt-6 space-y-4 overflow-y-auto h-[calc(100vh-280px)] w-full">
                                     {
                                         items.map((_, index) => {
                                             return <>

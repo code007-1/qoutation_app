@@ -5,7 +5,7 @@ import MainMenu from "./menu";
 import { Link } from "@remix-run/react";
 
 export default function Header() {
-    const { toggleTheme, accessToken, headerText, theme } = useGlobalContext();
+    const { toggleTheme, headerText, theme } = useGlobalContext();
 
     return (
         <>

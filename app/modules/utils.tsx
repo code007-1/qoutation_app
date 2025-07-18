@@ -1,8 +1,8 @@
 import pkg from 'jsonwebtoken';
-const { sign, verify } = pkg;
+const { verify } = pkg;
 
 import { createCookie } from "@remix-run/node";
-import { MetaFunction } from "@remix-run/react";
+//import { MetaFunction } from "@remix-run/react";
 import { count, search } from "./dbOnline";
 import { profile } from "~/routes/dashboard.profile";
 
@@ -66,7 +66,7 @@ export async function verifyAccessToken(request: any) {
     }
     catch (error) {
         console.log("error while checking access token : token malformed or expired");
-        throw new Response("Internal server error", { status: 500 });
+        throw new Response("Internal server error", { status: 401 });
     }
 }
 

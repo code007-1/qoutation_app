@@ -14,7 +14,7 @@ function LoadData() {
     }
 
     else {
-        fs.createReadStream('./assets/data (1).csv') // Replace 'file.csv' with your file path
+        fs.createReadStream('./assets/data.csv') // Replace 'file.csv' with your file path
             .pipe(csv())
             .on('data', (row) => {
                 //console.log(row); // Each row is an object

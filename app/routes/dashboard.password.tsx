@@ -1,4 +1,3 @@
-import { useFetcher } from "@remix-run/react";
 import { useEffect } from "react";
 import { useCentralFetcher } from "~/component/centralFetcher";
 import { useGlobalContext } from "~/modules/gcontext";

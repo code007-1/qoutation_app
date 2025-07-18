@@ -1,15 +1,11 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 // Import these components correctly depending on your structure
 
 import { Columns } from "~/component/table/columns";
-
-import { dummyQuotations } from "~/component/table/data";
 import TableUI from "~/component/table/tableUI";
 import { createQuotation, initialQoutationData, useGlobalContext } from "~/modules/gcontext";
-import { QuotationData } from "./dashboard.quote";
 import { useCentralFetcher } from "~/component/centralFetcher";
-import { useLoaderData } from "@remix-run/react";
 import { useNotification } from "~/modules/notificationContext";
 
 

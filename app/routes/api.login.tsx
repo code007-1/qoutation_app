@@ -1,5 +1,5 @@
-import { ActionFunction, createCookie, json } from "@remix-run/node";
-import { count, insertOnetoDb, insertOrUpdateOnetoDb, search } from "~/modules/dbOnline";
+import { ActionFunction, json } from "@remix-run/node";
+import { insertOnetoDb, search } from "~/modules/dbOnline";
 import { commitSession, getSession } from "~/modules/sessions";
 
 import pkg from 'jsonwebtoken';

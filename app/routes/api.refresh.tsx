@@ -1,5 +1,5 @@
-import { json, LoaderFunctionArgs } from "@remix-run/node";
-import pkg, { decode } from 'jsonwebtoken';
+import { LoaderFunctionArgs } from "@remix-run/node";
+import pkg from 'jsonwebtoken';
 import { search } from "~/modules/dbOnline";
 const { sign, verify } = pkg;
 import { commitSession, getSession } from "~/modules/sessions";

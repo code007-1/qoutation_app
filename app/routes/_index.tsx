@@ -20,23 +20,30 @@ export default function Index() {
       addNotifications({
         title: "Logged In...",
         message: `Logged in successfully as ${loginFetcher.data?.profile.username?.toUpperCase()}`,
-        //duration: 5000,
-        //variant: "success"
       });
     }
     if (loginFetcher.data?.profile)
       setProfile(pre => { return { ...pre, ...loginFetcher.data?.profile } });
     if (loginFetcher.data?.quote)
       setQuote(loginFetcher.data?.quote);
+    else if (typeof (loginFetcher?.data) === "string") {
+      addNotifications({
+        title: "Login error...",
+        message: loginFetcher?.data || "",
+      });
+    }
+    console.log("error response : ", loginFetcher.data);
   }, [loginFetcher.data]);
+
+  useEffect(() => { }, [loginFetcher]);
 
   useEffect(() => {
     if (accessToken) {
-      navigate("/dashboard/home");
-      /*if (loginFetcher.data?.quote)
+      //navigate("/dashboard/home");
+      if (loginFetcher.data?.quote)
         navigate("/welcome");
       else
-        navigate("/dashboard/home");*/
+        navigate("/dashboard/home");
     }
   }, [accessToken]);
 

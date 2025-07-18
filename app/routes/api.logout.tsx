@@ -1,5 +1,5 @@
-import { ActionFunction, LoaderFunction } from "@remix-run/node";
-import { insertOnetoDb, insertOrUpdateOnetoDb } from "~/modules/dbOnline";
+import { LoaderFunction } from "@remix-run/node";
+//import { insertOnetoDb, insertOrUpdateOnetoDb } from "~/modules/dbOnline";
 import { commitSession, getSession } from "~/modules/sessions";
 
 export const loader: LoaderFunction = async ({ request }) => {

@@ -1,5 +1,5 @@
 import { renderToStream } from "@react-pdf/renderer";
-import { ActionFunction, LoaderFunction } from "@remix-run/node";
+import { ActionFunction } from "@remix-run/node";
 import PDFDocument from "~/component/PDFDcoument";
 import { insertOnetoDb, insertOrUpdateOnetoDb } from "~/modules/dbOnline";
 import { verifyAccessToken } from "~/modules/utils";

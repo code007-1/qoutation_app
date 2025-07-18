@@ -1,9 +1,6 @@
-// app/context/ThemeContext.jsx
-
 import { Link } from "@remix-run/react";
 import React, { createContext, useState, useContext, ReactNode } from "react";
 import { profile } from "~/routes/dashboard.profile";
-//import { QuotationData, QuoteItems } from "~/component/quote";
 import { QuotationData, QuoteItems } from "~/routes/dashboard.quote";
 
 interface AppContextType {

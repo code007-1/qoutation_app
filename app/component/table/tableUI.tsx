@@ -15,8 +15,8 @@ import {
     SortingState,
     useReactTable,
 } from "@tanstack/react-table";
-import { AlignRight, ChevronDown, ChevronLeft, ChevronRight, ChevronsUpDownIcon } from "lucide-react";
-import { ChangeEvent, FC, memo, ReactElement, useMemo, useState } from "react";
+import { ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
+import { FC, memo, useMemo, useState } from "react";
 import { useGlobalContext } from "~/modules/gcontext";
 import { createPdf, QuotationData } from "~/routes/dashboard.quote";
 import { useCentralFetcher } from "../centralFetcher";
