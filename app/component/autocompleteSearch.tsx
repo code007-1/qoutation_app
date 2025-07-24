@@ -3,15 +3,15 @@ import { useState, useRef, useEffect } from "react";
 import { useGlobalContext } from "~/modules/gcontext";
 import { QuoteItems } from "~/routes/dashboard.quote";
 
-//- advance show hide for better ui - optimized little bit, ok for now
-//- welcome animation - partially done, would improve animation
+//- done - advance show hide for better ui - optimized little bit, ok for now
+//- done - welcome animation - partially done, would improve animation
 //- as of now only online- offline online sync both mongob
 //- done - user profile edit
 // save type check while uploading to mongodb i.e., form data validation
 //- done - notification system 
-// access token verify
+//- done - access token verify
 // pwa or exe application form
-// login log system
+// - done - partially done - login log system
 
 export default function AutocompleteSearch({ index }: { index: number }) {
     const [input, setInput] = useState("");

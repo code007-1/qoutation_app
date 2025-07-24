@@ -38,26 +38,8 @@ export default function PDFDocument(data: QuotationData, showCustomerList: boole
         tableCellSno: { width: "8%", padding: 8, textAlign: "left", fontSize: 9, color: "#505050" },
         tableCellTotals: { padding: 8, textAlign: "left", fontSize: 9, fontWeight: "bold", color: "#505050" },
     });
-
-    /*const data: QuotationData = {
-        no: "1",
-        date: new Date().toDateString(),
-        items: {
-            "a": { id: 1, name: "phone", price: 5000, quantity: 2 },
-            "b": { id: 2, name: "laptop", price: 50000, quantity: 1 },
-            "c": { id: 3, name: "tablet", price: 20000, quantity: 3 }
-        },
-        intro: "This is with reference to the discussions we had earlier with you regarding your requirement of Matrix Digital IP-PBXS System. Please find below our best offer for the same.",
-        terms: ["Payment Terms: 100% advance.", "Delivery Schedule: Within 1-2 days after received the PO along with Advance.", "12 Months offsite warranty from the side of OEM as per their terms.", "Validity: This offer is valid for 30 days."],
-        additionalInfo:
-            ["Online UPS supply and Network Rack with Accessories like Fan, AC Socket, and networking etc. requirements would be fulfilled by customer."],
-        from: "Teen Telecommunication Pvt. Ltd.",
-        fromAddress: ["G-57, Vikas Marg, Near Metro Pillar No.41, \nDelhi - 110092"],
-        to: "Verma Internationals Ltd.",
-        toAddress: ["G-57, Vikas Marg, Near Metro Pillar No.41, \nDelhi - 110092"],
-        tax: 18,
-        discount: 5
-    };*/
+    var dated = data.date.split("-");
+    const date = dated[2] + "-" + dated[1] + "-" + dated[0];
 
     return (
         <Document title="Quotation" author={data.madeby} subject="Business Quotation" >
@@ -80,7 +62,7 @@ export default function PDFDocument(data: QuotationData, showCustomerList: boole
                     </Text>
                     <Text>
                         <Text style={styles.qoutationDetails}>Quotation Date: </Text>
-                        <Text style={styles.intro}>{data.date}</Text>
+                        <Text style={styles.intro}>{date}</Text>
                     </Text>
                 </View>
                 <Text style={styles.newline} >{"\n\n\n"}</Text>
@@ -107,7 +89,7 @@ export default function PDFDocument(data: QuotationData, showCustomerList: boole
                         <Text style={[styles.tableCellHeader, { width: "40%" }]}>Item</Text>
                         <Text style={[styles.tableCellHeader, { flexGrow: 1, flexBasis: 0 }]}>Quantity</Text>
                         <Text style={[styles.tableCellHeader, { flexGrow: 1, flexBasis: 0 }]}>Price</Text>
-                        <Text style={[styles.tableCellHeader, { flexGrow: 1, flexBasis: 0 }]}>Discount</Text>
+                        {data.discount != 0 && <Text style={[styles.tableCellHeader, { flexGrow: 1, flexBasis: 0 }]}>Discount</Text>}
                         <Text style={[styles.tableCellHeader, { flexGrow: 1, flexBasis: 0 }]}>Amount</Text>
                     </View>
 
@@ -126,7 +108,7 @@ export default function PDFDocument(data: QuotationData, showCustomerList: boole
                                 </View>
                                 <Text style={styles.tableCell}>{e[1].quantity}</Text>
                                 <Text style={styles.tableCell}>Rs.{Number(e[1].price).toLocaleString('en-US')}</Text>
-                                <Text style={styles.tableCell}>{data.discount} %</Text>
+                                {data.discount != 0 && <Text style={styles.tableCell}>{data.discount} %</Text>}
                                 <Text style={styles.tableCell}>Rs.{Number((e[1].price * e[1].quantity * (1 - data.discount * 0.01)).toFixed(2)).toLocaleString('en-US')}</Text>
                             </View>);
                     })}
@@ -135,7 +117,7 @@ export default function PDFDocument(data: QuotationData, showCustomerList: boole
                         <Text style={[styles.tableCellTotals, { width: "40%", textDecoration: "none", fontStyle: "italic" }]}>Taxable Value</Text>
                         <Text style={styles.tableCell}></Text>
                         <Text style={styles.tableCell}></Text>
-                        <Text style={styles.tableCell}></Text>
+                        {data.discount != 0 && <Text style={styles.tableCell}></Text>}
                         <Text style={[styles.tableCellTotals, { flexGrow: 1, flexBasis: 0 }]}>Rs.{Number((data.amount * (1 - data.discount * 0.01)).toFixed(2)).toLocaleString('en-US')}</Text>
                     </View>
                     <View style={Object.entries(data.items).length % 2 === 0 ? styles.tableRowOdd : styles.tableRowEven}>
@@ -143,7 +125,7 @@ export default function PDFDocument(data: QuotationData, showCustomerList: boole
                         <Text style={[styles.tableCellTotals, { width: "40%", textDecoration: "none", fontStyle: "italic" }]}>Tax @ {data.tax}%</Text>
                         <Text style={styles.tableCell}></Text>
                         <Text style={styles.tableCell}></Text>
-                        <Text style={styles.tableCell}></Text>
+                        {data.discount != 0 && <Text style={styles.tableCell}></Text>}
                         <Text style={[styles.tableCellTotals, { flexGrow: 1, flexBasis: 0 }]}>Rs.{Number((data.amount * (1 - data.discount * 0.01) * data.tax * 0.01).toFixed(2)).toLocaleString('en-US')}</Text>
                     </View>
                     <View style={Object.entries(data.items).length % 2 === 0 ? styles.tableRowEven : styles.tableRowOdd}>
@@ -151,7 +133,7 @@ export default function PDFDocument(data: QuotationData, showCustomerList: boole
                         <Text style={[styles.tableCellTotals, { width: "40%", textDecoration: "none", fontStyle: "italic" }]}>Total Amount</Text>
                         <Text style={styles.tableCell}></Text>
                         <Text style={styles.tableCell}></Text>
-                        <Text style={styles.tableCell}></Text>
+                        {data.discount != 0 && <Text style={styles.tableCell}></Text>}
                         <Text style={[styles.tableCellTotals, { flexGrow: 1, flexBasis: 0 }]}>Rs.{Number((data.amount * (1 + data.tax * 0.01) * (1 - data.discount * 0.01)).toFixed(2)).toLocaleString('en-US')}</Text>
                     </View>
                 </View>

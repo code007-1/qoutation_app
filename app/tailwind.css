@@ -43,7 +43,7 @@ body {
   --border: 75, 75, 75;
 }
 
-.sunsetGlow {
+.dark {
   --header: 255, 244, 229;
   --headerBackground: 252, 222, 194;
   --textPrimary: 85, 44, 0;
@@ -55,7 +55,7 @@ body {
   --border: 234, 210, 183;
 }
 
-.galacticNight {
+.dark {
   --header: 25, 32, 45;
   --headerBackground: 18, 24, 38;
   --textPrimary: 220, 225, 230;
