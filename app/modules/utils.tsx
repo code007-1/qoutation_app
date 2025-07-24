@@ -43,8 +43,11 @@ export type logoutData = {
 
 export async function getQoute() {
     const len = await count("unnamed", "quotes") as number;
+    console.log("len of quotes", len);
     var index = Math.floor(Math.random() * len);
+    console.log("index of quotes", index);
     index = index < len ? index : len - 1
+    console.log("index of quotes again", index);
     const quote = await search("unnamed", "quotes", {}, 1, index);
     if (quote && quote.length > 0) return quote[0].quote;
     else return "";
