@@ -14,6 +14,7 @@ export type QuoteItems = {
     quantity: number;
     description?: string;
     link?: string;
+    showLink?: boolean;
 };
 
 export type QuotationData = {
