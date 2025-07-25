@@ -5,6 +5,7 @@ import AutocompleteSearch from "~/component/autocompleteSearch";
 import { logoutData } from "~/modules/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import { useCentralFetcher } from "~/component/centralFetcher";
+import { Switch } from "@headlessui/react";
 
 export type QuoteItems = {
     id: number;
@@ -36,6 +37,7 @@ export type QuotationData = {
     contact?: string;
     website?: string;
     pdfColor?: string;
+    showLinks?: boolean;
 };
 
 export async function createPdf(data: QuotationData, fetcher: any, showCustomerList?: boolean, save: boolean = true) {
@@ -95,10 +97,15 @@ export default function Quote() {
 
     useEffect(() => {
         var no = new Date().getTime().toString();
-        if (passedData && passedData?.editing === true)
-            no = data.no;
+        var fromAddress = profile.address;
+        var from = profile.company;
 
-        setData((pre) => { return { ...pre, no: no, from: profile.company, fromAddress: profile.address, email: profile.email, website: profile.website, contact: profile.contact, pdfColor: String(profile.pdfColor), madeby: profile.username || "", date: new Date().toISOString().split("T")[0] } });
+        if (passedData && passedData?.editing === true) {
+            no = data.no;
+            fromAddress = data.fromAddress;
+            from = data.from;
+        }
+        setData((pre) => { return { ...pre, no: no, from: from, fromAddress: fromAddress, email: profile.email, website: profile.website, contact: profile.contact, pdfColor: String(profile.pdfColor), madeby: profile.username || "", date: new Date().toISOString().split("T")[0], showLinks: data?.showLinks !== undefined ? data.showLinks : true } });
     }, [])
 
     //updateItem={updatedItem} updatePrice={updatedPrice} updateQuanity={updatedQuanity} deleteItem={deleteItem}
@@ -120,6 +127,20 @@ export default function Quote() {
                             <div className="text-sm">{data.no}</div>
                             <div className="text-sm font-semibold ml-10 mr-2">Date</div>
                             <input type="date" color="white" name="date" id="date" pattern="\d{4}-\d{2}-\d{2}" placeholder="Date" className="border border-border w-25 h-10 bg-background" value={data.date} onChange={e => setData(pre => { return { ...pre, date: e.target.value } })} />
+                            <div className="text-sm font-semibold ml-10 mr-2">Show Links</div>
+                            <Switch
+                                checked={data.showLinks}
+                                onChange={(e) => { setData(pre => { return { ...pre, showLinks: e } }) }}
+                                className={`ml-4 ${data.showLinks ? 'bg-button/75' : 'bg-buttonHover'}
+                                      relative inline-flex h-[24px] w-[40px] shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2`}
+                            >
+                                <span className="sr-only">Show Customer Lists : </span>
+                                <span
+                                    aria-hidden="true"
+                                    className={`${data.showLinks ? 'translate-x-4' : 'translate-x-0'}
+                                        pointer-events-none inline-block h-[20px] w-[20px] transform rounded-full bg-buttonTextPrimary shadow-lg ring-0 transition duration-200 ease-in-out`}
+                                />
+                            </Switch>
                         </div>
 
                         {step === 1 &&

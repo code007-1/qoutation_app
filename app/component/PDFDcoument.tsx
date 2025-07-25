@@ -1,10 +1,9 @@
 import { Document, Page, Text, View, StyleSheet, Image, Link } from "@react-pdf/renderer";
-import { Watermark } from "./Watermark";
+import { Watermark } from "./watermark";
 import { QuotationData } from "~/routes/dashboard.quote";
 
 export default function PDFDocument(data: QuotationData, showCustomerList: boolean = true) {
     const hue = data.pdfColor ? data.pdfColor : "222";
-    console.log("show customer list", showCustomerList);
 
     const styles = StyleSheet.create({
         page: { padding: 30, display: "flex", flexDirection: "column", fontFamily: "Times-Roman", fontStyle: "normal" },
@@ -99,7 +98,7 @@ export default function PDFDocument(data: QuotationData, showCustomerList: boole
                                 <Text style={styles.tableCellSno}>{i + 1}</Text>
                                 <View style={styles.tableCellBox}>
                                     {
-                                        e[1].link
+                                        e[1].link && data.showLinks
                                             ? <Link style={styles.tableCellLink} src={e[1].link || "#"}>{e[1].name} {e[1].hsn != "" && <> : HSN - {e[1].hsn}</>}</Link>
                                             : <Text style={[styles.tableCellName]} >{e[1].name} {e[1].hsn != "" && <>: HSN - {e[1].hsn}</>}</Text>
                                     }

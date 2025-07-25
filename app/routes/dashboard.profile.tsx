@@ -33,7 +33,7 @@ export default function Profile() {
             body: JSON.stringify(profile),
         });
         if (response.status === 200) addNotifications({ title: "Success...", message: "Profile updated successfully" });
-        else addNotifications({ title: "Failure...", message: "Fail to update profile...try gain later.." });
+        else addNotifications({ title: "Failure....", message: "Fail to update profile...try gain later..." });
     }
 
     return (
@@ -64,7 +64,7 @@ export default function Profile() {
                             className={`ml-4 ${enabled ? 'bg-button/75' : 'bg-buttonHover'}
           relative inline-flex h-[24px] w-[40px] shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2`}
                         >
-                            <span className="sr-only">Use setting</span>
+                            <span className="sr-only">Show Customer Lists : </span>
                             <span
                                 aria-hidden="true"
                                 className={`${enabled ? 'translate-x-4' : 'translate-x-0'}
