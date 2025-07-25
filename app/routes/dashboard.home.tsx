@@ -8,16 +8,11 @@ import { createQuotation, initialQoutationData, useGlobalContext } from "~/modul
 import { useCentralFetcher } from "~/component/centralFetcher";
 import { useNotification } from "~/modules/notificationContext";
 
-
 const StaffTable = () => {
     // Initiate your states
     const [loading, setLoading] = useState(false);
     const { addNotifications } = useNotification();
     const fetcher = useCentralFetcher();
-
-    // For pagination, define maximum of data per page
-
-    const ITEMS_PER_PAGE = 10;
 
     const { quoteData, setHeaderText, dataCount, setDataCount, setQuoteData, setData, setItems } = useGlobalContext();
     async function getQoutes() {
@@ -64,6 +59,19 @@ const StaffTable = () => {
         }
     }
 
+    async function handleDeletequotation(no: string) {
+        const result = await fetcher("/api/delete", { method: "POST", body: JSON.stringify(no) });
+        if (result.status !== 200) {
+            addNotifications({
+                title: "Error while deletion...",
+                message: result.statusText || "",
+            });
+        }
+        else {
+            setQuoteData((pre: any) => { return pre.filter((item: any) => item.no === no ? false : true) });
+        }
+    }
+
     useEffect(() => {
         setData(initialQoutationData());
         setItems([]);
@@ -71,35 +79,6 @@ const StaffTable = () => {
         if (dataCount === 0)
             getQoutes();
     }, []);
-
-
-    /*    const handlePageChange = (page: any) => {
-        setCurrentPage(page);
-    };
-    
-    
-    // handle the search here
-    
-    const handleSearch = (query: string) => {
-        query = query.toLowerCase();
-        if (query.trim() === "") {
-            // Restore the original data when the search query is empty
-            setItems(dummyQuotations);
-        } else {
-            const filteredData = items.filter((item: QuotationData) =>
-                item.no.toLowerCase().includes(query) ||
-                item.madeby.toLowerCase().includes(query) ||
-                item.to.toLowerCase().includes(query)
-            );
-            setItems(filteredData || []);
-        }
-        console.log("search terms is", query, query.trim() === "");
-    };*/
-
-
-    //const DataLength = items.length;
-
-
 
     return (
         <>
@@ -114,6 +93,7 @@ const StaffTable = () => {
                         //page={handlePageChange}
                         search={handleAdvanceSearch}
                         refresh={getQoutes}
+                        deleteQuotation={handleDeletequotation}
                     />
                 </div>
             </section>

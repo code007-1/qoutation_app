@@ -20,6 +20,7 @@ import { FC, memo, useMemo, useState } from "react";
 import { useGlobalContext } from "~/modules/gcontext";
 import { createPdf, QuotationData } from "~/routes/dashboard.quote";
 import { useCentralFetcher } from "../centralFetcher";
+import { useNotification } from "~/modules/notificationContext";
 
 // Typescript interface
 
@@ -39,6 +40,7 @@ interface TableProps {
     children?: React.ReactNode | React.ReactElement
     handleRow?: () => void,
     refresh: () => void,
+    deleteQuotation: (no: string) => void
 }
 
 
@@ -59,7 +61,8 @@ const TableUI: FC<TableProps> = ({
     EmptyText,
     children,
     handleRow,
-    refresh
+    refresh,
+    deleteQuotation
 }) => {
 
     const memoizedData = useMemo(() => data, [data]);
@@ -215,7 +218,6 @@ const TableUI: FC<TableProps> = ({
                 </div>
             </div>
 
-
             <div>
                 <Dialog open={open} onClose={setOpen} className="relative z-10">
                     <DialogBackdrop
@@ -296,6 +298,7 @@ const TableUI: FC<TableProps> = ({
                                             onClick={(e) => {
                                                 if (cell.column.id === "edit") handleEdit(row.original)
                                                 else if (cell.column.id === "copy") handleCopy(row.original)
+                                                else if (cell.column.id === "delete") deleteQuotation(row.original.no)
                                                 else createPdf(row.original, fetcher, profile.showCustomerList);
                                             }}
                                             key={cell.id}

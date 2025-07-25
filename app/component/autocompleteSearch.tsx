@@ -130,11 +130,11 @@ export default function AutocompleteSearch({ index }: { index: number }) {
                     ))}
                 </ul>
             )}
-            <input
-                type="text"
+            <textarea
                 placeholder="Description...each line should be comma separated"
-                className="border p-2 w-[40%] border-border bg-background text-textPrimary focus:outline-textPrimary"
+                className="border w-[40%] border-border bg-background text-textPrimary focus:outline-textPrimary"
                 value={items[index].description}
+                rows={1}
                 onChange={(e) => {
                     setItems(pre => {
                         return pre.map((item, i) => i === index

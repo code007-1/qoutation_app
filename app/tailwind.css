@@ -43,7 +43,7 @@ body {
   --border: 75, 75, 75;
 }
 
-.dark {
+.solarwind {
   --header: 255, 244, 229;
   --headerBackground: 252, 222, 194;
   --textPrimary: 85, 44, 0;
@@ -55,7 +55,7 @@ body {
   --border: 234, 210, 183;
 }
 
-.dark {
+.dark2 {
   --header: 25, 32, 45;
   --headerBackground: 18, 24, 38;
   --textPrimary: 220, 225, 230;
@@ -67,7 +67,7 @@ body {
   --border: 46, 54, 76;
 }
 
-.mintyFresh {
+.seagreen {
   --header: 240, 255, 252;
   --headerBackground: 225, 250, 245;
   --textPrimary: 34, 85, 73;

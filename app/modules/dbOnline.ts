@@ -1,18 +1,5 @@
 const username = "spttcpl";
 const password = "9ziRq5mLRppCobx8";
-import { cli } from "@remix-run/dev";
-/*import { MongoClient } from "mongodb";
-
-const uri = "mongodb+srv://ttcplhelpdesk:<db_password>@cluster0.fvsd2fl.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
-const client = new MongoClient(uri);
-await client.connect();
-const db = client.db("yourDatabase");
-const collection = db.collection("yourCollection");
-
-export async function searchItems(query: string) {
-    return await collection.find({ name: { $regex: query, $options: "i" } }).limit(10).toArray();
-}*/
-
 
 //const { MongoClient, ServerApiVersion } = require('mongodb');
 import { MongoClient, ServerApiVersion } from "mongodb";
@@ -96,7 +83,12 @@ export async function update(db: string = "unnamed", collection: string = "users
     }
 }
 
-
+export async function deleteOneFromDB(no: string, db: string = "unnamed", collection: string = "quotations",) {
+    client.connect().then(async (e) => {
+        const result = await client.db(db).collection(collection).deleteOne({ "no": no });
+        console.log(`New item created with the following id: ${result.deletedCount}`);
+    }).catch(console.error).finally(() => client.close());
+}
 export async function insertOrUpdateOnetoDb(data: any, db: string = "unnamed", collection: string = "quotations") {
     client.connect().then(async (e) => {
         const { _id, ...restData } = data;
