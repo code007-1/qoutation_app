@@ -7,6 +7,7 @@ import TableUI from "~/component/table/tableUI";
 import { createQuotation, initialQoutationData, useGlobalContext } from "~/modules/gcontext";
 import { useCentralFetcher } from "~/component/centralFetcher";
 import { useNotification } from "~/modules/notificationContext";
+import { userProfile } from "~/modules/utils";
 
 const StaffTable = () => {
     // Initiate your states
@@ -14,7 +15,7 @@ const StaffTable = () => {
     const { addNotifications } = useNotification();
     const fetcher = useCentralFetcher();
 
-    const { quoteData, setHeaderText, dataCount, setDataCount, setQuoteData, setData, setItems } = useGlobalContext();
+    const { quoteData, setHeaderText, dataCount, setDataCount, setQuoteData, setData, setItems, profile } = useGlobalContext();
     async function getQoutes() {
         const response = await fetcher(`/api/quotations`);
         if (response.status === 200) {
@@ -60,7 +61,8 @@ const StaffTable = () => {
     }
 
     async function handleDeletequotation(no: string) {
-        const result = await fetcher("/api/delete", { method: "POST", body: JSON.stringify(no) });
+        //console.log("deleting quotation no : ", no, " by user : ", profile.username);
+        const result = await fetcher("/api/delete", { method: "POST", body: JSON.stringify({ "no": no, "username": profile.username }) });
         if (result.status !== 200) {
             addNotifications({
                 title: "Error while deletion...",
