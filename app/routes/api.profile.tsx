@@ -1,5 +1,5 @@
 import { ActionFunction } from "@remix-run/node";
-import { insertOrUpdateOnetoDb, update } from "~/modules/dbOnline";
+import { insertOnetoDb, insertOrUpdateOnetoDb, update } from "~/modules/dbOnline";
 import { updateProfile, verifyAccessToken } from "~/modules/utils";
 
 export const action: ActionFunction = async ({ request, params }) => {
@@ -10,11 +10,11 @@ export const action: ActionFunction = async ({ request, params }) => {
         const result = await update("unnamed", "users", { username: data.username }, { $set: data });
         if (result) {
             updateProfile(data);
-            await insertOrUpdateOnetoDb({ "by": data.username, "action": "profile update", "result": "scceded", "when": new Date().toISOString() }, "unnamed", "logs");
+            await insertOnetoDb({ "by": data.username, "action": "profile update", "result": "scceded", "when": new Date().toISOString() }, "unnamed", "logs");
             return new Response("Profile updated", { status: 200 });
         }
         else {
-            await insertOrUpdateOnetoDb({ "by": data.username, "action": "profile update", "result": "username not found", "when": new Date().toISOString() }, "unnamed", "logs");
+            await insertOnetoDb({ "by": data.username, "action": "profile update", "result": "username not found", "when": new Date().toISOString() }, "unnamed", "logs");
             return new Response("Username not found", { status: 404 });
         }
     }

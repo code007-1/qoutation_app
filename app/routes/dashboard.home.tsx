@@ -7,6 +7,7 @@ import TableUI from "~/component/table/tableUI";
 import { createQuotation, initialQoutationData, useGlobalContext } from "~/modules/gcontext";
 import { useCentralFetcher } from "~/component/centralFetcher";
 import { useNotification } from "~/modules/notificationContext";
+import { userProfile } from "~/modules/utils";
 
 const StaffTable = () => {
     // Initiate your states
@@ -16,6 +17,7 @@ const StaffTable = () => {
 
     const { quoteData, setHeaderText, dataCount, setDataCount, setQuoteData, setData, setItems } = useGlobalContext();
     async function getQoutes() {
+        setLoading(true);
         const response = await fetcher(`/api/quotations`);
         if (response.status === 200) {
             const data = await response.json()
@@ -25,22 +27,27 @@ const StaffTable = () => {
         else {
             addNotifications({ title: "Failure...", message: "Fail to load data." });
         }
+        setLoading(false);
     }
 
     async function handleAdvanceSearch(query?: { start: string, end: string, to: string }) {
+        setLoading(true);
         var response;
         if (query) {
             response = await fetcher(`/api/quotations?start=${query.start}&end=${query.end}&to=${query.to}`);
             if (response.status === 200) {
                 const data = await response.json();
                 setQuoteData(data);
+
             }
             else if (response.status != 200) {
                 addNotifications({ title: "Failure...", message: "Fail to load data." });
             }
             setDataCount(0);
+            setLoading(false);
         }
         else {
+            setLoading(true);
             response = await fetcher(`/api/quotations?skip=${dataCount}`);
             if (response.status === 200) {
                 const data = await response.json();
@@ -56,11 +63,12 @@ const StaffTable = () => {
             else if (response.status != 200) {
                 addNotifications({ title: "Failure...", message: "Fail to load data." });
             }
+            setLoading(false);
         }
     }
 
     async function handleDeletequotation(no: string) {
-        const result = await fetcher("/api/delete", { method: "POST", body: JSON.stringify(no) });
+        const result = await fetcher("/api/delete", { method: "POST", body: JSON.stringify({ "no": no, "username": userProfile.username }) });
         if (result.status !== 200) {
             addNotifications({
                 title: "Error while deletion...",
