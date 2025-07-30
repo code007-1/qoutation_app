@@ -15,7 +15,7 @@ const StaffTable = () => {
     const { addNotifications } = useNotification();
     const fetcher = useCentralFetcher();
 
-    const { quoteData, setHeaderText, dataCount, setDataCount, setQuoteData, setData, setItems } = useGlobalContext();
+    const { quoteData, setHeaderText, dataCount, setDataCount, setQuoteData, setData, setItems, profile } = useGlobalContext();
     async function getQoutes() {
         setLoading(true);
         const response = await fetcher(`/api/quotations`);
@@ -68,7 +68,7 @@ const StaffTable = () => {
     }
 
     async function handleDeletequotation(no: string) {
-        const result = await fetcher("/api/delete", { method: "POST", body: JSON.stringify({ "no": no, "username": userProfile.username }) });
+        const result = await fetcher("/api/delete", { method: "POST", body: JSON.stringify(no) });
         if (result.status !== 200) {
             addNotifications({
                 title: "Error while deletion...",

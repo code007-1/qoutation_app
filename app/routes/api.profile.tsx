@@ -1,5 +1,5 @@
 import { ActionFunction } from "@remix-run/node";
-import { insertOnetoDb, insertOrUpdateOnetoDb, update } from "~/modules/dbOnline";
+import { insertOnetoDb, update } from "~/modules/dbOnline";
 import { updateProfile, verifyAccessToken } from "~/modules/utils";
 
 export const action: ActionFunction = async ({ request, params }) => {
