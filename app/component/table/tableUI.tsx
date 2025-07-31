@@ -16,11 +16,12 @@ import {
     useReactTable,
 } from "@tanstack/react-table";
 import { ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
-import { FC, memo, useMemo, useState } from "react";
+import { FC, memo, useEffect, useMemo, useState } from "react";
 import { useGlobalContext } from "~/modules/gcontext";
 import { createPdf, QuotationData } from "~/routes/dashboard.quote";
 import { useCentralFetcher } from "../centralFetcher";
 import { useNotification } from "~/modules/notificationContext";
+import { Loading } from "../loading";
 
 // Typescript interface
 
@@ -126,6 +127,11 @@ const TableUI: FC<TableProps> = ({
         setItems(row.items);
         navigate("/dashboard/quote");
     }
+
+
+    /*useEffect(() => {
+        console.log("fetching value : ", isFetching)
+    }, [isFetching]);*/
 
     return (
         <div className="">
@@ -242,8 +248,8 @@ const TableUI: FC<TableProps> = ({
                                         <input type="date" className="p-2" onChange={(e) => { setQuery(pre => { return { ...pre, start: e.target.value } }) }} />
                                         <div>End</div>
                                         <input type="date" className="p-2" onChange={(e) => { setQuery(pre => { return { ...pre, end: e.target.value } }) }} />
-                                        <div>To</div>
-                                        <input type="text" className="p-2" onChange={(e) => { setQuery(pre => { return { ...pre, to: e.target.value } }) }} />
+                                        {/*<div>To</div>
+                                        <input type="text" className="p-2" onChange={(e) => { setQuery(pre => { return { ...pre, to: e.target.value } }) }} />*/}
                                     </div>
                                 </div>
                                 <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
@@ -274,7 +280,7 @@ const TableUI: FC<TableProps> = ({
             <div className="">
                 <table className="w-full">
                     <thead>
-                        {!isFetching && getHeaderGroups().map((headerGroup) => (
+                        {/*!isFetching &&*/ getHeaderGroups().map((headerGroup) => (
                             <tr key={headerGroup.id} className="bg-headerBackground">
                                 {headerGroup.headers.map((header) => (
                                     <th key={header.id} className="text-left text-textSecondary p-2" >

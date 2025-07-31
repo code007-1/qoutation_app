@@ -17,6 +17,7 @@ const StaffTable = () => {
 
     const { quoteData, setHeaderText, dataCount, setDataCount, setQuoteData, setData, setItems, profile } = useGlobalContext();
     async function getQoutes() {
+        setLoading(true);
         const response = await fetcher(`/api/quotations`);
         if (response.status === 200) {
             const data = await response.json()
@@ -26,22 +27,27 @@ const StaffTable = () => {
         else {
             addNotifications({ title: "Failure...", message: "Fail to load data." });
         }
+        setLoading(false);
     }
 
     async function handleAdvanceSearch(query?: { start: string, end: string, to: string }) {
+        setLoading(true);
         var response;
         if (query) {
             response = await fetcher(`/api/quotations?start=${query.start}&end=${query.end}&to=${query.to}`);
             if (response.status === 200) {
                 const data = await response.json();
                 setQuoteData(data);
+
             }
             else if (response.status != 200) {
                 addNotifications({ title: "Failure...", message: "Fail to load data." });
             }
             setDataCount(0);
+            setLoading(false);
         }
         else {
+            setLoading(true);
             response = await fetcher(`/api/quotations?skip=${dataCount}`);
             if (response.status === 200) {
                 const data = await response.json();
@@ -57,6 +63,7 @@ const StaffTable = () => {
             else if (response.status != 200) {
                 addNotifications({ title: "Failure...", message: "Fail to load data." });
             }
+            setLoading(false);
         }
     }
 

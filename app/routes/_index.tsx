@@ -2,6 +2,7 @@ import packageJson from '../../package.json';
 import { useFetcher, useNavigate } from "@remix-run/react";
 import { Loader, SunMoon } from "lucide-react";
 import { useEffect } from "react";
+import { Loading } from '~/component/loading';
 import { useGlobalContext } from "~/modules/gcontext";
 import { useNotification } from "~/modules/notificationContext";
 import { loginData } from "~/modules/utils";

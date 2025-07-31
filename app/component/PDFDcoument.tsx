@@ -1,13 +1,77 @@
-import { Document, Page, Text, View, StyleSheet, Image, Link } from "@react-pdf/renderer";
+import { Document, Page, Text, View, StyleSheet, Image, Link, Font } from "@react-pdf/renderer";
 import { Watermark } from "./watermark";
 import { QuotationData } from "~/routes/dashboard.quote";
+import OxaniumRegular from "../fonts/Oxanium/static/Oxanium-Regular.ttf";
+import OxaniumSemiBold from "../fonts/Oxanium/static/Oxanium-SemiBold.ttf";
+import OxaniumBold from "../fonts/Oxanium/static/Oxanium-Bold.ttf";
+import OxaniumRegularExtraBold from "../fonts/Oxanium/static/Oxanium-ExtraBold.ttf";
+import OxaniumExtraLight from "../fonts/Oxanium/static/Oxanium-ExtraLight.ttf";
+import OxaniumMedium from "../fonts/Oxanium/static/Oxanium-Medium.ttf";
 
 export default function PDFDocument(data: QuotationData, showCustomerList: boolean = true) {
     const hue = data.pdfColor ? data.pdfColor : "222";
 
+    Font.register({
+        //family: 'Oswald',
+        //src: 'https://fonts.gstatic.com/s/oswald/v13/Y_TKV6o8WovbUd3m_X9aAA.ttf',
+        family: "Oxanium",
+        fonts: [
+            {
+                src: OxaniumRegular,
+                fontStyle: "normal",
+                fontWeight: "normal"
+            },
+            {
+                src: OxaniumExtraLight,
+                fontStyle: "normal",
+                fontWeight: "ultralight"
+            },
+            {
+                src: OxaniumExtraLight,
+                fontStyle: "normal",
+                fontWeight: "light"
+            },
+            {
+                src: OxaniumMedium,
+                fontStyle: "normal",
+                fontWeight: "medium"
+            },
+            {
+                src: OxaniumSemiBold,
+                fontStyle: "normal",
+                fontWeight: "semibold"
+            },
+            {
+                src: OxaniumBold,
+                fontStyle: "normal",
+                fontWeight: "bold"
+            },
+            {
+                src: OxaniumRegularExtraBold,
+                fontStyle: "normal",
+                fontWeight: "ultrabold"
+            },
+            {
+                src: OxaniumRegularExtraBold,
+                fontStyle: "normal",
+                fontWeight: "heavy"
+            },
+            {
+                src: OxaniumExtraLight,
+                fontStyle: "normal",
+                fontWeight: "thin"
+            },
+            {
+                src: OxaniumExtraLight,
+                fontStyle: "italic",
+                fontWeight: 700
+            }
+        ]
+    });
+
     const styles = StyleSheet.create({
         page: { padding: 30, display: "flex", flexDirection: "column", fontStyle: "normal" },
-        title: { fontSize: 20, fontWeight: "bold", textAlign: "center", color: `hsl(${hue} 100% 72%)` },
+        title: { textAlign: "center", color: `hsl(${hue} 100% 72%)` },
         backgroundImage: { height: "auto", width: "100%" },
         header: { marginBottom: 15 },
         bodyText: { fontSize: 40, fontStyle: "italic", fontWeight: "bold", marginVertical: 20 },
