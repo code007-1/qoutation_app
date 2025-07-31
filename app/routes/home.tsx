@@ -2,7 +2,7 @@ import Header from "~/component/header";
 import { Outlet, useNavigate } from "@remix-run/react";
 import { useEffect } from "react";
 import { useGlobalContext } from "~/modules/gcontext";
-import { NotepadText, ReceiptIndianRupee, ReceiptText, ScrollText } from "lucide-react";
+import { NotebookText, NotepadText, ReceiptIndianRupee, ReceiptText, ScrollText } from "lucide-react";
 
 export default function DashboardSettings() {
     const navigate = useNavigate();
@@ -33,6 +33,10 @@ export default function DashboardSettings() {
                         <div className="flex flex-col items-center cursor-pointer hover:bg-buttonHover/50 my-4 mx-10" onClick={() => navigate("/dashboard/challan/show")}>
                             <NotepadText size={200} className="text-textSecondary" />
                             <div className="text-textSecondary font-bold text-center text-2xl">Challan</div>
+                        </div>
+                        <div className="flex flex-col items-center cursor-pointer hover:bg-buttonHover/50 my-4 mx-10" onClick={() => navigate("/dashboard/challan/show")}>
+                            <NotebookText size={200} className="text-textSecondary" />
+                            <div className="text-textSecondary font-bold text-center text-2xl">Complaints</div>
                         </div>
                     </div>
                 </div>
