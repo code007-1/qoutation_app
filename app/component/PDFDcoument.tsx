@@ -6,7 +6,7 @@ export default function PDFDocument(data: QuotationData, showCustomerList: boole
     const hue = data.pdfColor ? data.pdfColor : "222";
 
     const styles = StyleSheet.create({
-        page: { padding: 30, display: "flex", flexDirection: "column", fontFamily: "Times-Roman", fontStyle: "normal" },
+        page: { padding: 30, display: "flex", flexDirection: "column", fontStyle: "normal" },
         title: { fontSize: 20, fontWeight: "bold", textAlign: "center", color: `hsl(${hue} 100% 72%)` },
         backgroundImage: { height: "auto", width: "100%" },
         header: { marginBottom: 15 },
