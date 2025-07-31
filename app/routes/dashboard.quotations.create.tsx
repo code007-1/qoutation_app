@@ -53,7 +53,7 @@ export async function createPdf(data: QuotationData, fetcher: any, showCustomerL
     window.open(url); // or trigger download
 }
 
-export default function Quote() {
+export default function QuotationsCreate() {
     const location = useLocation();
     const passedData = location.state;
 
@@ -150,7 +150,7 @@ export default function Quote() {
                                 </button>
                             </div>}
                         {/*<div className="w-1/2 flex justify-end">
-                            <Link to={"/dashboard/home"} className="bg-button text-buttonTextPrimary px-4 py-1 text-lg" onClick={(e) => { setHeaderText(createQuotation); }}>
+                            <Link to={"/dashboard/showquotations"} className="bg-button text-buttonTextPrimary px-4 py-1 text-lg" onClick={(e) => { setHeaderText(createQuotation); }}>
                                 Cancel
                             </Link>
                         </div>*/}
@@ -246,7 +246,7 @@ export default function Quote() {
                                     <button onClick={() => setStep(1)} className="bg-button text-buttonTextPrimary px-4 py-1 mt-4 text-lg">
                                         Back
                                     </button>
-                                    <form onSubmit={(e) => { createPdf(data, fetcher, profile?.showCustomerList); e.preventDefault(); navigate("/dashboard/home") }}>
+                                    <form onSubmit={(e) => { createPdf(data, fetcher, profile?.showCustomerList); e.preventDefault(); navigate("/dashboard/showquotations") }}>
                                         <button className="bg-button text-buttonTextPrimary px-4 py-1 mt-4 text-lg" type="submit">Generate Qoutation PDF</button>
                                     </form>
                                 </div>

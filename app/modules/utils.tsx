@@ -4,7 +4,7 @@ const { verify } = pkg;
 import { createCookie } from "@remix-run/node";
 //import { MetaFunction } from "@remix-run/react";
 import { count, search } from "./dbOnline";
-import { profile } from "~/routes/dashboard.profile";
+import { profile } from "~/routes/dashboard.settings.profile";
 
 export const JWT_REFRESH_KEY = "123!@#$@SDFASDAD";
 export const JWT_ACCESS_KEY = "!#SDAS@#!!@XZZXC";

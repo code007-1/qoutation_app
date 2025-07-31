@@ -1,6 +1,6 @@
 import { Document, Page, Text, View, StyleSheet, Image, Link, Font } from "@react-pdf/renderer";
 import { Watermark } from "./watermark";
-import { QuotationData } from "~/routes/dashboard.quote";
+import { QuotationData } from "~/routes/dashboard.quotations.create";
 import OxaniumRegular from "../fonts/Oxanium/static/Oxanium-Regular.ttf";
 import OxaniumSemiBold from "../fonts/Oxanium/static/Oxanium-SemiBold.ttf";
 import OxaniumBold from "../fonts/Oxanium/static/Oxanium-Bold.ttf";
@@ -78,7 +78,7 @@ export default function PDFDocument(data: QuotationData, showCustomerList: boole
         rowContainer: { display: "flex", flexDirection: "row", justifyContent: "space-between", gap: 20 },
         columnContainer: { flexDirection: "column", justifyContent: "center" },
         footer: { fontSize: 16, color: "gray", marginBottom: 0, marginTop: "auto" },
-        paragraph: { width: "48%", textAlign: "justify", fontSize: 11, backgroundColor: `hsl(${hue} 100% 97%)`, padding: 10, borderRadius: 5, lineHeight: 1.25 },
+        paragraph: { width: "48%", textAlign: "justify", fontSize: 11, backgroundColor: `hsl(${hue} 100% 97%)`, padding: 10, lineHeight: 1.25 },
         pageNumber: { position: "absolute", bottom: 20, right: 40, fontSize: 10, color: "#6E6E6E" },
         fromto: { fontSize: 11, color: `hsl(${hue} 100% 60%)` },
         companyDetails: { fontSize: 11, textAlign: "center", fontWeight: "bold" },

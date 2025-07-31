@@ -18,7 +18,7 @@ import {
 import { ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
 import { FC, memo, useEffect, useMemo, useState } from "react";
 import { useGlobalContext } from "~/modules/gcontext";
-import { createPdf, QuotationData } from "~/routes/dashboard.quote";
+import { createPdf, QuotationData } from "~/routes/dashboard.quotations.create";
 import { useCentralFetcher } from "../centralFetcher";
 import { useNotification } from "~/modules/notificationContext";
 import { Loading } from "../loading";
@@ -47,7 +47,7 @@ interface TableProps {
 
 // The main table 
 
-const TableUI: FC<TableProps> = ({
+const ChallanTableUI: FC<TableProps> = ({
     data,
     columns,
     isFetching,
@@ -405,4 +405,4 @@ const TableUI: FC<TableProps> = ({
 };
 
 
-export default memo(TableUI);
+export default memo(ChallanTableUI);

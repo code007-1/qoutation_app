@@ -2,14 +2,13 @@ import { useEffect, useState } from "react";
 
 // Import these components correctly depending on your structure
 
-import { Columns } from "~/component/table/columns";
-import TableUI from "~/component/table/tableUI";
-import { createQuotation, initialQoutationData, useGlobalContext } from "~/modules/gcontext";
+import { ChallanColumn } from "~/component/challan/challanColumns";
+import QuotationsTableUI from "~/component/quotation/quotationsTableUI";
+import { createChallan, createQuotation, initialQoutationData, useGlobalContext } from "~/modules/gcontext";
 import { useCentralFetcher } from "~/component/centralFetcher";
 import { useNotification } from "~/modules/notificationContext";
-import { userProfile } from "~/modules/utils";
 
-const StaffTable = () => {
+const QuotationsShow = () => {
     // Initiate your states
     const [loading, setLoading] = useState(false);
     const { addNotifications } = useNotification();
@@ -84,7 +83,7 @@ const StaffTable = () => {
     useEffect(() => {
         setData(initialQoutationData());
         setItems([]);
-        setHeaderText(createQuotation);
+        setHeaderText(createChallan);
         if (dataCount === 0)
             getQoutes();
     }, []);
@@ -93,9 +92,9 @@ const StaffTable = () => {
         <>
             <section className="mt-5">
                 <div>
-                    <TableUI
+                    <QuotationsTableUI
                         data={quoteData}
-                        columns={Columns}
+                        columns={ChallanColumn}
                         searchLabel="Search by Name or job title"
                         EmptyText="No Quotations Found!"
                         isFetching={loading}
@@ -110,4 +109,4 @@ const StaffTable = () => {
     );
 };
 
-export default StaffTable;
+export default QuotationsShow;

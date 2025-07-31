@@ -1,7 +1,7 @@
 import { Minus } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { useGlobalContext } from "~/modules/gcontext";
-import { QuoteItems } from "~/routes/dashboard.quote";
+import { QuoteItems } from "~/routes/dashboard.quotations.create";
 
 //- done - advance show hide for better ui - optimized little bit, ok for now
 //- done - welcome animation - partially done, would improve animation

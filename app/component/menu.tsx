@@ -42,7 +42,7 @@ export default function MainMenu() {
                     <div className="">
                         <MenuItem>
                             <Link
-                                to="/dashboard/profile"
+                                to="/dashboard/settings/profile"
                                 className="flex px-4 py-2 text-sm text-textSecondary data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
                             >
                                 <UserPen size={20} className="mr-2" />
@@ -51,7 +51,7 @@ export default function MainMenu() {
                         </MenuItem>
                         <MenuItem>
                             <Link
-                                to="/dashboard/password"
+                                to="/dashboard/settings/password"
                                 className="flex px-4 py-2 text-sm text-textSecondary data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
                             >
                                 <RotateCcwKey size={20} className="mr-2" />
