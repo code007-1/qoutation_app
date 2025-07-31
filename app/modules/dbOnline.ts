@@ -35,12 +35,8 @@ export async function search(db: string = "unnamed", collection: string = "qouta
         await client.connect();
         return await client.db(db).collection(collection).find(query).skip(skip).limit(limit).toArray();//{ name: { $regex: query, $options: "i" } }
     }
-    catch (error) {
-        console.log("error while saerching in db : ", error);
-    }
-    finally {
-        await client.close();
-    }
+    catch (error) { console.log("error while saerching in db : ", error); }
+    finally { await client.close(); }
 }
 
 export async function sortedSearch(db: string = "unnamed", collection: string = "qoutations", query: {} = {}, limit: number = 10, skip: number = 0, sortOrder: number = -1, sortKey: string = "_id") {
@@ -48,12 +44,8 @@ export async function sortedSearch(db: string = "unnamed", collection: string = 
         await client.connect();
         return await client.db(db).collection(collection).find(query).sort({ _id: -1 }).skip(skip).limit(limit).toArray();//{ name: { $regex: query, $options: "i" } }
     }
-    catch (error) {
-        console.log("error while saerching in db : ", error);
-    }
-    finally {
-        await client.close();
-    }
+    catch (error) { console.log("error while saerching in db : ", error); }
+    finally { await client.close(); }
 }
 
 
@@ -62,12 +54,8 @@ export async function count(db: string = "unnamed", collection: string = "qoutat
         await client.connect();
         return await client.db(db).collection(collection).countDocuments(query);//{ name: { $regex: query, $options: "i" } }
     }
-    catch (error) {
-        console.log("error while saerching in db : ", error);
-    }
-    finally {
-        await client.close();
-    }
+    catch (error) { console.log("error while saerching in db : ", error); }
+    finally { await client.close(); }
 }
 
 export async function update(db: string = "unnamed", collection: string = "users", query: {} = {}, updateDoc: {}) {
@@ -75,35 +63,55 @@ export async function update(db: string = "unnamed", collection: string = "users
         await client.connect();
         return await client.db(db).collection(collection).updateOne(query, updateDoc);//{ name: { $regex: query, $options: "i" } }
     }
-    catch (error) {
-        console.log("error while saerching in db : ", error);
-    }
-    finally {
-        await client.close();
-    }
+    catch (error) { console.log("error while saerching in db : ", error); }
+    finally { await client.close(); }
 }
 
-export async function deleteOneFromDB(no: string, db: string = "unnamed", collection: string = "quotations",) {
-    client.connect().then(async (e) => {
+export async function deleteOneFromDB(no: string, db: string = "unnamed", collection: string = "quotations",): Promise<number | undefined> {
+    try {
+        await client.connect();
         const result = await client.db(db).collection(collection).deleteOne({ "no": no });
         console.log(`New item created with the following id: ${result.deletedCount}`);
-    }).catch(console.error).finally(() => client.close());
+        return result.deletedCount;
+    }
+    catch (error) { console.log("error while deleting from database : ", error); }
+    finally { await client.close(); }
+
+    /*client.connect().then(async (e) => {
+        const result = await client.db(db).collection(collection).deleteOne({ "no": no });
+        console.log(`New item created with the following id: ${result.deletedCount}`);
+    }).catch(console.error).finally(() => client.close());*/
 }
 export async function insertOrUpdateOnetoDb(data: any, db: string = "unnamed", collection: string = "quotations") {
-    client.connect().then(async (e) => {
+    try {
+        await client.connect();
         const { _id, ...restData } = data;
         const result = await client.db(db).collection(collection).updateOne({ "no": data.no }, { $set: { ...restData } }, { upsert: true });
         console.log(`New item created with the following id: ${result.upsertedId} : ${result}`);
-    }).catch(console.error).finally(() => client.close());
-
+        return result.upsertedCount;
+    }
+    catch (error) { console.log("error while updating document to database : ", error); }
+    finally { await client.close(); }
+    /*client.connect().then(async (e) => {
+        const { _id, ...restData } = data;
+        const result = await client.db(db).collection(collection).updateOne({ "no": data.no }, { $set: { ...restData } }, { upsert: true });
+        console.log(`New item created with the following id: ${result.upsertedId} : ${result}`);
+    }).catch(console.error).finally(() => client.close());*/
 }
 
 export async function insertOnetoDb(data: any, db: string = "unnamed", collection: string = "logs") {
-    client.connect().then(async (e) => {
+    try {
+        await client.connect();
         const result = await client.db(db).collection(collection).insertOne(data);
         console.log(`New log created with the following id: ${result.insertedId} : ${result}`);
-    }).catch(console.error).finally(() => client.close());
-
+        return result.insertedId;
+    }
+    catch (error) { console.log("error while inserting document to database : ", error); }
+    finally { await client.close(); }
+    /*client.connect().then(async (e) => {
+        const result = await client.db(db).collection(collection).insertOne(data);
+        console.log(`New log created with the following id: ${result.insertedId} : ${result}`);
+    }).catch(console.error).finally(() => client.close());*/
 }
 
 

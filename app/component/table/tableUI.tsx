@@ -248,8 +248,8 @@ const TableUI: FC<TableProps> = ({
                                         <input type="date" className="p-2" onChange={(e) => { setQuery(pre => { return { ...pre, start: e.target.value } }) }} />
                                         <div>End</div>
                                         <input type="date" className="p-2" onChange={(e) => { setQuery(pre => { return { ...pre, end: e.target.value } }) }} />
-                                        <div>To</div>
-                                        <input type="text" className="p-2" onChange={(e) => { setQuery(pre => { return { ...pre, to: e.target.value } }) }} />
+                                        {/*<div>To</div>
+                                        <input type="text" className="p-2" onChange={(e) => { setQuery(pre => { return { ...pre, to: e.target.value } }) }} />*/}
                                     </div>
                                 </div>
                                 <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">

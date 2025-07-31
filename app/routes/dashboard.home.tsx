@@ -68,7 +68,8 @@ const StaffTable = () => {
     }
 
     async function handleDeletequotation(no: string) {
-        const result = await fetcher("/api/delete", { method: "POST", body: JSON.stringify(no) });
+        //console.log("deleting quotation no : ", no, " by user : ", profile.username);
+        const result = await fetcher("/api/delete", { method: "POST", body: JSON.stringify({ "no": no, "username": profile.username }) });
         if (result.status !== 200) {
             addNotifications({
                 title: "Error while deletion...",
