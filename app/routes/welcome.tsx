@@ -4,7 +4,7 @@ import { useGlobalContext } from "~/modules/gcontext";
 
 export default function Welcome() {
     const navigate = useNavigate();
-    const { quote } = useGlobalContext();
+    const { gQuote } = useGlobalContext();
 
     return (
         <>
@@ -22,7 +22,7 @@ export default function Welcome() {
                                 {"Hi...Gunjan...Ji 👋 😃"}
                             </div>
                             <div className="text-3xl font-Kalam">
-                                {quote}
+                                {gQuote}
                             </div>
                             <button className="bg-blue-600 w-min text-white text-base font-mono px-2 py-1 mt-4" onClick={(e) => navigate("/dashboard/home")}>Next</button>
                         </div>

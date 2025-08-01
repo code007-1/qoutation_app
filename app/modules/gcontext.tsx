@@ -2,6 +2,7 @@ import { Link } from "@remix-run/react";
 import React, { createContext, useState, useContext, ReactNode } from "react";
 import { profile } from "~/routes/dashboard.settings.profile";
 import { QuotationData, QuoteItems } from "~/routes/dashboard.quotations.create";
+import packageJson from '../../package.json';
 
 interface AppContextType {
     theme: string;
@@ -12,24 +13,26 @@ interface AppContextType {
     setItems: React.Dispatch<React.SetStateAction<QuoteItems[]>>;
     data: QuotationData;
     setData: React.Dispatch<React.SetStateAction<QuotationData>>;
-    userName: string | undefined,
-    setUserName: React.Dispatch<React.SetStateAction<string | undefined>>;
+    homeLink: string;
+    setHomeLink: React.Dispatch<React.SetStateAction<string>>;
     headerText: string | ReactNode
     setHeaderText: React.Dispatch<React.SetStateAction<string | ReactNode>>;
-    quote: string | undefined;
-    setQuote: React.Dispatch<React.SetStateAction<string | undefined>>;
+    gQuote: string | undefined;
+    setGQuote: React.Dispatch<React.SetStateAction<string | undefined>>;
     profile: profile,
     setProfile: React.Dispatch<React.SetStateAction<profile>>;
     dataCount: number;
     setDataCount: React.Dispatch<React.SetStateAction<number>>;
     quoteData: QuotationData[];
     setQuoteData: React.Dispatch<React.SetStateAction<QuotationData[]>>;
+    appName: string;
+    setAppName: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const appContext = createContext<AppContextType | null>(null);
 export const createQuotation = <>< Link to={"/dashboard/quotations/create"} className="cursor-pointer hover:bg-buttonHover w-min text-nowrap p-1" >Create Quotation</Link ></>;
 export const createChallan = <>< Link to={"/dashboard/challan/create"} className="cursor-pointer hover:bg-buttonHover w-min text-nowrap p-1" >Create Challan</Link ></>;
-export const initialQoutationData = () => {
+export const initialQuotationData = () => {
     return {
         no: new Date().getTime().toString(),
         date: new Date().toISOString().split("T")[0], // Default to today's date
@@ -51,7 +54,8 @@ export const initialQoutationData = () => {
 export const AppProvider = ({ children }: { children: React.ReactNode }) => {
     const [theme, setTheme] = useState("light"); // Default theme
     const [accessToken, setAccessToken] = useState<string | undefined>();
-    const [userName, setUserName] = useState<string | undefined>();
+    const [homeLink, setHomeLink] = useState<string>("/home");
+    const [appName, setAppName] = useState<string>(packageJson.name.slice(0, 3) + packageJson.name[3].toUpperCase() + packageJson.name.slice(4));
     const [headerText, setHeaderText] = useState<string | ReactNode>(createQuotation);
     const [items, setItems] = useState<QuoteItems[]>([]);
     const [dataCount, setDataCount] = useState<number>(0);
@@ -61,7 +65,7 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
 
     //const date = new Date().getTime().toString();
 
-    const [data, setData] = useState<QuotationData>(initialQoutationData());
+    const [data, setData] = useState<QuotationData>(initialQuotationData());
 
 
     const toggleTheme = () => {
@@ -69,7 +73,7 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
     };
 
     return (
-        <appContext.Provider value={{ theme, toggleTheme, accessToken, setAccessToken, items, setItems, data, setData, userName, setUserName, headerText, setHeaderText, quote: gQuote, setQuote: setGQuote, profile, setProfile, dataCount, setDataCount, quoteData, setQuoteData }}>
+        <appContext.Provider value={{ theme, toggleTheme, accessToken, setAccessToken, items, setItems, data, setData, headerText, setHeaderText, gQuote, setGQuote, profile, setProfile, dataCount, setDataCount, quoteData, setQuoteData, homeLink, setHomeLink, setAppName, appName }}>
             {children}
         </appContext.Provider>
     );
