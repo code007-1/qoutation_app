@@ -298,7 +298,7 @@ const TableUI: FC<TableProps> = ({
                     <tbody className="p-2">
                         {!isFetching ? (
                             getRowModel()?.rows.map((row) => (
-                                <tr key={row.id} className="bg-header cursor-pointer hover:bg-buttonHover">
+                                <tr key={row.id} className="bg-header cursor-pointer hover:bg-buttonHover" tabIndex={0}>
                                     {row.getVisibleCells().map((cell) => (
                                         <td
                                             onClick={(e) => {

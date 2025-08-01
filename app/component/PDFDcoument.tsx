@@ -216,7 +216,7 @@ export default function PDFDocument(data: QuotationData, showCustomerList: boole
                         <Text break={true} style={{ fontSize: 14, fontWeight: "bold", textAlign: "center" }}>Out Customers List</Text>
                         <Image style={styles.backgroundImage} src={"public/All.jpg"} />
                     </>}
-                <Text fixed style={styles.pageNumber} render={({ pageNumber }) => `${data.website}                                                              Page ${pageNumber}`} />
+                <Text fixed style={styles.pageNumber} render={({ pageNumber }) => `${data.website}                                                      Page ${pageNumber}`} />
             </Page>
         </Document >
     );
