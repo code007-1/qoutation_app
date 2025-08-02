@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 import { ChallanColumn } from "~/component/challan/challanColumns";
 import QuotationsTableUI from "~/component/quotation/quotationsTableUI";
-import { createChallan, createQuotation, initialQuotationData, useGlobalContext } from "~/modules/gcontext";
+import { createChallan, initialQuotationData, useGlobalContext } from "~/modules/gcontext";
 import { useCentralFetcher } from "~/component/centralFetcher";
 import { useNotification } from "~/modules/notificationContext";
 

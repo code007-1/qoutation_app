@@ -53,7 +53,7 @@ export async function createPdf(data: QuotationData, fetcher: any, showCustomerL
     window.open(url); // or trigger download
 }
 
-export default function Quote() {
+export default function CreateChallan() {
     const location = useLocation();
     const passedData = location.state;
 
@@ -85,9 +85,8 @@ export default function Quote() {
     }
 
     useEffect(() => {
-        if (step === 0) setHeaderText("Qoutation Details")
+        if (step === 0) setHeaderText("Challan Details")
         else if (step === 1) setHeaderText("Product Details")
-        else if (step === 2) setHeaderText("Terms and Conditions")
     }, [step])
 
     useEffect(() => {
@@ -151,6 +150,10 @@ export default function Quote() {
                             <div className="mx-10 flex space-x-10 w-full">
                                 <div className="w-full space-y-4">
                                     <div>
+                                        <label className="text-sm font-semibold">Challan Type</label>
+                                        <input key={"second"} type="text" placeholder="Enter Second Party Name" className="border border-border p-2 w-full bg-background" value={data.to} onChange={e => setData(pre => { return { ...pre, to: e.target.value } })} />
+                                    </div>
+                                    <div>
                                         <label className="text-sm font-semibold">To</label>
                                         <input key={"second"} type="text" placeholder="Enter Second Party Name" className="border border-border p-2 w-full bg-background" value={data.to} onChange={e => setData(pre => { return { ...pre, to: e.target.value } })} />
                                     </div>
@@ -182,7 +185,7 @@ export default function Quote() {
                                     </div>
                                 </div>
                                 <div className="flex justify-center space-x-4">
-                                    <button onClick={() => setStep(1)} className="bg-button text-buttonTextPrimary px-4 py-1 mt-4 text-lg">
+                                    <button onClick={() => setStep(0)} className="bg-button text-buttonTextPrimary px-4 py-1 mt-4 text-lg">
                                         Back
                                     </button>
                                     <form onSubmit={(e) => { "create pdf"; e.preventDefault(); navigate("/dashboard/showquotations") }}>
