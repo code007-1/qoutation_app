@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 
 // Import these components correctly depending on your structure
 
-import { Columns } from "~/component/table/columns";
-import TableUI from "~/component/table/tableUI";
+import { ChallanColumn } from "~/component/challan/challanColumns";
 import { createQuotation, initialQoutationData, useGlobalContext } from "~/modules/gcontext";
 import { useCentralFetcher } from "~/component/centralFetcher";
 import { useNotification } from "~/modules/notificationContext";
 import { userProfile } from "~/modules/utils";
+import ChallanTableUI from "~/component/challan/challanTableUI";
 
 const StaffTable = () => {
     // Initiate your states
@@ -93,9 +93,9 @@ const StaffTable = () => {
         <>
             <section className="mt-5">
                 <div>
-                    <TableUI
+                    <ChallanTableUI
                         data={quoteData}
-                        columns={Columns}
+                        columns={ChallanColumn}
                         searchLabel="Search by Name or job title"
                         EmptyText="No Quotations Found!"
                         isFetching={loading}

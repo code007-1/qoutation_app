@@ -44,7 +44,7 @@ export default function Index() {
       if (loginFetcher.data?.quote)
         navigate("/welcome");
       else
-        navigate("/dashboard/challanhome");
+        navigate("/home"); 0
     }
   }, [accessToken]);
 

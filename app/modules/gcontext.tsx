@@ -1,7 +1,7 @@
 import { Link } from "@remix-run/react";
 import React, { createContext, useState, useContext, ReactNode } from "react";
-import { profile } from "~/routes/dashboard.profile";
-import { QuotationData, QuoteItems } from "~/routes/dashboard.quote";
+import { profile } from "~/routes/dashboard.settings.profile";
+import { QuotationData, QuoteItems } from "~/routes/dashboard.quotations.create";
 
 interface AppContextType {
     theme: string;
@@ -27,7 +27,8 @@ interface AppContextType {
 }
 
 const appContext = createContext<AppContextType | null>(null);
-export const createQuotation = <>< Link to={"/dashboard/quote"} className="cursor-pointer hover:bg-buttonHover w-min text-nowrap p-1" >Create Quotation</Link ></>;
+export const createQuotation = <>< Link to={"/dashboard/quotations/create"} className="cursor-pointer hover:bg-buttonHover w-min text-nowrap p-1" >Create Quotation</Link ></>;
+export const createChallan = <>< Link to={"/dashboard/challan/create"} className="cursor-pointer hover:bg-buttonHover w-min text-nowrap p-1" >Create Challan</Link ></>;
 export const initialQoutationData = () => {
     return {
         no: new Date().getTime().toString(),

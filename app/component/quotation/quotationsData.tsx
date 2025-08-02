@@ -1,6 +1,6 @@
 // app/types/quotation.ts
 
-import { QuotationData, QuoteItems } from "~/routes/dashboard.quote";
+import { QuotationData, QuoteItems } from "~/routes/dashboard.quotations.create";
 
 export const dummyQuotations: QuotationData[] = [
     {

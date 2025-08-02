@@ -13,7 +13,7 @@ export const sortButton = (column: any, name: string) => {
     )
 }
 
-export const Columns: ColumnDef<any, any>[] = [
+export const QuotationsColumns: ColumnDef<any, any>[] = [
 
     {
         accessorKey: "no",

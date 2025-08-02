@@ -3,7 +3,7 @@ const password = "9ziRq5mLRppCobx8";
 
 //const { MongoClient, ServerApiVersion } = require('mongodb');
 import { MongoClient, ServerApiVersion } from "mongodb";
-import { QuotationData } from "~/routes/dashboard.quote";
+import { QuotationData } from "~/routes/dashboard.quotations";
 
 const uri = "mongodb+srv://spttcpl:9ziRq5mLRppCobx8@cluster0.bbixzsn.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 

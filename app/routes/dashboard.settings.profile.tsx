@@ -16,7 +16,7 @@ export type profile = {
     showCustomerList?: boolean
 }
 
-export default function Profile() {
+export default function SettingsProfile() {
     const { setHeaderText, profile, setProfile } = useGlobalContext();
     const { addNotifications } = useNotification();
     const fetcher = useCentralFetcher();

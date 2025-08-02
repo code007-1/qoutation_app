@@ -1,7 +1,7 @@
 import { useFetcher, useLocation, useNavigate } from "@remix-run/react";
 import { useEffect, useState } from "react";
 import { useGlobalContext } from "~/modules/gcontext";
-import AutocompleteSearch from "~/component/autocompleteSearch";
+import QuotationAutocompleteSearch from "~/component/quotationAutocompleteSearch";
 import { logoutData } from "~/modules/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import { useCentralFetcher } from "~/component/centralFetcher";
@@ -53,7 +53,7 @@ export async function createPdf(data: QuotationData, fetcher: any, showCustomerL
     window.open(url); // or trigger download
 }
 
-export default function Quote() {
+export default function QuotationsCreate() {
     const location = useLocation();
     const passedData = location.state;
 
@@ -85,7 +85,7 @@ export default function Quote() {
     }
 
     useEffect(() => {
-        if (step === 0) setHeaderText("Qoutation Details")
+        if (step === 0) setHeaderText("Quotation Details")
         else if (step === 1) setHeaderText("Product Details")
         else if (step === 2) setHeaderText("Terms and Conditions")
     }, [step])
@@ -121,9 +121,9 @@ export default function Quote() {
             >
                 <div className="text-textSecondary">
                     <div className="mt-4 flex space-x-4 items-center align-middle">
-                        <div className="flex items-center w-1/2">
-                            <div className="text-sm font-semibold mr-2">Qoutation No.</div>
-                            {/*<input type="text" name="no" placeholder="Enter Qoutation No." className="border border-border p-2 mb-2 mr-5 w-25 bg-background" value={data.no} onChange={e => setData((pre) => { return { ...pre, no: e.target.value }; })} />*/}
+                        <div className="flex items-center w-3/4">
+                            <div className="text-sm font-semibold mr-2">Quotation No.</div>
+                            {/*<input type="text" name="no" placeholder="Enter Quotation No." className="border border-border p-2 mb-2 mr-5 w-25 bg-background" value={data.no} onChange={e => setData((pre) => { return { ...pre, no: e.target.value }; })} />*/}
                             <div className="text-sm">{data.no}</div>
                             <div className="text-sm font-semibold ml-10 mr-2">Date</div>
                             <input type="date" color="white" name="date" id="date" pattern="\d{4}-\d{2}-\d{2}" placeholder="Date" className="border border-border w-25 h-10 bg-background" value={data.date} onChange={e => setData(pre => { return { ...pre, date: e.target.value } })} />
@@ -142,15 +142,14 @@ export default function Quote() {
                                 />
                             </Switch>
                         </div>
-
                         {step === 1 &&
-                            <div className="w-1/2 flex justify-end">
+                            <div className="w-1/4 flex justify-end">
                                 <button onClick={addItem} className="bg-button text-buttonTextPrimary px-4 py-1 text-lg">
                                     Add Item
                                 </button>
                             </div>}
                         {/*<div className="w-1/2 flex justify-end">
-                            <Link to={"/dashboard/home"} className="bg-button text-buttonTextPrimary px-4 py-1 text-lg" onClick={(e) => { setHeaderText(createQuotation); }}>
+                            <Link to={"/dashboard/showquotations"} className="bg-button text-buttonTextPrimary px-4 py-1 text-lg" onClick={(e) => { setHeaderText(createQuotation); }}>
                                 Cancel
                             </Link>
                         </div>*/}
@@ -196,7 +195,7 @@ export default function Quote() {
                                     {
                                         items.map((_, index) => {
                                             return <>
-                                                <AutocompleteSearch key={index} index={index} />
+                                                <QuotationAutocompleteSearch key={index} index={index} />
                                             </>;
                                         })}
                                 </div>
@@ -246,8 +245,8 @@ export default function Quote() {
                                     <button onClick={() => setStep(1)} className="bg-button text-buttonTextPrimary px-4 py-1 mt-4 text-lg">
                                         Back
                                     </button>
-                                    <form onSubmit={(e) => { createPdf(data, fetcher, profile?.showCustomerList); e.preventDefault(); navigate("/dashboard/home") }}>
-                                        <button className="bg-button text-buttonTextPrimary px-4 py-1 mt-4 text-lg" type="submit">Generate Qoutation PDF</button>
+                                    <form onSubmit={(e) => { createPdf(data, fetcher, profile?.showCustomerList); e.preventDefault(); navigate("/dashboard/showquotations") }}>
+                                        <button className="bg-button text-buttonTextPrimary px-4 py-1 mt-4 text-lg" type="submit">Generate Quotation PDF</button>
                                     </form>
                                 </div>
                             </>

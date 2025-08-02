@@ -1,7 +1,7 @@
 import { Minus } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { useGlobalContext } from "~/modules/gcontext";
-import { QuoteItems } from "~/routes/dashboard.quote";
+import { QuoteItems } from "~/routes/dashboard.quotations.create";
 
 //- done - advance show hide for better ui - optimized little bit, ok for now
 //- done - welcome animation - partially done, would improve animation
@@ -13,7 +13,7 @@ import { QuoteItems } from "~/routes/dashboard.quote";
 // pwa or exe application form
 // - done - partially done - login log system
 
-export default function AutocompleteSearch({ index }: { index: number }) {
+export default function ChallanAutocompleteSearch({ index }: { index: number }) {
     const [input, setInput] = useState("");
     const [showSuggestions, setShowSuggestions] = useState(false);
     const [filtered, setFiltered] = useState<QuoteItems[]>([]);
@@ -103,7 +103,7 @@ export default function AutocompleteSearch({ index }: { index: number }) {
     };
 
     return (
-        <div className="flex space-x-4 relative w-auto">
+        <div className="flex relative w-auto gap-x-4">
             <input
                 ref={inputRef}
                 type="text"
@@ -117,7 +117,7 @@ export default function AutocompleteSearch({ index }: { index: number }) {
                 autoComplete="off"
             />
             {showSuggestions && (
-                <ul className="z-10 absolute top-full -left-4 right-0 bg-buttonHover border border-border overflow-y-auto w-[28%] max-h-96">
+                <ul className="z-10 absolute top-full -left-0 right-0 bg-buttonHover border border-border overflow-y-auto w-[30%] max-h-96">
                     {filtered.map((s, idx) => (
                         <li
                             key={s.id}
@@ -131,8 +131,8 @@ export default function AutocompleteSearch({ index }: { index: number }) {
                 </ul>
             )}
             <textarea
-                placeholder="Description...each line should be comma separated"
-                className="border w-[40%] border-border bg-background text-textPrimary focus:outline-textPrimary"
+                placeholder="Any Description or Serial Numbers separated by comma..."
+                className="p-2 border w-[40%] border-border bg-background text-textPrimary focus:outline-textPrimary"
                 value={items[index].description}
                 rows={1}
                 onChange={(e) => {
@@ -143,32 +143,7 @@ export default function AutocompleteSearch({ index }: { index: number }) {
                     })
                 }}
             />
-            <input
-                type="string"
-                placeholder="HSN"
-                className="border p-2 w-[10%] border-border bg-background text-textPrimary focus:outline-textPrimary"
-                value={items[index]?.hsn}
-                onChange={(e) => {
-                    setItems(pre => {
-                        return pre.map((item, i) => i === index
-                            ? { ...items[index], hsn: e.target.value }
-                            : item);
-                    })
-                }}
-            />
-            <input
-                type="number"
-                placeholder="Price"
-                className="border p-2 w-[10%] border-border bg-background text-textPrimary focus:outline-textPrimary"
-                value={items[index]?.price}
-                onChange={(e) => {
-                    setItems(pre => {
-                        return pre.map((item, i) => i === index
-                            ? { ...items[index], price: Number(e.target.value) }
-                            : item);
-                    })
-                }}
-            />
+
 
             <input
                 type="number"

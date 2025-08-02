@@ -18,7 +18,7 @@ import {
 import { ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
 import { FC, memo, useEffect, useMemo, useState } from "react";
 import { useGlobalContext } from "~/modules/gcontext";
-import { createPdf, QuotationData } from "~/routes/dashboard.quote";
+import { createPdf, QuotationData } from "~/routes/dashboard.quotations.create";
 import { useCentralFetcher } from "../centralFetcher";
 import { useNotification } from "~/modules/notificationContext";
 import { Loading } from "../loading";
@@ -47,7 +47,7 @@ interface TableProps {
 
 // The main table 
 
-const TableUI: FC<TableProps> = ({
+const QuotationsTableUI: FC<TableProps> = ({
     data,
     columns,
     isFetching,
@@ -298,14 +298,14 @@ const TableUI: FC<TableProps> = ({
                     <tbody className="p-2">
                         {!isFetching ? (
                             getRowModel()?.rows.map((row) => (
-                                <tr key={row.id} className="bg-header cursor-pointer hover:bg-buttonHover" tabIndex={0}>
+                                <tr key={row.id} className="bg-header cursor-pointer hover:bg-buttonHover">
                                     {row.getVisibleCells().map((cell) => (
                                         <td
                                             onClick={(e) => {
                                                 if (cell.column.id === "edit") handleEdit(row.original)
                                                 else if (cell.column.id === "copy") handleCopy(row.original)
                                                 else if (cell.column.id === "delete") deleteQuotation(row.original.no)
-                                                else createPdf(row.original, fetcher, profile.showCustomerList);
+                                                else createPdf(row.original, fetcher, profile.showCustomerList, false);
                                             }}
                                             key={cell.id}
                                             className="text-textSecondary text-base text-left p-2"
@@ -405,4 +405,4 @@ const TableUI: FC<TableProps> = ({
 };
 
 
-export default memo(TableUI);
+export default memo(QuotationsTableUI);
