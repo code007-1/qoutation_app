@@ -12,7 +12,7 @@ export default function Index() {
   const loginFetcher = useFetcher<loginData>();
   const isSubmitting = loginFetcher.state === "submitting";
   const navigate = useNavigate();
-  const { accessToken, setAccessToken, setProfile, setQuote, theme, toggleTheme } = useGlobalContext();
+  const { accessToken, setAccessToken, setProfile, setGQuote, theme, toggleTheme } = useGlobalContext();
   const { addNotifications } = useNotification();
 
   useEffect(() => {
@@ -26,7 +26,7 @@ export default function Index() {
     if (loginFetcher.data?.profile)
       setProfile(pre => { return { ...pre, ...loginFetcher.data?.profile } });
     if (loginFetcher.data?.quote)
-      setQuote(loginFetcher.data?.quote);
+      setGQuote(loginFetcher.data?.quote);
     else if (typeof (loginFetcher?.data) === "string") {
       addNotifications({
         title: "Login error...",

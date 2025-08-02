@@ -119,13 +119,13 @@ const QuotationsTableUI: FC<TableProps> = ({
     function handleEdit(row: QuotationData) {
         setData(row);
         setItems(row.items);
-        navigate("/dashboard/quote", { state: { editing: true } });
+        navigate("/dashboard/quotations/create", { state: { editing: true } });
     }
 
     function handleCopy(row: QuotationData) {
         setData(row);
         setItems(row.items);
-        navigate("/dashboard/quote");
+        navigate("/dashboard/quotations/create", { state: { editing: false } });
     }
 
 
@@ -148,41 +148,43 @@ const QuotationsTableUI: FC<TableProps> = ({
                             transition
                             className="absolute -right-34 z-10 mt-2 w-[136px] origin-top-right rounded-sm bg-background shadow-lg ring-1 ring-black/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
                         >
-                            <ListboxOption
-                                key={"no"}
-                                value={"no"}
-                                className="block px-4 py-2 text-sm text-textSecondary data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
-                            >
-                                Quotation #
-                            </ListboxOption>
-                            <ListboxOption
-                                key={"madeby"}
-                                value={"madeby"}
-                                className="block px-4 py-2 text-sm text-textSecondary data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
-                            >
-                                Made By
-                            </ListboxOption>
-                            <ListboxOption
-                                key={"date"}
-                                value={"date"}
-                                className="block px-4 py-2 text-sm text-textSecondary data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
-                            >
-                                Date
-                            </ListboxOption>
-                            <ListboxOption
-                                key={"to"}
-                                value={"to"}
-                                className="block px-4 py-2 text-sm text-textSecondary data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
-                            >
-                                To
-                            </ListboxOption>
-                            <ListboxOption
-                                key={"discount"}
-                                value={"discount"}
-                                className="block px-4 py-2 text-sm text-textSecondary data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
-                            >
-                                Discount
-                            </ListboxOption>
+                            <div className="p-1">
+                                <ListboxOption
+                                    key={"no"}
+                                    value={"no"}
+                                    className="block px-4 py-2 text-sm text-textSecondary data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
+                                >
+                                    Quotation #
+                                </ListboxOption>
+                                <ListboxOption
+                                    key={"madeby"}
+                                    value={"madeby"}
+                                    className="block px-4 py-2 text-sm text-textSecondary data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
+                                >
+                                    Made By
+                                </ListboxOption>
+                                <ListboxOption
+                                    key={"date"}
+                                    value={"date"}
+                                    className="block px-4 py-2 text-sm text-textSecondary data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
+                                >
+                                    Date
+                                </ListboxOption>
+                                <ListboxOption
+                                    key={"to"}
+                                    value={"to"}
+                                    className="block px-4 py-2 text-sm text-textSecondary data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
+                                >
+                                    To
+                                </ListboxOption>
+                                <ListboxOption
+                                    key={"discount"}
+                                    value={"discount"}
+                                    className="block px-4 py-2 text-sm text-textSecondary data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
+                                >
+                                    Discount
+                                </ListboxOption>
+                            </div>
                         </ListboxOptions>
                     </div>
                 </Listbox>

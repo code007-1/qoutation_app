@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 import { ChallanColumn } from "~/component/challan/challanColumns";
 import QuotationsTableUI from "~/component/quotation/quotationsTableUI";
-import { createChallan, createQuotation, initialQoutationData, useGlobalContext } from "~/modules/gcontext";
+import { createChallan, createQuotation, initialQuotationData, useGlobalContext } from "~/modules/gcontext";
 import { useCentralFetcher } from "~/component/centralFetcher";
 import { useNotification } from "~/modules/notificationContext";
 
@@ -67,7 +67,6 @@ const QuotationsShow = () => {
     }
 
     async function handleDeletequotation(no: string) {
-        //console.log("deleting quotation no : ", no, " by user : ", profile.username);
         const result = await fetcher("/api/delete", { method: "POST", body: JSON.stringify({ "no": no, "username": profile.username }) });
         if (result.status !== 200) {
             addNotifications({
@@ -81,7 +80,7 @@ const QuotationsShow = () => {
     }
 
     useEffect(() => {
-        setData(initialQoutationData());
+        setData(initialQuotationData());
         setItems([]);
         setHeaderText(createChallan);
         if (dataCount === 0)

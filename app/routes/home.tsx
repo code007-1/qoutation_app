@@ -2,11 +2,12 @@ import Header from "~/component/header";
 import { Outlet, useNavigate } from "@remix-run/react";
 import { useEffect } from "react";
 import { useGlobalContext } from "~/modules/gcontext";
-import { NotebookText, NotepadText, ReceiptIndianRupee, ReceiptText, ScrollText } from "lucide-react";
+import { NotebookText, NotepadText, ScrollText } from "lucide-react";
+import packageJson from "../../package.json";
 
 export default function DashboardSettings() {
     const navigate = useNavigate();
-    const { accessToken, setHeaderText } = useGlobalContext();
+    const { accessToken, setHeaderText, setAppName, setHomeLink } = useGlobalContext();
 
 
     useEffect(() => {
@@ -26,20 +27,20 @@ export default function DashboardSettings() {
                 <div className="mx-10">
                     <div className="my-10 grid grid-cols-3 gap-x-20">
                         <button className="flex flex-col items-center cursor-pointer hover:bg-buttonHover/75 my-4 mx-10" onClick={() => navigate("/dashboard/quotations/show")}>
-                            <ScrollText size={200} className="text-textSecondary" />
+                            <ScrollText size={100} className="text-textSecondary" />
                             <div className="text-textSecondary font-bold text-center text-2xl">Quotation</div>
                         </button>
                         <button className="flex flex-col items-center cursor-pointer hover:bg-buttonHover/50 my-4 mx-10" onClick={() => navigate("/dashboard/challan/show")} tabIndex={0}>
-                            <NotepadText size={200} className="text-textSecondary" />
+                            <NotepadText size={100} className="text-textSecondary" />
                             <div className="text-textSecondary font-bold text-center text-2xl">Challan</div>
                         </button>
-                        <button className="flex flex-col items-center cursor-pointer hover:bg-buttonHover/50 my-4 mx-10" onClick={() => navigate("/dashboard/challan/show")} tabIndex={0}>
-                            <NotebookText size={200} className="text-textSecondary" />
+                        <button className="flex flex-col items-center cursor-pointer hover:bg-buttonHover/50 my-4 mx-10" onClick={() => navigate("/dashboard/challan/show")}>
+                            <NotebookText size={100} className="text-textSecondary" />
                             <div className="text-textSecondary font-bold text-center text-2xl">Complaints</div>
                         </button>
                     </div>
                 </div>
-            </div>
+            </div >
         </>
     );
 }
