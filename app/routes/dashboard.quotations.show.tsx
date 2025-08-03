@@ -1,7 +1,4 @@
 import { useEffect, useState } from "react";
-
-// Import these components correctly depending on your structure
-
 import { QuotationsColumns } from "~/component/quotation/quotationColumns";
 import QuotationsTableUI from "~/component/quotation/quotationsTableUI";
 import { createQuotation, initialQuotationData, useGlobalContext } from "~/modules/gcontext";

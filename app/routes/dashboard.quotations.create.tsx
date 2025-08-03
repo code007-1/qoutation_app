@@ -1,7 +1,7 @@
 import { useFetcher, useLocation, useNavigate } from "@remix-run/react";
 import { useEffect, useState } from "react";
 import { useGlobalContext } from "~/modules/gcontext";
-import QuotationAutocompleteSearch from "~/component/quotationAutocompleteSearch";
+import QuotationAutocompleteSearch from "~/component/quotation/quotationAutocompleteSearch";
 import { logoutData } from "~/modules/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import { useCentralFetcher } from "~/component/centralFetcher";
@@ -40,8 +40,8 @@ export type QuotationData = {
     showLinks?: boolean;
 };
 
-export async function createPdf(data: QuotationData, fetcher: any, showCustomerList?: boolean, save: boolean = true) {
-    const response = await fetcher(`/api/pdf?save=${save}&showCustomerList=${showCustomerList}`, {
+export async function createPdf(data: QuotationData, fetcher: any, showCustomerList?: boolean, save: boolean = true, type: string = "quotation") {
+    const response = await fetcher(`/api/pdf?save=${save}&showCustomerList=${showCustomerList}&type=${type}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
@@ -61,13 +61,7 @@ export default function QuotationsCreate() {
     const [step, setStep] = useState<number>(0);
     const fetcher = useCentralFetcher();
 
-    const logoutFetcher = useFetcher<logoutData>();
     const navigate = useNavigate();
-
-    useEffect(() => {
-        if (logoutFetcher.data?.success)
-            setAccessToken(undefined);
-    }, [logoutFetcher.data]);
 
     useEffect(() => {
         if (accessToken === undefined) //console.log("should navigate to home page");
@@ -86,8 +80,8 @@ export default function QuotationsCreate() {
 
     useEffect(() => {
         if (step === 0) setHeaderText("Quotation Details")
-        else if (step === 1) setHeaderText("Product Details")
-        else if (step === 2) setHeaderText("Terms and Conditions")
+        else if (step === 1) setHeaderText("Quotation Product Details")
+        else if (step === 2) setHeaderText("Quotation Terms and Conditions")
     }, [step])
 
     useEffect(() => {
@@ -157,7 +151,6 @@ export default function QuotationsCreate() {
 
                     <div className="flex flex-col items-center space-y-2">
                         {step === 0 && <>
-
                             <div className="w-full">
                                 <label className="text-sm font-semibold">Introductory text</label>
                                 <textarea rows={5} placeholder="Enter Introductory Text" className="p-2 border border-border rounded w-full mb-2 bg-background" value={data.intro} onChange={e => setData(pre => { return { ...pre, intro: e.target.value } })} />

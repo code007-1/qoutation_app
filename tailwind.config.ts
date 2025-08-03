@@ -18,7 +18,8 @@ export default {
         Kaushan: ["Kaushan Script"],
         Calligraffitti: ["Calligraffitti"],
         Playwrite: ["Playwrite IN"],
-        Kalam: ["Kalam"]
+        Kalam: ["Kalam"],
+        Satisfy: ["Satisfy"]
       },
       colors: {
         header: "rgba(var(--header))",

@@ -3,7 +3,7 @@ import { useCentralFetcher } from "~/component/centralFetcher";
 import { useGlobalContext } from "~/modules/gcontext";
 import { useNotification } from "~/modules/notificationContext";
 
-export default function Password() {
+export default function SettingsPassword() {
     const { setHeaderText, profile, setProfile } = useGlobalContext();
     const { addNotifications } = useNotification();
     const fetcher = useCentralFetcher();

@@ -1,12 +1,9 @@
 import { useEffect, useState } from "react";
-
-// Import these components correctly depending on your structure
-
 import { ChallanColumn } from "~/component/challan/challanColumns";
-import QuotationsTableUI from "~/component/quotation/quotationsTableUI";
-import { createChallan, initialQuotationData, useGlobalContext } from "~/modules/gcontext";
+import { createChallan, initialChallanData, useGlobalContext } from "~/modules/gcontext";
 import { useCentralFetcher } from "~/component/centralFetcher";
 import { useNotification } from "~/modules/notificationContext";
+import ChallanTableUI from "~/component/challan/challanTableUI";
 
 const QuotationsShow = () => {
     // Initiate your states
@@ -14,14 +11,14 @@ const QuotationsShow = () => {
     const { addNotifications } = useNotification();
     const fetcher = useCentralFetcher();
 
-    const { quoteData, setHeaderText, dataCount, setDataCount, setQuoteData, setData, setItems, profile } = useGlobalContext();
+    const { setHeaderText, challanDataCount, setChallanDataCount, setoldChallanData, setChallanData, setChallanItems, profile, oldChallanData } = useGlobalContext();
     async function getQoutes() {
         setLoading(true);
         const response = await fetcher(`/api/quotations`);
         if (response.status === 200) {
             const data = await response.json()
-            setQuoteData(data);
-            setDataCount(data.length);//dataCount + 
+            setoldChallanData(data);
+            setChallanDataCount(data.length);//dataCount + 
         }
         else {
             addNotifications({ title: "Failure...", message: "Fail to load data." });
@@ -36,27 +33,27 @@ const QuotationsShow = () => {
             response = await fetcher(`/api/quotations?start=${query.start}&end=${query.end}&to=${query.to}`);
             if (response.status === 200) {
                 const data = await response.json();
-                setQuoteData(data);
+                setoldChallanData(data);
 
             }
             else if (response.status != 200) {
                 addNotifications({ title: "Failure...", message: "Fail to load data." });
             }
-            setDataCount(0);
+            setChallanDataCount(0);
             setLoading(false);
         }
         else {
             setLoading(true);
-            response = await fetcher(`/api/quotations?skip=${dataCount}`);
+            response = await fetcher(`/api/quotations?skip=${challanDataCount}`);
             if (response.status === 200) {
                 const data = await response.json();
-                if (dataCount == 0) {
-                    setQuoteData(data);
-                    setDataCount(data.length);
+                if (challanDataCount == 0) {
+                    setoldChallanData(data);
+                    setChallanDataCount(data.length);
                 }
                 else {
-                    setQuoteData(pre => { return [...pre, ...data] });
-                    setDataCount(quoteData.length + data.length);
+                    setoldChallanData(pre => { return [...pre, ...data] });
+                    setChallanDataCount(oldChallanData.length + data.length);
                 }
             }
             else if (response.status != 200) {
@@ -75,15 +72,15 @@ const QuotationsShow = () => {
             });
         }
         else {
-            setQuoteData((pre: any) => { return pre.filter((item: any) => item.no === no ? false : true) });
+            setoldChallanData((pre: any) => { return pre.filter((item: any) => item.no === no ? false : true) });
         }
     }
 
     useEffect(() => {
-        setData(initialQuotationData());
-        setItems([]);
+        setChallanData(initialChallanData());
+        setChallanItems([]);
         setHeaderText(createChallan);
-        if (dataCount === 0)
+        if (challanDataCount === 0)
             getQoutes();
     }, []);
 
@@ -91,8 +88,8 @@ const QuotationsShow = () => {
         <>
             <section className="mt-5">
                 <div>
-                    <QuotationsTableUI
-                        data={quoteData}
+                    <ChallanTableUI
+                        data={oldChallanData}
                         columns={ChallanColumn}
                         searchLabel="Search by Name or job title"
                         EmptyText="No Quotations Found!"

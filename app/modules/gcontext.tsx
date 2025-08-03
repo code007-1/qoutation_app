@@ -3,30 +3,46 @@ import React, { createContext, useState, useContext, ReactNode } from "react";
 import { profile } from "~/routes/dashboard.settings.profile";
 import { QuotationData, QuoteItems } from "~/routes/dashboard.quotations.create";
 import packageJson from '../../package.json';
+import { ChallanData, ChallanItems } from "~/routes/dashboard.challan.create";
 
 interface AppContextType {
+    // app related variables
     theme: string;
     toggleTheme: () => void;
     accessToken: string | undefined;
     setAccessToken: React.Dispatch<React.SetStateAction<string | undefined>>;
-    items: QuoteItems[];
-    setItems: React.Dispatch<React.SetStateAction<QuoteItems[]>>;
-    data: QuotationData;
-    setData: React.Dispatch<React.SetStateAction<QuotationData>>;
     homeLink: string;
     setHomeLink: React.Dispatch<React.SetStateAction<string>>;
-    headerText: string | ReactNode
+    appName: string;
+    setAppName: React.Dispatch<React.SetStateAction<string>>;
+    headerText: string | ReactNode;
     setHeaderText: React.Dispatch<React.SetStateAction<string | ReactNode>>;
+
+    // user related variables
     gQuote: string | undefined;
     setGQuote: React.Dispatch<React.SetStateAction<string | undefined>>;
     profile: profile,
     setProfile: React.Dispatch<React.SetStateAction<profile>>;
-    dataCount: number;
-    setDataCount: React.Dispatch<React.SetStateAction<number>>;
+
+    // quotation related variables
     quoteData: QuotationData[];
     setQuoteData: React.Dispatch<React.SetStateAction<QuotationData[]>>;
-    appName: string;
-    setAppName: React.Dispatch<React.SetStateAction<string>>;
+    dataCount: number;
+    setDataCount: React.Dispatch<React.SetStateAction<number>>;
+    items: QuoteItems[];
+    setItems: React.Dispatch<React.SetStateAction<QuoteItems[]>>;
+    data: QuotationData;
+    setData: React.Dispatch<React.SetStateAction<QuotationData>>;
+
+    // challan related variables
+    oldChallanData: ChallanData[];
+    setoldChallanData: React.Dispatch<React.SetStateAction<ChallanData[]>>;
+    challanDataCount: number;
+    setChallanDataCount: React.Dispatch<React.SetStateAction<number>>;
+    challanItems: ChallanItems[];
+    setChallanItems: React.Dispatch<React.SetStateAction<ChallanItems[]>>;
+    challanData: ChallanData;
+    setChallanData: React.Dispatch<React.SetStateAction<ChallanData>>;
 }
 
 const appContext = createContext<AppContextType | null>(null);
@@ -51,21 +67,44 @@ export const initialQuotationData = () => {
     }
 }
 
+export const initialChallanData = () => {
+    return {
+        no: new Date().getTime().toString(),
+        date: new Date().toISOString().split("T")[0], // Default to today's date
+        items: [],
+        type: "Delivery Challan",
+        category: "Delivery Challan",
+        from: "Teen Telecommunication Pvt. Ltd.",
+        fromAddress: "G-57, Vikas Marg, Near Metro Pillar No.41, \nDelhi - 110092",
+        to: "",
+        toAddress: "",
+        madeby: "",
+    }
+}
+
 export const AppProvider = ({ children }: { children: React.ReactNode }) => {
+    // app related variaibles
     const [theme, setTheme] = useState("light"); // Default theme
     const [accessToken, setAccessToken] = useState<string | undefined>();
     const [homeLink, setHomeLink] = useState<string>("/home");
     const [appName, setAppName] = useState<string>(packageJson.name.slice(0, 3) + packageJson.name[3].toUpperCase() + packageJson.name.slice(4));
     const [headerText, setHeaderText] = useState<string | ReactNode>(createQuotation);
-    const [items, setItems] = useState<QuoteItems[]>([]);
-    const [dataCount, setDataCount] = useState<number>(0);
-    const [quoteData, setQuoteData] = useState<QuotationData[]>([]);
+
+    // user related variables
     const [gQuote, setGQuote] = useState<string | undefined>();
     const [profile, setProfile] = useState<profile>({ contact: "+91 7065577059/60", address: "G-57, Vikas Marg, Near Metro Pillar No.41, \nDelhi - 110092", company: "Teen Telecommunication Pvt. Ltd.", email: "sales@teentelecommunication.com", pdfColor: "222", website: "https://teentelecommunication.com", showCustomerList: true });
 
-    //const date = new Date().getTime().toString();
+    // quotation related variables
+    const [quoteData, setQuoteData] = useState<QuotationData[]>([]); // data loaded from db of old quotations
+    const [dataCount, setDataCount] = useState<number>(0); // count of data loaded from db
+    const [items, setItems] = useState<QuoteItems[]>([]); // items added to the current quotation being created
+    const [data, setData] = useState<QuotationData>(initialQuotationData()); // data of the whole current quotation being created
 
-    const [data, setData] = useState<QuotationData>(initialQuotationData());
+    // challan related variables
+    const [oldChallanData, setoldChallanData] = useState<ChallanData[]>([]); // data loaded from db of old quotations
+    const [challanDataCount, setChallanDataCount] = useState<number>(0); // count of data loaded from db
+    const [challanItems, setChallanItems] = useState<ChallanItems[]>([]); // items added to the current quotation being created
+    const [challanData, setChallanData] = useState<ChallanData>(initialChallanData()); // data of the whole current quotation being created
 
 
     const toggleTheme = () => {
@@ -73,7 +112,7 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
     };
 
     return (
-        <appContext.Provider value={{ theme, toggleTheme, accessToken, setAccessToken, items, setItems, data, setData, headerText, setHeaderText, gQuote, setGQuote, profile, setProfile, dataCount, setDataCount, quoteData, setQuoteData, homeLink, setHomeLink, setAppName, appName }}>
+        <appContext.Provider value={{ theme, toggleTheme, accessToken, setAccessToken, items, setItems, data, setData, headerText, setHeaderText, gQuote, setGQuote, profile, setProfile, dataCount, setDataCount, quoteData, setQuoteData, homeLink, setHomeLink, setAppName, appName, oldChallanData, setoldChallanData, challanDataCount, setChallanDataCount, challanItems, setChallanItems, challanData, setChallanData }}>
             {children}
         </appContext.Provider>
     );

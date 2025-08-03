@@ -14,25 +14,24 @@ import { QuoteItems } from "~/routes/dashboard.quotations.create";
 // - done - partially done - login log system
 
 export default function ChallanAutocompleteSearch({ index }: { index: number }) {
-    const [input, setInput] = useState("");
     const [showSuggestions, setShowSuggestions] = useState(false);
     const [filtered, setFiltered] = useState<QuoteItems[]>([]);
     const [highlighted, setHighlighted] = useState<number>(-1);
     const inputRef = useRef<HTMLInputElement>(null);
     const [hasFocus, setFocus] = useState(false);
 
-    const { setItems, items } = useGlobalContext();
+    const { setChallanItems, challanItems } = useGlobalContext();
 
     useEffect(() => {
         if (hasFocus) {
-            if (items[index].name.trim() === "") {
+            if (challanItems[index].name.trim() === "") {
                 setFiltered([]);
                 setShowSuggestions(false);
-            } else if (showSuggestions || filtered.length != 1 || filtered[0].name.toLowerCase() != items[index].name.toLowerCase()) {
+            } else if (showSuggestions || filtered.length != 1 || filtered[0].name.toLowerCase() != challanItems[index].name.toLowerCase()) {
                 fetch(`/api/search`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(items[index].name),
+                    body: JSON.stringify(challanItems[index].name),
                 })
                     .then(async (res) => {
                         const filteredList: QuoteItems[] = await res.json();
@@ -45,22 +44,22 @@ export default function ChallanAutocompleteSearch({ index }: { index: number }) 
                     });
             }
         }
-    }, [items[index].name]);
+    }, [challanItems[index].name]);
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         //setInput(e.target.value);
-        setItems((pre) => {
+        setChallanItems((pre) => {
             return pre.map((item, i) => i === index
-                ? { ...items[index], name: e.target.value }
+                ? { ...challanItems[index], name: e.target.value }
                 : item)
         });
     };
 
     const handleSuggestionClick = (suggestion: QuoteItems) => {
         //setInput(suggestion.label);
-        setItems(pre => {
+        setChallanItems(pre => {
             return pre.map((item, i) => i == index
-                ? { id: suggestion.id, hsn: suggestion.hsn, name: suggestion.name, price: suggestion.price, quantity: 1, description: suggestion.description || "", link: suggestion.link }
+                ? { id: suggestion.id, name: suggestion.name, quantity: 1 }
                 : item)
         });
         setShowSuggestions(false);
@@ -91,12 +90,11 @@ export default function ChallanAutocompleteSearch({ index }: { index: number }) 
             //setInput(filtered[highlighted].label);
             setFiltered([filtered[highlighted]]);
             setShowSuggestions(false);
-            setItems(pre => {
+            setChallanItems(pre => {
                 return pre.map((item, i) => i === index
-                    ? { id: filtered[highlighted].id, hsn: filtered[highlighted].hsn, name: filtered[highlighted].name, price: filtered[highlighted].price, quantity: 1, description: filtered[highlighted].description || "", link: filtered[highlighted].link }
+                    ? { id: filtered[highlighted].id, name: filtered[highlighted].name, quantity: 1 }
                     : item)
-            }
-            );
+            });
         } else if (e.key === "Escape") {
             setShowSuggestions(false);
         }
@@ -107,7 +105,7 @@ export default function ChallanAutocompleteSearch({ index }: { index: number }) 
             <input
                 ref={inputRef}
                 type="text"
-                value={items[index].name}
+                value={challanItems[index].name}
                 onChange={handleInputChange}
                 onBlur={handleBlur}
                 onFocus={handleFocus}
@@ -133,34 +131,33 @@ export default function ChallanAutocompleteSearch({ index }: { index: number }) 
             <textarea
                 placeholder="Any Description or Serial Numbers separated by comma..."
                 className="p-2 border w-[40%] border-border bg-background text-textPrimary focus:outline-textPrimary"
-                value={items[index].description}
+                value={challanItems[index].sno}
                 rows={1}
                 onChange={(e) => {
-                    setItems(pre => {
+                    setChallanItems(pre => {
                         return pre.map((item, i) => i === index
-                            ? { ...items[index], description: e.target.value }
+                            ? { ...challanItems[index], description: e.target.value }
                             : item);
                     })
                 }}
             />
 
-
             <input
                 type="number"
                 placeholder="Quantity"
                 className="border p-2 w-[10%] border-border bg-background text-textPrimary focus:outline-textPrimary"
-                value={items[index]?.quantity}
+                value={challanItems[index]?.quantity}
                 onChange={(e) => {
-                    setItems(pre => {
+                    setChallanItems(pre => {
                         return pre.map((item, i) => i === index
-                            ? { ...items[index], quantity: Number(e.target.value) }
+                            ? { ...challanItems[index], quantity: Number(e.target.value) }
                             : item);
                     })
                 }}
             />
             <button className="hover:bg-headerBackground bg-buttonHover p-2" onClick={(e) => {
                 //setInput(index);
-                setItems(pre =>
+                setChallanItems(pre =>
                     pre.filter((_, i) => i != index)
                 );
             }}>

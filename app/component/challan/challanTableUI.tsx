@@ -71,20 +71,22 @@ const ChallanTableUI: FC<TableProps> = ({
     const memoisedHeaderComponent = useMemo(() => headerComponent, [headerComponent]);
     const [sorting, setSorting] = useState<SortingState>([]);
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-    const [type, setType] = useState<string>("no");
+    const [filterType, setFilterType] = useState<string>("Quotation #");
 
-    function getType(type: string) {
-        if (type === "no") return "Quotation #";
-        else if (type === "madeby") return "Made By";
-        else if (type === "date") return "Date";
-        else if (type === "to") return "To";
-        else if (type === "discount") return "Discount";
-        else if (type === "amount") return "Amount";
-        else type;
-    }
+    const filterTypes = ["Quotation #", "Made By", "Date", "To", " Discount"];
+
+    const getType = (type: string) => {
+        switch (type) {
+            case "Quotation #": return "no";
+            case "Made By": return "madeby";
+            case "Date": return "date";
+            case "To": return "to";
+            case "Discount": return "discount";
+            default: return "no";
+        }
+    };
 
     const [pagination, setPagination] = useState<PaginationState>({ pageIndex: 0, pageSize: 10 })
-
 
     const { getHeaderGroups, getRowModel, getAllColumns, getColumn, firstPage, getCanNextPage, getCanPreviousPage, getState, getPageCount, setPageIndex, setPageSize, lastPage, nextPage, previousPage, getRowCount } = useReactTable({
         data: memoizedData,
@@ -128,69 +130,38 @@ const ChallanTableUI: FC<TableProps> = ({
         navigate("/dashboard/quote");
     }
 
-
-    /*useEffect(() => {
-        console.log("fetching value : ", isFetching)
-    }, [isFetching]);*/
-
     return (
         <div className="">
             <div className="flex space-x-4 items-center align-middle">
-
-                <Listbox value={type} onChange={setType}>
+                <Listbox value={filterType} onChange={setFilterType}>
                     <div className="relative">
                         <ListboxButton className="flex items-center hover:bg-buttonHover px-2 border border-border py-2">
-                            <div className="text-textSecondary mr-2">{getType(type)}</div>
+                            <div className="text-textSecondary mr-2">{filterType}</div>
                             <ChevronDown className="text-textPrimary" />
                         </ListboxButton>
-
                         <ListboxOptions
                             transition
                             className="absolute -right-34 z-10 mt-2 w-[136px] origin-top-right rounded-sm bg-background shadow-lg ring-1 ring-black/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
                         >
-                            <ListboxOption
-                                key={"no"}
-                                value={"no"}
-                                className="block px-4 py-2 text-sm text-textSecondary data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
-                            >
-                                Quotation #
-                            </ListboxOption>
-                            <ListboxOption
-                                key={"madeby"}
-                                value={"madeby"}
-                                className="block px-4 py-2 text-sm text-textSecondary data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
-                            >
-                                Made By
-                            </ListboxOption>
-                            <ListboxOption
-                                key={"date"}
-                                value={"date"}
-                                className="block px-4 py-2 text-sm text-textSecondary data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
-                            >
-                                Date
-                            </ListboxOption>
-                            <ListboxOption
-                                key={"to"}
-                                value={"to"}
-                                className="block px-4 py-2 text-sm text-textSecondary data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
-                            >
-                                To
-                            </ListboxOption>
-                            <ListboxOption
-                                key={"discount"}
-                                value={"discount"}
-                                className="block px-4 py-2 text-sm text-textSecondary data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
-                            >
-                                Discount
-                            </ListboxOption>
+                            {filterTypes.map((filterType) => {
+                                return (
+                                    <ListboxOption
+                                        key={filterType}
+                                        value={filterType}
+                                        className="block px-4 py-2 text-sm text-textSecondary data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
+                                    >
+                                        {filterType}
+                                    </ListboxOption>
+                                );
+                            })}
                         </ListboxOptions>
                     </div>
                 </Listbox>
                 <input
                     placeholder="Filter....."
-                    value={(getColumn(type)?.getFilterValue() as string) ?? ""}
+                    value={(getColumn(getType(filterType))?.getFilterValue() as string) ?? ""}
                     onChange={(event) =>
-                        getColumn(type)?.setFilterValue(event.target.value)
+                        getColumn(getType(filterType))?.setFilterValue(event.target.value)
                     }
                     className="border p-2 w-[20%] border-border bg-background text-textPrimary focus:outline-textPrimary"
                 />

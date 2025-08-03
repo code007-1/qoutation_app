@@ -12,7 +12,7 @@ export default function Index() {
   const loginFetcher = useFetcher<loginData>();
   const isSubmitting = loginFetcher.state === "submitting";
   const navigate = useNavigate();
-  const { accessToken, setAccessToken, setProfile, setGQuote, theme, toggleTheme } = useGlobalContext();
+  const { accessToken, setAccessToken, setProfile, setGQuote, theme, toggleTheme, appName } = useGlobalContext();
   const { addNotifications } = useNotification();
 
   useEffect(() => {
@@ -44,7 +44,7 @@ export default function Index() {
       if (loginFetcher.data?.quote)
         navigate("/welcome");
       else
-        navigate("/home"); 0
+        navigate("/home");
     }
   }, [accessToken]);
 
@@ -52,8 +52,12 @@ export default function Index() {
     <>
       <div className='max-h-screen bg-background'>
         <div className="absolute w-full flex bg-headerBackground py-2">
-          <div className='absolute left-1/2 -translate-x-1/2 text-2xl font-semibold text-textPrimary '>
-            {packageJson.name[0].toUpperCase() + packageJson.name.slice(1)}
+          <div className='absolute left-1/2 -translate-x-1/2'>
+            <div className="flex text-4xl text-textPrimary justify-center font-Satisfy">
+              <div>{appName.slice(0, 3)}</div>
+              <div>{appName[3]}</div>
+              <div>{appName.slice(4)}</div>
+            </div>
           </div>
           <div className='mr-0 ml-auto'>
             <button

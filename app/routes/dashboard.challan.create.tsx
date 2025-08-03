@@ -1,73 +1,46 @@
 import { useFetcher, useLocation, useNavigate } from "@remix-run/react";
 import { useEffect, useState } from "react";
 import { useGlobalContext } from "~/modules/gcontext";
-import ChallanAutocompleteSearch from "~/component/challanAutocompleteSearch";
+import ChallanAutocompleteSearch from "~/component/challan/challanAutocompleteSearch";
 import { logoutData } from "~/modules/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import { useCentralFetcher } from "~/component/centralFetcher";
-import { Switch } from "@headlessui/react";
+import { Listbox, ListboxButton, ListboxOption, ListboxOptions, Switch } from "@headlessui/react";
+import { ChevronDown } from "lucide-react";
 
-export type QuoteItems = {
+export type ChallanItems = {
     id: number;
-    hsn: string;
     name: string;
-    price: number;
     quantity: number;
-    description?: string;
-    link?: string;
-    showLink?: boolean;
+    sno?: string[];
+    unit?: string;
 };
 
-export type QuotationData = {
+export type ChallanData = {
     no: string;
     date: string;
-    items: QuoteItems[];
-    intro: string;
-    terms: string;
-    additionalInfo: string;
+    items: ChallanItems[];
+    type: string;
+    category: string;
     from: string;
     fromAddress: string;
     to: string;
     toAddress: string;
-    tax: number;
-    discount: number;
-    amount: number;
     madeby: string;
     email?: string;
     contact?: string;
     website?: string;
     pdfColor?: string;
-    showLinks?: boolean;
 };
-
-export async function createPdf(data: QuotationData, fetcher: any, showCustomerList?: boolean, save: boolean = true) {
-    const response = await fetcher(`/api/pdf?save=${save}&showCustomerList=${showCustomerList}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
-    });
-
-    const blob = await response.blob();
-    const url = window.URL.createObjectURL(blob);
-
-    window.open(url); // or trigger download
-}
 
 export default function CreateChallan() {
     const location = useLocation();
     const passedData = location.state;
 
-    const { items, setItems, data, setData, accessToken, setAccessToken, setHeaderText, profile } = useGlobalContext();
+    const { challanItems, setChallanItems, challanData, setChallanData, oldChallanData, accessToken, setAccessToken, setHeaderText, profile } = useGlobalContext();
     const [step, setStep] = useState<number>(0);
-    const fetcher = useCentralFetcher();
 
-    const logoutFetcher = useFetcher<logoutData>();
     const navigate = useNavigate();
-
-    useEffect(() => {
-        if (logoutFetcher.data?.success)
-            setAccessToken(undefined);
-    }, [logoutFetcher.data]);
 
     useEffect(() => {
         if (accessToken === undefined) //console.log("should navigate to home page");
@@ -75,24 +48,13 @@ export default function CreateChallan() {
     }, [accessToken]);
 
     function addItem() {
-        //const newKey = new Date().getTime() + 1;
-        setItems(pre => {
-            return [
-                ...pre,
-                { id: 0, hsn: "", name: "", description: "", price: 0, quantity: 0, link: "#" }
-            ]
-        });
+        setChallanItems(pre => { return [...pre, { id: 0, name: "", quantity: 0, sno: [], unit: "pcs" }] });
     }
 
     useEffect(() => {
-        if (step === 0) setHeaderText("Challan Details")
-        else if (step === 1) setHeaderText("Product Details")
-    }, [step])
-
-    useEffect(() => {
-        const amount = Object.entries(items).reduce((acc, [_, item]) => acc + (item.price * item.quantity), 0);
-        setData(pre => { return { ...pre, amount: amount } });
-    }, [items]);
+        if (step === 0) setHeaderText("Challan Details");
+        else if (step === 1) setHeaderText("Challan Product Details");
+    }, [step]);
 
     useEffect(() => {
         var no = new Date().getTime().toString();
@@ -100,14 +62,18 @@ export default function CreateChallan() {
         var from = profile.company;
 
         if (passedData && passedData?.editing === true) {
-            no = data.no;
-            fromAddress = data.fromAddress;
-            from = data.from;
+            no = challanData.no;
+            fromAddress = challanData.fromAddress;
+            from = challanData.from;
         }
-        setData((pre) => { return { ...pre, no: no, from: from, fromAddress: fromAddress, email: profile.email, website: profile.website, contact: profile.contact, pdfColor: String(profile.pdfColor), madeby: profile.username || "", date: new Date().toISOString().split("T")[0], showLinks: data?.showLinks !== undefined ? data.showLinks : true } });
+        setChallanData((pre) => { return { ...pre, no: no, from: from, fromAddress: fromAddress, email: profile.email, website: profile.website, contact: profile.contact, pdfColor: String(profile.pdfColor), madeby: profile.username || "", date: new Date().toISOString().split("T")[0] } });
     }, [])
 
     //updateItem={updatedItem} updatePrice={updatedPrice} updateQuanity={updatedQuanity} deleteItem={deleteItem}
+    const [type, setType] = useState<string>("Delivery Challan");
+
+    const [category, setCategory] = useState<string>("Dealer Sale");
+    const challanCatorgoies = ["Dealer Sale", "Dealer Return", "Customer Sale", "Customer Return", "Other"];
 
     return (<>
         <AnimatePresence>
@@ -121,15 +87,15 @@ export default function CreateChallan() {
                 <div className="text-textSecondary">
                     <div className="mt-4 flex space-x-4 items-center align-middle">
                         <div className="flex items-center w-[90%]">
-                            <div className="text-sm font-semibold mr-2">Challan No.</div>
-                            {/*<input type="text" name="no" placeholder="Enter Qoutation No." className="border border-border p-2 mb-2 mr-5 w-25 bg-background" value={data.no} onChange={e => setData((pre) => { return { ...pre, no: e.target.value }; })} />*/}
-                            <div className="text-sm">{data.no}</div>
-                            <div className="text-sm font-semibold ml-10 mr-2">Date</div>
-                            <input type="date" color="white" name="date" id="date" pattern="\d{4}-\d{2}-\d{2}" placeholder="Date" className="border border-border w-25 h-10 bg-background" value={data.date} onChange={e => setData(pre => { return { ...pre, date: e.target.value } })} />
-                            <div className="text-sm font-semibold ml-10 mr-2">Order No</div>
-                            <input type="text" color="white" name="orderno" id="orderno" placeholder="Order No." className="p-2 border border-border w-25 h-10 bg-background" value={data.date} onChange={e => setData(pre => { return { ...pre, date: e.target.value } })} />
-                            <div className="text-sm font-semibold ml-10 mr-2">Mode of Dispatch</div>
-                            <input type="text" color="white" name="modeofdispatch" id="orderno" placeholder="Mode of Dispatch" className="p-2 border border-border w-25 h-10 bg-background" value={data.date} onChange={e => setData(pre => { return { ...pre, date: e.target.value } })} />
+                            <div className="flex w-[15%] gap-x-2">
+                                <div className="text-sm font-semibold">Challan No.</div>
+                                {/*<input type="text" name="no" placeholder="Enter Qoutation No." className="border border-border p-2 mb-2 mr-5 w-25 bg-background" value={data.no} onChange={e => setData((pre) => { return { ...pre, no: e.target.value }; })} />*/}
+                                <div className="text-sm">{challanData.no}</div>
+                            </div>
+                            <div className="flex w-[15%] items-center gap-x-4">
+                                <div className="text-sm font-semibold">Date</div>
+                                <input type="date" color="white" name="date" id="date" pattern="\d{4}-\d{2}-\d{2}" placeholder="Date" className="border border-border w-25 h-10 bg-background" value={challanData.date} onChange={e => setChallanData(pre => { return { ...pre, date: e.target.value } })} />
+                            </div>
                         </div>
 
                         {step === 1 &&
@@ -145,21 +111,97 @@ export default function CreateChallan() {
                         </div>*/}
                     </div>
 
-                    <div className="flex flex-col items-center space-y-2">
+                    <div className="flex flex-col items-center">
                         {step === 0 && <>
-                            <div className="mx-10 flex space-x-10 w-full">
+                            <div className="flex w-full mt-4">
                                 <div className="w-full space-y-4">
-                                    <div>
-                                        <label className="text-sm font-semibold">Challan Type</label>
-                                        <input key={"second"} type="text" placeholder="Enter Second Party Name" className="border border-border p-2 w-full bg-background" value={data.to} onChange={e => setData(pre => { return { ...pre, to: e.target.value } })} />
+                                    <div className="w-[90%] flex">
+                                        <div className="w-[15%]">
+                                            <div className="text-sm font-semibold text-left">Order No</div>
+                                            <input type="text" color="white" name="orderno" id="orderno" placeholder="Order No." className="p-2 border border-border w- h-10 bg-background" value={challanData.date} onChange={e => setChallanData(pre => { return { ...pre, date: e.target.value } })} />
+                                        </div>
+                                        <div className="w-[15%]">
+                                            <div className="text-sm font-semibold">Mode of Dispatch</div>
+                                            <input type="text" color="white" name="modeofdispatch" id="orderno" placeholder="Mode of Dispatch" className="p-2 border border-border w-25 h-10 bg-background" value={challanData.date} onChange={e => setChallanData(pre => { return { ...pre, date: e.target.value } })} />
+                                        </div>
+                                        <div className="w-[15%]">
+                                            <div className="text-sm font-semibold">Challan Type</div>
+                                            <Listbox value={type} onChange={setType}>
+                                                <div className="relative">
+                                                    <ListboxButton className="w-[75%] flex items-center justify-between hover:bg-buttonHover px-2 border border-border py-2">
+                                                        <div className="text-textSecondary mr-2">{type}</div>
+                                                        <ChevronDown className="text-textPrimary" />
+                                                    </ListboxButton>
+
+                                                    <ListboxOptions
+                                                        transition
+                                                        className="absolute -right-34 z-10 mt-2 w-[75%] origin-top-right rounded-sm bg-background shadow-lg ring-1 ring-black/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
+                                                    >
+                                                        <div className="p-1">
+                                                            {["Delivery Challan", "MIS Challan"].map((type) => (
+                                                                <ListboxOption
+                                                                    key={type}
+                                                                    value={type}
+                                                                    className="block px-4 py-2 text-sm text-textSecondary data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
+                                                                >
+                                                                    {type}
+                                                                </ListboxOption>
+                                                            ))}
+                                                        </div>
+                                                    </ListboxOptions>
+                                                </div>
+                                            </Listbox>
+                                        </div>
+                                        <div className="w-[15%]">
+                                            <div className="text-sm font-semibold">Challan Category</div>
+                                            <Listbox value={category} onChange={setCategory}>
+                                                <div className="relative">
+                                                    <ListboxButton className="w-[75%] flex items-center justify-between hover:bg-buttonHover px-2 border border-border py-2">
+                                                        <div className="text-textSecondary mr-2">{category}</div>
+                                                        <ChevronDown className="text-textPrimary" />
+                                                    </ListboxButton>
+
+                                                    <ListboxOptions
+                                                        transition
+                                                        className="absolute -right-34 z-10 mt-2 w-[75%] origin-top-right rounded-sm bg-background shadow-lg ring-1 ring-black/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
+                                                    >
+                                                        <div className="p-1">
+                                                            {challanCatorgoies.map((category) => (
+                                                                <ListboxOption
+                                                                    key={category}
+                                                                    value={category}
+                                                                    className="block px-4 py-2 text-sm text-textSecondary data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
+                                                                >
+                                                                    {category}
+                                                                </ListboxOption>
+                                                            ))}
+                                                        </div>
+                                                    </ListboxOptions>
+                                                </div>
+                                            </Listbox>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <label className="text-sm font-semibold">To</label>
-                                        <input key={"second"} type="text" placeholder="Enter Second Party Name" className="border border-border p-2 w-full bg-background" value={data.to} onChange={e => setData(pre => { return { ...pre, to: e.target.value } })} />
-                                    </div>
-                                    <div>
-                                        <label className="text-sm font-semibold">Address</label>
-                                        <textarea rows={5} placeholder="Enter Second Party Address" className="p-2 border border-border w-full bg-background" value={data.toAddress} onChange={e => setData(pre => { return { ...pre, toAddress: e.target.value } })} />
+                                    <div className="flex space-x-10 w-full">
+                                        <div className="w-full space-y-4">
+                                            <div>
+                                                <label className="text-sm font-semibold">First Party Name</label>
+                                                <input key={"frist"} type="text" placeholder="Enter First Party Name" className="border border-border p-2 w-full bg-background" value={challanData.from} onChange={e => setChallanData(pre => { return { ...pre, from: e.target.value } })} />
+                                            </div>
+                                            <div>
+                                                <label className="text-sm font-semibold">First Party Address</label>
+                                                <textarea rows={5} placeholder="Enter First Party Address" className="p-2 border border-border w-full bg-background" value={challanData.fromAddress} onChange={e => setChallanData(pre => { return { ...pre, fromAddress: e.target.value } })} />
+                                            </div>
+                                        </div>
+                                        <div className="w-full space-y-4">
+                                            <div>
+                                                <label className="text-sm font-semibold">Second Party Name</label>
+                                                <input key={"second"} type="text" placeholder="Enter Second Party Name" className="border border-border p-2 w-full bg-background" value={challanData.to} onChange={e => setChallanData(pre => { return { ...pre, to: e.target.value } })} />
+                                            </div>
+                                            <div>
+                                                <label className="text-sm font-semibold">Second Party Address</label>
+                                                <textarea rows={5} placeholder="Enter Second Party Address" className="p-2 border border-border w-full bg-background" value={challanData.toAddress} onChange={e => setChallanData(pre => { return { ...pre, toAddress: e.target.value } })} />
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -172,7 +214,7 @@ export default function CreateChallan() {
                             step === 1 && <>
                                 <div className="mt-6 space-y-4 overflow-y-auto h-[calc(100vh-280px)] w-full">
                                     {
-                                        items.map((_, index) => {
+                                        challanItems.map((_, index) => {
                                             return <>
                                                 <ChallanAutocompleteSearch key={index} index={index} />
                                             </>;
@@ -181,7 +223,7 @@ export default function CreateChallan() {
                                 <div className="flex justify-between w-full">
                                     <div className="flex items-center">
                                         <div className="text-sm font-semibold mr-4">Total Quantity:</div>
-                                        <div className="">Rs.{data.amount.toLocaleString('en-US')}</div>
+                                        <div className="">Rs.{"11"}</div>
                                     </div>
                                 </div>
                                 <div className="flex justify-center space-x-4">
