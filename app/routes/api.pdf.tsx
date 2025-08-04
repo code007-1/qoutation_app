@@ -31,12 +31,8 @@ export const action: ActionFunction = async ({ request, params }) => {
         // and transform it to a Buffer to send in the Response
         let body: Buffer = await new Promise((resolve, reject) => {
             let buffers: Uint8Array[] = [];
-            stream.on("data", (data) => {
-                buffers.push(data);
-            });
-            stream.on("end", () => {
-                resolve(Buffer.concat(buffers));
-            });
+            stream.on("data", (data) => { buffers.push(data); });
+            stream.on("end", () => { resolve(Buffer.concat(buffers)); });
             stream.on("error", reject);
         });
 

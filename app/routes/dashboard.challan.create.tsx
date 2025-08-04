@@ -26,6 +26,8 @@ export type ChallanData = {
     fromAddress: string;
     to: string;
     toAddress: string;
+    orderno?: string;
+    modeofdispatch?: string;
     madeby: string;
     email?: string;
     contact?: string;

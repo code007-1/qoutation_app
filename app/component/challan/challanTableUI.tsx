@@ -73,15 +73,15 @@ const ChallanTableUI: FC<TableProps> = ({
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
     const [filterType, setFilterType] = useState<string>("Quotation #");
 
-    const filterTypes = ["Quotation #", "Made By", "Date", "To", " Discount"];
+    const filterTypes = ["Challan #", "Made By", "Date", "To", " Discount"];
 
     const getType = (type: string) => {
         switch (type) {
-            case "Quotation #": return "no";
+            case "Challan #": return "no";
             case "Made By": return "madeby";
             case "Date": return "date";
             case "To": return "to";
-            case "Discount": return "discount";
+            case "S.No.": return "sno";
             default: return "no";
         }
     };
@@ -143,17 +143,19 @@ const ChallanTableUI: FC<TableProps> = ({
                             transition
                             className="absolute -right-34 z-10 mt-2 w-[136px] origin-top-right rounded-sm bg-background shadow-lg ring-1 ring-black/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
                         >
-                            {filterTypes.map((filterType) => {
-                                return (
-                                    <ListboxOption
-                                        key={filterType}
-                                        value={filterType}
-                                        className="block px-4 py-2 text-sm text-textSecondary data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
-                                    >
-                                        {filterType}
-                                    </ListboxOption>
-                                );
-                            })}
+                            <div className="p-1">
+                                {filterTypes.map((filterType) => {
+                                    return (
+                                        <ListboxOption
+                                            key={filterType}
+                                            value={filterType}
+                                            className="block px-4 py-2 text-sm text-textSecondary data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
+                                        >
+                                            {filterType}
+                                        </ListboxOption>
+                                    );
+                                })}
+                            </div>
                         </ListboxOptions>
                     </div>
                 </Listbox>

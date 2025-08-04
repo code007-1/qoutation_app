@@ -24,7 +24,7 @@ export default function Welcome() {
                             <div className="text-3xl font-Kalam">
                                 {gQuote}
                             </div>
-                            <button className="bg-blue-600 w-min text-white text-base font-mono px-2 py-1 mt-4" onClick={(e) => navigate("/dashboard/home")}>Next</button>
+                            <button className="bg-blue-600 w-min text-white text-base font-mono px-2 py-1 mt-4" onClick={(e) => navigate("/home")}>Next</button>
                         </div>
 
                     </div>

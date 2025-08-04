@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 // Import these components correctly depending on your structure
 
 import { ChallanColumn } from "~/component/challan/challanColumns";
-import { createQuotation, initialQoutationData, useGlobalContext } from "~/modules/gcontext";
+import { createQuotation, initialChallanData, useGlobalContext } from "~/modules/gcontext";
 import { useCentralFetcher } from "~/component/centralFetcher";
 import { useNotification } from "~/modules/notificationContext";
 import { userProfile } from "~/modules/utils";
@@ -82,7 +82,7 @@ const StaffTable = () => {
     }
 
     useEffect(() => {
-        setData(initialQoutationData());
+        //setData(initialChallanData());
         setItems([]);
         setHeaderText(createQuotation);
         if (dataCount === 0)
