@@ -30,7 +30,7 @@ export default function MainMenu() {
             <Menu as="div" className="relative inline-block text-left">
                 <div>
                     <MenuButton className="flex mr-10 items-center hover:bg-buttonHover px-2">
-                        <div className=" text-textPrimary text-xl mr-2">{text}</div>
+                        <div className="text-textPrimary text-xl mr-2">{text}</div>
                         <AlignRight className="text-textPrimary" />
                     </MenuButton>
                 </div>

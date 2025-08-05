@@ -14,7 +14,6 @@ export const sortButton = (column: any, name: string) => {
 }
 
 export const ChallanColumn: ColumnDef<any, any>[] = [
-
     {
         accessorKey: "no",
         header: "Challan #",
@@ -25,7 +24,6 @@ export const ChallanColumn: ColumnDef<any, any>[] = [
             return row.original[columnId].toLowerCase().includes(filterValue);
         },
     },
-
     {
         accessorKey: "madeby",
         header: "Made By",
@@ -36,7 +34,6 @@ export const ChallanColumn: ColumnDef<any, any>[] = [
             return row.original[columnId].toLowerCase().includes(filterValue);
         },
     },
-
     {
         accessorKey: "date",
         header: "Date",
@@ -47,10 +44,19 @@ export const ChallanColumn: ColumnDef<any, any>[] = [
             return row.original[columnId].toLowerCase().includes(filterValue);
         }
     },
-
     {
         accessorKey: "to",
         header: "To",
+        cell: (user: any) => {
+            return <span>{user.row.original.to}</span>
+        },
+        filterFn: (row, columnId, filterValue) => {
+            return row.original[columnId].toLowerCase().includes(filterValue);
+        },
+    },
+    {
+        accessorKey: "sno",
+        header: "S. No.",
         cell: (user: any) => {
             return <span>{user.row.original.to}</span>
         },

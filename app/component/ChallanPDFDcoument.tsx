@@ -1,8 +1,9 @@
 import { Document, Page, Text, View, StyleSheet, Image, Link, Font } from "@react-pdf/renderer";
 import { Watermark } from "~/component/watermark";
 import { ChallanData } from "~/routes/dashboard.challan.create";
+import { Svg, Line } from '@react-pdf/renderer';
 
-export default function PDFDocument(data1: ChallanData) {
+export default function ChallanPDFDocument() {
     const data: ChallanData = {
         no: "123",
         date: "2023-10-01",
@@ -11,16 +12,18 @@ export default function PDFDocument(data1: ChallanData) {
             sno: ["123", "1233", "432", "12", "412"]
         }],
         from: "Teen Telecommunication Pvt. Ltd.",
-        fromAddress: "G-57, 3rd Floor, Vikas Marg, Laxmi Nagar, Near Metro Pillar No. 41",
+        fromAddress: "G-57, 3rd Floor, Vikas Marg, Laxmi Nagar,\n Near Metro Pillar No. 41, Delihi - 110092",
         to: "M/s Someone",
         toAddress: "At Some Place",
         madeby: "Unknown",
         contact: "+91 12312312312312",
-        email: "",
+        email: "abc@gmail.com",
         website: "https://teentelecommunication.com",
         pdfColor: "222",
         type: "Delivery Challan",
-        category: "Delivery Challan"
+        category: "Delivery Challan",
+        orderno: "ORD-12345",
+        modeofdispatch: "Courier",
     };
 
     const hue = data.pdfColor ? data.pdfColor : "222";
@@ -60,6 +63,19 @@ export default function PDFDocument(data1: ChallanData) {
     var dated = data.date.split("-");
     const date = dated[2] + "-" + dated[1] + "-" + dated[0];
 
+    const HorizontalLine = ({ width = 500, color = 'black', thickness = 1 }) => (
+        <Svg height="10" width={width.toString()}>
+            <Line
+                x1="0"
+                y1="5"
+                x2={width.toString()}
+                y2="5"
+                strokeWidth={thickness}
+                stroke={color}
+            />
+        </Svg>
+    );
+
     return (
         <Document title="Challan" author={data.madeby} subject="Business Challan" >
             <Page wrap size="A4" style={styles.page}>
@@ -67,6 +83,7 @@ export default function PDFDocument(data1: ChallanData) {
                 <View fixed style={styles.header}>
                     <Text style={styles.title}>{data.from}</Text>
                     <Text style={styles.newline}>{"\n"}</Text>
+                    <Text style={styles.companyDetails}>{data.fromAddress}</Text>
                     <Text>
                         <Text style={styles.companyDetails}>Contact No: </Text>
                         <Text style={{ fontSize: 10 }}>{data.contact}</Text>
@@ -79,7 +96,7 @@ export default function PDFDocument(data1: ChallanData) {
                         <Text style={styles.qoutationDetails}>Challan No:</Text>
                         <Text style={styles.intro}>{data.no}</Text>
                     </Text>
-                    <Text style={{ fontWeight: "bold" }}>{data.type}</Text>
+                    <Text style={styles.qoutationDetails}>{data.type}</Text>
                     <Text>
                         <Text style={styles.qoutationDetails}>Challan Date: </Text>
                         <Text style={styles.intro}>{date}</Text>
@@ -88,16 +105,18 @@ export default function PDFDocument(data1: ChallanData) {
                 <Text style={styles.newline} >{"\n\n\n"}</Text>
                 <View style={styles.rowContainer}>
                     <View style={styles.paragraph}>
-                        <Text style={styles.fromto}>Challan by</Text>
-                        <Text style={styles.newline}>{"\n"}</Text>
-                        <Text style={styles.bold}>{data.from}</Text>
-                        <Text style={styles.address}>{data.fromAddress}</Text>
-                    </View>
-                    <View style={styles.paragraph}>
-                        <Text style={styles.fromto}>Challan to{"\n"}</Text>
-                        <Text style={styles.newline}>{"\n"}</Text>
                         <Text style={styles.bold}>{data.to}</Text>
                         <Text style={styles.address}>{data.toAddress}</Text>
+                    </View>
+                    <View style={styles.paragraph}>
+                        <Text>
+                            <Text style={styles.qoutationDetails}>Order No: </Text>
+                            <Text style={styles.intro}>{data.orderno}</Text>
+                        </Text>
+                        <Text>
+                            <Text style={styles.qoutationDetails}>Mode of Dispatch: </Text>
+                            <Text style={styles.intro}>{data.modeofdispatch}</Text>
+                        </Text>
                     </View>
                 </View>
                 <Text style={styles.newline}>{"\n\n\n"}</Text>
@@ -106,11 +125,8 @@ export default function PDFDocument(data1: ChallanData) {
                 < View style={styles.tableContainer}>
                     <View style={styles.tableRowEven}>
                         <Text style={[styles.tableCellHeader, { width: "8%" }]}>S.No.</Text>
-                        <Text style={[styles.tableCellHeader, { width: "40%" }]}>Item</Text>
-                        <Text style={[styles.tableCellHeader, { flexGrow: 1, flexBasis: 0 }]}>Quantity</Text>
-                        <Text style={[styles.tableCellHeader, { flexGrow: 1, flexBasis: 0 }]}>Price</Text>
-
-                        <Text style={[styles.tableCellHeader, { flexGrow: 1, flexBasis: 0 }]}>Amount</Text>
+                        <Text style={[styles.tableCellHeader, { flexGrow: 1, flexBasis: 0 }]}>Item</Text>
+                        <Text style={[styles.tableCellHeader, { width: "15%" }]}>Quantity</Text>
                     </View>
 
                     {Object.entries(data.items).map((e, i) => {
@@ -124,18 +140,12 @@ export default function PDFDocument(data1: ChallanData) {
                                 <Text style={styles.tableCell}>{e[1].quantity}</Text>
                             </View>);
                     })}
-                    <View style={Object.entries(data.items).length % 2 === 0 ? styles.tableRowEven : styles.tableRowOdd}>
-                        <Text style={styles.tableCellSno}></Text>
-                        <Text style={[styles.tableCellTotals, { width: "40%", textDecoration: "none", fontStyle: "italic" }]}>Taxable Value</Text>
-                        <Text style={styles.tableCell}></Text>
-                        <Text style={styles.tableCell}></Text>
-                    </View>
-                    <View style={Object.entries(data.items).length % 2 === 0 ? styles.tableRowOdd : styles.tableRowEven}>
-                        <Text style={styles.tableCellSno}></Text>
-                        <Text style={styles.tableCell}></Text>
-                        <Text style={styles.tableCell}></Text>
-                    </View>
                 </View>
+                <View fixed style={{ position: "absolute", bottom: 80, left: 40, fontSize: 10, color: "#6E6E6E" }}>
+                    <HorizontalLine width={525} color="gray" thickness={2} />
+                    <Text >`Customer's Signature                                                                                              For Teen Telecommunication Pvt. Ltd.` </Text>
+                </View>
+
                 <Text fixed style={styles.pageNumber} render={({ pageNumber }) => `${data.website}                                                      Page ${pageNumber}`} />
             </Page>
         </Document >
