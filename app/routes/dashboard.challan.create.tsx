@@ -111,7 +111,7 @@ export default function CreateChallan() {
                         </div>*/}
                     </div>
 
-                    <div className="flex flex-col items-center">
+                    <div className="flex flex-col items-center w-full">
                         {step === 0 && <>
                             <div className="flex w-full mt-4">
                                 <div className="w-full space-y-4">

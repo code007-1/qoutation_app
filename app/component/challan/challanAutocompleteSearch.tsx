@@ -101,7 +101,7 @@ export default function ChallanAutocompleteSearch({ index }: { index: number }) 
     };
 
     return (
-        <div className="grid grid-cols-9 relative w-auto gap-x-4">
+        <div className="grid grid-cols-10 relative w-auto gap-x-4">
             <input
                 ref={inputRef}
                 type="text"
@@ -151,6 +151,20 @@ export default function ChallanAutocompleteSearch({ index }: { index: number }) 
                     setChallanItems(pre => {
                         return pre.map((item, i) => i === index
                             ? { ...challanItems[index], quantity: Number(e.target.value) }
+                            : item);
+                    })
+                }}
+            />
+
+            <input
+                type="string"
+                placeholder="Unit"
+                className="border p-2 border-border bg-background text-textPrimary focus:outline-textPrimary"
+                value={challanItems[index]?.unit}
+                onChange={(e) => {
+                    setChallanItems(pre => {
+                        return pre.map((item, i) => i === index
+                            ? { ...challanItems[index], unit: e.target.value }
                             : item);
                     })
                 }}
