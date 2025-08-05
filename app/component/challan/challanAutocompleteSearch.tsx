@@ -116,7 +116,7 @@ export default function ChallanAutocompleteSearch({ index }: { index: number }) 
             />
 
             {showSuggestions && (
-                <ul className="z-10 absolute top-full -left-0 right-0 bg-buttonHover border border-border overflow-y-auto max-h-96">
+                <ul className="w-[29%] z-10 absolute top-full -left-0 right-0 bg-buttonHover border border-border overflow-y-auto max-h-96">
                     {filtered.map((s, idx) => (
                         <li
                             key={s.id}
@@ -137,7 +137,7 @@ export default function ChallanAutocompleteSearch({ index }: { index: number }) 
                 onChange={(e) => {
                     setChallanItems(pre => {
                         return pre.map((item, i) => i === index
-                            ? { ...challanItems[index], description: e.target.value }
+                            ? { ...challanItems[index], sno: e.target.value.replaceAll(" ", "").split(",") }
                             : item);
                     })
                 }}

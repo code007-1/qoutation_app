@@ -79,6 +79,7 @@ export const initialChallanData = () => {
         to: "",
         toAddress: "",
         madeby: "",
+        modeofdispatch: "by hand"
     }
 }
 

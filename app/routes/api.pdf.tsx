@@ -1,5 +1,6 @@
 import { renderToStream } from "@react-pdf/renderer";
 import { ActionFunction } from "@remix-run/node";
+import ChallanPDFDocument from "~/component/ChallanPDFDcoument";
 import PDFDocument from "~/component/PDFDcoument";
 import { insertOnetoDb, insertOrUpdateOnetoDb } from "~/modules/dbOnline";
 import { verifyAccessToken } from "~/modules/utils";
@@ -13,11 +14,16 @@ export const action: ActionFunction = async ({ request, params }) => {
         const url = new URL(request.url);
         const save = url.searchParams.get("save") || "true";
         const showCustomerList = url.searchParams.get("showCustomerList");
+        const type = url.searchParams.get("type") || "quotation";
 
-        if (save === "true") {
-            await insertOrUpdateOnetoDb(data);
-            await insertOnetoDb({ "by": data.madeby, "action": "pdf creation", "result": "succeded", "when": new Date().toISOString() }, "unnamed", "logs");
-        }
+        /*if (save === "true") {
+            if (type === "quotation")
+                await insertOrUpdateOnetoDb(data);
+            else
+                await insertOrUpdateOnetoDb(data, "unnamed", "challans");
+
+            await insertOnetoDb({ "by": data.madeby, "action": `${type} pdf creation`, "result": "succeded", "when": new Date().toISOString() }, "unnamed", "logs");
+        }*/
 
 
         //console.log("PDF loader called", request, params, data);
@@ -25,8 +31,11 @@ export const action: ActionFunction = async ({ request, params }) => {
 
         // render the PDF as a stream so you do it async
         //additionalInfo={data.additionalInfo} date={data.date} discount={data.discount} from={data.from} fromAddress={data.fromAddress} intro={data.intro} items={data.items} no={data.no} tax={data.tax} terms={data.terms} to={data.to} toAddress={data.toAddress} 
-
-        let stream = await renderToStream(PDFDocument({ ...data }, showCustomerList === "false" ? false : true));
+        let stream;
+        if (type === "quotation")
+            stream = await renderToStream(PDFDocument({ ...data }, showCustomerList === "false" ? false : true));
+        else
+            stream = await renderToStream(ChallanPDFDocument({ ...data }));
 
         // and transform it to a Buffer to send in the Response
         let body: Buffer = await new Promise((resolve, reject) => {

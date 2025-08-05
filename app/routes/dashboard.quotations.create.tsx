@@ -6,6 +6,7 @@ import { logoutData } from "~/modules/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import { useCentralFetcher } from "~/component/centralFetcher";
 import { Switch } from "@headlessui/react";
+import { ChallanData } from "./dashboard.challan.create";
 
 export type QuoteItems = {
     id: number;
@@ -40,7 +41,7 @@ export type QuotationData = {
     showLinks?: boolean;
 };
 
-export async function createPdf(data: QuotationData, fetcher: any, showCustomerList?: boolean, save: boolean = true, type: string = "quotation") {
+export async function createPdf(data: QuotationData | ChallanData, fetcher: any, showCustomerList?: boolean, save: boolean = true, type: string = "quotation") {
     const response = await fetcher(`/api/pdf?save=${save}&showCustomerList=${showCustomerList}&type=${type}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

@@ -5,6 +5,8 @@ import ChallanAutocompleteSearch from "~/component/challan/challanAutocompleteSe
 import { AnimatePresence, motion } from "framer-motion";
 import { Listbox, ListboxButton, ListboxOption, ListboxOptions } from "@headlessui/react";
 import { ChevronDown } from "lucide-react";
+import { createPdf } from "./dashboard.quotations.create";
+import { useCentralFetcher } from "~/component/centralFetcher";
 
 export type ChallanItems = {
     id: number;
@@ -39,6 +41,7 @@ export default function CreateChallan() {
 
     const { challanItems, setChallanItems, challanData, setChallanData, accessToken, setHeaderText, profile } = useGlobalContext();
     const [step, setStep] = useState<number>(0);
+    const fetcher = useCentralFetcher();
 
     const navigate = useNavigate();
 
@@ -118,11 +121,11 @@ export default function CreateChallan() {
                                     <div className="w-[90%] grid grid-cols-4">
                                         <div className="">
                                             <div className="text-sm font-semibold text-left">Order No</div>
-                                            <input type="text" color="white" name="orderno" id="orderno" placeholder="Order No." className="p-2 border border-border w- h-10 bg-background" value={challanData.date} onChange={e => setChallanData(pre => { return { ...pre, date: e.target.value } })} />
+                                            <input type="text" color="white" name="orderno" id="orderno" placeholder="Order No." className="p-2 border border-border w- h-10 bg-background" value={challanData.orderno} onChange={e => setChallanData(pre => { return { ...pre, date: e.target.value } })} />
                                         </div>
                                         <div className="">
                                             <div className="text-sm font-semibold">Mode of Dispatch</div>
-                                            <input type="text" color="white" name="modeofdispatch" id="orderno" placeholder="Mode of Dispatch" className="p-2 border border-border w-25 h-10 bg-background" value={challanData.date} onChange={e => setChallanData(pre => { return { ...pre, date: e.target.value } })} />
+                                            <input type="text" color="white" name="modeofdispatch" id="orderno" placeholder="Mode of Dispatch" className="p-2 border border-border w-25 h-10 bg-background" value={challanData.modeofdispatch} onChange={e => setChallanData(pre => { return { ...pre, date: e.target.value } })} />
                                         </div>
                                         <div className="">
                                             <div className="text-sm font-semibold">Challan Type</div>
@@ -230,7 +233,8 @@ export default function CreateChallan() {
                                     <button onClick={() => setStep(0)} className="bg-button text-buttonTextPrimary px-4 py-1 mt-4 text-lg">
                                         Back
                                     </button>
-                                    <form onSubmit={(e) => { "create pdf"; e.preventDefault(); navigate("/dashboard/challan/show") }}>
+
+                                    <form onSubmit={(e) => { const updatedChallanData = { ...challanData, items: challanItems }; setChallanData(pre => { return { ...pre, items: challanItems } }); createPdf(updatedChallanData, fetcher, false, true, "challan"); e.preventDefault(); navigate("/dashboard/challan/show"); }}>
                                         <button className="bg-button text-buttonTextPrimary px-4 py-1 mt-4 text-lg" type="submit">Generate Challan PDF</button>
                                     </form>
                                 </div>

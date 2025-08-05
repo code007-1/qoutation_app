@@ -3,8 +3,8 @@ import { Watermark } from "~/component/watermark";
 import { ChallanData } from "~/routes/dashboard.challan.create";
 import { Svg, Line } from '@react-pdf/renderer';
 
-export default function ChallanPDFDocument() {
-    const data: ChallanData = {
+export default function ChallanPDFDocument(data: ChallanData) {
+    /*const data: ChallanData = {
         no: "123",
         date: "2023-10-01",
         items: [{
@@ -29,10 +29,10 @@ export default function ChallanPDFDocument() {
         pdfColor: "222",
         type: "Delivery Challan",
         category: "Delivery Challan",
-        orderno: "ORD-12345",
+        orderno: "",
         modeofdispatch: "Courier",
-    };
-
+    };*/
+    console.log("asd", data);
     const hue = data.pdfColor ? data.pdfColor : "222";
 
     const styles = StyleSheet.create({
@@ -108,10 +108,13 @@ export default function ChallanPDFDocument() {
                     <Text style={styles.challanDetails}>{data.toAddress}</Text>
                 </View>
                 <View style={styles.paragraph}>
-                    <Text>
-                        <Text style={[styles.challanDetails, { fontWeight: "bold" }]}>Order No: </Text>
-                        <Text style={styles.challanDetails}>{data.orderno}</Text>
-                    </Text>
+                    {data.orderno &&
+                        <Text>
+                            <Text style={[styles.challanDetails, { fontWeight: "bold" }]}>Order No: </Text>
+                            <Text style={styles.challanDetails}>{data.orderno}</Text>
+                        </Text>
+                    }
+
                     <Text>
                         <Text style={[styles.challanDetails, { fontWeight: "bold" }]}>Mode of Dispatch: </Text>
                         <Text style={styles.challanDetails}>{data.modeofdispatch}</Text>
