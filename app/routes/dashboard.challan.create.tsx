@@ -1,11 +1,9 @@
-import { useFetcher, useLocation, useNavigate } from "@remix-run/react";
+import { useLocation, useNavigate } from "@remix-run/react";
 import { useEffect, useState } from "react";
 import { useGlobalContext } from "~/modules/gcontext";
 import ChallanAutocompleteSearch from "~/component/challan/challanAutocompleteSearch";
-import { logoutData } from "~/modules/utils";
 import { AnimatePresence, motion } from "framer-motion";
-import { useCentralFetcher } from "~/component/centralFetcher";
-import { Listbox, ListboxButton, ListboxOption, ListboxOptions, Switch } from "@headlessui/react";
+import { Listbox, ListboxButton, ListboxOption, ListboxOptions } from "@headlessui/react";
 import { ChevronDown } from "lucide-react";
 
 export type ChallanItems = {
@@ -37,7 +35,7 @@ export default function CreateChallan() {
     const location = useLocation();
     const passedData = location.state;
 
-    const { challanItems, setChallanItems, challanData, setChallanData, oldChallanData, accessToken, setAccessToken, setHeaderText, profile } = useGlobalContext();
+    const { challanItems, setChallanItems, challanData, setChallanData, accessToken, setHeaderText, profile } = useGlobalContext();
     const [step, setStep] = useState<number>(0);
 
     const navigate = useNavigate();
@@ -86,13 +84,13 @@ export default function CreateChallan() {
             >
                 <div className="text-textSecondary">
                     <div className="mt-4 flex space-x-4 items-center align-middle">
-                        <div className="flex items-center w-[90%]">
-                            <div className="flex w-[15%] gap-x-2">
+                        <div className="w-[90%] grid grid-cols-4">
+                            <div className="flex items-center gap-x-2">
                                 <div className="text-sm font-semibold">Challan No.</div>
                                 {/*<input type="text" name="no" placeholder="Enter Qoutation No." className="border border-border p-2 mb-2 mr-5 w-25 bg-background" value={data.no} onChange={e => setData((pre) => { return { ...pre, no: e.target.value }; })} />*/}
                                 <div className="text-sm">{challanData.no}</div>
                             </div>
-                            <div className="flex w-[15%] items-center gap-x-4">
+                            <div className="flex items-center gap-x-4">
                                 <div className="text-sm font-semibold">Date</div>
                                 <input type="date" color="white" name="date" id="date" pattern="\d{4}-\d{2}-\d{2}" placeholder="Date" className="border border-border w-25 h-10 bg-background" value={challanData.date} onChange={e => setChallanData(pre => { return { ...pre, date: e.target.value } })} />
                             </div>
@@ -115,16 +113,16 @@ export default function CreateChallan() {
                         {step === 0 && <>
                             <div className="flex w-full mt-4">
                                 <div className="w-full space-y-4">
-                                    <div className="w-[90%] flex">
-                                        <div className="w-[15%]">
+                                    <div className="w-[90%] grid grid-cols-4">
+                                        <div className="">
                                             <div className="text-sm font-semibold text-left">Order No</div>
                                             <input type="text" color="white" name="orderno" id="orderno" placeholder="Order No." className="p-2 border border-border w- h-10 bg-background" value={challanData.date} onChange={e => setChallanData(pre => { return { ...pre, date: e.target.value } })} />
                                         </div>
-                                        <div className="w-[15%]">
+                                        <div className="">
                                             <div className="text-sm font-semibold">Mode of Dispatch</div>
                                             <input type="text" color="white" name="modeofdispatch" id="orderno" placeholder="Mode of Dispatch" className="p-2 border border-border w-25 h-10 bg-background" value={challanData.date} onChange={e => setChallanData(pre => { return { ...pre, date: e.target.value } })} />
                                         </div>
-                                        <div className="w-[15%]">
+                                        <div className="">
                                             <div className="text-sm font-semibold">Challan Type</div>
                                             <Listbox value={type} onChange={setType}>
                                                 <div className="relative">
@@ -152,7 +150,7 @@ export default function CreateChallan() {
                                                 </div>
                                             </Listbox>
                                         </div>
-                                        <div className="w-[15%]">
+                                        <div className="">
                                             <div className="text-sm font-semibold">Challan Category</div>
                                             <Listbox value={category} onChange={setCategory}>
                                                 <div className="relative">
@@ -230,7 +228,7 @@ export default function CreateChallan() {
                                     <button onClick={() => setStep(0)} className="bg-button text-buttonTextPrimary px-4 py-1 mt-4 text-lg">
                                         Back
                                     </button>
-                                    <form onSubmit={(e) => { "create pdf"; e.preventDefault(); navigate("/dashboard/showquotations") }}>
+                                    <form onSubmit={(e) => { "create pdf"; e.preventDefault(); navigate("/dashboard/challan/show") }}>
                                         <button className="bg-button text-buttonTextPrimary px-4 py-1 mt-4 text-lg" type="submit">Generate Challan PDF</button>
                                     </form>
                                 </div>

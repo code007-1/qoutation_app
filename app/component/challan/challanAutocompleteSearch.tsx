@@ -1,7 +1,7 @@
 import { Minus } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { useGlobalContext } from "~/modules/gcontext";
-import { QuoteItems } from "~/routes/dashboard.quotations.create";
+import { ChallanItems } from "~/routes/dashboard.challan.create";
 
 //- done - advance show hide for better ui - optimized little bit, ok for now
 //- done - welcome animation - partially done, would improve animation
@@ -15,7 +15,7 @@ import { QuoteItems } from "~/routes/dashboard.quotations.create";
 
 export default function ChallanAutocompleteSearch({ index }: { index: number }) {
     const [showSuggestions, setShowSuggestions] = useState(false);
-    const [filtered, setFiltered] = useState<QuoteItems[]>([]);
+    const [filtered, setFiltered] = useState<ChallanItems[]>([]);
     const [highlighted, setHighlighted] = useState<number>(-1);
     const inputRef = useRef<HTMLInputElement>(null);
     const [hasFocus, setFocus] = useState(false);
@@ -34,7 +34,7 @@ export default function ChallanAutocompleteSearch({ index }: { index: number }) 
                     body: JSON.stringify(challanItems[index].name),
                 })
                     .then(async (res) => {
-                        const filteredList: QuoteItems[] = await res.json();
+                        const filteredList: ChallanItems[] = await res.json();
                         setFiltered(filteredList);
                         setShowSuggestions(filteredList.length > 0);
                         setHighlighted(-1);
@@ -55,7 +55,7 @@ export default function ChallanAutocompleteSearch({ index }: { index: number }) 
         });
     };
 
-    const handleSuggestionClick = (suggestion: QuoteItems) => {
+    const handleSuggestionClick = (suggestion: ChallanItems) => {
         //setInput(suggestion.label);
         setChallanItems(pre => {
             return pre.map((item, i) => i == index
@@ -101,7 +101,7 @@ export default function ChallanAutocompleteSearch({ index }: { index: number }) 
     };
 
     return (
-        <div className="flex relative w-auto gap-x-4">
+        <div className="grid grid-cols-9 relative w-auto gap-x-4">
             <input
                 ref={inputRef}
                 type="text"
@@ -110,12 +110,13 @@ export default function ChallanAutocompleteSearch({ index }: { index: number }) 
                 onBlur={handleBlur}
                 onFocus={handleFocus}
                 onKeyDown={handleKeyDown}
-                className="w-[30%] p-2 border border-border bg-background text-textPrimary focus:outline-textPrimary"
+                className="col-span-3 p-2 border border-border bg-background text-textPrimary focus:outline-textPrimary"
                 placeholder="Search Product..."
                 autoComplete="off"
             />
+
             {showSuggestions && (
-                <ul className="z-10 absolute top-full -left-0 right-0 bg-buttonHover border border-border overflow-y-auto w-[30%] max-h-96">
+                <ul className="z-10 absolute top-full -left-0 right-0 bg-buttonHover border border-border overflow-y-auto max-h-96">
                     {filtered.map((s, idx) => (
                         <li
                             key={s.id}
@@ -130,7 +131,7 @@ export default function ChallanAutocompleteSearch({ index }: { index: number }) 
             )}
             <textarea
                 placeholder="Any Description or Serial Numbers separated by comma..."
-                className="p-2 border w-[40%] border-border bg-background text-textPrimary focus:outline-textPrimary"
+                className="col-span-4 p-2 border border-border bg-background text-textPrimary focus:outline-textPrimary"
                 value={challanItems[index].sno}
                 rows={1}
                 onChange={(e) => {
@@ -141,11 +142,10 @@ export default function ChallanAutocompleteSearch({ index }: { index: number }) 
                     })
                 }}
             />
-
             <input
                 type="number"
                 placeholder="Quantity"
-                className="border p-2 w-[10%] border-border bg-background text-textPrimary focus:outline-textPrimary"
+                className="border p-2 border-border bg-background text-textPrimary focus:outline-textPrimary"
                 value={challanItems[index]?.quantity}
                 onChange={(e) => {
                     setChallanItems(pre => {
@@ -155,13 +155,13 @@ export default function ChallanAutocompleteSearch({ index }: { index: number }) 
                     })
                 }}
             />
-            <button className="hover:bg-headerBackground bg-buttonHover p-2" onClick={(e) => {
-                //setInput(index);
+
+            <button className="w-[35%] hover:bg-headerBackground bg-buttonHover p-2" onClick={(e) => {
                 setChallanItems(pre =>
                     pre.filter((_, i) => i != index)
                 );
             }}>
-                <Minus className="text-textSecondary" />
+                <Minus className="w-full text-textSecondary" />
             </button>
         </div>
     );

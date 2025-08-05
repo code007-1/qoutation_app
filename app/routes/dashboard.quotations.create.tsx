@@ -238,7 +238,7 @@ export default function QuotationsCreate() {
                                     <button onClick={() => setStep(1)} className="bg-button text-buttonTextPrimary px-4 py-1 mt-4 text-lg">
                                         Back
                                     </button>
-                                    <form onSubmit={(e) => { createPdf(data, fetcher, profile?.showCustomerList); e.preventDefault(); navigate("/dashboard/showquotations") }}>
+                                    <form onSubmit={(e) => { createPdf(data, fetcher, profile?.showCustomerList); e.preventDefault(); navigate("/dashboard/quotations/show") }}>
                                         <button className="bg-button text-buttonTextPrimary px-4 py-1 mt-4 text-lg" type="submit">Generate Quotation PDF</button>
                                     </form>
                                 </div>
