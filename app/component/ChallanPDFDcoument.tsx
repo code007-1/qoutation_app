@@ -3,9 +3,9 @@ import { Watermark } from "~/component/watermark";
 import { ChallanData } from "~/routes/dashboard.challan.create";
 import { Svg, Line } from '@react-pdf/renderer';
 
-export default function ChallanPDFDocument(data: ChallanData) {
-    /*const data: ChallanData = {
-        no: "123",
+export default function ChallanPDFDocument() {
+    const data: ChallanData = {
+        no: "12312312sad213123asd",
         date: "2023-10-01",
         items: [{
             id: 1, name: "MATRIX NXDBM VOCODER 64", quantity: 5,
@@ -17,9 +17,24 @@ export default function ChallanPDFDocument(data: ChallanData) {
             sno: ["123", "1233", "432", "12", "412", "123", "1233", "432", "12", "412", "123", "1233", "432", "12", "412", "123", "1233", "432", "12", "412"],
             unit: "pcs"
         },
+        {
+            id: 1, name: "MATRIX NXDBM VOCODER 64", quantity: 5,
+            sno: ["123", "1233", "432", "12", "412"],
+            unit: "pcs"
+        },
+        {
+            id: 1, name: "MATRIX PENX 6S EPABX SYSTEM", quantity: 5,
+            sno: ["123", "1233", "432", "12", "412", "123", "1233", "432", "12", "412", "123", "1233", "432", "12", "412", "123", "1233", "432", "12", "412"],
+            unit: "pcs"
+        },
+        {
+            id: 1, name: "MATRIX NXDBM VOCODER 64", quantity: 5,
+            sno: ["123", "1233", "432", "12", "412"],
+            unit: "pcs"
+        },
         ],
         from: "Teen Telecommunication Pvt. Ltd.",
-        fromAddress: "G-57, 3rd Floor, Vikas Marg, Laxmi Nagar, Near Metro Pillar No. 41, Delihi - 110092",
+        fromAddress: "G-57, Vikas Marg, Laxmi Nagar, Near Metro Pillar No. 41, Delihi - 110092",
         to: "M/s Someone",
         toAddress: "At Some Place",
         madeby: "Unknown",
@@ -31,8 +46,7 @@ export default function ChallanPDFDocument(data: ChallanData) {
         category: "Delivery Challan",
         orderno: "",
         modeofdispatch: "Courier",
-    };*/
-    console.log("asd", data);
+    };
     const hue = data.pdfColor ? data.pdfColor : "222";
 
     const styles = StyleSheet.create({
@@ -44,7 +58,7 @@ export default function ChallanPDFDocument(data: ChallanData) {
         companyDetails: { fontSize: 11, textAlign: "center" },
         intro: { textAlign: "justify", fontSize: 10, lineHeight: 1.25 },
         bold: { fontSize: 9, fontWeight: "bold" },
-        challanDetails: { textAlign: "justify", fontSize: 10, lineHeight: 1.25 },
+        challanDetails: { fontSize: 10, lineHeight: 1.25 },
         newline: { lineHeight: 0.25 },
         address: { fontSize: 9 },
 
@@ -52,7 +66,7 @@ export default function ChallanPDFDocument(data: ChallanData) {
         tableRowEven: { flexDirection: "row", backgroundColor: "#FFFFFF", color: `hsl(${hue} 0% 0%)` },
         tableRowOdd: { flexDirection: "row", backgroundColor: `hsl(${hue} 0% 95%)`, color: `hsl(${hue} 0% 0%)` },
         tableCellHeader: { padding: 8, backgroundColor: `hsl(${hue} 0% 11%)`, textAlign: "left", color: "white" },
-        tableCellContent: { padding: 8, textAlign: "left", fontSize: 11 },
+        tableCellContent: { padding: 8, textAlign: "left", fontSize: 10 },
     });
     var dated = data.date.split("-");
     const date = dated[2] + "-" + dated[1] + "-" + dated[0];
@@ -81,23 +95,23 @@ export default function ChallanPDFDocument(data: ChallanData) {
 
             <Text style={styles.companyDetails}>
                 <Text style={{ fontWeight: "bold" }}>Contact No:- </Text>
-                <Text > {data.contact}</Text>
+                <Text>{data.contact}</Text>
             </Text>
 
             <Text style={styles.companyDetails}>
                 <Text style={{ fontWeight: "bold" }}>Email Id:- </Text>
-                <Link src={`mailto:${data.email}`} style={{ textDecoration: "none", color: "black" }}>{data.email}</Link>
+                <Text >{data.email}</Text>
             </Text>
 
             <Text style={styles.newline}>{"\n\n"}</Text>
             <View style={styles.rowContainer}>
-                <Text>
+                <Text style={{ width: "33%" }}>
                     <Text style={[styles.challanDetails, { fontWeight: "bold" }]}>Challan No:</Text>
                     <Text style={styles.challanDetails}>{data.no}</Text>
                 </Text>
-                <Text style={[styles.challanDetails, { fontSize: 12, fontWeight: "bold" }]}>{data.type}</Text>
-                <Text>
-                    <Text style={[styles.challanDetails, { fontWeight: "bold" }]}>Date: </Text>
+                <Text style={[styles.challanDetails, { fontSize: 12, fontWeight: "bold", textAlign: "center", width: "33%" }]}>{data.type}</Text>
+                <Text style={{ width: "33%" }}>
+                    <Text style={[styles.challanDetails, { fontWeight: "bold", textAlign: "right" }]}>Date: </Text>
                     <Text style={styles.challanDetails}>{date}</Text>
                 </Text>
             </View>
@@ -125,11 +139,18 @@ export default function ChallanPDFDocument(data: ChallanData) {
     </>;
 
     const footer = <>
-        <View fixed style={[{ position: "absolute", bottom: 100, left: 40, fontSize: 11, color: "black", marginTop: 1000 }]}>
-            <HorizontalLine width={525} color="gray" thickness={2} />
-            <Text>Customer's Name & Signature                                                                For Teen Telecommunication Pvt. Ltd.</Text>
+        <View fixed style={[{ width: "90%", paddingTop: "1%", paddingBottom: "10%", position: "absolute", bottom: 40, fontSize: 11, color: "black", border: "2px solid #DCD7D7", backgroundColor: "#F2F2F2" }]}>
+            {/*<HorizontalLine width={535} color="gray" thickness={2} />*/}
+            <View style={{ flexDirection: "row", marginRight: 60, width: "100%" }}>
+                <Text style={{ width: "50%", paddingLeft: "2%" }}>For Customer</Text>
+                <Text style={{ width: "50%", textAlign: "right", paddingRight: "2%" }}>For {data.from}</Text>
+            </View>
         </View>
-        {<Text fixed style={{ position: "absolute", bottom: 20, right: 30, fontSize: 11, color: "black" }} render={({ pageNumber }) => `${data.website}                                                 Page ${pageNumber}`} />}
+        <View fixed style={{ flexDirection: "row", width: "90%", position: "absolute", bottom: 20, fontSize: 11, color: "black" }}>
+            <Text style={{ width: "33%" }} ></Text>
+            <Text style={{ width: "34%", textAlign: "center", fontStyle: "italic" }}>{data.website} </Text >
+            <Text style={{ width: "33%", textAlign: "right", fontStyle: "italic" }} render={({ pageNumber, totalPages }) => `Page ${pageNumber % (totalPages / 2) === 0 ? (totalPages / 2) : pageNumber % (totalPages / 2)} of ${totalPages / 2}`} />
+        </View>
     </>;
 
     return (
@@ -151,13 +172,30 @@ export default function ChallanPDFDocument(data: ChallanData) {
                                 <View style={i % 2 === 0 ? styles.tableRowEven : styles.tableRowOdd}>
                                     <Text style={[styles.tableCellContent, { width: "8%" }]}>{i + 1}</Text>
                                     <View style={[styles.tableCellContent, { flexBasis: 0, flexGrow: 1 }]}>
-                                        <Text style={{ fontSize: 11 }} >{e[1].name}</Text>
+                                        <Text>{e[1].name}</Text>
                                         <Text style={{ fontStyle: "italic" }} >{e[1].sno?.join(", ")} </Text>
                                     </View>
                                     <Text style={[styles.tableCellContent, { width: "15%" }]}>{e[1].unit}</Text>
                                     <Text style={[styles.tableCellContent, { width: "15%" }]}>{e[1].quantity}</Text>
                                 </View>);
                         })}
+
+                        <View style={{ flexDirection: "row", backgroundColor: "black", color: "white" }}>
+                            <Text style={[styles.tableCellContent, { width: "8%" }]}></Text>
+                            <View style={[styles.tableCellContent, { flexBasis: 0, flexGrow: 1 }]}>
+                                <Text style={{ fontSize: 11, fontWeight: "bold", fontStyle: "italic" }} >Total Items</Text>
+                            </View>
+                            <Text style={[styles.tableCellContent, { width: "15%" }]}></Text>
+                            <Text style={[styles.tableCellContent, { width: "15%", fontWeight: "bold", fontStyle: "italic" }]}>{data.items.length}</Text>
+                        </View>
+                        <View style={{ flexDirection: "row", backgroundColor: "black", color: "white" }}>
+                            <Text style={[styles.tableCellContent, { width: "8%" }]}></Text>
+                            <View style={[styles.tableCellContent, { flexBasis: 0, flexGrow: 1 }]}>
+                                <Text style={{ fontSize: 11, fontWeight: "bold", fontStyle: "italic" }} >Total Quantity</Text>
+                            </View>
+                            <Text style={[styles.tableCellContent, { width: "15%" }]}></Text>
+                            <Text style={[styles.tableCellContent, { width: "15%", fontWeight: "bold", fontStyle: "italic" }]}>{data.items.reduce((acc, item) => acc + item.quantity, 0)}</Text>
+                        </View>
                     </View>
                     {footer}
                 </Page>
