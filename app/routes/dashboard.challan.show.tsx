@@ -14,7 +14,7 @@ const QuotationsShow = () => {
     const { setHeaderText, challanDataCount, setChallanDataCount, setoldChallanData, setChallanData, setChallanItems, profile, oldChallanData } = useGlobalContext();
     async function getQoutes() {
         setLoading(true);
-        const response = await fetcher(`/api/quotations`);
+        const response = await fetcher(`/api/challans`);
         if (response.status === 200) {
             const data = await response.json()
             setoldChallanData(data);
@@ -30,7 +30,7 @@ const QuotationsShow = () => {
         setLoading(true);
         var response;
         if (query) {
-            response = await fetcher(`/api/quotations?start=${query.start}&end=${query.end}&to=${query.to}`);
+            response = await fetcher(`/api/challans?start=${query.start}&end=${query.end}&to=${query.to}`);
             if (response.status === 200) {
                 const data = await response.json();
                 setoldChallanData(data);
@@ -44,7 +44,7 @@ const QuotationsShow = () => {
         }
         else {
             setLoading(true);
-            response = await fetcher(`/api/quotations?skip=${challanDataCount}`);
+            response = await fetcher(`/api/challans?skip=${challanDataCount}`);
             if (response.status === 200) {
                 const data = await response.json();
                 if (challanDataCount == 0) {
@@ -64,7 +64,7 @@ const QuotationsShow = () => {
     }
 
     async function handleDeletequotation(no: string) {
-        const result = await fetcher("/api/delete", { method: "POST", body: JSON.stringify({ "no": no, "username": profile.username }) });
+        const result = await fetcher("/api/delete", { method: "POST", body: JSON.stringify({ "no": no, "username": profile.username, type: "challans" }) });
         if (result.status !== 200) {
             addNotifications({
                 title: "Error while deletion...",

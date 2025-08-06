@@ -16,21 +16,15 @@ export const action: ActionFunction = async ({ request, params }) => {
         const showCustomerList = url.searchParams.get("showCustomerList");
         const type = url.searchParams.get("type") || "quotation";
 
-        /*if (save === "true") {
+        if (save === "true") {
             if (type === "quotation")
                 await insertOrUpdateOnetoDb(data);
             else
                 await insertOrUpdateOnetoDb(data, "unnamed", "challans");
 
             await insertOnetoDb({ "by": data.madeby, "action": `${type} pdf creation`, "result": "succeded", "when": new Date().toISOString() }, "unnamed", "logs");
-        }*/
+        }
 
-
-        //console.log("PDF loader called", request, params, data);
-        // Fetch the data you need for the PDF
-
-        // render the PDF as a stream so you do it async
-        //additionalInfo={data.additionalInfo} date={data.date} discount={data.discount} from={data.from} fromAddress={data.fromAddress} intro={data.intro} items={data.items} no={data.no} tax={data.tax} terms={data.terms} to={data.to} toAddress={data.toAddress} 
         let stream;
         if (type === "quotation")
             stream = await renderToStream(PDFDocument({ ...data }, showCustomerList === "false" ? false : true));

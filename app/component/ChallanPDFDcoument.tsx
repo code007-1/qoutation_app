@@ -3,8 +3,8 @@ import { Watermark } from "~/component/watermark";
 import { ChallanData } from "~/routes/dashboard.challan.create";
 import { Svg, Line } from '@react-pdf/renderer';
 
-export default function ChallanPDFDocument() {
-    const data: ChallanData = {
+export default function ChallanPDFDocument(data: ChallanData) {
+    /*const data: ChallanData = {
         no: "12312312sad213123asd",
         date: "2023-10-01",
         items: [{
@@ -46,7 +46,7 @@ export default function ChallanPDFDocument() {
         category: "Delivery Challan",
         orderno: "",
         modeofdispatch: "Courier",
-    };
+    };*/
     const hue = data.pdfColor ? data.pdfColor : "222";
 
     const styles = StyleSheet.create({
@@ -180,7 +180,7 @@ export default function ChallanPDFDocument() {
                                 </View>);
                         })}
 
-                        <View style={{ flexDirection: "row", backgroundColor: "black", color: "white" }}>
+                        <View style={{ flexDirection: "row", backgroundColor: `hsl(${hue} 0% 11%)`, color: "white" }}>
                             <Text style={[styles.tableCellContent, { width: "8%" }]}></Text>
                             <View style={[styles.tableCellContent, { flexBasis: 0, flexGrow: 1 }]}>
                                 <Text style={{ fontSize: 11, fontWeight: "bold", fontStyle: "italic" }} >Total Items</Text>
@@ -188,7 +188,7 @@ export default function ChallanPDFDocument() {
                             <Text style={[styles.tableCellContent, { width: "15%" }]}></Text>
                             <Text style={[styles.tableCellContent, { width: "15%", fontWeight: "bold", fontStyle: "italic" }]}>{data.items.length}</Text>
                         </View>
-                        <View style={{ flexDirection: "row", backgroundColor: "black", color: "white" }}>
+                        <View style={{ flexDirection: "row", backgroundColor: `hsl(${hue} 0% 11%)`, color: "white" }}>
                             <Text style={[styles.tableCellContent, { width: "8%" }]}></Text>
                             <View style={[styles.tableCellContent, { flexBasis: 0, flexGrow: 1 }]}>
                                 <Text style={{ fontSize: 11, fontWeight: "bold", fontStyle: "italic" }} >Total Quantity</Text>

@@ -70,7 +70,7 @@ export default function CreateChallan() {
             from = challanData.from;
         }
         setChallanData((pre) => { return { ...pre, no: no, from: from, fromAddress: fromAddress, email: profile.email, website: profile.website, contact: profile.contact, pdfColor: String(profile.pdfColor), madeby: profile.username || "", date: new Date().toISOString().split("T")[0] } });
-    }, [])
+    }, []);
 
     //updateItem={updatedItem} updatePrice={updatedPrice} updateQuanity={updatedQuanity} deleteItem={deleteItem}
     const [type, setType] = useState<string>("Delivery Challan");
@@ -234,7 +234,7 @@ export default function CreateChallan() {
                                         Back
                                     </button>
 
-                                    <form onSubmit={(e) => { const updatedChallanData = { ...challanData, items: challanItems }; setChallanData(pre => { return { ...pre, items: challanItems } }); createPdf(updatedChallanData, fetcher, false, true, "challan"); e.preventDefault(); navigate("/dashboard/challan/show"); }}>
+                                    <form onSubmit={(e) => { console.log("challan items : ", challanItems); const updatedChallanData = { ...challanData, items: challanItems }; setChallanData(pre => { return { ...pre, items: challanItems } }); createPdf(updatedChallanData, fetcher, false, true, "challan"); e.preventDefault(); navigate("/dashboard/challan/show"); }}>
                                         <button className="bg-button text-buttonTextPrimary px-4 py-1 mt-4 text-lg" type="submit">Generate Challan PDF</button>
                                     </form>
                                 </div>

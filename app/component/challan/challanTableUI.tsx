@@ -1,30 +1,14 @@
-import { Listbox, ListboxButton, ListboxOption, ListboxOptions, Dialog, DialogBackdrop, DialogPanel, DialogTitle } from "@headlessui/react";
 import { useNavigate } from "@remix-run/react";
-import {
-    Cell,
-    ColumnDef,
-    ColumnFiltersState,
-    flexRender,
-    getCoreRowModel,
-    getFilteredRowModel,
-    getPaginationRowModel,
-    getSortedRowModel,
-    OnChangeFn,
-    PaginationState,
-    Row,
-    SortingState,
-    useReactTable,
-} from "@tanstack/react-table";
 import { ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
-import { FC, memo, useEffect, useMemo, useState } from "react";
+import { FC, memo, useMemo, useState } from "react";
 import { useGlobalContext } from "~/modules/gcontext";
-import { createPdf, QuotationData } from "~/routes/dashboard.quotations.create";
+import { createPdf } from "~/routes/dashboard.quotations.create";
 import { useCentralFetcher } from "../centralFetcher";
-import { useNotification } from "~/modules/notificationContext";
-import { Loading } from "../loading";
+import { Cell, ColumnDef, ColumnFiltersState, flexRender, getCoreRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, PaginationState, Row, SortingState, useReactTable } from "@tanstack/react-table";
+import { Listbox, ListboxButton, ListboxOption, ListboxOptions, Dialog, DialogBackdrop, DialogPanel, DialogTitle } from "@headlessui/react";
+import { ChallanData } from "~/routes/dashboard.challan.create";
 
 // Typescript interface
-
 interface TableProps {
     data: any[];
     columns: ColumnDef<any>[];
@@ -46,7 +30,6 @@ interface TableProps {
 
 
 // The main table 
-
 const ChallanTableUI: FC<TableProps> = ({
     data,
     columns,
@@ -71,7 +54,7 @@ const ChallanTableUI: FC<TableProps> = ({
     const memoisedHeaderComponent = useMemo(() => headerComponent, [headerComponent]);
     const [sorting, setSorting] = useState<SortingState>([]);
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-    const [filterType, setFilterType] = useState<string>("Quotation #");
+    const [filterType, setFilterType] = useState<string>("Challan #");
 
     const filterTypes = ["Challan #", "Made By", "Date", "To", " Discount"];
 
@@ -113,21 +96,21 @@ const ChallanTableUI: FC<TableProps> = ({
         !isFetching && (!memoizedData || memoizedData.length === 0);
 
     const navigate = useNavigate();
-    const { setData, setItems, profile } = useGlobalContext();
+    const { setChallanData, setChallanItems, profile } = useGlobalContext();
     const fetcher = useCentralFetcher();
     const [open, setOpen] = useState(false);
     const [query, setQuery] = useState({ start: "", end: "", to: "" });
 
-    function handleEdit(row: QuotationData) {
-        setData(row);
-        setItems(row.items);
-        navigate("/dashboard/quote", { state: { editing: true } });
+    function handleEdit(row: ChallanData) {
+        setChallanData(row);
+        setChallanItems(row.items);
+        navigate("/dashboard/challan/create", { state: { editing: true } });
     }
 
-    function handleCopy(row: QuotationData) {
-        setData(row);
-        setItems(row.items);
-        navigate("/dashboard/quote");
+    function handleCopy(row: ChallanData) {
+        setChallanData(row);
+        setChallanItems(row.items);
+        navigate("/dashboard/challan/create");
     }
 
     return (

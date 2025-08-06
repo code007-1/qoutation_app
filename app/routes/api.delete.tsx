@@ -5,21 +5,25 @@ import { verifyAccessToken } from "~/modules/utils";
 export const action: ActionFunction = async ({ request, params }) => {
     try {
         await verifyAccessToken(request);
-        const { no, username } = await request.json();
-        console.log("deleting quotation no : ", no, " by user : ", username);
-        const result = await deleteOneFromDB(no);
+        const { no, username, type } = await request.json();
+        //console.log("deleting quotation no : ", no, " by user : ", username);
+        var result;
+        if (type === "challans")
+            result = await deleteOneFromDB(no, "unnamed", "challans");
+        else //if (type === "quotations")
+            result = await deleteOneFromDB(no, "unnamed", "quotations");
 
         if (result != undefined && result > 0) {
-            await insertOnetoDb({ "by": username, "action": `deleting quotation ${no}`, "result": "succeded", "when": new Date().toISOString() }, "unnamed", "logs");
-            return new Response("Quotation deleted", { status: 200 });
+            await insertOnetoDb({ "by": username, "action": `deleting ${type} ${no}`, "result": "succeded", "when": new Date().toISOString() }, "unnamed", "logs");
+            return new Response(`${type} deleted`, { status: 200 });
         }
         else {
-            await insertOnetoDb({ "by": username, "action": `deleting quotation ${no}`, "result": "failed", "when": new Date().toISOString() }, "unnamed", "logs");
-            return new Response("Quotation not deleted", { status: 500 });
+            await insertOnetoDb({ "by": username, "action": `deleting ${type} ${no}`, "result": "failed", "when": new Date().toISOString() }, "unnamed", "logs");
+            return new Response(`${type} not deleted`, { status: 500 });
         }
     }
     catch (error) {
-        console.log("error while deleting quotation data : ", error);
-        throw new Response("Error while deleting quotation data", { status: 500 });
+        console.log(`error while deleting quotation or challan data : `, error);
+        throw new Response("Error while deleting quotation or challan data", { status: 500 });
     }
 }
