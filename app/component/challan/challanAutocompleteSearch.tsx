@@ -130,14 +130,14 @@ export default function ChallanAutocompleteSearch({ index }: { index: number }) 
                 </ul>
             )}
             <textarea
-                placeholder="Any Description or Serial Numbers separated by comma..."
+                placeholder="Serial Numbers separated by commas..."
                 className="col-span-4 p-2 border border-border bg-background text-textPrimary focus:outline-textPrimary"
                 value={challanItems[index].sno}
                 rows={1}
                 onChange={(e) => {
                     setChallanItems(pre => {
                         return pre.map((item, i) => i === index
-                            ? { ...challanItems[index], sno: e.target.value.split(",") }
+                            ? { ...challanItems[index], sno: e.target.value.replaceAll("/\s{2,}", " ").split(",") }
                             : item);
                     })
                 }}
@@ -150,7 +150,7 @@ export default function ChallanAutocompleteSearch({ index }: { index: number }) 
                 onChange={(e) => {
                     setChallanItems(pre => {
                         return pre.map((item, i) => i === index
-                            ? { ...challanItems[index], quantity: Number(e.target.value) }
+                            ? { ...challanItems[index], quantity: Number(e.target.value || undefined) }
                             : item);
                     })
                 }}

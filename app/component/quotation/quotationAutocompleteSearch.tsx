@@ -131,7 +131,7 @@ export default function QuotationAutocompleteSearch({ index }: { index: number }
                 </ul>
             )}
             <textarea
-                placeholder="Description...each line should be comma separated"
+                placeholder="Any prodcut description..."
                 className="border w-[40%] border-border bg-background text-textPrimary focus:outline-textPrimary"
                 value={items[index].description}
                 rows={1}
@@ -161,10 +161,11 @@ export default function QuotationAutocompleteSearch({ index }: { index: number }
                 placeholder="Price"
                 className="border p-2 w-[10%] border-border bg-background text-textPrimary focus:outline-textPrimary"
                 value={items[index]?.price}
+                min={0}
                 onChange={(e) => {
                     setItems(pre => {
                         return pre.map((item, i) => i === index
-                            ? { ...items[index], price: Number(e.target.value) }
+                            ? { ...items[index], price: Number(e.target.value || undefined) }
                             : item);
                     })
                 }}
@@ -175,10 +176,12 @@ export default function QuotationAutocompleteSearch({ index }: { index: number }
                 placeholder="Quantity"
                 className="border p-2 w-[10%] border-border bg-background text-textPrimary focus:outline-textPrimary"
                 value={items[index]?.quantity}
+                min={0}
                 onChange={(e) => {
                     setItems(pre => {
+                        const value = e.target.value;
                         return pre.map((item, i) => i === index
-                            ? { ...items[index], quantity: Number(e.target.value) }
+                            ? { ...items[index], quantity: Number(e.target.value || undefined) }
                             : item);
                     })
                 }}

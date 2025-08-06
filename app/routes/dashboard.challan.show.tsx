@@ -11,13 +11,13 @@ const QuotationsShow = () => {
     const { addNotifications } = useNotification();
     const fetcher = useCentralFetcher();
 
-    const { setHeaderText, challanDataCount, setChallanDataCount, setoldChallanData, setChallanData, setChallanItems, profile, oldChallanData } = useGlobalContext();
-    async function getQoutes() {
+    const { setHeaderText, challanDataCount, setChallanDataCount, setOldChallanData, setChallanData, setChallanItems, profile, oldChallanData } = useGlobalContext();
+    async function getChallans() {
         setLoading(true);
         const response = await fetcher(`/api/challans`);
         if (response.status === 200) {
             const data = await response.json()
-            setoldChallanData(data);
+            setOldChallanData(data);
             setChallanDataCount(data.length);//dataCount + 
         }
         else {
@@ -33,7 +33,7 @@ const QuotationsShow = () => {
             response = await fetcher(`/api/challans?start=${query.start}&end=${query.end}&to=${query.to}`);
             if (response.status === 200) {
                 const data = await response.json();
-                setoldChallanData(data);
+                setOldChallanData(data);
 
             }
             else if (response.status != 200) {
@@ -48,11 +48,11 @@ const QuotationsShow = () => {
             if (response.status === 200) {
                 const data = await response.json();
                 if (challanDataCount == 0) {
-                    setoldChallanData(data);
+                    setOldChallanData(data);
                     setChallanDataCount(data.length);
                 }
                 else {
-                    setoldChallanData(pre => { return [...pre, ...data] });
+                    setOldChallanData(pre => { return [...pre, ...data] });
                     setChallanDataCount(oldChallanData.length + data.length);
                 }
             }
@@ -63,7 +63,7 @@ const QuotationsShow = () => {
         }
     }
 
-    async function handleDeletequotation(no: string) {
+    async function handleDeleteChallan(no: string) {
         const result = await fetcher("/api/delete", { method: "POST", body: JSON.stringify({ "no": no, "username": profile.username, type: "challans" }) });
         if (result.status !== 200) {
             addNotifications({
@@ -72,7 +72,7 @@ const QuotationsShow = () => {
             });
         }
         else {
-            setoldChallanData((pre: any) => { return pre.filter((item: any) => item.no === no ? false : true) });
+            setOldChallanData((pre: any) => { return pre.filter((item: any) => item.no === no ? false : true) });
         }
     }
 
@@ -81,7 +81,7 @@ const QuotationsShow = () => {
         setChallanItems([]);
         setHeaderText(createChallan);
         if (challanDataCount === 0)
-            getQoutes();
+            getChallans();
     }, []);
 
     return (
@@ -92,12 +92,12 @@ const QuotationsShow = () => {
                         data={oldChallanData}
                         columns={ChallanColumn}
                         searchLabel="Search by Name or job title"
-                        EmptyText="No Quotations Found!"
+                        EmptyText="No Challans Found!"
                         isFetching={loading}
                         //page={handlePageChange}
                         search={handleAdvanceSearch}
-                        refresh={getQoutes}
-                        deleteQuotation={handleDeletequotation}
+                        refresh={getChallans}
+                        deleteChallan={handleDeleteChallan}
                     />
                 </div>
             </section>

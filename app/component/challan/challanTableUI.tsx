@@ -25,7 +25,7 @@ interface TableProps {
     children?: React.ReactNode | React.ReactElement
     handleRow?: () => void,
     refresh: () => void,
-    deleteQuotation: (no: string) => void
+    deleteChallan: (no: string) => void
 }
 
 
@@ -46,7 +46,7 @@ const ChallanTableUI: FC<TableProps> = ({
     children,
     handleRow,
     refresh,
-    deleteQuotation
+    deleteChallan
 }) => {
 
     const memoizedData = useMemo(() => data, [data]);
@@ -56,7 +56,7 @@ const ChallanTableUI: FC<TableProps> = ({
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
     const [filterType, setFilterType] = useState<string>("Challan #");
 
-    const filterTypes = ["Challan #", "Made By", "Date", "To", " Discount"];
+    const filterTypes = ["Challan #", "Made By", "Date", "To", "S.No."];
 
     const getType = (type: string) => {
         switch (type) {
@@ -260,8 +260,8 @@ const ChallanTableUI: FC<TableProps> = ({
                                             onClick={(e) => {
                                                 if (cell.column.id === "edit") handleEdit(row.original)
                                                 else if (cell.column.id === "copy") handleCopy(row.original)
-                                                else if (cell.column.id === "delete") deleteQuotation(row.original.no)
-                                                else createPdf(row.original, fetcher, profile.showCustomerList);
+                                                else if (cell.column.id === "delete") deleteChallan(row.original.no)
+                                                else createPdf(row.original, fetcher, false, false, "challan");
                                             }}
                                             key={cell.id}
                                             className="text-textSecondary text-base text-left p-2"

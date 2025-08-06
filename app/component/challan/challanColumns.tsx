@@ -1,5 +1,6 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, Copy, Pencil, Trash2 } from "lucide-react";
+import { ChallanItems } from "~/routes/dashboard.challan.create";
 
 export const sortButton = (column: any, name: string) => {
     return (
@@ -58,7 +59,7 @@ export const ChallanColumn: ColumnDef<any, any>[] = [
         accessorKey: "sno",
         header: "S. No.",
         cell: (user: any) => {
-            return <span>{user.row.original.to}</span>
+            return <span>{user.row.original.items.map((item: ChallanItems) => { return item.sno?.join(", ") }).join(", ")}</span>
         },
         filterFn: (row, columnId, filterValue) => {
             return row.original[columnId].toLowerCase().includes(filterValue);

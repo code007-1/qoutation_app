@@ -58,7 +58,7 @@ export default function QuotationsCreate() {
     const location = useLocation();
     const passedData = location.state;
 
-    const { items, setItems, data, setData, accessToken, setAccessToken, setHeaderText, profile } = useGlobalContext();
+    const { items, setItems, data, setData, accessToken, setHeaderText, profile } = useGlobalContext();
     const [step, setStep] = useState<number>(0);
     const fetcher = useCentralFetcher();
 
@@ -103,8 +103,6 @@ export default function QuotationsCreate() {
         setData((pre) => { return { ...pre, no: no, from: from, fromAddress: fromAddress, email: profile.email, website: profile.website, contact: profile.contact, pdfColor: String(profile.pdfColor), madeby: profile.username || "", date: new Date().toISOString().split("T")[0], showLinks: data?.showLinks !== undefined ? data.showLinks : true } });
     }, [])
 
-    //updateItem={updatedItem} updatePrice={updatedPrice} updateQuanity={updatedQuanity} deleteItem={deleteItem}
-
     return (<>
         <AnimatePresence>
             <motion.div
@@ -143,21 +141,16 @@ export default function QuotationsCreate() {
                                     Add Item
                                 </button>
                             </div>}
-                        {/*<div className="w-1/2 flex justify-end">
-                            <Link to={"/dashboard/showquotations"} className="bg-button text-buttonTextPrimary px-4 py-1 text-lg" onClick={(e) => { setHeaderText(createQuotation); }}>
-                                Cancel
-                            </Link>
-                        </div>*/}
                     </div>
 
-                    <div className="flex flex-col items-center space-y-2">
+                    <div className="flex flex-col items-center">
                         {step === 0 && <>
                             <div className="w-full">
                                 <label className="text-sm font-semibold">Introductory text</label>
-                                <textarea rows={5} placeholder="Enter Introductory Text" className="p-2 border border-border rounded w-full mb-2 bg-background" value={data.intro} onChange={e => setData(pre => { return { ...pre, intro: e.target.value } })} />
+                                <textarea rows={3} placeholder="Enter Introductory Text" className="p-2 border border-border rounded w-full mb-2 bg-background" value={data.intro} onChange={e => setData(pre => { return { ...pre, intro: e.target.value } })} />
                             </div>
                             <div className="mx-10 flex space-x-10 w-full">
-                                <div className="w-full space-y-4">
+                                <div className="w-full space-y-2">
                                     <div>
                                         <label className="text-sm font-semibold">First Party Name</label>
                                         <input key={"frist"} type="text" placeholder="Enter First Party Name" className="border border-border p-2 w-full bg-background" value={data.from} onChange={e => setData(pre => { return { ...pre, from: e.target.value } })} />
@@ -167,7 +160,7 @@ export default function QuotationsCreate() {
                                         <textarea rows={5} placeholder="Enter First Party Address" className="p-2 border border-border w-full bg-background" value={data.fromAddress} onChange={e => setData(pre => { return { ...pre, fromAddress: e.target.value } })} />
                                     </div>
                                 </div>
-                                <div className="w-full space-y-4">
+                                <div className="w-full space-y-2">
                                     <div>
                                         <label className="text-sm font-semibold">Second Party Name</label>
                                         <input key={"second"} type="text" placeholder="Enter Second Party Name" className="border border-border p-2 w-full bg-background" value={data.to} onChange={e => setData(pre => { return { ...pre, to: e.target.value } })} />
@@ -185,7 +178,7 @@ export default function QuotationsCreate() {
                         }
                         {
                             step === 1 && <>
-                                <div className="mt-6 space-y-4 overflow-y-auto h-[calc(100vh-280px)] w-full">
+                                <div className="mt-4 space-y-4 overflow-y-auto h-[calc(100vh-220px)] w-full">
                                     {
                                         items.map((_, index) => {
                                             return <>
@@ -212,10 +205,10 @@ export default function QuotationsCreate() {
                                     </div>
                                 </div>
                                 <div className="flex justify-center space-x-4">
-                                    <button onClick={() => setStep(0)} className="bg-button text-buttonTextPrimary px-4 py-1 mt-4 text-lg">
+                                    <button onClick={() => setStep(0)} className="bg-button text-buttonTextPrimary px-4 py-1 mt-2 text-lg">
                                         Back
                                     </button>
-                                    <button onClick={() => { setData((pre) => { return { ...pre, items: [...items] } }); setStep(2) }} className="bg-button text-buttonTextPrimary px-4 py-1 mt-4 text-lg">
+                                    <button onClick={() => { setData((pre) => { return { ...pre, items: [...items] } }); setStep(2) }} className="bg-button text-buttonTextPrimary px-4 py-1 mt-2 text-lg">
                                         Next
                                     </button>
                                 </div>
