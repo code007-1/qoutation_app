@@ -173,7 +173,7 @@ export default function ChallanPDFDocument(data: ChallanData) {
                                     <Text style={[styles.tableCellContent, { width: "8%" }]}>{i + 1}</Text>
                                     <View style={[styles.tableCellContent, { flexBasis: 0, flexGrow: 1 }]}>
                                         <Text>{e[1].name}</Text>
-                                        <Text style={{ fontStyle: "italic" }} >{e[1].sno?.join(", ")} </Text>
+                                        <Text style={{ fontStyle: "italic" }} >{e[1].sno} </Text>
                                     </View>
                                     <Text style={[styles.tableCellContent, { width: "15%" }]}>{e[1].unit}</Text>
                                     <Text style={[styles.tableCellContent, { width: "15%" }]}>{e[1].quantity}</Text>
