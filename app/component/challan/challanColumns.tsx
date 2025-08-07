@@ -58,7 +58,7 @@ export const ChallanColumn: ColumnDef<any, any>[] = [
         accessorKey: "sno",
         header: "S. No.",
         cell: (user: any) => {
-            return <span>{user.row.original.to}</span>
+            return <span>{user.row.original.items.map(i => { return })[0].sno}</span>
         },
         filterFn: (row, columnId, filterValue) => {
             return row.original[columnId].toLowerCase().includes(filterValue);
