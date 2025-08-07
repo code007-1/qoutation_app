@@ -12,7 +12,7 @@ export type ChallanItems = {
     id: number;
     name: string;
     quantity: number;
-    sno?: string;
+    sno?: string[];
     unit?: string;
 };
 

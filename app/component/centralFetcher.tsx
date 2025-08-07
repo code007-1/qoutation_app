@@ -22,7 +22,7 @@ export const useCentralFetcher = () => {
                 return fetch(url, { ...options, headers: retryHeaders });
             } else {
                 setAccessToken(undefined);
-                localStorage.clear();
+                //localStorage.clear();
                 throw new Response("Failed to refresh access token");
             }
         }

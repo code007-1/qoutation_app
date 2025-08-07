@@ -59,7 +59,7 @@ export default function ChallanAutocompleteSearch({ index }: { index: number }) 
         //setInput(suggestion.label);
         setChallanItems(pre => {
             return pre.map((item, i) => i == index
-                ? { id: suggestion.id, name: suggestion.name, quantity: 1, sno: "", unit: suggestion.unit || "pcs" }
+                ? { id: suggestion.id, name: suggestion.name, quantity: 1, sno: [], unit: suggestion.unit || "pcs" }
                 : item)
         });
         setShowSuggestions(false);
@@ -92,7 +92,7 @@ export default function ChallanAutocompleteSearch({ index }: { index: number }) 
             setShowSuggestions(false);
             setChallanItems(pre => {
                 return pre.map((item, i) => i === index
-                    ? { id: filtered[highlighted].id, name: filtered[highlighted].name, quantity: 1, sno: "", unit: filtered[highlighted].unit || "pcs" }
+                    ? { id: filtered[highlighted].id, name: filtered[highlighted].name, quantity: 1, sno: [], unit: filtered[highlighted].unit || "pcs" }
                     : item)
             });
         } else if (e.key === "Escape") {
@@ -136,8 +136,9 @@ export default function ChallanAutocompleteSearch({ index }: { index: number }) 
                 rows={1}
                 onChange={(e) => {
                     setChallanItems(pre => {
+                        const snos = e.target.value.replace(/[\s,]+/g, ",").trim().split(",");
                         return pre.map((item, i) => i === index
-                            ? { ...challanItems[index], sno: e.target.value.replaceAll("/\s{2,}", " ") }
+                            ? { ...challanItems[index], sno: snos, quantity: snos.length }
                             : item);
                     })
                 }}
