@@ -110,6 +110,7 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
 
     const toggleTheme = () => {
         setTheme((prev) => (prev === "light" ? "dark" : "light"));
+        localStorage.setItem("theme", theme === "light" ? "dark" : "light");
     };
 
     return (

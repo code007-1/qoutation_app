@@ -36,7 +36,9 @@ export default function Index() {
     console.log("error response : ", loginFetcher.data);
   }, [loginFetcher.data]);
 
-  useEffect(() => { }, [loginFetcher]);
+  useEffect(() => {
+    localStorage.getItem("theme") || localStorage.setItem("theme", "dark");
+  }, []);
 
   useEffect(() => {
     if (accessToken) {
