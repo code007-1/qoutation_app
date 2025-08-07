@@ -54,7 +54,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
         }
     }
     catch (error) {
-        console.error("error while loading quotations data : ", error);
+        console.error("error while loading challans data : ", error);
         throw new Response("Internal server error", { status: 500 });
     }
 }

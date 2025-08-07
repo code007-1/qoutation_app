@@ -16,12 +16,10 @@ export const loader: LoaderFunction = async ({ request, params }) => {
         if (start != "" || end != "" || to != "") {
             const query = { "date": { $gte: start, $lte: end } };
             const result = await sortedSearch("unnamed", "quotations", query, limit, 0, -1, "_id");
-            //console.log("result is 1", result);
             return Response.json(result, { status: 200 });
         }
         else {
             const result = await sortedSearch("unnamed", "quotations", {}, limit, skip, -1, "_id");
-            //console.log("result is 2", result);
             return Response.json(result, { status: 200 });
         }
     }

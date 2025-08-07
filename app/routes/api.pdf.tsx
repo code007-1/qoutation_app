@@ -11,6 +11,8 @@ export const action: ActionFunction = async ({ request, params }) => {
         await verifyAccessToken(request);
         const data = await request.json();
 
+        console.log("challan data is ", data);
+
         const url = new URL(request.url);
         const save = url.searchParams.get("save") || "true";
         const showCustomerList = url.searchParams.get("showCustomerList");
@@ -19,9 +21,12 @@ export const action: ActionFunction = async ({ request, params }) => {
         if (save === "true") {
             if (type === "quotation")
                 await insertOrUpdateOnetoDb(data);
-            else
+            else if (type === "challan")
                 await insertOrUpdateOnetoDb(data, "unnamed", "challans");
-
+            else {
+                console.error("unknown data type while saving to db");
+                throw new Response("Internal server error", { status: 500 });
+            }
             await insertOnetoDb({ "by": data.madeby, "action": `${type} pdf creation`, "result": "succeded", "when": new Date().toISOString() }, "unnamed", "logs");
         }
 

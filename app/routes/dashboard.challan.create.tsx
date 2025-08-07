@@ -12,7 +12,7 @@ export type ChallanItems = {
     id: number;
     name: string;
     quantity: number;
-    sno?: string[];
+    sno?: string;
     unit?: string;
 };
 
@@ -51,7 +51,7 @@ export default function CreateChallan() {
     }, [accessToken]);
 
     function addItem() {
-        setChallanItems(pre => { return [...pre, { id: 0, name: "", quantity: 0, sno: [], unit: "pcs" }] });
+        setChallanItems(pre => { return [...pre, { id: 0, name: "", quantity: 0, sno: "", unit: "pcs" }] });
     }
 
     useEffect(() => {
@@ -76,7 +76,7 @@ export default function CreateChallan() {
     const [type, setType] = useState<string>("Delivery Challan");
 
     const [category, setCategory] = useState<string>("Dealer Sale");
-    const challanCatorgoies = ["Dealer Sale", "Dealer Return", "Customer Sale", "Customer Return", "Other"];
+    const challanCatorgoies = ["Dealer Sale", "Gem Sale", "Private Sale", "Govt. Sale", "MTNL Sale", "Private Standby", "Private Client Property Return", "Vendor Reparing", "Govt. Standby", "MTNL Standby", "Govt. Client Property Return"];
 
     return (<>
         <AnimatePresence>
@@ -234,7 +234,7 @@ export default function CreateChallan() {
                                         Back
                                     </button>
 
-                                    <form onSubmit={(e) => { console.log("challan items : ", challanItems); const updatedChallanData = { ...challanData, items: challanItems }; setChallanData(pre => { return { ...pre, items: challanItems } }); createPdf(updatedChallanData, fetcher, false, true, "challan"); e.preventDefault(); navigate("/dashboard/challan/show"); }}>
+                                    <form onSubmit={(e) => { const updatedChallanData = { ...challanData, items: challanItems }; setChallanData(pre => { return { ...pre, items: challanItems } }); createPdf(updatedChallanData, fetcher, false, true, "challan"); e.preventDefault(); navigate("/dashboard/challan/show"); }}>
                                         <button className="bg-button text-buttonTextPrimary px-4 py-1 mt-4 text-lg" type="submit">Generate Challan PDF</button>
                                     </form>
                                 </div>

@@ -64,7 +64,7 @@ const QuotationsShow = () => {
     }
 
     async function handleDeletequotation(no: string) {
-        const result = await fetcher("/api/delete", { method: "POST", body: JSON.stringify({ "no": no, "username": profile.username, type: "challans" }) });
+        const result = await fetcher("/api/delete", { method: "POST", body: JSON.stringify({ "no": no, "username": profile.username, type: "quotations" }) });
         if (result.status !== 200) {
             addNotifications({
                 title: "Error while deletion...",

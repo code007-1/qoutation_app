@@ -36,7 +36,7 @@ interface AppContextType {
 
     // challan related variables
     oldChallanData: ChallanData[];
-    setoldChallanData: React.Dispatch<React.SetStateAction<ChallanData[]>>;
+    setOldChallanData: React.Dispatch<React.SetStateAction<ChallanData[]>>;
     challanDataCount: number;
     setChallanDataCount: React.Dispatch<React.SetStateAction<number>>;
     challanItems: ChallanItems[];
@@ -102,7 +102,7 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
     const [data, setData] = useState<QuotationData>(initialQuotationData()); // data of the whole current quotation being created
 
     // challan related variables
-    const [oldChallanData, setoldChallanData] = useState<ChallanData[]>([]); // data loaded from db of old quotations
+    const [oldChallanData, setOldChallanData] = useState<ChallanData[]>([]); // data loaded from db of old quotations
     const [challanDataCount, setChallanDataCount] = useState<number>(0); // count of data loaded from db
     const [challanItems, setChallanItems] = useState<ChallanItems[]>([]); // items added to the current quotation being created
     const [challanData, setChallanData] = useState<ChallanData>(initialChallanData()); // data of the whole current quotation being created
@@ -113,7 +113,7 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
     };
 
     return (
-        <appContext.Provider value={{ theme, toggleTheme, accessToken, setAccessToken, items, setItems, data, setData, headerText, setHeaderText, gQuote, setGQuote, profile, setProfile, dataCount, setDataCount, quoteData, setQuoteData, homeLink, setHomeLink, setAppName, appName, oldChallanData, setoldChallanData, challanDataCount, setChallanDataCount, challanItems, setChallanItems, challanData, setChallanData }}>
+        <appContext.Provider value={{ theme, toggleTheme, accessToken, setAccessToken, items, setItems, data, setData, headerText, setHeaderText, gQuote, setGQuote, profile, setProfile, dataCount, setDataCount, quoteData, setQuoteData, homeLink, setHomeLink, setAppName, appName, oldChallanData, setOldChallanData, challanDataCount, setChallanDataCount, challanItems, setChallanItems, challanData, setChallanData }}>
             {children}
         </appContext.Provider>
     );

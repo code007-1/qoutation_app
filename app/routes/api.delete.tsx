@@ -10,8 +10,10 @@ export const action: ActionFunction = async ({ request, params }) => {
         var result;
         if (type === "challans")
             result = await deleteOneFromDB(no, "unnamed", "challans");
-        else //if (type === "quotations")
+        else if (type === "quotations")
             result = await deleteOneFromDB(no, "unnamed", "quotations");
+        else
+            return new Response(`nothing to deleted`, { status: 500 });
 
         if (result != undefined && result > 0) {
             await insertOnetoDb({ "by": username, "action": `deleting ${type} ${no}`, "result": "succeded", "when": new Date().toISOString() }, "unnamed", "logs");
