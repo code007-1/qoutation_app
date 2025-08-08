@@ -39,12 +39,10 @@ export const loader: LoaderFunction = async ({ request, params }) => {
         const limit = 1000;
         const skip = Number(url.searchParams.get("skip")) || 0;
 
-        const start = url.searchParams.get("start") || "";
-        const end = url.searchParams.get("end") || "";
-        const to = url.searchParams.get("to") || "";
+        const sno = url.searchParams.get("sno") || "";
 
-        if (start != "" || end != "" || to != "") {
-            const query = { "date": { $gte: start, $lte: end } };
+        if (sno != "") {
+            const query = { "items.sno": sno };
             const result = await sortedSearch("unnamed", "challans", query, limit, 0, -1, "_id");
             return Response.json(result, { status: 200 });
         }

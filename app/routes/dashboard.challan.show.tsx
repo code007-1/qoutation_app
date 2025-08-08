@@ -26,11 +26,11 @@ const QuotationsShow = () => {
         setLoading(false);
     }
 
-    async function handleAdvanceSearch(query?: { start: string, end: string, to: string }) {
+    async function handleAdvanceSearch(query?: { sno: string }) {
         setLoading(true);
         var response;
         if (query) {
-            response = await fetcher(`/api/challans?start=${query.start}&end=${query.end}&to=${query.to}`);
+            response = await fetcher(`/api/challans?sno=${query.sno}`);
             if (response.status === 200) {
                 const data = await response.json();
                 setOldChallanData(data);

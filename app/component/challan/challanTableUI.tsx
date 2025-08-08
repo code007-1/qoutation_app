@@ -18,7 +18,7 @@ interface TableProps {
     headerComponent?: JSX.Element;
     pageCount?: number;
     page?: (page: number) => void;
-    search: (query?: { start: string, end: string, to: string }) => Promise<void>;
+    search: (query?: { sno: string }) => Promise<void>;
     onClickRow?: (cell: Cell<any, unknown>, row: Row<any>) => void;
     searchLabel?: string;
     EmptyText?: string;
@@ -99,7 +99,7 @@ const ChallanTableUI: FC<TableProps> = ({
     const { setChallanData, setChallanItems, profile } = useGlobalContext();
     const fetcher = useCentralFetcher();
     const [open, setOpen] = useState(false);
-    const [query, setQuery] = useState({ start: "", end: "", to: "" });
+    const [query, setQuery] = useState({ sno: "" });
 
     function handleEdit(row: ChallanData) {
         setChallanData(row);
@@ -199,13 +199,9 @@ const ChallanTableUI: FC<TableProps> = ({
                                             Advance Filter
                                         </DialogTitle>
                                     </div>
-                                    <div className="mt-2 grid grid-cols-2">
-                                        <div>Start</div>
-                                        <input type="date" className="p-2" onChange={(e) => { setQuery(pre => { return { ...pre, start: e.target.value } }) }} />
-                                        <div>End</div>
-                                        <input type="date" className="p-2" onChange={(e) => { setQuery(pre => { return { ...pre, end: e.target.value } }) }} />
-                                        {/*<div>To</div>
-                                        <input type="text" className="p-2" onChange={(e) => { setQuery(pre => { return { ...pre, to: e.target.value } }) }} />*/}
+                                    <div className="mt-2 flex items-center">
+                                        <div className="w-[15%]">S. No.</div>
+                                        <input type="text" className="w-[85%] p-2" onChange={(e) => { setQuery(pre => { return { ...pre, sno: e.target.value } }) }} />
                                     </div>
                                 </div>
                                 <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">

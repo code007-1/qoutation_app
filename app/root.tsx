@@ -50,7 +50,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  const { setAccessToken, setProfile, theme } = useGlobalContext();
+  const { accessToken, setAccessToken, setProfile, theme } = useGlobalContext();
   const location = useLocation();
 
   useEffect(() => {
@@ -65,7 +65,8 @@ export default function App() {
         setAccessToken(undefined);
       }
     }
-    getAccessToken();
+    if (accessToken === undefined)
+      getAccessToken();
   }, []);
 
   const slideVariants: Variants = {

@@ -27,14 +27,16 @@ run();
 
 export async function search() {
     try {
-        const db = client.db("unnamed");
-        const challans = db.collection("challans");
-        const result = await challans.aggregate([{ $unwind: "$items" }, { $unwind: "$items.sno" }, { $match: { "items.sno": "\b123234\b" } }, { $project: { no: 1, date: 1, "items.sno": 1 } }]);
+        //const db = client.db("unnamed");
+        //const challans = db.collection("challans");
+        //const result = await challans.aggregate([{ $match: { "items.sno": "4532" } }]).toArray();
+
         //console.log("result is : ", result);
-        console.log("resulted data : ", await result.toArray())
+
         //await client.connect();
-        //return await client.db("unnamed").aggregate([{ $undwind: "$items.sno" }, { $project: { no: 1, "items.sno": 2, date: 3 } }])
+        const result = await client.db("unnamed").collection("challans").find({ "items.sno": "421" }).toArray();
         //(collection).find(query).skip(skip).limit(limit).toArray();//{ name: { $regex: query, $options: "i" } }
+        console.log("resulted data : ", result[0].items)
     }
     catch (error) { console.log("error while saerching in db : ", error); }
     //finally { await client.close(); }

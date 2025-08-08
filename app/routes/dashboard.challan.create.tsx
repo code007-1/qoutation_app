@@ -51,7 +51,7 @@ export default function CreateChallan() {
     }, [accessToken]);
 
     function addItem() {
-        setChallanItems(pre => { return [...pre, { id: 0, name: "", quantity: 0, sno: "", unit: "pcs" }] });
+        setChallanItems(pre => { return [...pre, { id: 0, name: "", quantity: 0, sno: [], unit: "pcs" }] });
     }
 
     useEffect(() => {
