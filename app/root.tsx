@@ -61,6 +61,9 @@ export default function App() {
         setAccessToken(details.token); // Store the fetched data in state
         setProfile(pre => { return { ...pre, ...details.profile } });
       }
+      else {
+        setAccessToken(undefined);
+      }
     }
     getAccessToken();
   }, []);

@@ -59,7 +59,7 @@ export const ChallanColumn: ColumnDef<any, any>[] = [
         accessorKey: "category",
         header: "Category",
         cell: (user: any) => {
-            return <span>{user.row.original.to}</span>
+            return <span>{user.row.original.category}</span>
         },
         filterFn: (row, columnId, filterValue) => {
             return row.original[columnId].toLowerCase().includes(filterValue);
@@ -69,10 +69,10 @@ export const ChallanColumn: ColumnDef<any, any>[] = [
         accessorKey: "sno",
         header: "S. No.",
         cell: (user: any) => {
-            return <span>{user.row.original.items.map((item: ChallanItems) => { return item.sno }).join(", ")}</span>
+            return <span>{user.row.original.items.map((item: ChallanItems) => { return item.sno?.join(", ") }).join(", ")}</span>
         },
         filterFn: (row, columnId, filterValue) => {
-            return row.original["items"].filter((item: ChallanItems) => item.sno?.toLowerCase().includes(filterValue)).length > 0;
+            return row.original["items"].filter((item: ChallanItems) => item.sno?.some(i => i.toLowerCase().includes(filterValue.toLowerCase()))).length > 0;
         },
     },
     {
