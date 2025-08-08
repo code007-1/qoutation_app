@@ -6,7 +6,8 @@
     "**/.server/**/*.tsx",
     "**/.client/**/*.ts",
     "**/.client/**/*.tsx",
-    "app/component"
+    "app/component",
+    "app/modules/dbOffline.js"
   ],
   "compilerOptions": {
     "lib": [

@@ -1,29 +1,11 @@
-import { Listbox, ListboxButton, ListboxOption, ListboxOptions, Dialog, DialogBackdrop, DialogPanel, DialogTitle } from "@headlessui/react";
 import { useNavigate } from "@remix-run/react";
-import {
-    Cell,
-    ColumnDef,
-    ColumnFiltersState,
-    flexRender,
-    getCoreRowModel,
-    getFilteredRowModel,
-    getPaginationRowModel,
-    getSortedRowModel,
-    OnChangeFn,
-    PaginationState,
-    Row,
-    SortingState,
-    useReactTable,
-} from "@tanstack/react-table";
 import { ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
-import { FC, memo, useEffect, useMemo, useState } from "react";
+import { FC, memo, useMemo, useState } from "react";
 import { useGlobalContext } from "~/modules/gcontext";
 import { createPdf, QuotationData } from "~/routes/dashboard.quotations.create";
 import { useCentralFetcher } from "../centralFetcher";
-import { useNotification } from "~/modules/notificationContext";
-import { Loading } from "../loading";
-
-// Typescript interface
+import { Listbox, ListboxButton, ListboxOption, ListboxOptions, Dialog, DialogBackdrop, DialogPanel, DialogTitle } from "@headlessui/react";
+import { Cell, ColumnDef, ColumnFiltersState, flexRender, getCoreRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, PaginationState, Row, SortingState, useReactTable } from "@tanstack/react-table";
 
 interface TableProps {
     data: any[];
@@ -300,7 +282,7 @@ const QuotationsTableUI: FC<TableProps> = ({
                     <tbody className="p-2">
                         {!isFetching ? (
                             getRowModel()?.rows.map((row) => (
-                                <tr key={row.id} className="bg-header cursor-pointer hover:bg-buttonHover">
+                                <tr key={row.id} className="bg-header cursor-pointer hover:bg-buttonHover" tabIndex={0}>
                                     {row.getVisibleCells().map((cell) => (
                                         <td
                                             onClick={(e) => {

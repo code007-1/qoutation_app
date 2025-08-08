@@ -5,6 +5,8 @@ import { useGlobalContext } from "~/modules/gcontext";
 export default function Welcome() {
     const navigate = useNavigate();
     const { gQuote } = useGlobalContext();
+    const date = new Date().getDate();
+    const message = "Happy Birthday to my beloved Princess......."
 
     return (
         <>
@@ -16,13 +18,13 @@ export default function Welcome() {
                     exit={{ opacity: 0, y: 50 }}
                     transition={{ duration: 0.5 }}
                 >
-                    <div className="h-screen flex justify-center items-center align-middle ">
+                    <div className="mx-10 h-screen flex justify-center items-center align-middle">
                         <div className="flex flex-col">
                             <div className="text-4xl font-Kaushan mb-4">
                                 {"Hi...Gunjan...Ji 👋 😃"}
                             </div>
                             <div className="text-3xl font-Kalam">
-                                {gQuote}
+                                {date == 11 ? message : gQuote}
                             </div>
                             <button className="bg-blue-600 w-min text-white text-base font-mono px-2 py-1 mt-4" onClick={(e) => navigate("/home")}>Next</button>
                         </div>

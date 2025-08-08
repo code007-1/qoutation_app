@@ -73,9 +73,6 @@ export default function CreateChallan() {
     }, []);
 
     //updateItem={updatedItem} updatePrice={updatedPrice} updateQuanity={updatedQuanity} deleteItem={deleteItem}
-    const [type, setType] = useState<string>("Delivery Challan");
-
-    const [category, setCategory] = useState<string>("Dealer Sale");
     const challanCatorgoies = ["Dealer Sale", "Gem Sale", "Private Sale", "Govt. Sale", "MTNL Sale", "Private Standby", "Private Client Property Return", "Vendor Reparing", "Govt. Standby", "MTNL Standby", "Govt. Client Property Return"];
 
     return (<>
@@ -129,10 +126,10 @@ export default function CreateChallan() {
                                         </div>
                                         <div className="">
                                             <div className="text-sm font-semibold">Challan Type</div>
-                                            <Listbox value={type} onChange={setType}>
+                                            <Listbox value={challanData.type} onChange={(e) => { setChallanData(pre => { return { ...pre, type: e } }) }}>
                                                 <div className="relative">
                                                     <ListboxButton className="w-[75%] flex items-center justify-between hover:bg-buttonHover px-2 border border-border py-2">
-                                                        <div className="text-textSecondary mr-2">{type}</div>
+                                                        <div className="text-textSecondary mr-2">{challanData.type}</div>
                                                         <ChevronDown className="text-textPrimary" />
                                                     </ListboxButton>
 
@@ -157,10 +154,10 @@ export default function CreateChallan() {
                                         </div>
                                         <div className="">
                                             <div className="text-sm font-semibold">Challan Category</div>
-                                            <Listbox value={category} onChange={setCategory}>
+                                            <Listbox value={challanData.category} onChange={e => { setChallanData(pre => { return { ...pre, category: e } }) }}>
                                                 <div className="relative">
                                                     <ListboxButton className="w-[75%] flex items-center justify-between hover:bg-buttonHover px-2 border border-border py-2">
-                                                        <div className="text-textSecondary mr-2">{category}</div>
+                                                        <div className="text-textSecondary mr-2">{challanData.category}</div>
                                                         <ChevronDown className="text-textPrimary" />
                                                     </ListboxButton>
 
