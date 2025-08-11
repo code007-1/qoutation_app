@@ -61,8 +61,8 @@ export const initialQuotationData = () => {
         to: "",
         toAddress: "",
         tax: 18,
-        discount: 5,
-        amount: 100000,
+        discount: 0,
+        amount: 0,
         madeby: "",
     }
 }

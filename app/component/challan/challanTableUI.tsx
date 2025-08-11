@@ -201,7 +201,7 @@ const ChallanTableUI: FC<TableProps> = ({
                                     </div>
                                     <div className="mt-2 flex items-center">
                                         <div className="w-[15%]">S. No.</div>
-                                        <input type="text" className="w-[85%] p-2" onChange={(e) => { setQuery(pre => { return { ...pre, sno: e.target.value } }) }} />
+                                        <input type="text" className="border border-border w-[85%] p-2" onChange={(e) => { setQuery(pre => { return { ...pre, sno: e.target.value } }) }} />
                                     </div>
                                 </div>
                                 <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
