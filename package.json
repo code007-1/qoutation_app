@@ -24,10 +24,8 @@
     "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.522.0",
     "mongodb": "^6.17.0",
-    "nexe": "^5.0.0-beta.4",
     "react": "^18.2.0",
     "react-dom": "^18.3.1",
-    "vara": "^1.4.1",
     "winston": "^3.17.0"
   },
   "devDependencies": {

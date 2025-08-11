@@ -1,4 +1,4 @@
-import packageJson from '../../package.json';
+import pacakageJson from "package.json"
 import { SunMoon } from "lucide-react";
 import { useGlobalContext } from "~/modules/gcontext";
 import MainMenu from "./menu";

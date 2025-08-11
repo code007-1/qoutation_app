@@ -18,7 +18,7 @@ const QuotationsShow = () => {
         if (response.status === 200) {
             const data = await response.json()
             setQuoteData(data);
-            setDataCount(data.length);//dataCount + 
+            setDataCount(data.length);
         }
         else {
             addNotifications({ title: "Failure...", message: "Fail to load data." });
@@ -94,7 +94,6 @@ const QuotationsShow = () => {
                         searchLabel="Search by Name or job title"
                         EmptyText="No Quotations Found!"
                         isFetching={loading}
-                        //page={handlePageChange}
                         search={handleAdvanceSearch}
                         refresh={getQoutes}
                         deleteQuotation={handleDeletequotation}

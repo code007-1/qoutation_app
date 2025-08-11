@@ -16,7 +16,7 @@ export const action: ActionFunction = async ({ request, params }) => {
         const result = await search("unnamed", "users", { username: username }, 1, 0);
 
         if (result && result.length > 0) {
-            const verified = await bcrypt.compare(password, result[0].password);//"$2b$11$8lTICnLuucL1CRQXZ.g.s.xlwzpxivlUbdDcwj60oEqrapJ5k/Lde"
+            const verified = await bcrypt.compare(password, result[0].password);
             if (verified) {
                 const ip = new URL(request.url);
 

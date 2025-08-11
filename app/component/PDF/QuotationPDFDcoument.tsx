@@ -1,73 +1,9 @@
 import { Document, Page, Text, View, StyleSheet, Image, Link, Font } from "@react-pdf/renderer";
-import { Watermark } from "./watermark";
+import { Watermark } from "../watermark";
 import { QuotationData } from "~/routes/dashboard.quotations.create";
-import OxaniumRegular from "../fonts/Oxanium/static/Oxanium-Regular.ttf";
-import OxaniumSemiBold from "../fonts/Oxanium/static/Oxanium-SemiBold.ttf";
-import OxaniumBold from "../fonts/Oxanium/static/Oxanium-Bold.ttf";
-import OxaniumRegularExtraBold from "../fonts/Oxanium/static/Oxanium-ExtraBold.ttf";
-import OxaniumExtraLight from "../fonts/Oxanium/static/Oxanium-ExtraLight.ttf";
-import OxaniumMedium from "../fonts/Oxanium/static/Oxanium-Medium.ttf";
 
-export default function PDFDocument(data: QuotationData, showCustomerList: boolean = true) {
+export default function QuotationPDFDocument(data: QuotationData, showCustomerList: boolean = true) {
     const hue = data.pdfColor ? data.pdfColor : "222";
-
-    Font.register({
-        //family: 'Oswald',
-        //src: 'https://fonts.gstatic.com/s/oswald/v13/Y_TKV6o8WovbUd3m_X9aAA.ttf',
-        family: "Oxanium",
-        fonts: [
-            {
-                src: OxaniumRegular,
-                fontStyle: "normal",
-                fontWeight: "normal"
-            },
-            {
-                src: OxaniumExtraLight,
-                fontStyle: "normal",
-                fontWeight: "ultralight"
-            },
-            {
-                src: OxaniumExtraLight,
-                fontStyle: "normal",
-                fontWeight: "light"
-            },
-            {
-                src: OxaniumMedium,
-                fontStyle: "normal",
-                fontWeight: "medium"
-            },
-            {
-                src: OxaniumSemiBold,
-                fontStyle: "normal",
-                fontWeight: "semibold"
-            },
-            {
-                src: OxaniumBold,
-                fontStyle: "normal",
-                fontWeight: "bold"
-            },
-            {
-                src: OxaniumRegularExtraBold,
-                fontStyle: "normal",
-                fontWeight: "ultrabold"
-            },
-            {
-                src: OxaniumRegularExtraBold,
-                fontStyle: "normal",
-                fontWeight: "heavy"
-            },
-            {
-                src: OxaniumExtraLight,
-                fontStyle: "normal",
-                fontWeight: "thin"
-            },
-            {
-                src: OxaniumExtraLight,
-                fontStyle: "italic",
-                fontWeight: 700
-            }
-        ]
-    });
 
     const styles = StyleSheet.create({
         page: { padding: 30, display: "flex", flexDirection: "column", fontStyle: "normal" },
@@ -169,9 +105,9 @@ export default function PDFDocument(data: QuotationData, showCustomerList: boole
                                     <Text style={styles.tableCellNameContent}>{e[1].description}</Text>
                                 </View>
                                 <Text style={styles.tableCell}>{e[1].quantity}</Text>
-                                <Text style={styles.tableCell}>Rs.{Number(e[1].price).toLocaleString('en-US')}</Text>
+                                <Text style={styles.tableCell}>Rs.{Math.round(e[1].price).toLocaleString('en-IN')}</Text>
                                 {data.discount != 0 && <Text style={styles.tableCell}>{data.discount} %</Text>}
-                                <Text style={styles.tableCell}>Rs.{Number((e[1].price * e[1].quantity * (1 - data.discount * 0.01)).toFixed(2)).toLocaleString('en-US')}</Text>
+                                <Text style={styles.tableCell}>Rs.{Math.round(e[1].price * e[1].quantity * (1 - data.discount * 0.01)).toLocaleString('en-IN')}</Text>
                             </View>);
                     })}
                     <View style={Object.entries(data.items).length % 2 === 0 ? styles.tableRowEven : styles.tableRowOdd}>
@@ -180,7 +116,7 @@ export default function PDFDocument(data: QuotationData, showCustomerList: boole
                         <Text style={styles.tableCell}></Text>
                         <Text style={styles.tableCell}></Text>
                         {data.discount != 0 && <Text style={styles.tableCell}></Text>}
-                        <Text style={[styles.tableCellTotals, { flexGrow: 1, flexBasis: 0 }]}>Rs.{Number((data.amount * (1 - data.discount * 0.01)).toFixed(2)).toLocaleString('en-US')}</Text>
+                        <Text style={[styles.tableCellTotals, { flexGrow: 1, flexBasis: 0 }]}>Rs.{Math.round(data.amount * (1 - data.discount * 0.01)).toLocaleString('en-IN')}</Text>
                     </View>
                     <View style={Object.entries(data.items).length % 2 === 0 ? styles.tableRowOdd : styles.tableRowEven}>
                         <Text style={styles.tableCellSno}></Text>
@@ -188,7 +124,7 @@ export default function PDFDocument(data: QuotationData, showCustomerList: boole
                         <Text style={styles.tableCell}></Text>
                         <Text style={styles.tableCell}></Text>
                         {data.discount != 0 && <Text style={styles.tableCell}></Text>}
-                        <Text style={[styles.tableCellTotals, { flexGrow: 1, flexBasis: 0 }]}>Rs.{Number((data.amount * (1 - data.discount * 0.01) * data.tax * 0.01).toFixed(2)).toLocaleString('en-US')}</Text>
+                        <Text style={[styles.tableCellTotals, { flexGrow: 1, flexBasis: 0 }]}>Rs.{(Math.round(data.amount * (1 - data.discount * 0.01) * data.tax * 0.01)).toLocaleString('en-IN')}</Text>
                     </View>
                     <View style={Object.entries(data.items).length % 2 === 0 ? styles.tableRowEven : styles.tableRowOdd}>
                         <Text style={styles.tableCellSno}></Text>
@@ -196,7 +132,7 @@ export default function PDFDocument(data: QuotationData, showCustomerList: boole
                         <Text style={styles.tableCell}></Text>
                         <Text style={styles.tableCell}></Text>
                         {data.discount != 0 && <Text style={styles.tableCell}></Text>}
-                        <Text style={[styles.tableCellTotals, { flexGrow: 1, flexBasis: 0 }]}>Rs.{Number((data.amount * (1 + data.tax * 0.01) * (1 - data.discount * 0.01)).toFixed(2)).toLocaleString('en-US')}</Text>
+                        <Text style={[styles.tableCellTotals, { flexGrow: 1, flexBasis: 0 }]}>Rs.{Math.round(data.amount * (1 + data.tax * 0.01) * (1 - data.discount * 0.01)).toLocaleString('en-IN')}</Text>
                     </View>
                 </View>
                 <View >

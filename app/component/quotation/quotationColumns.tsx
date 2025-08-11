@@ -75,7 +75,7 @@ export const QuotationsColumns: ColumnDef<any, any>[] = [
         header: "Amount",
         cell: (user: any) => {
             console.log("amount is ", user.row.original);
-            return <span>Rs.{user.row.original.amount.toLocaleString('en-US')}</span>
+            return <span>Rs.{user.row.original.amount.toLocaleString('en-IN')}</span>
         },
     },
     {

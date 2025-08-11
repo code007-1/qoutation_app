@@ -6,7 +6,6 @@ export const action: ActionFunction = async ({ request, params }) => {
     try {
         await verifyAccessToken(request);
         const { no, username, type } = await request.json();
-        //console.log("deleting quotation no : ", no, " by user : ", username);
         var result;
         if (type === "challans")
             result = await deleteOneFromDB(no, "unnamed", "challans");

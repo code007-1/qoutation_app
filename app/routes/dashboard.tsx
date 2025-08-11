@@ -1,4 +1,3 @@
-import Header from "~/component/header";
 import { Outlet, useNavigate } from "@remix-run/react";
 import { useEffect } from "react";
 import { useGlobalContext } from "~/modules/gcontext";

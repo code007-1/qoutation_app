@@ -1,9 +1,8 @@
-import Header from "~/component/header";
-import { Outlet, useNavigate } from "@remix-run/react";
+import Header from "~/component/menu/header";
+import { useNavigate } from "@remix-run/react";
 import { useEffect } from "react";
 import { useGlobalContext } from "~/modules/gcontext";
 import { NotebookText, NotepadText, ScrollText } from "lucide-react";
-import packageJson from "../../package.json";
 
 export default function DashboardSettings() {
     const navigate = useNavigate();
