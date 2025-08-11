@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { useFetcher } from "react-router-dom";
 import { useGlobalContext } from "~/modules/gcontext";
 import { logoutData } from "~/modules/utils";
-import { useCentralFetcher } from "./centralFetcher";
+import { useCentralFetcher } from "../centralFetcher";
 
 export default function MainMenu() {
     const { profile, setAccessToken } = useGlobalContext();

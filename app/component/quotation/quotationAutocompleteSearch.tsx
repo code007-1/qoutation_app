@@ -14,7 +14,6 @@ import { QuoteItems } from "~/routes/dashboard.quotations.create";
 // - done - partially done - login log system
 
 export default function QuotationAutocompleteSearch({ index }: { index: number }) {
-    const [input, setInput] = useState("");
     const [showSuggestions, setShowSuggestions] = useState(false);
     const [filtered, setFiltered] = useState<QuoteItems[]>([]);
     const [highlighted, setHighlighted] = useState<number>(-1);
@@ -48,7 +47,6 @@ export default function QuotationAutocompleteSearch({ index }: { index: number }
     }, [items[index].name]);
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        //setInput(e.target.value);
         setItems((pre) => {
             return pre.map((item, i) => i === index
                 ? { ...items[index], name: e.target.value }
@@ -57,7 +55,6 @@ export default function QuotationAutocompleteSearch({ index }: { index: number }
     };
 
     const handleSuggestionClick = (suggestion: QuoteItems) => {
-        //setInput(suggestion.label);
         setItems(pre => {
             return pre.map((item, i) => i == index
                 ? { id: suggestion.id, hsn: suggestion.hsn, name: suggestion.name, price: suggestion.price, quantity: 1, description: suggestion.description || "", link: suggestion.link }
@@ -187,7 +184,6 @@ export default function QuotationAutocompleteSearch({ index }: { index: number }
                 }}
             />
             <button className="hover:bg-headerBackground bg-buttonHover p-2" onClick={(e) => {
-                //setInput(index);
                 setItems(pre =>
                     pre.filter((_, i) => i != index)
                 );

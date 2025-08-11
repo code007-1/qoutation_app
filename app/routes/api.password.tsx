@@ -1,5 +1,5 @@
 import { ActionFunction } from "@remix-run/node";
-import { insertOnetoDb, insertOrUpdateOnetoDb, search, update } from "~/modules/dbOnline";
+import { insertOnetoDb, search, update } from "~/modules/dbOnline";
 import bcrypt from "bcrypt";
 import { verifyAccessToken } from "~/modules/utils";
 

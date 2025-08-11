@@ -8,6 +8,7 @@ import { profile } from "~/routes/dashboard.settings.profile";
 
 export const JWT_REFRESH_KEY = "123!@#$@SDFASDAD";
 export const JWT_ACCESS_KEY = "!#SDAS@#!!@XZZXC";
+export const localStringFormat = "en-IN";
 
 export var userProfile: profile = { address: "G-57, Vikas Marg, Near Metro Pillar No.41, \nDelhi - 110092", company: "Teen Telecommunication Pvt. Ltd.", contact: "+91 7065577059/60", email: "sales@teentelecommunication.com", pdfColor: "222", showCustomerList: true }
 

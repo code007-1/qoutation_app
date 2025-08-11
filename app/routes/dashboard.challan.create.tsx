@@ -46,7 +46,7 @@ export default function CreateChallan() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (accessToken === undefined) //console.log("should navigate to home page");
+        if (accessToken === undefined)
             navigate("/");
     }, [accessToken]);
 
@@ -72,7 +72,6 @@ export default function CreateChallan() {
         setChallanData((pre) => { return { ...pre, no: no, from: from, fromAddress: fromAddress, email: profile.email, website: profile.website, contact: profile.contact, pdfColor: String(profile.pdfColor), madeby: profile.username || "", date: new Date().toISOString().split("T")[0] } });
     }, []);
 
-    //updateItem={updatedItem} updatePrice={updatedPrice} updateQuanity={updatedQuanity} deleteItem={deleteItem}
     const challanCatorgoies = ["Dealer Sale", "Gem Sale", "Private Sale", "Govt. Sale", "MTNL Sale", "Private Standby", "Private Client Property Return", "Vendor Reparing", "Govt. Standby", "MTNL Standby", "Govt. Client Property Return"];
 
     return (<>

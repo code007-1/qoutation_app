@@ -18,7 +18,7 @@ const QuotationsShow = () => {
         if (response.status === 200) {
             const data = await response.json()
             setOldChallanData(data);
-            setChallanDataCount(data.length);//dataCount + 
+            setChallanDataCount(data.length);
         }
         else {
             addNotifications({ title: "Failure...", message: "Fail to load data." });
@@ -94,7 +94,6 @@ const QuotationsShow = () => {
                         searchLabel="Search by Name or job title"
                         EmptyText="No Challans Found!"
                         isFetching={loading}
-                        //page={handlePageChange}
                         search={handleAdvanceSearch}
                         refresh={getChallans}
                         deleteChallan={handleDeleteChallan}

@@ -110,11 +110,6 @@ const QuotationsTableUI: FC<TableProps> = ({
         navigate("/dashboard/quotations/create", { state: { editing: false } });
     }
 
-
-    /*useEffect(() => {
-        console.log("fetching value : ", isFetching)
-    }, [isFetching]);*/
-
     return (
         <div className="">
             <div className="flex space-x-4 items-center align-middle">

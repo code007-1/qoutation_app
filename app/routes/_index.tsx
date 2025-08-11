@@ -1,14 +1,11 @@
-import packageJson from '../../package.json';
 import { useFetcher, useNavigate } from "@remix-run/react";
 import { Loader, SunMoon } from "lucide-react";
 import { useEffect } from "react";
-import { Loading } from '~/component/loading';
 import { useGlobalContext } from "~/modules/gcontext";
 import { useNotification } from "~/modules/notificationContext";
 import { loginData } from "~/modules/utils";
 
 export default function Index() {
-
   const loginFetcher = useFetcher<loginData>();
   const isSubmitting = loginFetcher.state === "submitting";
   const navigate = useNavigate();
@@ -33,7 +30,6 @@ export default function Index() {
         message: loginFetcher?.data || "",
       });
     }
-    console.log("error response : ", loginFetcher.data);
   }, [loginFetcher.data]);
 
   useEffect(() => {
@@ -42,7 +38,6 @@ export default function Index() {
 
   useEffect(() => {
     if (accessToken) {
-      //navigate("/dashboard/home");
       if (loginFetcher.data?.quote)
         navigate("/welcome");
       else

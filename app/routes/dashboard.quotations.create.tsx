@@ -64,7 +64,7 @@ export default function QuotationsCreate() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (accessToken === undefined) //console.log("should navigate to home page");
+        if (accessToken === undefined)
             navigate("/");
     }, [accessToken]);
 
@@ -188,7 +188,7 @@ export default function QuotationsCreate() {
                                 <div className="flex justify-between w-full">
                                     <div className="flex items-center">
                                         <div className="text-sm font-semibold mr-4">Taxable Value:</div>
-                                        <div className="">Rs.{data.amount.toLocaleString('en-US')}</div>
+                                        <div className="">Rs.{data.amount.toLocaleString('en-IN')}</div>
                                     </div>
                                     <div className="flex items-center">
                                         <label className="text-sm font-semibold mr-4">Tax (%)</label>
@@ -200,7 +200,7 @@ export default function QuotationsCreate() {
                                     </div>
                                     <div className="flex items-center">
                                         <div className="text-sm font-semibold mr-4">Total:</div>
-                                        <div className="">Rs.{Number((data.amount * (1 + data.tax * 0.01) * (1 - data.discount * 0.01)).toFixed(2)).toLocaleString('en-US')}</div>
+                                        <div className="">Rs.{Number((data.amount * (1 + data.tax * 0.01) * (1 - data.discount * 0.01)).toFixed(2)).toLocaleString('en-IN')}</div>
                                     </div>
                                 </div>
                                 <div className="flex justify-center space-x-4">
