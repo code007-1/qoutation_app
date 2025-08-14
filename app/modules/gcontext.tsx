@@ -107,6 +107,10 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
     const [challanItems, setChallanItems] = useState<ChallanItems[]>([]); // items added to the current quotation being created
     const [challanData, setChallanData] = useState<ChallanData>(initialChallanData()); // data of the whole current quotation being created
 
+    // complaint related variables
+    /*const [oldComplaints, setOldCompliants] = useState<>([]);
+    const [compliantsDataCount, setComplaintsDataCount] = useState<number>(0);
+    const [complaintsData, setComplaintsData] = useState<>();*/
 
     const toggleTheme = () => {
         setTheme((prev) => (prev === "light" ? "dark" : "light"));

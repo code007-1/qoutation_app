@@ -13,6 +13,16 @@ import { QuoteItems } from "~/routes/dashboard.quotations.create";
 // pwa or exe application form
 // - done - partially done - login log system
 
+
+//compliant number
+//place
+//date and time
+//actual compliant
+//complaint status
+//done by
+//person who complained
+//phone number of person who complained
+
 export default function QuotationAutocompleteSearch({ index }: { index: number }) {
     const [showSuggestions, setShowSuggestions] = useState(false);
     const [filtered, setFiltered] = useState<QuoteItems[]>([]);

@@ -67,7 +67,7 @@ export default function App() {
     }
     if (accessToken === undefined)
       getAccessToken();
-  }, []);
+  }, [accessToken]);
 
   const slideVariants: Variants = {
     initial: { opacity: 0 },

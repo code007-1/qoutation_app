@@ -40,20 +40,32 @@ export default function QuotationPDFDocument(data: QuotationData, showCustomerLi
     var dated = data.date.split("-");
     const date = dated[2] + "-" + dated[1] + "-" + dated[0];
 
+    const header = <>
+        <View fixed style={styles.header}>
+            <Text style={styles.title}>{data.from}</Text>
+            <Text style={styles.newline}>{"\n"}</Text>
+            <Text>
+                <Text style={styles.companyDetails}>Contact No: </Text>
+                <Text style={{ fontSize: 10 }}>{data.contact}</Text>
+                <Text style={styles.companyDetails}>     Email Id: </Text>
+                <Link src={`mailto:${data.email}`} style={{ fontSize: 11, textDecoration: "underline", color: "#384388" }}>{data.email}</Link>
+            </Text>
+        </View>
+    </>;
+
+    const footer = <>
+        <View fixed style={{ flexDirection: "row", width: "90%", position: "absolute", bottom: 20, fontSize: 10, color: "black" }}>
+            <Text style={{ width: "33%" }} ></Text>
+            <Text style={{ width: "34%", textAlign: "center", fontStyle: "italic" }}>{data.website} </Text >
+            <Text style={{ width: "33%", textAlign: "right", fontStyle: "italic" }} render={({ pageNumber, totalPages }) => `Page ${pageNumber} of ${totalPages}`} />
+        </View>
+    </>;
+
     return (
         <Document title="Quotation" author={data.madeby} subject="Business Quotation" >
             <Page wrap size="A4" style={styles.page}>
                 <Watermark />
-                <View fixed style={styles.header}>
-                    <Text style={styles.title}>{data.from}</Text>
-                    <Text style={styles.newline}>{"\n"}</Text>
-                    <Text>
-                        <Text style={styles.companyDetails}>Contact No: </Text>
-                        <Text style={{ fontSize: 10 }}>{data.contact}</Text>
-                        <Text style={styles.companyDetails}>     Email Id: </Text>
-                        <Link src={`mailto:${data.email}`} style={{ fontSize: 11, textDecoration: "underline", color: "#384388" }}>{data.email}</Link>
-                    </Text>
-                </View>
+                {header}
                 <View style={styles.rowContainer}>
                     <Text>
                         <Text style={styles.qoutationDetails}>Quotation No:</Text>
@@ -79,10 +91,14 @@ export default function QuotationPDFDocument(data: QuotationData, showCustomerLi
                         <Text style={styles.address}>{data.toAddress}</Text>
                     </View>
                 </View>
-                <Text style={styles.newline}>{"\n\n\n"}</Text>
-                <Text style={styles.intro}>{data.intro}</Text>
-                <Text style={styles.newline}>{"\n"}</Text>
-                < View style={styles.tableContainer}>
+                {data.intro !== "" &&
+                    <>
+                        <Text style={styles.newline}>{"\n\n\n"}</Text>
+                        <Text style={styles.intro}>{data.intro}</Text>
+                        <Text style={styles.newline}>{"\n"}</Text>
+                    </>
+                }
+                <View style={styles.tableContainer}>
                     <View style={styles.tableRowEven}>
                         <Text style={[styles.tableCellHeader, { width: "8%" }]}>S.No.</Text>
                         <Text style={[styles.tableCellHeader, { width: "40%" }]}>Item</Text>
@@ -135,23 +151,23 @@ export default function QuotationPDFDocument(data: QuotationData, showCustomerLi
                         <Text style={[styles.tableCellTotals, { flexGrow: 1, flexBasis: 0 }]}>Rs.{Math.round(data.amount * (1 + data.tax * 0.01) * (1 - data.discount * 0.01)).toLocaleString('en-IN')}</Text>
                     </View>
                 </View>
-                <View >
+                {data.additionalInfo !== "" && <View >
                     <Text style={styles.fromto}>Note</Text>
                     <Text style={styles.newline}>{"\n"}</Text>
                     <Text style={styles.terms}>{data.additionalInfo}</Text>
-                </View>
+                </View>}
                 <Text style={styles.newline}>{"\n\n"}</Text>
-                <View >
+                {data.terms !== "" && <View >
                     <Text style={styles.fromto}>Terms and Conditions</Text>
                     <Text style={styles.newline}>{"\n"}</Text>
                     <Text style={styles.terms}>{data.terms} {"\n"}</Text>
-                </View>
+                </View>}
                 {showCustomerList &&
                     <>
                         <Text break={true} style={{ fontSize: 14, fontWeight: "bold", textAlign: "center" }}>Out Customers List</Text>
                         <Image style={styles.backgroundImage} src={"public/All.jpg"} />
                     </>}
-                <Text fixed style={styles.pageNumber} render={({ pageNumber }) => `${data.website}                                                      Page ${pageNumber}`} />
+                {footer}
             </Page>
         </Document >
     );
