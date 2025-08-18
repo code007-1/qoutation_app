@@ -4,6 +4,7 @@ import { profile } from "~/routes/dashboard.settings.profile";
 import { QuotationData, QuoteItems } from "~/routes/dashboard.quotations.create";
 import packageJson from '../../package.json';
 import { ChallanData, ChallanItems } from "~/routes/dashboard.challan.create";
+import { ComplaintsData } from "~/routes/dashboard.complaints.create";
 
 interface AppContextType {
     // app related variables
@@ -43,11 +44,15 @@ interface AppContextType {
     setChallanItems: React.Dispatch<React.SetStateAction<ChallanItems[]>>;
     challanData: ChallanData;
     setChallanData: React.Dispatch<React.SetStateAction<ChallanData>>;
+    complaintsData: ComplaintsData;
+    setComplaintsData: React.Dispatch<React.SetStateAction<ComplaintsData>>;
 }
 
 const appContext = createContext<AppContextType | null>(null);
 export const createQuotation = <>< Link to={"/dashboard/quotations/create"} className="cursor-pointer hover:bg-buttonHover w-min text-nowrap p-1" >Create Quotation</Link ></>;
 export const createChallan = <>< Link to={"/dashboard/challan/create"} className="cursor-pointer hover:bg-buttonHover w-min text-nowrap p-1" >Create Challan</Link ></>;
+export const createComplaint = <>< Link to={"/dashboard/complaints/create"} className="cursor-pointer hover:bg-buttonHover w-min text-nowrap p-1" >Create Complaint</Link ></>;
+
 export const initialQuotationData = () => {
     return {
         no: new Date().getTime().toString(),
@@ -83,6 +88,22 @@ export const initialChallanData = () => {
     }
 }
 
+export const initialComplaintsData = () => {
+    return {
+        no: `Govt-${1}`,
+        date: new Date().toISOString().split("T")[0], // Default to today's date
+        time: new Date().toTimeString(),
+        type: "Government",
+        complainingParty: "",
+        partyNumber: "",
+        complaint: "",
+        partyAddress: "",
+        attendingEngineer: "Yashwant",
+        madeby: "",
+        remarks: []
+    }
+}
+
 export const AppProvider = ({ children }: { children: React.ReactNode }) => {
     // app related variaibles
     const [theme, setTheme] = useState("light"); // Default theme
@@ -108,9 +129,9 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
     const [challanData, setChallanData] = useState<ChallanData>(initialChallanData()); // data of the whole current quotation being created
 
     // complaint related variables
-    /*const [oldComplaints, setOldCompliants] = useState<>([]);
+    const [oldComplaints, setOldCompliants] = useState<ComplaintsData>();
     const [compliantsDataCount, setComplaintsDataCount] = useState<number>(0);
-    const [complaintsData, setComplaintsData] = useState<>();*/
+    const [complaintsData, setComplaintsData] = useState<ComplaintsData>(initialComplaintsData());
 
     const toggleTheme = () => {
         setTheme((prev) => (prev === "light" ? "dark" : "light"));
@@ -118,7 +139,7 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
     };
 
     return (
-        <appContext.Provider value={{ theme, toggleTheme, accessToken, setAccessToken, items, setItems, data, setData, headerText, setHeaderText, gQuote, setGQuote, profile, setProfile, dataCount, setDataCount, quoteData, setQuoteData, homeLink, setHomeLink, setAppName, appName, oldChallanData, setOldChallanData, challanDataCount, setChallanDataCount, challanItems, setChallanItems, challanData, setChallanData }}>
+        <appContext.Provider value={{ theme, toggleTheme, accessToken, setAccessToken, items, setItems, data, setData, headerText, setHeaderText, gQuote, setGQuote, profile, setProfile, dataCount, setDataCount, quoteData, setQuoteData, homeLink, setHomeLink, setAppName, appName, oldChallanData, setOldChallanData, challanDataCount, setChallanDataCount, challanItems, setChallanItems, challanData, setChallanData, complaintsData, setComplaintsData }}>
             {children}
         </appContext.Provider>
     );

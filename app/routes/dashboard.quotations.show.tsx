@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { QuotationsColumns } from "~/component/quotation/quotationColumns";
 import QuotationsTableUI from "~/component/quotation/quotationsTableUI";
-import { createQuotation, initialQuotationData, useGlobalContext } from "~/modules/gcontext";
+import { createComplaint, createQuotation, initialQuotationData, useGlobalContext } from "~/modules/gcontext";
 import { useCentralFetcher } from "~/component/centralFetcher";
 import { useNotification } from "~/modules/notificationContext";
 
@@ -79,7 +79,7 @@ const QuotationsShow = () => {
     useEffect(() => {
         setData(initialQuotationData());
         setItems([]);
-        setHeaderText(createQuotation);
+        setHeaderText(createComplaint);
         if (dataCount === 0)
             getQoutes();
     }, []);
