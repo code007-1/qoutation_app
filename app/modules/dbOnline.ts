@@ -12,23 +12,36 @@ const client = new MongoClient(uri, {
     }
 });
 
+async function isMongoConnected() {
+    try {
+        await client.db("unnamed").command({ ping: 1 });
+        return true;
+    } catch (err) {
+        return false;
+    }
+}
+
 async function run() {
     try {
-        // Connect the client to the server	(optional starting in v4.7)
-        await client.connect();
-        // Send a ping to confirm a successful connection
-        await client.db("unnamed").command({ ping: 1 });
-        console.log("Pinged your deployment. You successfully connected to MongoDB!");
+        const tf = await isMongoConnected();
+        //check if already connected
+        if (tf) {
+            // Connect the client to the server	(optional starting in v4.7)
+            await client.connect();
+            // Send a ping to confirm a successful connection
+            await client.db("unnamed").command({ ping: 1 });
+            console.log("Pinged your deployment. You successfully connected to MongoDB!");
+        }
     }
     catch (error) {
         console.error("Error connecting to MongoDB:", error);
     }
 }
-run();
+//run();
 
 export async function search(db: string = "unnamed", collection: string = "qoutations", query: {} = {}, limit: number = 10, skip: number = 0) {
     try {
-        //await client.connect();
+        await run();
         return await client.db(db).collection(collection).find(query).skip(skip).limit(limit).toArray();//{ name: { $regex: query, $options: "i" } }
     }
     catch (error) { console.log("error while saerching in db : ", error); }
@@ -37,7 +50,7 @@ export async function search(db: string = "unnamed", collection: string = "qouta
 
 export async function sortedSearch(db: string = "unnamed", collection: string = "qoutations", query: {} = {}, limit: number = 10, skip: number = 0, sortOrder: number = -1, sortKey: string = "_id") {
     try {
-        //await client.connect();
+        await run();
         return await client.db(db).collection(collection).find(query).sort({ _id: -1 }).skip(skip).limit(limit).toArray();//{ name: { $regex: query, $options: "i" } }
     }
     catch (error) { console.log("error while saerching in db : ", error); }
@@ -47,7 +60,7 @@ export async function sortedSearch(db: string = "unnamed", collection: string = 
 
 export async function count(db: string = "unnamed", collection: string = "qoutations", query: {} = {}) {
     try {
-        //await client.connect();
+        await run();
         return await client.db(db).collection(collection).countDocuments(query);//{ name: { $regex: query, $options: "i" } }
     }
     catch (error) { console.log("error while saerching in db : ", error); }
@@ -56,7 +69,7 @@ export async function count(db: string = "unnamed", collection: string = "qoutat
 
 export async function update(db: string = "unnamed", collection: string = "users", query: {} = {}, updateDoc: {}) {
     try {
-        //await client.connect();
+        await run();
         return await client.db(db).collection(collection).updateOne(query, updateDoc);//{ name: { $regex: query, $options: "i" } }
     }
     catch (error) { console.log("error while saerching in db : ", error); }
@@ -65,7 +78,7 @@ export async function update(db: string = "unnamed", collection: string = "users
 
 export async function deleteOneFromDB(no: string, db: string = "unnamed", collection: string = "quotations",): Promise<number | undefined> {
     try {
-        //await client.connect();
+        await run();
         const result = await client.db(db).collection(collection).deleteOne({ "no": no });
         console.log(`New item created with the following id: ${result.deletedCount}`);
         return result.deletedCount;
@@ -75,7 +88,7 @@ export async function deleteOneFromDB(no: string, db: string = "unnamed", collec
 }
 export async function insertOrUpdateOnetoDb(data: any, db: string = "unnamed", collection: string = "quotations") {
     try {
-        //await client.connect();
+        await run();
         const { _id, ...restData } = data;
         const result = await client.db(db).collection(collection).updateOne({ "no": data.no }, { $set: { ...restData } }, { upsert: true });
         console.log(`New item created with the following id: ${result.upsertedId} : ${result}`);
@@ -87,7 +100,7 @@ export async function insertOrUpdateOnetoDb(data: any, db: string = "unnamed", c
 
 export async function insertOnetoDb(data: any, db: string = "unnamed", collection: string = "logs") {
     try {
-        //await client.connect();
+        await run();
         const result = await client.db(db).collection(collection).insertOne(data);
         console.log(`New log created with the following id: ${result.insertedId} : ${result}`);
         return result.insertedId;

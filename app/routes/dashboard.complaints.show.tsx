@@ -34,7 +34,6 @@ const ComplaintShow = () => {
             if (response.status === 200) {
                 const data = await response.json();
                 setQuoteData(data);
-
             }
             else if (response.status != 200) {
                 addNotifications({ title: "Failure...", message: "Fail to load data." });

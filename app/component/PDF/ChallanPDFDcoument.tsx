@@ -85,53 +85,53 @@ export default function ChallanPDFDocument(data: ChallanData) {
     );
 
     const header = <>
-        <View fixed style={styles.header}>
-            <Text style={styles.title}>{data.from}</Text>
-            <Text style={styles.newline}>{"\n"}</Text>
-            <Text style={styles.companyDetails}>
-                <Text style={{ fontWeight: "bold" }}>Address:- </Text>
-                <Text> {data.fromAddress}</Text>
+        <View fixed style={styles.header} key="nested-view-1">
+            <Text style={styles.title} key="challan-from">{data.from}</Text>
+            <Text style={styles.newline} key="blank1">{"\n"}</Text>
+            <Text style={styles.companyDetails} key="nested-view-2">
+                <Text style={{ fontWeight: "bold" }} key="address">Address:- </Text>
+                <Text key="addressvalue"> {data.fromAddress}</Text>
             </Text>
 
-            <Text style={styles.companyDetails}>
-                <Text style={{ fontWeight: "bold" }}>Contact No:- </Text>
-                <Text>{data.contact}</Text>
+            <Text style={styles.companyDetails} key="nested-view-3">
+                <Text style={{ fontWeight: "bold" }} key="contact">Contact No:- </Text>
+                <Text key="contactvalue">{data.contact}</Text>
             </Text>
 
-            <Text style={styles.companyDetails}>
-                <Text style={{ fontWeight: "bold" }}>Email Id:- </Text>
-                <Text >{data.email}</Text>
+            <Text style={styles.companyDetails} key="companydetail">
+                <Text style={{ fontWeight: "bold" }} key="emailid">Email Id:- </Text>
+                <Text key="emailvalue">{data.email}</Text>
             </Text>
 
-            <Text style={styles.newline}>{"\n\n"}</Text>
-            <View style={styles.rowContainer}>
-                <Text style={{ width: "33%" }}>
-                    <Text style={[styles.challanDetails, { fontWeight: "bold" }]}>Challan No:</Text>
-                    <Text style={styles.challanDetails}>{data.no}</Text>
+            <Text style={styles.newline} key="blank2">{"\n\n"}</Text>
+            <View style={styles.rowContainer} key="nested-view-4">
+                <Text style={{ width: "33%" }} key="nested-text-1">
+                    <Text style={[styles.challanDetails, { fontWeight: "bold" }]} key="challanno">Challan No:</Text>
+                    <Text style={styles.challanDetails} key="challannovalue">{data.no}</Text>
                 </Text>
-                <Text style={[styles.challanDetails, { fontSize: 12, fontWeight: "bold", textAlign: "center", width: "33%" }]}>{data.type}</Text>
-                <Text style={{ width: "33%" }}>
-                    <Text style={[styles.challanDetails, { fontWeight: "bold", textAlign: "right" }]}>Date: </Text>
-                    <Text style={styles.challanDetails}>{date}</Text>
+                <Text style={[styles.challanDetails, { fontSize: 12, fontWeight: "bold", textAlign: "center", width: "33%" }]} key="type">{data.type}</Text>
+                <Text style={{ width: "33%" }} key="nested-text-2">
+                    <Text style={[styles.challanDetails, { fontWeight: "bold", textAlign: "right" }]} key="date">Date: </Text>
+                    <Text style={styles.challanDetails} key="datevalue">{date}</Text>
                 </Text>
             </View>
-            <Text style={styles.newline} >{"\n\n\n"}</Text>
-            <View style={styles.rowContainer}>
-                <View style={styles.paragraph}>
-                    <Text style={[styles.challanDetails, { fontWeight: "bold" }]}>{data.to}</Text>
-                    <Text style={styles.challanDetails}>{data.toAddress}</Text>
+            <Text style={styles.newline} key="blank3">{"\n\n\n"}</Text>
+            <View style={styles.rowContainer} key="nested-view-5">
+                <View style={styles.paragraph} key="nested-view-6">
+                    <Text style={[styles.challanDetails, { fontWeight: "bold" }]} key="to">{data.to}</Text>
+                    <Text style={styles.challanDetails} key="tovalue">{data.toAddress}</Text>
                 </View>
-                <View style={styles.paragraph}>
+                <View style={styles.paragraph} key="nested-view-7">
                     {data.orderno &&
-                        <Text>
-                            <Text style={[styles.challanDetails, { fontWeight: "bold" }]}>Order No: </Text>
-                            <Text style={styles.challanDetails}>{data.orderno}</Text>
+                        <Text key="nested-text-3">
+                            <Text style={[styles.challanDetails, { fontWeight: "bold" }]} key="orderno">Order No: </Text>
+                            <Text style={styles.challanDetails} key="ordernovalue">{data.orderno}</Text>
                         </Text>
                     }
 
-                    <Text>
-                        <Text style={[styles.challanDetails, { fontWeight: "bold" }]}>Mode of Dispatch: </Text>
-                        <Text style={styles.challanDetails}>{data.modeofdispatch}</Text>
+                    <Text key="nested-text-4">
+                        <Text style={[styles.challanDetails, { fontWeight: "bold" }]} key="modeofdispacth">Mode of Dispatch: </Text>
+                        <Text style={styles.challanDetails} key="modeofdispatchvalue">{data.modeofdispatch}</Text>
                     </Text>
                 </View>
             </View>
@@ -139,66 +139,68 @@ export default function ChallanPDFDocument(data: ChallanData) {
     </>;
 
     const footer = <>
-        <View fixed style={[{ width: "90%", paddingTop: "1%", paddingBottom: "10%", position: "absolute", bottom: 40, fontSize: 11, color: "black", border: "2px solid #DCD7D7", backgroundColor: "#F2F2F2" }]}>
+        <View fixed style={[{ width: "90%", paddingTop: "1%", paddingBottom: "10%", position: "absolute", bottom: 40, fontSize: 11, color: "black", border: "2px solid #DCD7D7", backgroundColor: "#F2F2F2" }]} key="footerview">
             {/*<HorizontalLine width={535} color="gray" thickness={2} />*/}
-            <View style={{ flexDirection: "row", marginRight: 60, width: "100%" }}>
-                <Text style={{ width: "50%", paddingLeft: "2%" }}>For Customer</Text>
-                <Text style={{ width: "50%", textAlign: "right", paddingRight: "2%" }}>For {data.from}</Text>
+            <View style={{ flexDirection: "row", marginRight: 60, width: "100%" }} key="nested-view-8">
+                <Text style={{ width: "50%", paddingLeft: "2%" }} key="forcustomersignature">For Customer</Text>
+                <Text style={{ width: "50%", textAlign: "right", paddingRight: "2%" }} key="fromussignature">For {data.from}</Text>
             </View>
         </View>
-        <View fixed style={{ flexDirection: "row", width: "90%", position: "absolute", bottom: 20, fontSize: 11, color: "black" }}>
-            <Text style={{ width: "33%" }} ></Text>
-            <Text style={{ width: "34%", textAlign: "center", fontStyle: "italic" }}>{data.website} </Text >
-            <Text style={{ width: "33%", textAlign: "right", fontStyle: "italic" }} render={({ pageNumber, totalPages }) => `Page ${pageNumber % (totalPages / 2) === 0 ? (totalPages / 2) : pageNumber % (totalPages / 2)} of ${totalPages / 2}`} />
+        <View fixed style={{ flexDirection: "row", width: "90%", position: "absolute", bottom: 20, fontSize: 11, color: "black" }} key="nested-view-9">
+            <Text style={{ width: "33%" }} key="blank4"></Text>
+            <Text style={{ width: "34%", textAlign: "center", fontStyle: "italic" }} key="website">{data.website} </Text >
+            <Text style={{ width: "33%", textAlign: "right", fontStyle: "italic" }} render={({ pageNumber, totalPages }) => `Page ${pageNumber % (totalPages / 2) === 0 ? (totalPages / 2) : pageNumber % (totalPages / 2)} of ${totalPages / 2}`} key="pagenumber" />
         </View>
     </>;
 
     return (
-        <Document title="Challan" author={data.madeby} subject="Business Challan" >
+        <Document title="Challan" author={data.madeby} subject="Business Challan" key="challanpdf">
             {[0, 1].map((i) => {
-                return <Page wrap size="A4" style={styles.page}>
-                    <Watermark />
+                return <Page wrap size="A4" style={styles.page} key={`page${i}`}>
+                    <Watermark key="watermark" />
                     {header}
-                    <View style={[styles.tableContainer]}>
-                        <View fixed style={styles.tableRowEven}>
-                            <Text style={[styles.tableCellHeader, { width: "8%" }]}>S.No.</Text>
-                            <Text style={[styles.tableCellHeader, { flexGrow: 1, flexBasis: 0 }]}>Item</Text>
-                            <Text style={[styles.tableCellHeader, { width: "15%" }]}>Unit</Text>
-                            <Text style={[styles.tableCellHeader, { width: "15%" }]}>Quantity</Text>
+                    <View style={[styles.tableContainer]} key="nested-view-10">
+                        <View fixed style={styles.tableRowEven} key="nested-view-11">
+                            <Text style={[styles.tableCellHeader, { width: "8%" }]} key="sno">S.No.</Text>
+                            <Text style={[styles.tableCellHeader, { flexGrow: 1, flexBasis: 0 }]} key="item">Item</Text>
+                            <Text style={[styles.tableCellHeader, { width: "15%" }]} key="unit">Unit</Text>
+                            <Text style={[styles.tableCellHeader, { width: "15%" }]} key="quantity">Quantity</Text>
                         </View>
 
-                        {Object.entries(data.items).map((e, i) => {
-                            return (
-                                <View style={i % 2 === 0 ? styles.tableRowEven : styles.tableRowOdd}>
-                                    <Text style={[styles.tableCellContent, { width: "8%" }]}>{i + 1}</Text>
-                                    <View style={[styles.tableCellContent, { flexBasis: 0, flexGrow: 1 }]}>
-                                        <Text>{e[1].name}</Text>
-                                        <Text style={{ fontStyle: "italic" }} >{e[1].sno?.join(", ")} </Text>
-                                    </View>
-                                    <Text style={[styles.tableCellContent, { width: "15%" }]}>{e[1].unit}</Text>
-                                    <Text style={[styles.tableCellContent, { width: "15%" }]}>{e[1].quantity}</Text>
-                                </View>);
-                        })}
+                        {
+                            Object.entries(data.items).map((e, i) => {
+                                return (
+                                    <View style={i % 2 === 0 ? styles.tableRowEven : styles.tableRowOdd} key="nested-view-12">
+                                        <Text style={[styles.tableCellContent, { width: "8%" }]} key="snovalue">{i + 1}</Text>
+                                        <View style={[styles.tableCellContent, { flexBasis: 0, flexGrow: 1 }]} key="nested-text-5">
+                                            <Text key="name">{e[1].name}</Text>
+                                            <Text style={{ fontStyle: "italic" }} key="serialnovalue">{e[1].sno?.join(", ")} </Text>
+                                        </View>
+                                        <Text style={[styles.tableCellContent, { width: "15%" }]} key="unitvalue">{e[1].unit}</Text>
+                                        <Text style={[styles.tableCellContent, { width: "15%" }]} key="quantityvalue">{e[1].quantity}</Text>
+                                    </View>);
+                            })
+                        }
 
-                        <View style={{ flexDirection: "row", backgroundColor: `hsl(${hue} 0% 11%)`, color: "white" }}>
-                            <Text style={[styles.tableCellContent, { width: "8%" }]}></Text>
-                            <View style={[styles.tableCellContent, { flexBasis: 0, flexGrow: 1 }]}>
-                                <Text style={{ fontSize: 11, fontWeight: "bold", fontStyle: "italic" }} >Total Items</Text>
+                        <View style={{ flexDirection: "row", backgroundColor: `hsl(${hue} 0% 11%)`, color: "white" }} key="nested-view-13">
+                            <Text style={[styles.tableCellContent, { width: "8%" }]} key="blank5"></Text>
+                            <View style={[styles.tableCellContent, { flexBasis: 0, flexGrow: 1 }]} key="nested-view-14">
+                                <Text style={{ fontSize: 11, fontWeight: "bold", fontStyle: "italic" }} key="totalitems">Total Items</Text>
                             </View>
-                            <Text style={[styles.tableCellContent, { width: "15%" }]}></Text>
-                            <Text style={[styles.tableCellContent, { width: "15%", fontWeight: "bold", fontStyle: "italic" }]}>{data.items.length}</Text>
+                            <Text style={[styles.tableCellContent, { width: "15%" }]} key="nested-text-6"></Text>
+                            <Text style={[styles.tableCellContent, { width: "15%", fontWeight: "bold", fontStyle: "italic" }]} key="totalitemsvalue">{data.items.length}</Text>
                         </View>
-                        <View style={{ flexDirection: "row", backgroundColor: `hsl(${hue} 0% 11%)`, color: "white" }}>
-                            <Text style={[styles.tableCellContent, { width: "8%" }]}></Text>
-                            <View style={[styles.tableCellContent, { flexBasis: 0, flexGrow: 1 }]}>
-                                <Text style={{ fontSize: 11, fontWeight: "bold", fontStyle: "italic" }} >Total Quantity</Text>
+                        <View style={{ flexDirection: "row", backgroundColor: `hsl(${hue} 0% 11%)`, color: "white" }} key="nested-view-16">
+                            <Text style={[styles.tableCellContent, { width: "8%" }]} key="blank6"></Text>
+                            <View style={[styles.tableCellContent, { flexBasis: 0, flexGrow: 1 }]} key="nested-view-15">
+                                <Text style={{ fontSize: 11, fontWeight: "bold", fontStyle: "italic" }} key="totalquantityvalue">Total Quantity</Text>
                             </View>
-                            <Text style={[styles.tableCellContent, { width: "15%" }]}></Text>
-                            <Text style={[styles.tableCellContent, { width: "15%", fontWeight: "bold", fontStyle: "italic" }]}>{data.items.reduce((acc, item) => acc + item.quantity, 0)}</Text>
+                            <Text style={[styles.tableCellContent, { width: "15%" }]} key="blank7"></Text>
+                            <Text style={[styles.tableCellContent, { width: "15%", fontWeight: "bold", fontStyle: "italic" }]} key="quantityvalue">{data.items.reduce((acc, item) => acc + item.quantity, 0)}</Text>
                         </View>
-                    </View>
+                    </View >
                     {footer}
-                </Page>
+                </Page >
             })}
         </Document >
     );

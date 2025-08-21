@@ -30,6 +30,13 @@ export default function ComplaintsCreate() {
 
     const navigate = useNavigate();
 
+    function saveComplaint() {
+        fetcher(`/api/savecomplaint`, {
+            method: "POST", headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(complaintsData),
+        })
+    }
+
     useEffect(() => {
         if (accessToken === undefined)
             navigate("/");
@@ -63,10 +70,10 @@ export default function ComplaintsCreate() {
                             </div>
                             <div className="">
                                 <div className="text-sm font-semibold mr-2">Date & Time</div>
-                                <input type="datetime-local" color="white" name="date" id="date" pattern="\d{4}-\d{2}-\d{2}" placeholder="Date" className="border border-border h-10 bg-background w-full" value={complaintsData.date} onChange={e => setComplaintsData(pre => { return { ...pre, date: e.target.value } })} />
+                                <input type="datetime-local" color="white" name="date" id="date" pattern="\d{4}-\d{2}-\d{2}" placeholder="Date" className="border border-border h-10 bg-background w-full" value={complaintsData.date + "T" + complaintsData.time} onChange={e => { setComplaintsData(pre => { const dt = e.target.value.split("T"); return { ...pre, date: dt[0], time: dt[1] } }) }} />
                             </div>
                             <div>
-                                <label className="text-sm font-semibold">Complining Party Name</label>
+                                <label className="text-sm font-semibold">Complaining Party Name</label>
                                 <input key={"address"} type="text" placeholder="Enter party Name" className="border border-border p-2 w-full bg-background" value={complaintsData.complainingParty} onChange={e => setComplaintsData(pre => { return { ...pre, complainingParty: e.target.value } })} />
                             </div>
                             <div className="">
@@ -150,7 +157,7 @@ export default function ComplaintsCreate() {
                     </div>
 
                     <div className="flex flex-col items-center">
-                        <button onClick={() => setStep(1)} className="bg-button text-buttonTextPrimary px-4 py-1 mt-4 text-lg">
+                        <button onClick={saveComplaint} className="bg-button text-buttonTextPrimary px-4 py-1 mt-4 text-lg">
                             Save
                         </button>
                     </div>

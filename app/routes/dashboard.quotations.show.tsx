@@ -79,7 +79,7 @@ const QuotationsShow = () => {
     useEffect(() => {
         setData(initialQuotationData());
         setItems([]);
-        setHeaderText(createComplaint);
+        setHeaderText(createQuotation);
         if (dataCount === 0)
             getQoutes();
     }, []);

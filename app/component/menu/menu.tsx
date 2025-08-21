@@ -58,6 +58,15 @@ export default function MainMenu() {
                                 Challan's Home
                             </Link>
                         </MenuItem>
+                        <MenuItem>
+                            <Link
+                                to="/dashboard/complaints/show"
+                                className="flex px-4 py-2 text-sm text-textSecondary data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
+                            >
+                                <NotepadText size={20} className="mr-2" />
+                                Complaint's Home
+                            </Link>
+                        </MenuItem>
                     </div>
 
                     <div className="p-1">

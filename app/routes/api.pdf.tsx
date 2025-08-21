@@ -5,7 +5,6 @@ import QuotationPDFDocument from "~/component/PDF/QuotationPDFDcoument";
 import { insertOnetoDb, insertOrUpdateOnetoDb } from "~/modules/dbOnline";
 import { verifyAccessToken } from "~/modules/utils";
 
-//export let loader: LoaderFunction = async ({ request, params }) => {
 export const action: ActionFunction = async ({ request, params }) => {
     try {
         await verifyAccessToken(request);
@@ -35,7 +34,7 @@ export const action: ActionFunction = async ({ request, params }) => {
             stream = await renderToStream(ChallanPDFDocument({ ...data }));
 
         // and transform it to a Buffer to send in the Response
-        let body: Buffer = await new Promise<Buffer>((resolve, reject) => {
+        let body: Buffer = await new Promise((resolve, reject) => {
             let buffers: Uint8Array[] = [];
             stream.on("data", (data) => { buffers.push(data); });
             stream.on("end", () => { resolve(Buffer.concat(buffers)); });

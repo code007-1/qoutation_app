@@ -41,131 +41,131 @@ export default function QuotationPDFDocument(data: QuotationData, showCustomerLi
     const date = dated[2] + "-" + dated[1] + "-" + dated[0];
 
     const header = <>
-        <View fixed style={styles.header}>
-            <Text style={styles.title}>{data.from}</Text>
-            <Text style={styles.newline}>{"\n"}</Text>
-            <Text>
-                <Text style={styles.companyDetails}>Contact No: </Text>
-                <Text style={{ fontSize: 10 }}>{data.contact}</Text>
-                <Text style={styles.companyDetails}>     Email Id: </Text>
-                <Link src={`mailto:${data.email}`} style={{ fontSize: 11, textDecoration: "underline", color: "#384388" }}>{data.email}</Link>
+        <View fixed style={styles.header} key={"header"}>
+            <Text style={styles.title} key={"header-from"}>{data.from}</Text>
+            <Text style={styles.newline} key={"header-newline"}>{"\n"}</Text>
+            <Text key={"netsted-text-1"}>
+                <Text style={styles.companyDetails} key={"contactno"}>Contact No: </Text>
+                <Text style={{ fontSize: 10 }} key={"contactnovalue"}>{data.contact}</Text>
+                <Text style={styles.companyDetails} key={"emailid"}>     Email Id: </Text>
+                <Link src={`mailto:${data.email}`} style={{ fontSize: 11, textDecoration: "underline", color: "#384388" }} key={"emailidvalue"}>{data.email}</Link>
             </Text>
         </View>
     </>;
 
     const footer = <>
-        <View fixed style={{ flexDirection: "row", width: "90%", position: "absolute", bottom: 20, fontSize: 10, color: "black" }}>
-            <Text style={{ width: "33%" }} ></Text>
-            <Text style={{ width: "34%", textAlign: "center", fontStyle: "italic" }}>{data.website} </Text >
-            <Text style={{ width: "33%", textAlign: "right", fontStyle: "italic" }} render={({ pageNumber, totalPages }) => `Page ${pageNumber} of ${totalPages}`} />
+        <View fixed style={{ flexDirection: "row", width: "90%", position: "absolute", bottom: 20, fontSize: 10, color: "black" }} key="footer">
+            <Text style={{ width: "33%" }} key="blankfooterpart" ></Text>
+            <Text style={{ width: "34%", textAlign: "center", fontStyle: "italic" }} key="footerwebsite">{data.website} </Text >
+            <Text style={{ width: "33%", textAlign: "right", fontStyle: "italic" }} render={({ pageNumber, totalPages }) => `Page ${pageNumber} of ${totalPages}`} key="footerpageno" />
         </View>
     </>;
 
     return (
-        <Document title="Quotation" author={data.madeby} subject="Business Quotation" >
-            <Page wrap size="A4" style={styles.page}>
-                <Watermark />
+        <Document title="Quotation" author={data.madeby} subject="Business Quotation" key="quotationpdfdocument">
+            <Page wrap size="A4" style={styles.page} key="pages">
+                <Watermark key={"watermark"} />
                 {header}
-                <View style={styles.rowContainer}>
-                    <Text>
-                        <Text style={styles.qoutationDetails}>Quotation No:</Text>
-                        <Text style={styles.intro}>{data.no}</Text>
+                <View style={styles.rowContainer} key="rowcontainer-1">
+                    <Text key="nested-text-2">
+                        <Text style={styles.qoutationDetails} key="quotationno">Quotation No:</Text>
+                        <Text style={styles.intro} key="quotationnovalue">{data.no}</Text>
                     </Text>
-                    <Text>
-                        <Text style={styles.qoutationDetails}>Quotation Date: </Text>
-                        <Text style={styles.intro}>{date}</Text>
+                    <Text key="nested-text-3">
+                        <Text style={styles.qoutationDetails} key="quotationdate">Quotation Date: </Text>
+                        <Text style={styles.intro} key="quotationdatevalue">{date}</Text>
                     </Text>
                 </View>
-                <Text style={styles.newline} >{"\n\n\n"}</Text>
-                <View style={styles.rowContainer}>
-                    <View style={styles.paragraph}>
-                        <Text style={styles.fromto}>Quotation by</Text>
-                        <Text style={styles.newline}>{"\n"}</Text>
-                        <Text style={styles.bold}>{data.from}</Text>
-                        <Text style={styles.address}>{data.fromAddress}</Text>
+                <Text style={styles.newline} key="newline-text-3" >{"\n\n\n"}</Text>
+                <View style={styles.rowContainer} key="rowcontainer-2">
+                    <View style={styles.paragraph} key="nested-view-1">
+                        <Text style={styles.fromto} key="quotationby">Quotation by</Text>
+                        <Text style={styles.newline} key="newline-text-4">{"\n"}</Text>
+                        <Text style={styles.bold} key="quotationfrom">{data.from}</Text>
+                        <Text style={styles.address} key="quotationfromaddress">{data.fromAddress}</Text>
                     </View>
-                    <View style={styles.paragraph}>
-                        <Text style={styles.fromto}>Quotation to{"\n"}</Text>
-                        <Text style={styles.newline}>{"\n"}</Text>
-                        <Text style={styles.bold}>{data.to}</Text>
-                        <Text style={styles.address}>{data.toAddress}</Text>
+                    <View style={styles.paragraph} key="nested-view-2">
+                        <Text style={styles.fromto} key="quotationto">Quotation to{"\n"}</Text>
+                        <Text style={styles.newline} key="newline-text-5">{"\n"}</Text>
+                        <Text style={styles.bold} key="quotationtovalue">{data.to}</Text>
+                        <Text style={styles.address} key="quotationaddress">{data.toAddress}</Text>
                     </View>
                 </View>
                 {data.intro !== "" &&
                     <>
-                        <Text style={styles.newline}>{"\n\n\n"}</Text>
-                        <Text style={styles.intro}>{data.intro}</Text>
-                        <Text style={styles.newline}>{"\n"}</Text>
+                        <Text style={styles.newline} key="newline-text-6">{"\n\n\n"}</Text>
+                        <Text style={styles.intro} key="quotatintro">{data.intro}</Text>
+                        <Text style={styles.newline} key={"newline-text-7"}>{"\n"}</Text>
                     </>
                 }
-                <View style={styles.tableContainer}>
-                    <View style={styles.tableRowEven}>
-                        <Text style={[styles.tableCellHeader, { width: "8%" }]}>S.No.</Text>
-                        <Text style={[styles.tableCellHeader, { width: "40%" }]}>Item</Text>
-                        <Text style={[styles.tableCellHeader, { flexGrow: 1, flexBasis: 0 }]}>Quantity</Text>
-                        <Text style={[styles.tableCellHeader, { flexGrow: 1, flexBasis: 0 }]}>Price</Text>
-                        {data.discount != 0 && <Text style={[styles.tableCellHeader, { flexGrow: 1, flexBasis: 0 }]}>Discount</Text>}
-                        <Text style={[styles.tableCellHeader, { flexGrow: 1, flexBasis: 0 }]}>Amount</Text>
+                <View style={styles.tableContainer} key="nested-view-3">
+                    <View style={styles.tableRowEven} key="nested-view-4">
+                        <Text style={[styles.tableCellHeader, { width: "8%" }]} key="sno">S.No.</Text>
+                        <Text style={[styles.tableCellHeader, { width: "40%" }]} key="item">Item</Text>
+                        <Text style={[styles.tableCellHeader, { flexGrow: 1, flexBasis: 0 }]} key="quantity">Quantity</Text>
+                        <Text style={[styles.tableCellHeader, { flexGrow: 1, flexBasis: 0 }]} key="price">Price</Text>
+                        {data.discount != 0 && <Text style={[styles.tableCellHeader, { flexGrow: 1, flexBasis: 0 }]} key="discount">Discount</Text>}
+                        <Text style={[styles.tableCellHeader, { flexGrow: 1, flexBasis: 0 }]} key="amount">Amount</Text>
                     </View>
 
                     {Object.entries(data.items).map((e, i) => {
                         return (
-                            <View style={i % 2 === 0 ? styles.tableRowEven : styles.tableRowOdd}>
-                                <Text style={styles.tableCellSno}>{i + 1}</Text>
-                                <View style={styles.tableCellBox}>
+                            <View style={i % 2 === 0 ? styles.tableRowEven : styles.tableRowOdd} key="nested-view-5">
+                                <Text style={styles.tableCellSno} key="snovalue">{i + 1}</Text>
+                                <View style={styles.tableCellBox} key="nested-view-6">
                                     {
                                         e[1].link && data.showLinks
-                                            ? <Link style={styles.tableCellLink} src={e[1].link || "#"}>{e[1].name} {e[1].hsn != "" && <> : HSN - {e[1].hsn}</>}</Link>
-                                            : <Text style={[styles.tableCellName]} >{e[1].name} {e[1].hsn != "" && <>: HSN - {e[1].hsn}</>}</Text>
+                                            ? <Link style={styles.tableCellLink} src={e[1].link || "#"} key="linknamehsn">{e[1].name} {e[1].hsn != "" && <> : HSN - {e[1].hsn}</>}</Link>
+                                            : <Text style={[styles.tableCellName]} key="namehsn">{e[1].name} {e[1].hsn != "" && <>: HSN - {e[1].hsn}</>}</Text>
                                     }
-                                    <Text style={styles.tableCellNameContent}>{e[1].description}</Text>
+                                    <Text style={styles.tableCellNameContent} key="description">{e[1].description}</Text>
                                 </View>
-                                <Text style={styles.tableCell}>{e[1].quantity}</Text>
-                                <Text style={styles.tableCell}>Rs.{Math.round(e[1].price).toLocaleString('en-IN')}</Text>
-                                {data.discount != 0 && <Text style={styles.tableCell}>{data.discount} %</Text>}
-                                <Text style={styles.tableCell}>Rs.{Math.round(e[1].price * e[1].quantity * (1 - data.discount * 0.01)).toLocaleString('en-IN')}</Text>
+                                <Text style={styles.tableCell} key="quantityvalue">{e[1].quantity}</Text>
+                                <Text style={styles.tableCell} key="pricevalue">Rs.{Math.round(e[1].price).toLocaleString('en-IN')}</Text>
+                                {data.discount != 0 && <Text style={styles.tableCell} key="discountvalue">{data.discount} %</Text>}
+                                <Text style={styles.tableCell} key="amountvalue">Rs.{Math.round(e[1].price * e[1].quantity * (1 - data.discount * 0.01)).toLocaleString('en-IN')}</Text>
                             </View>);
                     })}
-                    <View style={Object.entries(data.items).length % 2 === 0 ? styles.tableRowEven : styles.tableRowOdd}>
-                        <Text style={styles.tableCellSno}></Text>
-                        <Text style={[styles.tableCellTotals, { width: "40%", textDecoration: "none", fontStyle: "italic" }]}>Taxable Value</Text>
-                        <Text style={styles.tableCell}></Text>
-                        <Text style={styles.tableCell}></Text>
-                        {data.discount != 0 && <Text style={styles.tableCell}></Text>}
-                        <Text style={[styles.tableCellTotals, { flexGrow: 1, flexBasis: 0 }]}>Rs.{Math.round(data.amount * (1 - data.discount * 0.01)).toLocaleString('en-IN')}</Text>
+                    <View style={Object.entries(data.items).length % 2 === 0 ? styles.tableRowEven : styles.tableRowOdd} key="nested-view-7">
+                        <Text style={styles.tableCellSno} key="blank1"></Text>
+                        <Text style={[styles.tableCellTotals, { width: "40%", textDecoration: "none", fontStyle: "italic" }]} key="taxablevalue">Taxable Value</Text>
+                        <Text style={styles.tableCell} key="blank2"></Text>
+                        <Text style={styles.tableCell} key="blank3"></Text>
+                        {data.discount != 0 && <Text style={styles.tableCell} key="blank4"></Text>}
+                        <Text style={[styles.tableCellTotals, { flexGrow: 1, flexBasis: 0 }]} key="blank5">Rs.{Math.round(data.amount * (1 - data.discount * 0.01)).toLocaleString('en-IN')}</Text>
                     </View>
-                    <View style={Object.entries(data.items).length % 2 === 0 ? styles.tableRowOdd : styles.tableRowEven}>
-                        <Text style={styles.tableCellSno}></Text>
-                        <Text style={[styles.tableCellTotals, { width: "40%", textDecoration: "none", fontStyle: "italic" }]}>Tax @ {data.tax}%</Text>
-                        <Text style={styles.tableCell}></Text>
-                        <Text style={styles.tableCell}></Text>
-                        {data.discount != 0 && <Text style={styles.tableCell}></Text>}
-                        <Text style={[styles.tableCellTotals, { flexGrow: 1, flexBasis: 0 }]}>Rs.{(Math.round(data.amount * (1 - data.discount * 0.01) * data.tax * 0.01)).toLocaleString('en-IN')}</Text>
+                    <View style={Object.entries(data.items).length % 2 === 0 ? styles.tableRowOdd : styles.tableRowEven} key="nested-view-8">
+                        <Text style={styles.tableCellSno} key="blank4"></Text>
+                        <Text style={[styles.tableCellTotals, { width: "40%", textDecoration: "none", fontStyle: "italic" }]} key="blank5">Tax @ {data.tax}%</Text>
+                        <Text style={styles.tableCell} key="blank6"></Text>
+                        <Text style={styles.tableCell} key="blank7"></Text>
+                        {data.discount != 0 && <Text style={styles.tableCell} key="blank8"></Text>}
+                        <Text style={[styles.tableCellTotals, { flexGrow: 1, flexBasis: 0 }]} key="blank9">Rs.{(Math.round(data.amount * (1 - data.discount * 0.01) * data.tax * 0.01)).toLocaleString('en-IN')}</Text>
                     </View>
-                    <View style={Object.entries(data.items).length % 2 === 0 ? styles.tableRowEven : styles.tableRowOdd}>
-                        <Text style={styles.tableCellSno}></Text>
-                        <Text style={[styles.tableCellTotals, { width: "40%", textDecoration: "none", fontStyle: "italic" }]}>Total Amount</Text>
-                        <Text style={styles.tableCell}></Text>
-                        <Text style={styles.tableCell}></Text>
-                        {data.discount != 0 && <Text style={styles.tableCell}></Text>}
-                        <Text style={[styles.tableCellTotals, { flexGrow: 1, flexBasis: 0 }]}>Rs.{Math.round(data.amount * (1 + data.tax * 0.01) * (1 - data.discount * 0.01)).toLocaleString('en-IN')}</Text>
+                    <View style={Object.entries(data.items).length % 2 === 0 ? styles.tableRowEven : styles.tableRowOdd} key="nested-view-9">
+                        <Text style={styles.tableCellSno} key="blank8"></Text>
+                        <Text style={[styles.tableCellTotals, { width: "40%", textDecoration: "none", fontStyle: "italic" }]} key="blank9">Total Amount</Text>
+                        <Text style={styles.tableCell} key="blank10"></Text>
+                        <Text style={styles.tableCell} key="blank11"></Text>
+                        {data.discount != 0 && <Text style={styles.tableCell} key="blank12"></Text>}
+                        <Text style={[styles.tableCellTotals, { flexGrow: 1, flexBasis: 0 }]} key="blank13">Rs.{Math.round(data.amount * (1 + data.tax * 0.01) * (1 - data.discount * 0.01)).toLocaleString('en-IN')}</Text>
                     </View>
                 </View>
-                {data.additionalInfo !== "" && <View >
-                    <Text style={styles.fromto}>Note</Text>
-                    <Text style={styles.newline}>{"\n"}</Text>
-                    <Text style={styles.terms}>{data.additionalInfo}</Text>
+                {data.additionalInfo !== "" && <View key="nested-view-10">
+                    <Text style={styles.fromto} key="note">Note</Text>
+                    <Text style={styles.newline} key="blank12">{"\n"}</Text>
+                    <Text style={styles.terms} key="blank13">{data.additionalInfo}</Text>
                 </View>}
-                <Text style={styles.newline}>{"\n\n"}</Text>
-                {data.terms !== "" && <View >
-                    <Text style={styles.fromto}>Terms and Conditions</Text>
-                    <Text style={styles.newline}>{"\n"}</Text>
-                    <Text style={styles.terms}>{data.terms} {"\n"}</Text>
+                <Text style={styles.newline} key="blank14">{"\n\n"}</Text>
+                {data.terms !== "" && <View key="nested-view-11">
+                    <Text style={styles.fromto} key="termsandconditions">Terms and Conditions</Text>
+                    <Text style={styles.newline} key="blank13">{"\n"}</Text>
+                    <Text style={styles.terms} key="termsandconditionsvalue">{data.terms} {"\n"}</Text>
                 </View>}
                 {showCustomerList &&
                     <>
-                        <Text break={true} style={{ fontSize: 14, fontWeight: "bold", textAlign: "center" }}>Out Customers List</Text>
-                        <Image style={styles.backgroundImage} src={"public/All.jpg"} />
+                        <Text break={true} style={{ fontSize: 14, fontWeight: "bold", textAlign: "center" }} key="customerlist">Out Customers List</Text>
+                        <Image style={styles.backgroundImage} src={"public/All.jpg"} key="image" />
                     </>}
                 {footer}
             </Page>
