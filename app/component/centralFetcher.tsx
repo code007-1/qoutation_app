@@ -4,12 +4,42 @@ import { useGlobalContext } from "~/modules/gcontext";
 export const useCentralFetcher = () => {
     const { accessToken, setAccessToken } = useGlobalContext();
 
+    function isTokenExpired(token: string): boolean {
+        try {
+            const payload = JSON.parse(atob(token.split('.')[1]));
+            const exp = payload.exp * 1000; // Convert to milliseconds
+            return Date.now() >= exp;
+        } catch (e) {
+            //console.error("Invalid token format or expiration detail found : ", e);
+            return true; // Assume expired if token is invalid0
+        }
+    }
+
+    async function getAccessToken() {
+        if (accessToken && !isTokenExpired(accessToken))
+            return accessToken;
+
+        const result = await fetch("/api/refresh");
+        if (result.status === 200) {
+
+            const access = await result.json();
+            setAccessToken(access.token);
+            return access.token;
+        }
+        setAccessToken(undefined);
+        return undefined;
+    }
+
     const centralFetcher = async (url: string, options: RequestInit = {}) => {
-        const headers = { ...(options.headers || {}), Authorization: accessToken ? `Bearer ${accessToken}` : "" };
+        const accessToken = await getAccessToken();
+        if (!accessToken)
+            throw new Response("Failed to refresh access token");
+
+        const headers = { ...(options.headers || {}), Authorization: `Bearer ${accessToken}` };
 
         const response = await fetch(url, { ...options, headers });
 
-        // Check if token has expired
+        // if for some reason the access token is wrong, try to refresh it
         if (response.status === 401) {
             const result = await fetch("/api/refresh");
             if (result.status === 200) {
@@ -22,11 +52,9 @@ export const useCentralFetcher = () => {
                 return fetch(url, { ...options, headers: retryHeaders });
             } else {
                 setAccessToken(undefined);
-                //localStorage.clear();
                 throw new Response("Failed to refresh access token");
             }
         }
-
         return response;
     };
 

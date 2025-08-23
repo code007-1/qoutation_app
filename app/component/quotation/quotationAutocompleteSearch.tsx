@@ -67,7 +67,7 @@ export default function QuotationAutocompleteSearch({ index }: { index: number }
     const handleSuggestionClick = (suggestion: QuoteItems) => {
         setItems(pre => {
             return pre.map((item, i) => i == index
-                ? { id: suggestion.id, hsn: suggestion.hsn, name: suggestion.name, price: suggestion.price, quantity: 1, description: suggestion.description || "", link: suggestion.link }
+                ? { id: suggestion.id, hsn: suggestion.hsn, name: suggestion.name, price: suggestion.price, quantity: 1, description: suggestion.description || "", link: suggestion.link, addon: 0 }
                 : item)
         });
         setShowSuggestions(false);
@@ -100,7 +100,7 @@ export default function QuotationAutocompleteSearch({ index }: { index: number }
             setShowSuggestions(false);
             setItems(pre => {
                 return pre.map((item, i) => i === index
-                    ? { id: filtered[highlighted].id, hsn: filtered[highlighted].hsn, name: filtered[highlighted].name, price: filtered[highlighted].price, quantity: 1, description: filtered[highlighted].description || "", link: filtered[highlighted].link }
+                    ? { id: filtered[highlighted].id, hsn: filtered[highlighted].hsn, name: filtered[highlighted].name, price: filtered[highlighted].price, quantity: 1, description: filtered[highlighted].description || "", link: filtered[highlighted].link, addon: 0 }
                     : item)
             }
             );
@@ -119,12 +119,12 @@ export default function QuotationAutocompleteSearch({ index }: { index: number }
                 onBlur={handleBlur}
                 onFocus={handleFocus}
                 onKeyDown={handleKeyDown}
-                className="w-[30%] p-2 border border-border bg-background text-textPrimary focus:outline-textPrimary"
+                className="w-[26%] p-2 border border-border bg-background text-textPrimary focus:outline-textPrimary"
                 placeholder="Search Product..."
                 autoComplete="off"
             />
             {showSuggestions && (
-                <ul className="z-10 absolute top-full -left-0 right-0 bg-buttonHover border border-border overflow-y-auto w-[27%] max-h-96">
+                <ul className="z-10 absolute top-full -left-0 right-0 bg-buttonHover border border-border overflow-y-auto w-[24%] max-h-96">
                     {filtered.map((s, idx) => (
                         <li
                             key={s.id}
@@ -139,7 +139,7 @@ export default function QuotationAutocompleteSearch({ index }: { index: number }
             )}
             <textarea
                 placeholder="Any prodcut description..."
-                className="border w-[40%] border-border bg-background text-textPrimary focus:outline-textPrimary"
+                className="p-2 border w-[34%] border-border bg-background text-textPrimary focus:outline-textPrimary"
                 value={items[index].description}
                 rows={1}
                 onChange={(e) => {
@@ -165,6 +165,22 @@ export default function QuotationAutocompleteSearch({ index }: { index: number }
             />
             <input
                 type="number"
+                placeholder="Quantity"
+                className="border p-2 w-[10%] border-border bg-background text-textPrimary focus:outline-textPrimary"
+                value={items[index]?.quantity}
+                min={0}
+                onChange={(e) => {
+                    setItems(pre => {
+                        const value = e.target.value;
+                        return pre.map((item, i) => i === index
+                            ? { ...items[index], quantity: Number(e.target.value || undefined) }
+                            : item);
+                    })
+                }}
+            />
+
+            <input
+                type="number"
                 placeholder="Price"
                 className="border p-2 w-[10%] border-border bg-background text-textPrimary focus:outline-textPrimary"
                 value={items[index]?.price}
@@ -180,19 +196,19 @@ export default function QuotationAutocompleteSearch({ index }: { index: number }
 
             <input
                 type="number"
-                placeholder="Quantity"
+                placeholder="Addon %"
                 className="border p-2 w-[10%] border-border bg-background text-textPrimary focus:outline-textPrimary"
-                value={items[index]?.quantity}
+                value={items[index]?.addon}
                 min={0}
                 onChange={(e) => {
                     setItems(pre => {
-                        const value = e.target.value;
                         return pre.map((item, i) => i === index
-                            ? { ...items[index], quantity: Number(e.target.value || undefined) }
+                            ? { ...items[index], addon: Number(e.target.value || undefined) }
                             : item);
                     })
                 }}
             />
+
             <button className="hover:bg-headerBackground bg-buttonHover p-2" onClick={(e) => {
                 setItems(pre =>
                     pre.filter((_, i) => i != index)

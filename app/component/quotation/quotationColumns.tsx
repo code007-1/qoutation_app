@@ -1,5 +1,6 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, Copy, Pencil, Trash2 } from "lucide-react";
+import { QuoteItems } from "~/routes/dashboard.quotations.create";
 
 export const sortButton = (column: any, name: string) => {
     return (
@@ -64,6 +65,17 @@ export const QuotationsColumns: ColumnDef<any, any>[] = [
         header: "Discount",
         cell: (user: any) => {
             return <span>{user.row.original.discount} %</span>
+        },
+        filterFn: (row, columnId, filterValue) => {
+            return row.original[columnId] == filterValue;
+        },
+    },
+    {
+        accessorKey: "addon",
+        header: "Avg. Addon %",
+        cell: (user: any) => {
+            const avg = user.row.original.items.reduce((acc: number, item: { addon?: number }) => acc + (item.addon ?? 0), 0) / (user.row.original.items.length || 1);
+            return <span>{avg} %</span>
         },
         filterFn: (row, columnId, filterValue) => {
             return row.original[columnId] == filterValue;

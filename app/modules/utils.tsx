@@ -21,6 +21,9 @@ export function updateProfile(result: any) {
     userProfile.address = result.address;
     userProfile.pdfColor = result.pdfColor;
     userProfile.showCustomerList = result?.showCustomerList;
+    userProfile.terms = result?.terms;
+    userProfile.additionalInfo = result?.additionalInfo;
+    userProfile.intro = result?.intro;
 }
 
 // utitlity functions
@@ -58,7 +61,7 @@ export async function verifyAccessToken(request: any) {
     const accessToken = request.headers.get("authorization")?.replace("Bearer ", "");
 
     if (!accessToken) {
-        console.log("access token is missing: ");
+        console.log("access token is missing: ", request.headers);
         throw new Response("user not authorized", { status: 401 });
     }
 

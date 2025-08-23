@@ -7,8 +7,9 @@
     "**/.client/**/*.ts",
     "**/.client/**/*.tsx",
     "app/component",
-    "app/modules/dbOffline.js"
-  ],
+    "app/modules/dbOffline.js",
+    "desktop/index.js"
+, "app/modules/logger.js"  ],
   "compilerOptions": {
     "lib": [
       "DOM",

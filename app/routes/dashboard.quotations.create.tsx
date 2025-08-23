@@ -12,6 +12,7 @@ export type QuoteItems = {
     hsn: string;
     name: string;
     price: number;
+    addon: number;
     quantity: number;
     description?: string;
     link?: string;
@@ -73,7 +74,7 @@ export default function QuotationsCreate() {
         setItems(pre => {
             return [
                 ...pre,
-                { id: 0, hsn: "", name: "", description: "", price: 0, quantity: 0, link: "#" }
+                { id: 0, hsn: "", name: "", description: "", price: 0, quantity: 0, link: "#", addon: 0 }
             ]
         });
     }
@@ -85,7 +86,7 @@ export default function QuotationsCreate() {
     }, [step])
 
     useEffect(() => {
-        const amount = Object.entries(items).reduce((acc, [_, item]) => acc + (item.price * item.quantity), 0);
+        const amount = Object.entries(items).reduce((acc, [_, item]) => acc + (item.price * item.quantity * (1 + 0.01 * item.addon)), 0);
         setData(pre => { return { ...pre, amount: amount } });
     }, [items]);
 
@@ -93,13 +94,20 @@ export default function QuotationsCreate() {
         var no = new Date().getTime().toString();
         var fromAddress = profile.address;
         var from = profile.company;
+        var itemswithAddon = items;
 
         if (passedData && passedData?.editing === true) {
             no = data.no;
             fromAddress = data.fromAddress;
             from = data.from;
+
+            itemswithAddon = itemswithAddon.map((item) => {
+                if (!item.addon) item.addon = 0;
+                return item;
+            });
         }
-        setData((pre) => { return { ...pre, no: no, from: from, fromAddress: fromAddress, email: profile.email, website: profile.website, contact: profile.contact, pdfColor: String(profile.pdfColor), madeby: profile.username || "", date: new Date().toISOString().split("T")[0], showLinks: data?.showLinks !== undefined ? data.showLinks : true } });
+        setItems(itemswithAddon);
+        setData((pre) => { return { ...pre, no: no, from: from, fromAddress: fromAddress, email: profile.email, website: profile.website, contact: profile.contact, pdfColor: String(profile.pdfColor), madeby: profile.username || "", date: new Date().toISOString().split("T")[0], showLinks: data?.showLinks !== undefined ? data.showLinks : true, items: itemswithAddon, intro: profile.intro ?? data.intro, terms: profile.terms ?? data.terms, additionalInfo: profile.additionalInfo ?? data.additionalInfo } });
     }, [])
 
     return (<>

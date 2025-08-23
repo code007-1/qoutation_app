@@ -121,9 +121,9 @@ export default function QuotationPDFDocument(data: QuotationData, showCustomerLi
                                     <Text style={styles.tableCellNameContent} key="description">{e[1].description}</Text>
                                 </View>
                                 <Text style={styles.tableCell} key="quantityvalue">{e[1].quantity}</Text>
-                                <Text style={styles.tableCell} key="pricevalue">Rs.{Math.round(e[1].price).toLocaleString('en-IN')}</Text>
+                                <Text style={styles.tableCell} key="pricevalue">Rs.{Math.round(e[1].price * (1 + 0.01 * (e[1].addon ?? 0))).toLocaleString('en-IN')}</Text>
                                 {data.discount != 0 && <Text style={styles.tableCell} key="discountvalue">{data.discount} %</Text>}
-                                <Text style={styles.tableCell} key="amountvalue">Rs.{Math.round(e[1].price * e[1].quantity * (1 - data.discount * 0.01)).toLocaleString('en-IN')}</Text>
+                                <Text style={styles.tableCell} key="amountvalue">Rs.{Math.round(e[1].price * (1 + 0.01 * (e[1].addon ?? 0)) * e[1].quantity * (1 - data.discount * 0.01)).toLocaleString('en-IN')}</Text>
                             </View>);
                     })}
                     <View style={Object.entries(data.items).length % 2 === 0 ? styles.tableRowEven : styles.tableRowOdd} key="nested-view-7">
