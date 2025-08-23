@@ -9,6 +9,7 @@ import { ComplaintsData } from "~/routes/dashboard.complaints.create";
 interface AppContextType {
     // app related variables
     theme: string;
+    setTheme: React.Dispatch<React.SetStateAction<string>>;
     toggleTheme: () => void;
     accessToken: string | undefined;
     setAccessToken: React.Dispatch<React.SetStateAction<string | undefined>>;
@@ -134,12 +135,30 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
     const [complaintsData, setComplaintsData] = useState<ComplaintsData>(initialComplaintsData());
 
     const toggleTheme = () => {
-        setTheme((prev) => (prev === "light" ? "dark" : "light"));
-        localStorage.setItem("theme", theme === "light" ? "dark" : "light");
+        const currentTheme = () => {
+            switch (theme) {
+                case "light":
+                    return "dark";
+                case "dark":
+                    return "dark2";
+                case "dark2":
+                    return "solarwind";
+                case "solarwind":
+                    return "seagreen";
+                case "seagreen":
+                    return "sunsetBloom";
+                case "sunsetBloom":
+                    return "cyberpunkPulse";
+                default:
+                    return "light"; // Fallback to light theme
+            }
+        };
+        setTheme(currentTheme);
+        localStorage.setItem("theme", currentTheme());
     };
 
     return (
-        <appContext.Provider value={{ theme, toggleTheme, accessToken, setAccessToken, items, setItems, data, setData, headerText, setHeaderText, gQuote, setGQuote, profile, setProfile, dataCount, setDataCount, quoteData, setQuoteData, homeLink, setHomeLink, setAppName, appName, oldChallanData, setOldChallanData, challanDataCount, setChallanDataCount, challanItems, setChallanItems, challanData, setChallanData, complaintsData, setComplaintsData }}>
+        <appContext.Provider value={{ theme, setTheme, toggleTheme, accessToken, setAccessToken, items, setItems, data, setData, headerText, setHeaderText, gQuote, setGQuote, profile, setProfile, dataCount, setDataCount, quoteData, setQuoteData, homeLink, setHomeLink, setAppName, appName, oldChallanData, setOldChallanData, challanDataCount, setChallanDataCount, challanItems, setChallanItems, challanData, setChallanData, complaintsData, setComplaintsData }}>
             {children}
         </appContext.Provider>
     );

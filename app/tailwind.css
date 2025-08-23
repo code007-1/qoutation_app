@@ -43,18 +43,6 @@ body {
   --border: 75, 75, 75;
 }
 
-.solarwind {
-  --header: 255, 244, 229;
-  --headerBackground: 252, 222, 194;
-  --textPrimary: 85, 44, 0;
-  --textSecondary: 138, 73, 16;
-  --buttonTextPrimary: 255, 255, 255;
-  --button: 205, 95, 43;
-  --buttonHover: 243, 179, 108;
-  --background: 255, 238, 221;
-  --border: 234, 210, 183;
-}
-
 .dark2 {
   --header: 25, 32, 45;
   --headerBackground: 18, 24, 38;
@@ -67,6 +55,18 @@ body {
   --border: 46, 54, 76;
 }
 
+.solarwind {
+  --header: 255, 244, 229;
+  --headerBackground: 252, 222, 194;
+  --textPrimary: 85, 44, 0;
+  --textSecondary: 138, 73, 16;
+  --buttonTextPrimary: 255, 255, 255;
+  --button: 205, 95, 43;
+  --buttonHover: 243, 179, 108;
+  --background: 255, 238, 221;
+  --border: 234, 210, 183;
+}
+
 .seagreen {
   --header: 240, 255, 252;
   --headerBackground: 225, 250, 245;
@@ -77,4 +77,49 @@ body {
   --buttonHover: 185, 235, 225;
   --background: 235, 252, 248;
   --border: 210, 235, 230;
+}
+
+.sunsetBloom {
+  --header: 255, 240, 245;
+  --headerBackground: 255, 220, 230;
+  --textPrimary: 90, 30, 50;
+  --textSecondary: 150, 80, 100;
+  --buttonTextPrimary: 255, 255, 255;
+  --button: 200, 80, 100;
+  --buttonHover: 255, 180, 200;
+  --background: 255, 235, 240;
+  --border: 240, 200, 210;
+}
+
+.copperTone {
+  --header: 255, 244, 230;
+  --headerBackground: 250, 230, 210;
+  --textPrimary: 102, 51, 0;
+  --textSecondary: 153, 102, 51;
+  --buttonTextPrimary: 255, 255, 255;
+  --button: 204, 102, 0;
+  --buttonHover: 255, 153, 51;
+  --background: 255, 240, 220;
+  --border: 230, 200, 180;
+}
+
+.cyberpunkPulse {
+  --header: 255, 0, 110;
+  /* Neon pink */
+  --headerBackground: 20, 20, 20;
+  /* Deep black */
+  --textPrimary: 0, 255, 180;
+  /* Electric teal */
+  --textSecondary: 255, 255, 0;
+  /* Bright yellow */
+  --buttonTextPrimary: 0, 0, 0;
+  /* Black text on neon buttons */
+  --button: 0, 255, 255;
+  /* Cyan button */
+  --buttonHover: 255, 0, 255;
+  /* Magenta hover */
+  --background: 10, 10, 25;
+  /* Midnight blue-black */
+  --border: 255, 0, 110;
+  /* Neon pink border */
 }
