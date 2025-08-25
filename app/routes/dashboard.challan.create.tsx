@@ -45,11 +45,6 @@ export default function CreateChallan() {
 
     const navigate = useNavigate();
 
-    useEffect(() => {
-        if (accessToken === undefined)
-            navigate("/");
-    }, [accessToken]);
-
     function addItem() {
         setChallanItems(pre => { return [...pre, { id: 0, name: "", quantity: 0, sno: [], unit: "pcs" }] });
     }

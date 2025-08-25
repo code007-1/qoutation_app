@@ -1,17 +1,7 @@
 import Header from "~/component/menu/header";
-import { Outlet, useNavigate } from "@remix-run/react";
-import { useEffect } from "react";
-import { useGlobalContext } from "~/modules/gcontext";
+import { Outlet } from "@remix-run/react";
 
 export default function DashboardQuotations() {
-    const navigate = useNavigate();
-    const { accessToken } = useGlobalContext();
-
-
-    useEffect(() => {
-        if (accessToken === undefined)
-            navigate("/");
-    }, [accessToken]);
 
     return (
         <>

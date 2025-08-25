@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { QuotationsColumns } from "~/component/quotation/quotationColumns";
 import QuotationsTableUI from "~/component/quotation/quotationsTableUI";
-import { createComplaint, createQuotation, initialQuotationData, useGlobalContext } from "~/modules/gcontext";
+import { createQuotation, initialQuotationData, useGlobalContext } from "~/modules/gcontext";
 import { useCentralFetcher } from "~/component/centralFetcher";
 import { useNotification } from "~/modules/notificationContext";
 

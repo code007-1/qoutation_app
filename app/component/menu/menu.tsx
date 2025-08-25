@@ -1,10 +1,7 @@
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { Link } from "@remix-run/react";
-import { AlignRight, LogOut, NotepadText, RotateCcwKey, ScrollText, UserPen } from "lucide-react";
-import { useEffect } from "react";
-import { useFetcher } from "react-router-dom";
+import { AlignRight, Info, LogOut, NotepadText, RotateCcwKey, ScrollText, UserPen } from "lucide-react";
 import { useGlobalContext } from "~/modules/gcontext";
-import { logoutData } from "~/modules/utils";
 import { useCentralFetcher } from "../centralFetcher";
 
 export default function MainMenu() {
@@ -14,15 +11,17 @@ export default function MainMenu() {
         text = profile.username?.slice(0, 1).toLocaleUpperCase() + profile.username?.slice(1);
         if (profile.username?.toLowerCase() === "gunjan") text = `Hi...${text} Ji...`;;
     }
-
-    const logoutFetcher = useFetcher<logoutData>();
     const fetcher = useCentralFetcher();
 
     async function handleSubmit(event: any) {
         event.preventDefault();
-        await fetcher("/api/logout")
-            .then((result) => { result.status === 200 && setAccessToken(undefined) })
-            .catch(error => console.log("error while logging out : ", error));
+        const result = await fetcher(`/api/logout`);
+        if (result.status === 200) {
+            setAccessToken(undefined);
+            localStorage.removeItem("login");
+        }
+        else
+            console.log("error while logging out : ", result);
     }
 
     return (
@@ -88,6 +87,7 @@ export default function MainMenu() {
                                 Update Password
                             </Link>
                         </MenuItem>
+
                         <form onSubmit={handleSubmit}>
                             <MenuItem>
                                 <button

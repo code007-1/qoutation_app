@@ -1,4 +1,4 @@
-import { useLocation, useNavigate } from "@remix-run/react";
+import { useLocation } from "@remix-run/react";
 import { useEffect, useState } from "react";
 import { useGlobalContext } from "~/modules/gcontext";
 import { AnimatePresence, motion } from "framer-motion";
@@ -24,11 +24,9 @@ export default function ComplaintsCreate() {
     const location = useLocation();
     const passedData = location.state;
 
-    const { complaintsData, setComplaintsData, accessToken, setHeaderText, profile } = useGlobalContext();
+    const { complaintsData, setComplaintsData, setHeaderText, profile } = useGlobalContext();
     const [step, setStep] = useState<number>(0);
     const fetcher = useCentralFetcher();
-
-    const navigate = useNavigate();
 
     function saveComplaint() {
         fetcher(`/api/savecomplaint`, {
@@ -36,11 +34,6 @@ export default function ComplaintsCreate() {
             body: JSON.stringify(complaintsData),
         })
     }
-
-    useEffect(() => {
-        if (accessToken === undefined)
-            navigate("/");
-    }, [accessToken]);
 
     useEffect(() => {
         var no = "Govt-1";

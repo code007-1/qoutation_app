@@ -1,14 +1,11 @@
 import { LoaderFunction } from "@remix-run/node";
 import { insertOnetoDb } from "~/modules/dbOnline";
-//import { insertOnetoDb, insertOrUpdateOnetoDb } from "~/modules/dbOnline";
 import { commitSession, getSession } from "~/modules/sessions";
+import { verifyAccessToken } from "~/modules/utils";
 
 export const loader: LoaderFunction = async ({ request }) => {
     try {
-        //const refreshToken = request.headers.get("cookie");
-        const url = new URL(request.url);
-        //verifyAccess(refreshToken ? refreshToken : "", url.host)
-
+        await verifyAccessToken(request);
 
         const session = await getSession();
         session.unset("rToken");

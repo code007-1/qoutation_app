@@ -15,11 +15,18 @@ export default function Index() {
   useEffect(() => {
     if (loginFetcher.data?.token) {
       setAccessToken(loginFetcher.data.token); // Store the fetched data in state
+      localStorage.setItem("login", "y");
+      if (loginFetcher.data?.quote)
+        navigate("/dashboard/welcome");
+      else
+        navigate("/dashboard/home");
+
       addNotifications({
         title: "Logged In...",
         message: `Logged in successfully as ${loginFetcher.data?.profile.username?.toUpperCase()}`,
       });
     }
+
     if (loginFetcher.data?.profile)
       setProfile(pre => { return { ...pre, ...loginFetcher.data?.profile } });
     if (loginFetcher.data?.quote)
@@ -34,16 +41,16 @@ export default function Index() {
 
   useEffect(() => {
     localStorage.getItem("theme") || localStorage.setItem("theme", "dark");
-  }, []);
+  });
 
-  useEffect(() => {
+  /*useEffect(() => {
     if (accessToken) {
       if (loginFetcher.data?.quote)
         navigate("/welcome");
       else
         navigate("/home");
     }
-  }, [accessToken]);
+  }, [accessToken]);*/
 
   return (
     <>

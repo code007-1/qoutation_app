@@ -4,7 +4,7 @@ import { useGlobalContext } from "~/modules/gcontext";
 import { useNotification } from "~/modules/notificationContext";
 
 export default function SettingsPassword() {
-    const { setHeaderText, profile, setProfile } = useGlobalContext();
+    const { setHeaderText, profile } = useGlobalContext();
     const { addNotifications } = useNotification();
     const fetcher = useCentralFetcher();
 

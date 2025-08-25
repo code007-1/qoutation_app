@@ -64,11 +64,6 @@ export default function QuotationsCreate() {
 
     const navigate = useNavigate();
 
-    useEffect(() => {
-        if (accessToken === undefined)
-            navigate("/");
-    }, [accessToken]);
-
     function addItem() {
         //const newKey = new Date().getTime() + 1;
         setItems(pre => {
@@ -91,15 +86,17 @@ export default function QuotationsCreate() {
     }, [items]);
 
     useEffect(() => {
-        var no = new Date().getTime().toString();
-        var fromAddress = profile.address;
-        var from = profile.company;
-        var itemswithAddon = items;
+        let no = new Date().getTime().toString();
+        let fromAddress = profile.address;
+        let from = profile.company;
+        let itemswithAddon = items;
+        let intro = profile.intro ?? "";
 
         if (passedData && passedData?.editing === true) {
             no = data.no;
             fromAddress = data.fromAddress;
             from = data.from;
+            intro = data.intro;
 
             itemswithAddon = itemswithAddon.map((item) => {
                 if (!item.addon) item.addon = 0;
@@ -107,7 +104,7 @@ export default function QuotationsCreate() {
             });
         }
         setItems(itemswithAddon);
-        setData((pre) => { return { ...pre, no: no, from: from, fromAddress: fromAddress, email: profile.email, website: profile.website, contact: profile.contact, pdfColor: String(profile.pdfColor), madeby: profile.username || "", date: new Date().toISOString().split("T")[0], showLinks: data?.showLinks !== undefined ? data.showLinks : true, items: itemswithAddon, intro: profile.intro ?? data.intro, terms: profile.terms ?? data.terms, additionalInfo: profile.additionalInfo ?? data.additionalInfo } });
+        setData((pre) => { return { ...pre, no: no, from: from, fromAddress: fromAddress, email: profile.email, website: profile.website, contact: profile.contact, pdfColor: String(profile.pdfColor), madeby: profile.username || "", date: new Date().toISOString().split("T")[0], showLinks: data?.showLinks !== undefined ? data.showLinks : false, items: itemswithAddon, intro: intro, terms: profile.terms ?? data.terms, additionalInfo: profile.additionalInfo ?? data.additionalInfo } });
     }, [])
 
     return (<>

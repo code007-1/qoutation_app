@@ -25,7 +25,7 @@ export default function Header() {
                             onClick={toggleTheme}
                             className="py-1 px-2 border-none hover:bg-buttonHover"
                         >
-                            <SunMoon color={`${theme === "light" ? "black" : "white"}`} />
+                            <SunMoon className="text-textPrimary" />
                         </button>
                     </div>
                 </div>

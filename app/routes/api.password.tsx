@@ -3,7 +3,7 @@ import { insertOnetoDb, search, update } from "~/modules/dbOnline";
 import bcrypt from "bcrypt";
 import { verifyAccessToken } from "~/modules/utils";
 
-export const action: ActionFunction = async ({ request, params }) => {
+export const action: ActionFunction = async ({ request }) => {
     try {
         await verifyAccessToken(request);
         const formdata = await request.formData() as any;

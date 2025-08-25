@@ -3,13 +3,17 @@ import { useEffect } from "react";
 import { useGlobalContext } from "~/modules/gcontext";
 
 export default function Dashboard() {
-    const navigate = useNavigate();
     const { accessToken } = useGlobalContext();
-
+    const navigate = useNavigate();
 
     useEffect(() => {
-        if (accessToken === undefined)
-            navigate("/");
+        const login = localStorage.getItem("login");
+        if (accessToken === undefined) {
+            if (!login || login === "n")
+                navigate("/");
+        }
+        else
+            localStorage.setItem("login", "y");
     }, [accessToken]);
 
     return (
