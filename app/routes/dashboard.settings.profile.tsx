@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useCentralFetcher } from "~/component/centralFetcher";
 import { useGlobalContext } from "~/modules/gcontext";
 import { useNotification } from "~/modules/notificationContext";
-import { Tab, TabGroup, TabList, TabPanel, TabPanels, Switch } from '@headlessui/react';
+import { Tab, TabGroup, TabList, TabPanel, TabPanels, Switch } from "@headlessui/react";
 
 export type profile = {
     username?: string,
@@ -30,9 +30,9 @@ export default function SettingsProfile() {
     });
 
     async function handleSubmit() {
-        const response = await fetcher('/api/profile', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+        const response = await fetcher("/api/profile", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify(profile),
         });
         if (response.status === 200) addNotifications({ title: "Success...", message: "Profile updated successfully" });
@@ -43,7 +43,7 @@ export default function SettingsProfile() {
         <>
             <TabGroup className={"mt-4"}>
                 <TabList className="flex justify-center w-full">
-                    <div className="flex bg-headerBackground">
+                    <div className="flex bg-headerBackground" tabIndex={0}>
                         {["General Profile Settings", "Quotation Related Settings"].map((name: string) => (
                             <Tab
                                 key={name}
@@ -93,13 +93,13 @@ export default function SettingsProfile() {
                                     <Switch
                                         checked={enabled}
                                         onChange={(e) => { setEnabled(e); setProfile((pre) => { return { ...pre, showCustomerList: e } }) }}
-                                        className={`ml-4 ${enabled ? 'bg-button/75' : 'bg-buttonHover'}
+                                        className={`ml-4 ${enabled ? "bg-button/75" : "bg-buttonHover"}
           relative inline-flex h-[24px] w-[40px] shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2`}
                                     >
                                         <span className="sr-only">Show Customer Lists : </span>
                                         <span
                                             aria-hidden="true"
-                                            className={`${enabled ? 'translate-x-4' : 'translate-x-0'}
+                                            className={`${enabled ? "translate-x-4" : "translate-x-0"}
             pointer-events-none inline-block h-[20px] w-[20px] transform rounded-full bg-buttonTextPrimary shadow-lg ring-0 transition duration-200 ease-in-out`}
                                         />
                                     </Switch>

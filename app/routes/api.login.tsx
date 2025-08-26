@@ -2,12 +2,12 @@ import { ActionFunction, json } from "@remix-run/node";
 import { insertOnetoDb, search } from "~/modules/dbOnline";
 import { commitSession, getSession } from "~/modules/sessions";
 
-import pkg from 'jsonwebtoken';
+import pkg from "jsonwebtoken";
 const { sign } = pkg;
 import bcrypt from "bcrypt";
 import { getQoute, JWT_ACCESS_KEY, JWT_REFRESH_KEY, userProfile, updateProfile } from "~/modules/utils";
 
-export const action: ActionFunction = async ({ request, params }) => {
+export const action: ActionFunction = async ({ request }) => {
     try {
         const formData = await request.formData();
         const username = (formData.get("username") as string).trim().toLowerCase();

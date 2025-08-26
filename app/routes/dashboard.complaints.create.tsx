@@ -30,7 +30,7 @@ export default function ComplaintsCreate() {
 
     function saveComplaint() {
         fetcher(`/api/savecomplaint`, {
-            method: "POST", headers: { 'Content-Type': 'application/json' },
+            method: "POST", headers: { "Content-Type": "application/json" },
             body: JSON.stringify(complaintsData),
         })
     }

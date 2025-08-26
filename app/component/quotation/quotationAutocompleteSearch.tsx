@@ -39,8 +39,8 @@ export default function QuotationAutocompleteSearch({ index }: { index: number }
                 setShowSuggestions(false);
             } else if (showSuggestions || filtered.length != 1 || filtered[0].name.toLowerCase() != items[index].name.toLowerCase()) {
                 fetch(`/api/search`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(items[index].name),
                 })
                     .then(async (res) => {

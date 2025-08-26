@@ -2,7 +2,7 @@ import { Link } from "@remix-run/react";
 import React, { createContext, useState, useContext, ReactNode } from "react";
 import { profile } from "~/routes/dashboard.settings.profile";
 import { QuotationData, QuoteItems } from "~/routes/dashboard.quotations.create";
-import packageJson from '../../package.json';
+import packageJson from "../../package.json";
 import { ChallanData, ChallanItems } from "~/routes/dashboard.challan.create";
 import { ComplaintsData } from "~/routes/dashboard.complaints.create";
 
@@ -57,7 +57,7 @@ export const createComplaint = <>< Link to={"/dashboard/complaints/create"} clas
 export const initialQuotationData = () => {
     return {
         no: new Date().getTime().toString(),
-        date: new Date().toISOString().split("T")[0], // Default to today's date
+        date: new Date().toISOString().split("T")[0], // Default to today"s date
         items: [],
         intro: "This is about our earlier discussions with you regarding your requirement for the Matrix Digital IP-PBXS System. Please find below our best offer for the same.",
         terms: "1. Payment Terms: 100% advance.\n2. Delivery Schedule: Within 1-2 days after receiving the PO along with the Advance.\n3. 12 Months off-site warranty from the OEM, as per their terms.\n4. Validity: This offer is valid for 30 days.",
@@ -76,7 +76,7 @@ export const initialQuotationData = () => {
 export const initialChallanData = () => {
     return {
         no: new Date().getTime().toString(),
-        date: new Date().toISOString().split("T")[0], // Default to today's date
+        date: new Date().toISOString().split("T")[0], // Default to today"s date
         items: [],
         type: "Delivery Challan",
         category: "Delivery Challan",
@@ -92,7 +92,7 @@ export const initialChallanData = () => {
 export const initialComplaintsData = () => {
     return {
         no: `Govt-${1}`,
-        date: new Date().toISOString().split("T")[0], // Default to today's date
+        date: new Date().toISOString().split("T")[0], // Default to today"s date
         time: new Date().toTimeString(),
         type: "Government",
         complainingParty: "",

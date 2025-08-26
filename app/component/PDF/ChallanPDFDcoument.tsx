@@ -1,7 +1,7 @@
 import { Document, Page, Text, View, StyleSheet, Image, Link, Font } from "@react-pdf/renderer";
 import { Watermark } from "~/component/watermark";
 import { ChallanData } from "~/routes/dashboard.challan.create";
-import { Svg, Line } from '@react-pdf/renderer';
+import { Svg, Line } from "@react-pdf/renderer";
 
 export default function ChallanPDFDocument(data: ChallanData) {
     /*const data: ChallanData = {
@@ -71,7 +71,7 @@ export default function ChallanPDFDocument(data: ChallanData) {
     var dated = data.date.split("-");
     const date = dated[2] + "-" + dated[1] + "-" + dated[0];
 
-    const HorizontalLine = ({ width = 500, color = 'black', thickness = 0.5 }) => (
+    const HorizontalLine = ({ width = 500, color = "black", thickness = 0.5 }) => (
         <Svg height="10" width={width.toString()}>
             <Line
                 x1="0"

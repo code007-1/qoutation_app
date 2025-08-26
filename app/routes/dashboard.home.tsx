@@ -6,13 +6,7 @@ import { NotebookText, NotepadText, ScrollText } from "lucide-react";
 
 export default function DashboardSettings() {
     const navigate = useNavigate();
-    const { accessToken, setHeaderText, setAppName, setHomeLink } = useGlobalContext();
-
-
-    useEffect(() => {
-        if (accessToken === undefined)
-            navigate("/");
-    }, [accessToken]);
+    const { setHeaderText } = useGlobalContext();
 
     useEffect(() => {
         // Set the header text for the settings page  

@@ -1,12 +1,11 @@
 import { useGlobalContext } from "~/modules/gcontext";
 
-
 export const useCentralFetcher = () => {
     const { accessToken, setAccessToken } = useGlobalContext();
 
     function isTokenExpired(token: string): boolean {
         try {
-            const payload = JSON.parse(atob(token.split('.')[1]));
+            const payload = JSON.parse(atob(token.split(".")[1]));
             const exp = payload.exp * 1000; // Convert to milliseconds
             return Date.now() >= exp;
         } catch (e) {
@@ -24,9 +23,11 @@ export const useCentralFetcher = () => {
 
             const access = await result.json();
             setAccessToken(access.token);
+            localStorage.setItem("login", "y");
             return access.token;
         }
         setAccessToken(undefined);
+        localStorage.setItem("login", "n");
         return undefined;
     }
 
@@ -46,12 +47,14 @@ export const useCentralFetcher = () => {
 
                 const access = await result.json();
                 setAccessToken(access.token);
+                localStorage.setItem("login", "y");
 
                 // Retry the original request with the new token
                 const retryHeaders = { ...(options.headers || {}), Authorization: `Bearer ${access.token}` };
                 return fetch(url, { ...options, headers: retryHeaders });
             } else {
                 setAccessToken(undefined);
+                localStorage.setItem("login", "n");
                 throw new Response("Failed to refresh access token");
             }
         }

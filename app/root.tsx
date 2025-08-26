@@ -1,13 +1,5 @@
-import {
-  Links,
-  Meta,
-  Outlet,
-  Scripts,
-  ScrollRestoration,
-  useLocation,
-} from "@remix-run/react";
+import { Links, Meta, Outlet, Scripts, ScrollRestoration, useLocation } from "@remix-run/react";
 import type { LinksFunction } from "@remix-run/node";
-
 import "./tailwind.css";
 import { AppProvider, useGlobalContext } from "./modules/gcontext";
 import { useEffect } from "react";
@@ -60,9 +52,11 @@ export default function App() {
         const details = await result.json();
         setAccessToken(details.token); // Store the fetched data in state
         setProfile(pre => { return { ...pre, ...details.profile } });
+        localStorage.setItem("login", "y");
       }
       else {
         setAccessToken(undefined);
+        localStorage.setItem("login", "n");
       }
     }
     if (accessToken === undefined)
@@ -73,7 +67,7 @@ export default function App() {
     const storedTheme = localStorage.getItem("theme");
     if (storedTheme)
       setTheme(storedTheme);
-  }, []);
+  });
 
   const slideVariants: Variants = {
     initial: { opacity: 0 },

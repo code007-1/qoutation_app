@@ -1,4 +1,4 @@
-import pkg from 'jsonwebtoken';
+import pkg from "jsonwebtoken";
 const { verify } = pkg;
 
 import { createCookie } from "@remix-run/node";
@@ -27,11 +27,11 @@ export function updateProfile(result: any) {
 }
 
 // utitlity functions
-const refresTokenCookie = createCookie('rToken', {
+const refresTokenCookie = createCookie("rToken", {
     httpOnly: true, // Prevent client-side accesss
     //secure: true, // Only send over HTTPS
-    //sameSite: 'none', // For cross-site requests
-    sameSite: 'lax',
+    //sameSite: "none", // For cross-site requests
+    sameSite: "lax",
     maxAge: 1000 * 60 * 60 * 24
 });
 
@@ -47,11 +47,11 @@ export type logoutData = {
 
 export async function getQoute() {
     const len = await count("unnamed", "quotes") as number;
-    console.log("len of quotes", len);
+    //console.log("len of quotes", len);
     var index = Math.floor(Math.random() * len);
-    console.log("index of quotes", index);
+    //console.log("index of quotes", index);
     index = index < len ? index : len - 1
-    console.log("index of quotes again", index);
+    //console.log("index of quotes again", index);
     const quote = await search("unnamed", "quotes", {}, 1, index);
     if (quote && quote.length > 0) return quote[0].quote;
     else return "";

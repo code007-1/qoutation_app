@@ -42,10 +42,24 @@ export type QuotationData = {
 };
 
 export async function createPdf(data: QuotationData | ChallanData, fetcher: any, showCustomerList?: boolean, save: boolean = true, type: string = "quotation") {
+    let filteredItems;
+    if (type === "quotation") {
+        filteredItems = data.items.filter((item: any) => {
+            if (!Number.isFinite(item.price) || !Number.isFinite(item.quantity)) return false;
+            else return true;
+        })
+    }
+    else if (type === "challan") {
+        filteredItems = data.items.filter((item: any) => {
+            if (!Number.isFinite(item.quantity)) return false;
+            else return true;
+        })
+    }
+
     const response = await fetcher(`/api/pdf?save=${save}&showCustomerList=${showCustomerList}&type=${type}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...data, items: filteredItems })
     });
 
     const blob = await response.blob();
@@ -86,15 +100,20 @@ export default function QuotationsCreate() {
     }, [items]);
 
     useEffect(() => {
-        let no = new Date().getTime().toString();
+        const d = new Date();
+        let no = d.getTime().toString();
         let fromAddress = profile.address;
         let from = profile.company;
         let itemswithAddon = items;
+        let intro = profile.intro ?? "";
+        let date = d.toISOString().split("T")[0];
 
         if (passedData && passedData?.editing === true) {
             no = data.no;
             fromAddress = data.fromAddress;
             from = data.from;
+            intro = data.intro;
+            date = data.date;
 
             itemswithAddon = itemswithAddon.map((item) => {
                 if (!item.addon) item.addon = 0;
@@ -102,7 +121,7 @@ export default function QuotationsCreate() {
             });
         }
         setItems(itemswithAddon);
-        setData((pre) => { return { ...pre, no: no, from: from, fromAddress: fromAddress, email: profile.email, website: profile.website, contact: profile.contact, pdfColor: String(profile.pdfColor), madeby: profile.username || "", date: new Date().toISOString().split("T")[0], showLinks: data?.showLinks !== undefined ? data.showLinks : true, items: itemswithAddon, intro: profile.intro ?? data.intro, terms: profile.terms ?? data.terms, additionalInfo: profile.additionalInfo ?? data.additionalInfo } });
+        setData((pre) => { return { ...pre, no: no, from: from, fromAddress: fromAddress, email: profile.email, website: profile.website, contact: profile.contact, pdfColor: String(profile.pdfColor), madeby: profile.username || "", date: date, showLinks: data?.showLinks !== undefined ? data.showLinks : false, items: itemswithAddon, intro: intro, terms: profile.terms ?? data.terms, additionalInfo: profile.additionalInfo ?? data.additionalInfo } });
     }, [])
 
     return (<>
@@ -126,13 +145,13 @@ export default function QuotationsCreate() {
                             <Switch
                                 checked={data.showLinks}
                                 onChange={(e) => { setData(pre => { return { ...pre, showLinks: e } }) }}
-                                className={`ml-4 ${data.showLinks ? 'bg-button/75' : 'bg-buttonHover'}
+                                className={`ml-4 ${data.showLinks ? "bg-button/75" : "bg-buttonHover"}
                                       relative inline-flex h-[24px] w-[40px] shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2`}
                             >
                                 <span className="sr-only">Show Customer Lists : </span>
                                 <span
                                     aria-hidden="true"
-                                    className={`${data.showLinks ? 'translate-x-4' : 'translate-x-0'}
+                                    className={`${data.showLinks ? "translate-x-4" : "translate-x-0"}
                                         pointer-events-none inline-block h-[20px] w-[20px] transform rounded-full bg-buttonTextPrimary shadow-lg ring-0 transition duration-200 ease-in-out`}
                                 />
                             </Switch>
@@ -191,7 +210,7 @@ export default function QuotationsCreate() {
                                 <div className="flex justify-between w-full">
                                     <div className="flex items-center">
                                         <div className="text-sm font-semibold mr-4">Taxable Value:</div>
-                                        <div className="">Rs.{data.amount.toLocaleString('en-IN')}</div>
+                                        <div className="">Rs.{data.amount.toLocaleString("en-IN")}</div>
                                     </div>
                                     <div className="flex items-center">
                                         <label htmlFor="tax" className="text-sm font-semibold mr-4">Tax (%)</label>
@@ -203,7 +222,7 @@ export default function QuotationsCreate() {
                                     </div>
                                     <div className="flex items-center">
                                         <div className="text-sm font-semibold mr-4">Total:</div>
-                                        <div className="">Rs.{Number((data.amount * (1 + data.tax * 0.01) * (1 - data.discount * 0.01)).toFixed(2)).toLocaleString('en-IN')}</div>
+                                        <div className="">Rs.{Number((data.amount * (1 + data.tax * 0.01) * (1 - data.discount * 0.01)).toFixed(2)).toLocaleString("en-IN")}</div>
                                     </div>
                                 </div>
                                 <div className="flex justify-center space-x-4">

@@ -335,7 +335,7 @@ const QuotationsTableUI: FC<TableProps> = ({
                 <span className="flex items-center gap-1">
                     <div>Page</div>
                     <strong>
-                        {getState().pagination.pageIndex + 1} of{' '}
+                        {getState().pagination.pageIndex + 1} of{" "}
                         {getPageCount().toLocaleString()}
                     </strong>
                 </span>
@@ -367,7 +367,7 @@ const QuotationsTableUI: FC<TableProps> = ({
                     ))}
                 </select>
                 {/*<div>
-                    Showing {getRowModel().rows.length.toLocaleString()} of{' '}
+                    Showing {getRowModel().rows.length.toLocaleString()} of{" "}
                     {getRowCount().toLocaleString()} Rows
                 </div>*/}
             </div>

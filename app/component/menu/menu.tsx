@@ -1,9 +1,7 @@
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { Link } from "@remix-run/react";
-import { AlignRight, LogOut, NotepadText, RotateCcwKey, ScrollText, UserPen } from "lucide-react";
-import { useFetcher } from "react-router-dom";
+import { AlignRight, Info, LogOut, NotepadText, RotateCcwKey, ScrollText, UserPen } from "lucide-react";
 import { useGlobalContext } from "~/modules/gcontext";
-import { logoutData } from "~/modules/utils";
 import { useCentralFetcher } from "../centralFetcher";
 
 export default function MainMenu() {
@@ -13,14 +11,17 @@ export default function MainMenu() {
         text = profile.username?.slice(0, 1).toLocaleUpperCase() + profile.username?.slice(1);
         if (profile.username?.toLowerCase() === "gunjan") text = `Hi...${text} Ji...`;
     }
-
     const fetcher = useCentralFetcher();
 
     async function handleSubmit(event: any) {
         event.preventDefault();
-        await fetcher("/api/logout")
-            .then((result) => { result.status === 200 && setAccessToken(undefined) })
-            .catch(error => console.log("error while logging out : ", error));
+        const result = await fetcher(`/api/logout`);
+        if (result.status === 200) {
+            setAccessToken(undefined);
+            localStorage.removeItem("login");
+        }
+        else
+            console.log("error while logging out : ", result);
     }
 
     return (
@@ -53,7 +54,7 @@ export default function MainMenu() {
                                 className="flex px-4 py-2 text-sm text-textSecondary data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
                             >
                                 <NotepadText size={20} className="mr-2" />
-                                Challan's Home
+                                Challan"s Home
                             </Link>
                         </MenuItem>
                         <MenuItem>
@@ -62,7 +63,7 @@ export default function MainMenu() {
                                 className="flex px-4 py-2 text-sm text-textSecondary data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
                             >
                                 <NotepadText size={20} className="mr-2" />
-                                Complaint's Home
+                                Complaint"s Home
                             </Link>
                         </MenuItem>
                     </div>
@@ -86,6 +87,7 @@ export default function MainMenu() {
                                 Update Password
                             </Link>
                         </MenuItem>
+
                         <form onSubmit={handleSubmit}>
                             <MenuItem>
                                 <button
