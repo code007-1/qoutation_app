@@ -1,10 +1,10 @@
 import fs from "fs";
-import csv from 'csv-parser';
+import csv from "csv-parser";
 export const rows: any = [];
 
 function LoadData() {
-    /*if (!fs.existsSync('./app/modules/data.csv')) {
-        console.error("CSV file not found. Please ensure 'data.csv' exists in the current directory.");
+    /*if (!fs.existsSync("./app/modules/data.csv")) {
+        console.error("CSV file not found. Please ensure "data.csv" exists in the current directory.");
         return;
     }*/
 
@@ -14,14 +14,14 @@ function LoadData() {
     }
 
     else {
-        fs.createReadStream('./assets/data.csv') // Replace 'file.csv' with your file path
+        fs.createReadStream("./assets/data.csv") // Replace "file.csv" with your file path
             .pipe(csv())
-            .on('data', (row) => {
+            .on("data", (row) => {
                 //console.log(row); // Each row is an object
                 rows.push(row);
             })
-            .on('end', () => {
-                console.log('CSV file successfully processed.');
+            .on("end", () => {
+                console.log("CSV file successfully processed.");
                 //console.log(rows);
             });
     }

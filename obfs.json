@@ -1,0 +1,14 @@
+{
+    "compact": false,
+    "controlFlowFlattening": false,
+    "deadCodeInjection": false,
+    "stringArray": true,
+    "stringArrayEncoding": [
+        "base64"
+    ],
+    "stringArrayThreshold": 0.75,
+    "renameGlobals": true,
+    "identifierNamesGenerator": "mangled",
+    "transformObjectKeys": true,
+    "unicodeEscapeSequence": false
+}

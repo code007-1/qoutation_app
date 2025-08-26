@@ -39,8 +39,8 @@ export default function QuotationAutocompleteSearch({ index }: { index: number }
                 setShowSuggestions(false);
             } else if (showSuggestions || filtered.length != 1 || filtered[0].name.toLowerCase() != items[index].name.toLowerCase()) {
                 fetch(`/api/search`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(items[index].name),
                 })
                     .then(async (res) => {
@@ -171,7 +171,6 @@ export default function QuotationAutocompleteSearch({ index }: { index: number }
                 min={0}
                 onChange={(e) => {
                     setItems(pre => {
-                        const value = e.target.value;
                         return pre.map((item, i) => i === index
                             ? { ...items[index], quantity: Number(e.target.value || undefined) }
                             : item);

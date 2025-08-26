@@ -9,7 +9,7 @@ export default function Index() {
   const loginFetcher = useFetcher<loginData>();
   const isSubmitting = loginFetcher.state === "submitting";
   const navigate = useNavigate();
-  const { accessToken, setAccessToken, setProfile, setGQuote, theme, toggleTheme, appName } = useGlobalContext();
+  const { setAccessToken, setProfile, setGQuote, theme, toggleTheme, appName } = useGlobalContext();
   const { addNotifications } = useNotification();
 
   useEffect(() => {
@@ -43,32 +43,23 @@ export default function Index() {
     localStorage.getItem("theme") || localStorage.setItem("theme", "dark");
   });
 
-  /*useEffect(() => {
-    if (accessToken) {
-      if (loginFetcher.data?.quote)
-        navigate("/welcome");
-      else
-        navigate("/home");
-    }
-  }, [accessToken]);*/
-
   return (
     <>
-      <div className='max-h-screen bg-background'>
+      <div className="max-h-screen bg-background">
         <div className="absolute w-full flex bg-headerBackground py-2">
-          <div className='absolute left-1/2 -translate-x-1/2'>
+          <div className="absolute left-1/2 -translate-x-1/2">
             <div className="flex text-4xl text-textPrimary justify-center font-Satisfy">
               <div>{appName.slice(0, 3)}</div>
               <div>{appName[3]}</div>
               <div>{appName.slice(4)}</div>
             </div>
           </div>
-          <div className='mr-0 ml-auto'>
+          <div className="mr-0 ml-auto">
             <button
               onClick={toggleTheme}
               className="py-1 px-2 border-none hover:bg-buttonHover mx-10"
             >
-              <SunMoon color={`${theme === "light" ? "black" : "white"}`} />
+              <SunMoon className="text-textPrimary" />
             </button>
           </div>
         </div >

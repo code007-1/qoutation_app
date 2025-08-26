@@ -29,8 +29,8 @@ export default function ChallanAutocompleteSearch({ index }: { index: number }) 
                 setShowSuggestions(false);
             } else if (showSuggestions || filtered.length != 1 || filtered[0].name.toLowerCase() != challanItems[index].name.toLowerCase()) {
                 fetch(`/api/search`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(challanItems[index].name),
                 })
                     .then(async (res) => {

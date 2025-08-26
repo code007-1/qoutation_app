@@ -15,8 +15,8 @@ export default function SettingsPassword() {
     async function handleSubmit(event: any) {
         event.preventDefault();
         const formData = new FormData(event.target);
-        const response = await fetcher('/api/password', {
-            method: 'POST',
+        const response = await fetcher("/api/password", {
+            method: "POST",
             body: formData,
         });
         if (response.status === 200) addNotifications({ title: "Success...", message: "Password updated successfully" });

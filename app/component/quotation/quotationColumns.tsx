@@ -1,6 +1,5 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, Copy, Pencil, Trash2 } from "lucide-react";
-import { QuoteItems } from "~/routes/dashboard.quotations.create";
 
 export const sortButton = (column: any, name: string) => {
     return (
@@ -89,7 +88,7 @@ export const QuotationsColumns: ColumnDef<any, any>[] = [
             //console.log("asd", user.row.original.amount, user.row.original.to);
             if (!user.row.original.amount)
                 return "";
-            return <span>Rs.{user.row.original.amount.toLocaleString('en-US')}</span>
+            return <span>Rs.{user.row.original.amount.toLocaleString("en-US")}</span>
         },
     },
     {
