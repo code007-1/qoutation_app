@@ -39,16 +39,11 @@ export default function CreateChallan() {
     const location = useLocation();
     const passedData = location.state;
 
-    const { challanItems, setChallanItems, challanData, setChallanData, accessToken, setHeaderText, profile } = useGlobalContext();
+    const { challanItems, setChallanItems, challanData, setChallanData, setHeaderText, profile } = useGlobalContext();
     const [step, setStep] = useState<number>(0);
     const fetcher = useCentralFetcher();
 
     const navigate = useNavigate();
-
-    useEffect(() => {
-        if (accessToken === undefined)
-            navigate("/");
-    }, [accessToken]);
 
     function addItem() {
         setChallanItems(pre => { return [...pre, { id: 0, name: "", quantity: 0, sno: [], unit: "pcs" }] });
@@ -60,9 +55,9 @@ export default function CreateChallan() {
     }, [step]);
 
     useEffect(() => {
-        var no = new Date().getTime().toString();
-        var fromAddress = profile.address;
-        var from = profile.company;
+        let no = new Date().getTime().toString();
+        let fromAddress = profile.address;
+        let from = profile.company;
 
         if (passedData && passedData?.editing === true) {
             no = challanData.no;
@@ -70,7 +65,7 @@ export default function CreateChallan() {
             from = challanData.from;
         }
         setChallanData((pre) => { return { ...pre, no: no, from: from, fromAddress: fromAddress, email: profile.email, website: profile.website, contact: profile.contact, pdfColor: String(profile.pdfColor), madeby: profile.username || "", date: new Date().toISOString().split("T")[0] } });
-    }, []);
+    });
 
     const challanCatorgoies = ["Dealer Sale", "Gem Sale", "Private Sale", "Govt. Sale", "MTNL Sale", "Private Standby", "Private Client Property Return", "Vendor Reparing", "Govt. Standby", "MTNL Standby", "Govt. Client Property Return"];
 
@@ -183,22 +178,22 @@ export default function CreateChallan() {
                                     <div className="flex space-x-10 w-full">
                                         <div className="w-full space-y-4">
                                             <div>
-                                                <label className="text-sm font-semibold">First Party Name</label>
-                                                <input key={"frist"} type="text" placeholder="Enter First Party Name" className="border border-border p-2 w-full bg-background" value={challanData.from} onChange={e => setChallanData(pre => { return { ...pre, from: e.target.value } })} />
+                                                <label htmlFor="firstPartyName" className="text-sm font-semibold">First Party Name</label>
+                                                <input id="firstPartyName" key={"frist"} type="text" placeholder="Enter First Party Name" className="border border-border p-2 w-full bg-background" value={challanData.from} onChange={e => setChallanData(pre => { return { ...pre, from: e.target.value } })} />
                                             </div>
                                             <div>
-                                                <label className="text-sm font-semibold">First Party Address</label>
-                                                <textarea rows={5} placeholder="Enter First Party Address" className="p-2 border border-border w-full bg-background" value={challanData.fromAddress} onChange={e => setChallanData(pre => { return { ...pre, fromAddress: e.target.value } })} />
+                                                <label htmlFor="firstPartyAddress" className="text-sm font-semibold">First Party Address</label>
+                                                <textarea id="firstPartyAddress" rows={5} placeholder="Enter First Party Address" className="p-2 border border-border w-full bg-background" value={challanData.fromAddress} onChange={e => setChallanData(pre => { return { ...pre, fromAddress: e.target.value } })} />
                                             </div>
                                         </div>
                                         <div className="w-full space-y-4">
                                             <div>
-                                                <label className="text-sm font-semibold">Second Party Name</label>
-                                                <input key={"second"} type="text" placeholder="Enter Second Party Name" className="border border-border p-2 w-full bg-background" value={challanData.to} onChange={e => setChallanData(pre => { return { ...pre, to: e.target.value } })} />
+                                                <label htmlFor="secondPartyName" className="text-sm font-semibold">Second Party Name</label>
+                                                <input id="secondPartyName" key={"second"} type="text" placeholder="Enter Second Party Name" className="border border-border p-2 w-full bg-background" value={challanData.to} onChange={e => setChallanData(pre => { return { ...pre, to: e.target.value } })} />
                                             </div>
                                             <div>
-                                                <label className="text-sm font-semibold">Second Party Address</label>
-                                                <textarea rows={5} placeholder="Enter Second Party Address" className="p-2 border border-border w-full bg-background" value={challanData.toAddress} onChange={e => setChallanData(pre => { return { ...pre, toAddress: e.target.value } })} />
+                                                <label htmlFor="secondPartyAddress" className="text-sm font-semibold">Second Party Address</label>
+                                                <textarea id="secondPartyAddress" rows={5} placeholder="Enter Second Party Address" className="p-2 border border-border w-full bg-background" value={challanData.toAddress} onChange={e => setChallanData(pre => { return { ...pre, toAddress: e.target.value } })} />
                                             </div>
                                         </div>
                                     </div>

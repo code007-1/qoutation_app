@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { QuotationsColumns } from "~/component/quotation/quotationColumns";
 import QuotationsTableUI from "~/component/quotation/quotationsTableUI";
-import { createComplaint, createQuotation, initialQuotationData, useGlobalContext } from "~/modules/gcontext";
+import { createComplaint, initialQuotationData, useGlobalContext } from "~/modules/gcontext";
 import { useCentralFetcher } from "~/component/centralFetcher";
 import { useNotification } from "~/modules/notificationContext";
 
@@ -28,7 +28,7 @@ const ComplaintShow = () => {
 
     async function handleAdvanceSearch(query?: { start: string, end: string, to: string }) {
         setLoading(true);
-        var response;
+        let response;
         if (query) {
             response = await fetcher(`/api/quotations?start=${query.start}&end=${query.end}&to=${query.to}`);
             if (response.status === 200) {
@@ -81,7 +81,7 @@ const ComplaintShow = () => {
         setHeaderText(createComplaint);
         if (dataCount === 0)
             getQoutes();
-    }, []);
+    });
 
     return (
         <>

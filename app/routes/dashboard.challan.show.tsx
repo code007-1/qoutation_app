@@ -28,7 +28,7 @@ const QuotationsShow = () => {
 
     async function handleAdvanceSearch(query?: { sno: string }) {
         setLoading(true);
-        var response;
+        let response;
         if (query) {
             response = await fetcher(`/api/challans?sno=${query.sno}`);
             if (response.status === 200) {

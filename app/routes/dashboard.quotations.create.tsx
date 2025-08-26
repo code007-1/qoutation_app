@@ -58,16 +58,11 @@ export default function QuotationsCreate() {
     const location = useLocation();
     const passedData = location.state;
 
-    const { items, setItems, data, setData, accessToken, setHeaderText, profile } = useGlobalContext();
+    const { items, setItems, data, setData, setHeaderText, profile } = useGlobalContext();
     const [step, setStep] = useState<number>(0);
     const fetcher = useCentralFetcher();
 
     const navigate = useNavigate();
-
-    useEffect(() => {
-        if (accessToken === undefined)
-            navigate("/");
-    }, [accessToken]);
 
     function addItem() {
         //const newKey = new Date().getTime() + 1;
@@ -91,10 +86,10 @@ export default function QuotationsCreate() {
     }, [items]);
 
     useEffect(() => {
-        var no = new Date().getTime().toString();
-        var fromAddress = profile.address;
-        var from = profile.company;
-        var itemswithAddon = items;
+        let no = new Date().getTime().toString();
+        let fromAddress = profile.address;
+        let from = profile.company;
+        let itemswithAddon = items;
 
         if (passedData && passedData?.editing === true) {
             no = data.no;
@@ -153,28 +148,28 @@ export default function QuotationsCreate() {
                     <div className="flex flex-col items-center">
                         {step === 0 && <>
                             <div className="w-full">
-                                <label className="text-sm font-semibold">Introductory text</label>
-                                <textarea rows={3} placeholder="Enter Introductory Text" className="p-2 border border-border rounded w-full mb-2 bg-background" value={data.intro} onChange={e => setData(pre => { return { ...pre, intro: e.target.value } })} />
+                                <label htmlFor="introductorytext" className="text-sm font-semibold">Introductory text</label>
+                                <textarea id="introductorytext" rows={3} placeholder="Enter Introductory Text" className="p-2 border border-border rounded w-full mb-2 bg-background" value={data.intro} onChange={e => setData(pre => { return { ...pre, intro: e.target.value } })} />
                             </div>
                             <div className="mx-10 flex space-x-10 w-full">
                                 <div className="w-full space-y-2">
                                     <div>
-                                        <label className="text-sm font-semibold">First Party Name</label>
-                                        <input key={"frist"} type="text" placeholder="Enter First Party Name" className="border border-border p-2 w-full bg-background" value={data.from} onChange={e => setData(pre => { return { ...pre, from: e.target.value } })} />
+                                        <label htmlFor="firstPartyName" className="text-sm font-semibold">First Party Name</label>
+                                        <input id="firstPartyName" key={"frist"} type="text" placeholder="Enter First Party Name" className="border border-border p-2 w-full bg-background" value={data.from} onChange={e => setData(pre => { return { ...pre, from: e.target.value } })} />
                                     </div>
                                     <div>
-                                        <label className="text-sm font-semibold">First Party Address</label>
-                                        <textarea rows={5} placeholder="Enter First Party Address" className="p-2 border border-border w-full bg-background" value={data.fromAddress} onChange={e => setData(pre => { return { ...pre, fromAddress: e.target.value } })} />
+                                        <label htmlFor="firstPartyAddress" className="text-sm font-semibold">First Party Address</label>
+                                        <textarea id="firstPartyAddress" rows={5} placeholder="Enter First Party Address" className="p-2 border border-border w-full bg-background" value={data.fromAddress} onChange={e => setData(pre => { return { ...pre, fromAddress: e.target.value } })} />
                                     </div>
                                 </div>
                                 <div className="w-full space-y-2">
                                     <div>
-                                        <label className="text-sm font-semibold">Second Party Name</label>
-                                        <input key={"second"} type="text" placeholder="Enter Second Party Name" className="border border-border p-2 w-full bg-background" value={data.to} onChange={e => setData(pre => { return { ...pre, to: e.target.value } })} />
+                                        <label htmlFor="secondPartyName" className="text-sm font-semibold">Second Party Name</label>
+                                        <input id="secondPartyName" key={"second"} type="text" placeholder="Enter Second Party Name" className="border border-border p-2 w-full bg-background" value={data.to} onChange={e => setData(pre => { return { ...pre, to: e.target.value } })} />
                                     </div>
                                     <div>
-                                        <label className="text-sm font-semibold">Second Party Address</label>
-                                        <textarea rows={5} placeholder="Enter Second Party Address" className="p-2 border border-border w-full bg-background" value={data.toAddress} onChange={e => setData(pre => { return { ...pre, toAddress: e.target.value } })} />
+                                        <label htmlFor="secondPartyAddress" className="text-sm font-semibold">Second Party Address</label>
+                                        <textarea id="secondPartyAddress" rows={5} placeholder="Enter Second Party Address" className="p-2 border border-border w-full bg-background" value={data.toAddress} onChange={e => setData(pre => { return { ...pre, toAddress: e.target.value } })} />
                                     </div>
                                 </div>
                             </div>
@@ -199,12 +194,12 @@ export default function QuotationsCreate() {
                                         <div className="">Rs.{data.amount.toLocaleString('en-IN')}</div>
                                     </div>
                                     <div className="flex items-center">
-                                        <label className="text-sm font-semibold mr-4">Tax (%)</label>
-                                        <input type="number" placeholder="Enter Tax Percentage" className="border border-border p-2 w-25 bg-background" value={data.tax} onChange={e => setData(pre => { return { ...pre, tax: parseFloat(e.target.value) } })} />
+                                        <label htmlFor="tax" className="text-sm font-semibold mr-4">Tax (%)</label>
+                                        <input id="tax" type="number" placeholder="Enter Tax Percentage" className="border border-border p-2 w-25 bg-background" value={data.tax} onChange={e => setData(pre => { return { ...pre, tax: parseFloat(e.target.value) } })} />
                                     </div>
                                     <div className="flex items-center">
-                                        <label className="text-sm font-semibold mr-4">Discount (%)</label>
-                                        <input type="number" placeholder="Enter Discount Percentage" className="border border-border p-2 w-25 bg-background" value={data.discount} onChange={e => setData(pre => { return { ...pre, discount: parseFloat(e.target.value) } })} />
+                                        <label htmlFor="discount" className="text-sm font-semibold mr-4">Discount (%)</label>
+                                        <input id="discount" type="number" placeholder="Enter Discount Percentage" className="border border-border p-2 w-25 bg-background" value={data.discount} onChange={e => setData(pre => { return { ...pre, discount: parseFloat(e.target.value) } })} />
                                     </div>
                                     <div className="flex items-center">
                                         <div className="text-sm font-semibold mr-4">Total:</div>
@@ -227,12 +222,12 @@ export default function QuotationsCreate() {
                             <>
                                 <div className="flex w-full space-x-10">
                                     <div className="w-full">
-                                        <label className="text-sm font-semibold">Terms and Conditions</label>
-                                        <textarea rows={5} placeholder="Enter Terms and Conditions....." className="p-2 border border-border w-full bg-background" value={data.terms} onChange={e => setData(pre => { return { ...pre, terms: e.target.value } })} />
+                                        <label htmlFor="termsAndConditions" className="text-sm font-semibold">Terms and Conditions</label>
+                                        <textarea id="termsAndConditions" rows={5} placeholder="Enter Terms and Conditions....." className="p-2 border border-border w-full bg-background" value={data.terms} onChange={e => setData(pre => { return { ...pre, terms: e.target.value } })} />
                                     </div>
                                     <div className="w-full">
-                                        <label className="text-sm font-semibold">Additional Information</label>
-                                        <textarea rows={5} placeholder="Enter Additional Information....." className="p-2 border border-border w-full bg-background" value={data.additionalInfo} onChange={e => setData(pre => { return { ...pre, additionalInfo: e.target.value } })} />
+                                        <label htmlFor="additionalInformation" className="text-sm font-semibold">Additional Information</label>
+                                        <textarea id="additionalInformation" rows={5} placeholder="Enter Additional Information....." className="p-2 border border-border w-full bg-background" value={data.additionalInfo} onChange={e => setData(pre => { return { ...pre, additionalInfo: e.target.value } })} />
                                     </div>
                                 </div>
                                 <div className="flex justify-center space-x-4">

@@ -1,4 +1,4 @@
-import { useLocation, useNavigate } from "@remix-run/react";
+import { useLocation } from "@remix-run/react";
 import { useEffect, useState } from "react";
 import { useGlobalContext } from "~/modules/gcontext";
 import { AnimatePresence, motion } from "framer-motion";
@@ -24,11 +24,9 @@ export default function ComplaintsCreate() {
     const location = useLocation();
     const passedData = location.state;
 
-    const { complaintsData, setComplaintsData, accessToken, setHeaderText, profile } = useGlobalContext();
+    const { complaintsData, setComplaintsData, setHeaderText, profile } = useGlobalContext();
     const [step, setStep] = useState<number>(0);
     const fetcher = useCentralFetcher();
-
-    const navigate = useNavigate();
 
     function saveComplaint() {
         fetcher(`/api/savecomplaint`, {
@@ -38,19 +36,14 @@ export default function ComplaintsCreate() {
     }
 
     useEffect(() => {
-        if (accessToken === undefined)
-            navigate("/");
-    }, [accessToken]);
-
-    useEffect(() => {
-        var no = "Govt-1";
+        let no = "Govt-1";
 
         if (passedData && passedData?.editing === true) {
             no = complaintsData.no;
         }
         setComplaintsData((pre) => { return { ...pre, no: no, madeby: profile.username || "", date: new Date().toISOString().split("T")[0] } });
         setHeaderText("Complaint Details");
-    }, [])
+    })
 
     return (<>
         <AnimatePresence>
@@ -73,8 +66,8 @@ export default function ComplaintsCreate() {
                                 <input type="datetime-local" color="white" name="date" id="date" pattern="\d{4}-\d{2}-\d{2}" placeholder="Date" className="border border-border h-10 bg-background w-full" value={complaintsData.date + "T" + complaintsData.time} onChange={e => { setComplaintsData(pre => { const dt = e.target.value.split("T"); return { ...pre, date: dt[0], time: dt[1] } }) }} />
                             </div>
                             <div>
-                                <label className="text-sm font-semibold">Complaining Party Name</label>
-                                <input key={"address"} type="text" placeholder="Enter party Name" className="border border-border p-2 w-full bg-background" value={complaintsData.complainingParty} onChange={e => setComplaintsData(pre => { return { ...pre, complainingParty: e.target.value } })} />
+                                <label htmlFor="complainingPartyName" className="text-sm font-semibold">Complaining Party Name</label>
+                                <input id="complainingPartyName" key={"address"} type="text" placeholder="Enter party Name" className="border border-border p-2 w-full bg-background" value={complaintsData.complainingParty} onChange={e => setComplaintsData(pre => { return { ...pre, complainingParty: e.target.value } })} />
                             </div>
                             <div className="">
                                 <div className="text-sm font-semibold mr-2">Complaint Type</div>
@@ -137,21 +130,21 @@ export default function ComplaintsCreate() {
                                 </div>
                             </div>
                             <div>
-                                <label className="text-sm font-semibold">Contact Number</label>
-                                <input key={"second"} type="text" placeholder="Enter contact number" className="border border-border p-2 w-full bg-background" value={complaintsData.partyNumber} onChange={e => setComplaintsData(pre => { return { ...pre, partyNumber: e.target.value } })} />
+                                <label htmlFor="contactNumber" className="text-sm font-semibold">Contact Number</label>
+                                <input id="contactNumber" key={"second"} type="text" placeholder="Enter contact number" className="border border-border p-2 w-full bg-background" value={complaintsData.partyNumber} onChange={e => setComplaintsData(pre => { return { ...pre, partyNumber: e.target.value } })} />
                             </div>
                             <div>
-                                <label className="text-sm font-semibold">Address</label>
-                                <textarea rows={5} placeholder="Enter address" className="p-2 border border-border w-full bg-background" value={complaintsData.partyAddress} onChange={e => setComplaintsData(pre => { return { ...pre, partyAddress: e.target.value } })} />
+                                <label htmlFor="address" className="text-sm font-semibold">Address</label>
+                                <textarea id="address" rows={5} placeholder="Enter address" className="p-2 border border-border w-full bg-background" value={complaintsData.partyAddress} onChange={e => setComplaintsData(pre => { return { ...pre, partyAddress: e.target.value } })} />
                             </div>
                             <div >
-                                <label className="text-sm font-semibold">Complaint</label>
-                                <textarea rows={5} placeholder="Enter complaint" className="p-2 border border-border w-full bg-background" value={complaintsData.complaint} onChange={e => setComplaintsData(pre => { return { ...pre, complaint: e.target.value } })} />
+                                <label htmlFor="complaint" className="text-sm font-semibold">Complaint</label>
+                                <textarea id="complaint" rows={5} placeholder="Enter complaint" className="p-2 border border-border w-full bg-background" value={complaintsData.complaint} onChange={e => setComplaintsData(pre => { return { ...pre, complaint: e.target.value } })} />
                             </div>
 
                             <div>
-                                <label className="text-sm font-semibold">Remarks</label>
-                                <textarea rows={5} placeholder="Enter remarks" className="p-2 border border-border w-full bg-background" value={complaintsData.remarks} onChange={e => setComplaintsData(pre => { return { ...pre, remarks: [e.target.value] } })} />
+                                <label htmlFor="remakrs" className="text-sm font-semibold">Remarks</label>
+                                <textarea id="remarks" rows={5} placeholder="Enter remarks" className="p-2 border border-border w-full bg-background" value={complaintsData.remarks} onChange={e => setComplaintsData(pre => { return { ...pre, remarks: [e.target.value] } })} />
                             </div>
                         </div>
                     </div>

@@ -27,7 +27,7 @@ export default function SettingsProfile() {
 
     useEffect(() => {
         setHeaderText("Profile Settings");
-    }, []);
+    });
 
     async function handleSubmit() {
         const response = await fetcher('/api/profile', {

@@ -171,7 +171,6 @@ export default function QuotationAutocompleteSearch({ index }: { index: number }
                 min={0}
                 onChange={(e) => {
                     setItems(pre => {
-                        const value = e.target.value;
                         return pre.map((item, i) => i === index
                             ? { ...items[index], quantity: Number(e.target.value || undefined) }
                             : item);

@@ -1,8 +1,8 @@
-import { ActionFunction, LoaderFunction } from "@remix-run/node";
+import { ActionFunction } from "@remix-run/node";
 import { rows } from "~/modules/loadCSV";
 
 
-export const action: ActionFunction = async ({ request, params }) => {
+export const action: ActionFunction = async ({ request }) => {
     const query = await request.json();
     if (rows.length === 0) {
         return new Response(JSON.stringify({ error: "No data available" }), { status: 200 });
@@ -15,7 +15,7 @@ export const action: ActionFunction = async ({ request, params }) => {
 
         //console.log("Filtered rows:", filteredRows);
         // finally create the Response with the correct Content-Type header for a PDF
-        let headers = new Headers({ "Content-Type": "application/json" });
+        const headers = new Headers({ "Content-Type": "application/json" });
         return new Response(JSON.stringify([...filteredRows]), { status: 200, headers });
-    };
+    }
 };

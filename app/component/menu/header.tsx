@@ -1,11 +1,9 @@
-import pacakageJson from "package.json"
 import { SunMoon } from "lucide-react";
 import { useGlobalContext } from "~/modules/gcontext";
 import MainMenu from "./menu";
-import { Link } from "@remix-run/react";
 
 export default function Header() {
-    const { toggleTheme, headerText, theme, appName, homeLink } = useGlobalContext();
+    const { toggleTheme, headerText, appName } = useGlobalContext();
 
     return (
         <>
@@ -25,7 +23,7 @@ export default function Header() {
                             onClick={toggleTheme}
                             className="py-1 px-2 border-none hover:bg-buttonHover"
                         >
-                            <SunMoon color={`${theme === "light" ? "black" : "white"}`} />
+                            <SunMoon className="text-textPrimary" />
                         </button>
                     </div>
                 </div>

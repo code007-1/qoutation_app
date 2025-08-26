@@ -13,7 +13,6 @@ import { AppProvider, useGlobalContext } from "./modules/gcontext";
 import { useEffect } from "react";
 import { AnimatePresence, motion, Variants } from "framer-motion";
 import { NotificationProvider } from "./modules/notificationContext";
-import { use } from "framer-motion/client";
 
 export const links: LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
