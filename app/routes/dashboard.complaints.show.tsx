@@ -81,7 +81,7 @@ const ComplaintShow = () => {
         setHeaderText(createComplaint);
         if (dataCount === 0)
             getQoutes();
-    });
+    }, []);
 
     return (
         <>

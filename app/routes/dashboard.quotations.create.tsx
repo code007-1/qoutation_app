@@ -6,6 +6,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useCentralFetcher } from "~/component/centralFetcher";
 import { Switch } from "@headlessui/react";
 import { ChallanData } from "./dashboard.challan.create";
+import { Minus } from "lucide-react";
 
 export type QuoteItems = {
     id: number;
@@ -199,7 +200,18 @@ export default function QuotationsCreate() {
                         }
                         {
                             step === 1 && <>
-                                <div className="mt-4 space-y-4 overflow-y-auto h-[calc(100vh-220px)] w-full">
+                                <div className="mt-4 space-y-2 overflow-y-auto h-[calc(100vh-220px)] w-full">
+                                    <div className="flex relative w-auto gap-x-2">
+                                        <div className="grid grid-cols-11 gap-x-2 w-[98%]">
+                                            <div className="col-span-3 p-2">Name</div>
+                                            <div className="col-span-4 p-2">Description</div>
+                                            <div className="col-span-1 p-2">HSN</div>
+                                            <div className="col-span-1 p-2">Quantity</div>
+                                            <div className="col-span-1 p-2">Price</div>
+                                            <div className="col-span-1 p-2">Addon (%)</div>
+                                        </div>
+                                        <button className="invisible p-2"><Minus className="text-textSecondary" /></button>
+                                    </div>
                                     {
                                         items.map((_, index) => {
                                             return <>

@@ -65,7 +65,7 @@ export default function CreateChallan() {
             from = challanData.from;
         }
         setChallanData((pre) => { return { ...pre, no: no, from: from, fromAddress: fromAddress, email: profile.email, website: profile.website, contact: profile.contact, pdfColor: String(profile.pdfColor), madeby: profile.username || "", date: new Date().toISOString().split("T")[0] } });
-    });
+    }, []);
 
     const challanCatorgoies = ["Dealer Sale", "Gem Sale", "Private Sale", "Govt. Sale", "MTNL Sale", "Private Standby", "Private Client Property Return", "Vendor Reparing", "Govt. Standby", "MTNL Standby", "Govt. Client Property Return"];
 
@@ -206,7 +206,7 @@ export default function CreateChallan() {
                         }
                         {
                             step === 1 && <>
-                                <div className="mt-6 space-y-4 overflow-y-auto h-[calc(100vh-280px)] w-full">
+                                <div className="mt-4 space-y-2 overflow-y-auto h-[calc(100vh-280px)] w-full">
                                     {
                                         challanItems.map((_, index) => {
                                             return <>

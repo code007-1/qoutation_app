@@ -101,7 +101,7 @@ export default function ChallanAutocompleteSearch({ index }: { index: number }) 
     };
 
     return (
-        <div className="grid grid-cols-10 relative w-auto gap-x-4">
+        <div className="grid grid-cols-10 relative w-auto gap-x-2">
             <input
                 ref={inputRef}
                 type="text"

@@ -110,104 +110,107 @@ export default function QuotationAutocompleteSearch({ index }: { index: number }
     };
 
     return (
-        <div className="flex relative w-auto gap-x-4">
-            <input
-                ref={inputRef}
-                type="text"
-                value={items[index].name}
-                onChange={handleInputChange}
-                onBlur={handleBlur}
-                onFocus={handleFocus}
-                onKeyDown={handleKeyDown}
-                className="w-[26%] p-2 border border-border bg-background text-textPrimary focus:outline-textPrimary"
-                placeholder="Search Product..."
-                autoComplete="off"
-            />
-            {showSuggestions && (
-                <ul className="z-10 absolute top-full -left-0 right-0 bg-buttonHover border border-border overflow-y-auto w-[24%] max-h-96">
-                    {filtered.map((s, idx) => (
-                        <li
-                            key={s.id}
-                            onMouseDown={() => handleSuggestionClick(s)}
-                            className={`${idx === highlighted ? "bg-buttonHover" : "bg-background"} p-2 cursor-pointer text-textSecondary`}
-                            onMouseEnter={() => setHighlighted(idx)}
-                        >
-                            {s.name}
-                        </li>
-                    ))}
-                </ul>
-            )}
-            <textarea
-                placeholder="Any prodcut description..."
-                className="p-2 border w-[34%] border-border bg-background text-textPrimary focus:outline-textPrimary"
-                value={items[index].description}
-                rows={1}
-                onChange={(e) => {
-                    setItems(pre => {
-                        return pre.map((item, i) => i === index
-                            ? { ...items[index], description: e.target.value }
-                            : item);
-                    })
-                }}
-            />
-            <input
-                type="string"
-                placeholder="HSN"
-                className="border p-2 w-[10%] border-border bg-background text-textPrimary focus:outline-textPrimary"
-                value={items[index]?.hsn}
-                onChange={(e) => {
-                    setItems(pre => {
-                        return pre.map((item, i) => i === index
-                            ? { ...items[index], hsn: e.target.value }
-                            : item);
-                    })
-                }}
-            />
-            <input
-                type="number"
-                placeholder="Quantity"
-                className="border p-2 w-[10%] border-border bg-background text-textPrimary focus:outline-textPrimary"
-                value={items[index]?.quantity}
-                min={0}
-                onChange={(e) => {
-                    setItems(pre => {
-                        return pre.map((item, i) => i === index
-                            ? { ...items[index], quantity: Number(e.target.value || undefined) }
-                            : item);
-                    })
-                }}
-            />
+        <div className="flex relative w-auto gap-x-2">
+            <div className="grid grid-cols-11 gap-x-2 w-[98%]">
+                <div className="col-span-3 relative">
+                    <input
+                        ref={inputRef}
+                        type="text"
+                        value={items[index].name}
+                        onChange={handleInputChange}
+                        onBlur={handleBlur}
+                        onFocus={handleFocus}
+                        onKeyDown={handleKeyDown}
+                        className="w-full p-2 border border-border bg-background text-textPrimary focus:outline-textPrimary"
+                        placeholder="Search Product..."
+                        autoComplete="off"
+                    />
+                    {showSuggestions && (
+                        <ul className="w-full z-10 absolute top-full left-0 bg-buttonHover border border-border overflow-y-auto max-h-96">
+                            {filtered.map((s, idx) => (
+                                <li
+                                    key={s.id}
+                                    onMouseDown={() => handleSuggestionClick(s)}
+                                    className={`${idx === highlighted ? "bg-buttonHover" : "bg-background"} p-2 cursor-pointer text-textSecondary`}
+                                    onMouseEnter={() => setHighlighted(idx)}
+                                >
+                                    {s.name}
+                                </li>
+                            ))}
+                        </ul>
+                    )}
+                </div>
+                <textarea
+                    placeholder="Any prodcut description..."
+                    className="p-2 border col-span-4 border-border bg-background text-textPrimary focus:outline-textPrimary"
+                    value={items[index].description}
+                    rows={1}
+                    onChange={(e) => {
+                        setItems(pre => {
+                            return pre.map((item, i) => i === index
+                                ? { ...items[index], description: e.target.value }
+                                : item);
+                        })
+                    }}
+                />
+                <input
+                    type="string"
+                    placeholder="HSN"
+                    className="border p-2 border-border bg-background text-textPrimary focus:outline-textPrimary"
+                    value={items[index]?.hsn}
+                    onChange={(e) => {
+                        setItems(pre => {
+                            return pre.map((item, i) => i === index
+                                ? { ...items[index], hsn: e.target.value }
+                                : item);
+                        })
+                    }}
+                />
+                <input
+                    type="number"
+                    placeholder="Quantity"
+                    className="border p-2 border-border bg-background text-textPrimary focus:outline-textPrimary"
+                    value={items[index]?.quantity}
+                    min={0}
+                    onChange={(e) => {
+                        setItems(pre => {
+                            return pre.map((item, i) => i === index
+                                ? { ...items[index], quantity: Number(e.target.value || undefined) }
+                                : item);
+                        })
+                    }}
+                />
 
-            <input
-                type="number"
-                placeholder="Price"
-                className="border p-2 w-[10%] border-border bg-background text-textPrimary focus:outline-textPrimary"
-                value={items[index]?.price}
-                min={0}
-                onChange={(e) => {
-                    setItems(pre => {
-                        return pre.map((item, i) => i === index
-                            ? { ...items[index], price: Number(e.target.value || undefined) }
-                            : item);
-                    })
-                }}
-            />
+                <input
+                    type="number"
+                    placeholder="Price"
+                    className="border p-2 border-border bg-background text-textPrimary focus:outline-textPrimary"
+                    value={items[index]?.price}
+                    min={0}
+                    onChange={(e) => {
+                        setItems(pre => {
+                            return pre.map((item, i) => i === index
+                                ? { ...items[index], price: Number(e.target.value || undefined) }
+                                : item);
+                        })
+                    }}
+                />
 
-            <input
-                type="number"
-                placeholder="Addon %"
-                className="border p-2 w-[10%] border-border bg-background text-textPrimary focus:outline-textPrimary"
-                value={items[index]?.addon}
-                min={0}
-                onChange={(e) => {
-                    setItems(pre => {
-                        return pre.map((item, i) => i === index
-                            ? { ...items[index], addon: Number(e.target.value || undefined) }
-                            : item);
-                    })
-                }}
-            />
-
+                <input
+                    type="number"
+                    placeholder="Addon %"
+                    className="border p-2 border-border bg-background text-textPrimary focus:outline-textPrimary"
+                    value={items[index]?.addon}
+                    min={0}
+                    onChange={(e) => {
+                        setItems(pre => {
+                            return pre.map((item, i) => i === index
+                                ? { ...items[index], addon: Number(e.target.value || undefined) }
+                                : item);
+                        })
+                    }}
+                />
+            </div>
             <button className="hover:bg-headerBackground bg-buttonHover p-2" onClick={(e) => {
                 setItems(pre =>
                     pre.filter((_, i) => i != index)

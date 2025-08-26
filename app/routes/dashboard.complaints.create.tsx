@@ -43,7 +43,7 @@ export default function ComplaintsCreate() {
         }
         setComplaintsData((pre) => { return { ...pre, no: no, madeby: profile.username || "", date: new Date().toISOString().split("T")[0] } });
         setHeaderText("Complaint Details");
-    })
+    }, [])
 
     return (<>
         <AnimatePresence>
@@ -58,24 +58,24 @@ export default function ComplaintsCreate() {
                     <div className="mt-4 flex items-center align-middle">
                         <div className="grid grid-cols-3 gap-x-2 gap-y-2 w-full">
                             <div className="">
-                                <div className="text-sm font-semibold mr-2">Complaint No.</div>
-                                <input type="text" className="sm border border-border p-2 bg-background w-full" placeholder="Enter complaint no." value={complaintsData.no} onChange={(e) => { setComplaintsData(pre => { return { ...pre, no: e.target.value } }) }} />
+                                <label htmlFor="complaintNo" className="text-sm font-semibold">Complaint No.</label>
+                                <input id="complaintNo" type="text" className="sm border border-border p-2 bg-background w-full" placeholder="Enter complaint no." value={complaintsData.no} onChange={(e) => { setComplaintsData(pre => { return { ...pre, no: e.target.value } }) }} />
                             </div>
                             <div className="">
-                                <div className="text-sm font-semibold mr-2">Date & Time</div>
-                                <input type="datetime-local" color="white" name="date" id="date" pattern="\d{4}-\d{2}-\d{2}" placeholder="Date" className="border border-border h-10 bg-background w-full" value={complaintsData.date + "T" + complaintsData.time} onChange={e => { setComplaintsData(pre => { const dt = e.target.value.split("T"); return { ...pre, date: dt[0], time: dt[1] } }) }} />
+                                <label htmlFor="dateAndTime" className="text-sm font-semibold">Date & Time</label>
+                                <input id="dateAndTime" type="datetime-local" color="white" name="date" pattern="\d{4}-\d{2}-\d{2}" placeholder="Date" className="border border-border h-10 bg-background w-full" value={complaintsData.date + "T" + complaintsData.time} onChange={e => { setComplaintsData(pre => { const dt = e.target.value.split("T"); return { ...pre, date: dt[0], time: dt[1] } }) }} />
                             </div>
-                            <div>
+                            <div className="">
                                 <label htmlFor="complainingPartyName" className="text-sm font-semibold">Complaining Party Name</label>
                                 <input id="complainingPartyName" key={"address"} type="text" placeholder="Enter party Name" className="border border-border p-2 w-full bg-background" value={complaintsData.complainingParty} onChange={e => setComplaintsData(pre => { return { ...pre, complainingParty: e.target.value } })} />
                             </div>
                             <div className="">
-                                <div className="text-sm font-semibold mr-2">Complaint Type</div>
-                                <div>
+                                <label htmlFor="complaintType" className="text-sm font-semibold">Complaint Type</label>
+                                <div id="complaintType">
                                     <Listbox value={complaintsData.type} onChange={e => { setComplaintsData(pre => { return { ...pre, type: e } }) }}>
                                         <div className="relative">
                                             <ListboxButton className="flex items-center justify-between hover:bg-buttonHover px-2 border border-border py-2 w-full">
-                                                <div className="text-textSecondary mr-2">{complaintsData.type}</div>
+                                                <div className="text-textSecondary">{complaintsData.type}</div>
                                                 <ChevronDown className="text-textPrimary" />
                                             </ListboxButton>
 
@@ -100,8 +100,8 @@ export default function ComplaintsCreate() {
                                 </div>
                             </div>
                             <div className="">
-                                <div className="text-sm font-semibold mr-2">Assigned Engineer</div>
-                                <div>
+                                <label htmlFor="assignedEngineer" className="text-sm font-semibold mr-2">Assigned Engineer</label>
+                                <div id="assignedEngineer">
                                     <Listbox value={complaintsData.attendingEngineer} onChange={e => { setComplaintsData(pre => { return { ...pre, attendingEngineer: e } }) }}>
                                         <div className="relative">
                                             <ListboxButton className="flex items-center justify-between hover:bg-buttonHover px-2 border border-border py-2 w-full">

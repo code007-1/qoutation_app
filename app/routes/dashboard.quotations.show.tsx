@@ -82,7 +82,7 @@ const QuotationsShow = () => {
         setHeaderText(createQuotation);
         if (dataCount === 0)
             getQoutes();
-    });
+    }, []);
 
     return (
         <>

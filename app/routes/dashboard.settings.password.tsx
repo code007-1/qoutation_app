@@ -10,7 +10,7 @@ export default function SettingsPassword() {
 
     useEffect(() => {
         setHeaderText("Change Password");
-    });
+    }, []);
 
     async function handleSubmit(event: any) {
         event.preventDefault();

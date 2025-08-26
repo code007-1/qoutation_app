@@ -45,7 +45,7 @@ export default function MainMenu() {
                                 className="flex px-4 py-2 text-sm text-textSecondary data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
                             >
                                 <ScrollText size={20} className="mr-2" />
-                                Quotation&apos;s Home
+                                Quotation Home
                             </Link>
                         </MenuItem>
                         <MenuItem>
@@ -54,7 +54,7 @@ export default function MainMenu() {
                                 className="flex px-4 py-2 text-sm text-textSecondary data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
                             >
                                 <NotepadText size={20} className="mr-2" />
-                                Challan"s Home
+                                Challan Home
                             </Link>
                         </MenuItem>
                         <MenuItem>
@@ -63,7 +63,7 @@ export default function MainMenu() {
                                 className="flex px-4 py-2 text-sm text-textSecondary data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
                             >
                                 <NotepadText size={20} className="mr-2" />
-                                Complaint"s Home
+                                Complaint Home
                             </Link>
                         </MenuItem>
                     </div>
