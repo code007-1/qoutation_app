@@ -46,13 +46,13 @@ export async function createPdf(data: QuotationData | ChallanData, fetcher: any,
     let filteredItems;
     if (type === "quotation") {
         filteredItems = data.items.filter((item: any) => {
-            if (!Number.isFinite(item.price) || !Number.isFinite(item.quantity)) return false;
+            if (!isFinite(item.price) || !isFinite(item.quantity)) return false;
             else return true;
         })
     }
     else if (type === "challan") {
         filteredItems = data.items.filter((item: any) => {
-            if (!Number.isFinite(item.quantity)) return false;
+            if (!isFinite(item.quantity)) return false;
             else return true;
         })
     }
@@ -208,7 +208,7 @@ export default function QuotationsCreate() {
                                             <div className="col-span-1 p-2">HSN</div>
                                             <div className="col-span-1 p-2">Quantity</div>
                                             <div className="col-span-1 p-2">Price</div>
-                                            <div className="col-span-1 p-2">Addon (%)</div>
+                                            <div className="col-span-1 p-2">Addon %</div>
                                         </div>
                                         <button className="invisible p-2"><Minus className="text-textSecondary" /></button>
                                     </div>

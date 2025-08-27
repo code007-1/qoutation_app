@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { QuotationsColumns } from "~/component/quotation/quotationColumns";
+import { complaintColumn } from "~/component/complaints/complaintColumns";
 import QuotationsTableUI from "~/component/quotation/quotationsTableUI";
 import { createComplaint, initialQuotationData, useGlobalContext } from "~/modules/gcontext";
 import { useCentralFetcher } from "~/component/centralFetcher";
@@ -89,7 +89,7 @@ const ComplaintShow = () => {
                 <div>
                     <QuotationsTableUI
                         data={quoteData}
-                        columns={QuotationsColumns}
+                        columns={complaintColumn}
                         searchLabel="Search by Name or job title"
                         EmptyText="No Quotations Found!"
                         isFetching={loading}

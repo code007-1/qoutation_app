@@ -90,18 +90,20 @@ export const initialChallanData = () => {
 }
 
 export const initialComplaintsData = () => {
+    const dateTime = new Date().toISOString().split("T");
     return {
         no: `Govt-${1}`,
-        date: new Date().toISOString().split("T")[0], // Default to today"s date
-        time: new Date().toTimeString(),
+        date: dateTime[0], // Default to today"s date
+        time: dateTime[1].split(".")[0],
         type: "Government",
-        complainingParty: "",
-        partyNumber: "",
+        contactPerson: "",
+        contactNumber: "",
         complaint: "",
-        partyAddress: "",
-        attendingEngineer: "Yashwant",
+        address: "",
+        attendingEngineer: "Not Assigned",
         madeby: "",
-        remarks: []
+        remarks: "",
+        status: "pending"
     }
 }
 

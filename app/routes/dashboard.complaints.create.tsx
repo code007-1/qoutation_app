@@ -5,19 +5,21 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useCentralFetcher } from "~/component/centralFetcher";
 import { Listbox, ListboxButton, ListboxOption, ListboxOptions } from "@headlessui/react";
 import { ChevronDown } from "lucide-react";
+import constData from "../../assets/data.json";
 
 export type ComplaintsData = {
     no: string;
     type: string;
     date: string;
     time: string;
-    complainingParty: string;
-    partyNumber: string;
+    contactPerson: string;
+    contactNumber: string;
     complaint: string;
-    partyAddress: string;
+    nameOrAddress: string;
     attendingEngineer: string;
-    madeby: string;
-    remarks: string[];
+    recordedby: string;
+    remarks: string;
+    status: string;
 };
 
 export default function ComplaintsCreate() {
@@ -37,11 +39,16 @@ export default function ComplaintsCreate() {
 
     useEffect(() => {
         let no = "Govt-1";
+        const d = new Date().toISOString().split("T");
+        let date = d[0];
+        let time = d[1].split(".")[0];
 
         if (passedData && passedData?.editing === true) {
             no = complaintsData.no;
+            date = complaintsData.date;
+            time = complaintsData.time;
         }
-        setComplaintsData((pre) => { return { ...pre, no: no, madeby: profile.username || "", date: new Date().toISOString().split("T")[0] } });
+        setComplaintsData((pre) => { return { ...pre, no: no, madeby: profile.username || "", date: date, time: time } });
         setHeaderText("Complaint Details");
     }, [])
 
@@ -54,106 +61,131 @@ export default function ComplaintsCreate() {
                 exit={{ opacity: 1 }}
                 transition={{ duration: 0.4 }}
             >
-                <div className="text-textSecondary">
-                    <div className="mt-4 flex items-center align-middle">
-                        <div className="grid grid-cols-3 gap-x-2 gap-y-2 w-full">
-                            <div className="">
-                                <label htmlFor="complaintNo" className="text-sm font-semibold">Complaint No.</label>
-                                <input id="complaintNo" type="text" className="sm border border-border p-2 bg-background w-full" placeholder="Enter complaint no." value={complaintsData.no} onChange={(e) => { setComplaintsData(pre => { return { ...pre, no: e.target.value } }) }} />
-                            </div>
-                            <div className="">
-                                <label htmlFor="dateAndTime" className="text-sm font-semibold">Date & Time</label>
-                                <input id="dateAndTime" type="datetime-local" color="white" name="date" pattern="\d{4}-\d{2}-\d{2}" placeholder="Date" className="border border-border h-10 bg-background w-full" value={complaintsData.date + "T" + complaintsData.time} onChange={e => { setComplaintsData(pre => { const dt = e.target.value.split("T"); return { ...pre, date: dt[0], time: dt[1] } }) }} />
-                            </div>
-                            <div className="">
-                                <label htmlFor="complainingPartyName" className="text-sm font-semibold">Complaining Party Name</label>
-                                <input id="complainingPartyName" key={"address"} type="text" placeholder="Enter party Name" className="border border-border p-2 w-full bg-background" value={complaintsData.complainingParty} onChange={e => setComplaintsData(pre => { return { ...pre, complainingParty: e.target.value } })} />
-                            </div>
-                            <div className="">
-                                <label htmlFor="complaintType" className="text-sm font-semibold">Complaint Type</label>
-                                <div id="complaintType">
-                                    <Listbox value={complaintsData.type} onChange={e => { setComplaintsData(pre => { return { ...pre, type: e } }) }}>
-                                        <div className="relative">
-                                            <ListboxButton className="flex items-center justify-between hover:bg-buttonHover px-2 border border-border py-2 w-full">
-                                                <div className="text-textSecondary">{complaintsData.type}</div>
-                                                <ChevronDown className="text-textPrimary" />
-                                            </ListboxButton>
+                <div className="mt-4 flex items-center align-middle text-textSecondary">
+                    <div className="grid grid-cols-3 gap-x-2 gap-y-2 w-full">
+                        <div className="">
+                            <label htmlFor="complaintNo" className="text-sm font-semibold">Complaint No.</label>
+                            <input id="complaintNo" type="text" className="sm border border-border p-2 bg-background w-full" placeholder="Enter complaint no." value={complaintsData.no} onChange={(e) => { setComplaintsData(pre => { return { ...pre, no: e.target.value } }) }} />
+                        </div>
+                        <div className="">
+                            <label htmlFor="dateAndTime" className="text-sm font-semibold">Date & Time</label>
+                            <input id="dateAndTime" type="datetime-local" color="white" name="date" pattern="\d{4}-\d{2}-\d{2}" placeholder="Date" className="border border-border h-10 bg-background w-full" value={complaintsData.date + "T" + complaintsData.time} onChange={e => { setComplaintsData(pre => { const dt = e.target.value.split("T"); return { ...pre, date: dt[0], time: dt[1] } }) }} />
+                        </div>
+                        <div className="">
+                            <label htmlFor="complaintType" className="text-sm font-semibold">Complaint Type</label>
+                            <div id="complaintType">
+                                <Listbox value={complaintsData.type} onChange={e => { setComplaintsData(pre => { return { ...pre, type: e } }) }}>
+                                    <div className="relative">
+                                        <ListboxButton className="flex items-center justify-between hover:bg-buttonHover px-2 border border-border py-2 w-full">
+                                            <div className="text-textSecondary">{complaintsData.type}</div>
+                                            <ChevronDown className="text-textPrimary" />
+                                        </ListboxButton>
 
-                                            <ListboxOptions
-                                                transition
-                                                className="absolute -right-34 z-10 w-[100%] mt-2 origin-top-right rounded-sm bg-background shadow-lg ring-1 ring-black/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
-                                            >
-                                                <div className="p-1">
-                                                    {["Government", "Private"].map((category) => (
-                                                        <ListboxOption
-                                                            key={category}
-                                                            value={category}
-                                                            className="block px-4 py-2 text-sm text-textSecondary data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
-                                                        >
-                                                            {category}
-                                                        </ListboxOption>
-                                                    ))}
-                                                </div>
-                                            </ListboxOptions>
-                                        </div>
-                                    </Listbox>
-                                </div>
-                            </div>
-                            <div className="">
-                                <label htmlFor="assignedEngineer" className="text-sm font-semibold mr-2">Assigned Engineer</label>
-                                <div id="assignedEngineer">
-                                    <Listbox value={complaintsData.attendingEngineer} onChange={e => { setComplaintsData(pre => { return { ...pre, attendingEngineer: e } }) }}>
-                                        <div className="relative">
-                                            <ListboxButton className="flex items-center justify-between hover:bg-buttonHover px-2 border border-border py-2 w-full">
-                                                <div className="text-textSecondary mr-2">{complaintsData.attendingEngineer}</div>
-                                                <ChevronDown className="text-textPrimary" />
-                                            </ListboxButton>
-
-                                            <ListboxOptions
-                                                transition
-                                                className="absolute -right-34 h-60 overflow-y-scroll z-10 mt-2 w-full origin-top-right rounded-sm bg-background shadow-lg ring-1 ring-black/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
-                                            >
-                                                <div className="p-1">
-                                                    {["Abhishek Mishra", "Abhishek Luthra", "Abhishek Verma", "Gulshan", "Mukesh Chand", "Prakhar", "Rahul", "Raj", "Roshan", "Saurav", "Shaifali", "Vishal", "Yashwant"].map((category) => (
-                                                        <ListboxOption
-                                                            key={category}
-                                                            value={category}
-                                                            className="block px-4 py-2 text-sm text-textSecondary data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
-                                                        >
-                                                            {category}
-                                                        </ListboxOption>
-                                                    ))}
-                                                </div>
-                                            </ListboxOptions>
-                                        </div>
-                                    </Listbox>
-                                </div>
-                            </div>
-                            <div>
-                                <label htmlFor="contactNumber" className="text-sm font-semibold">Contact Number</label>
-                                <input id="contactNumber" key={"second"} type="text" placeholder="Enter contact number" className="border border-border p-2 w-full bg-background" value={complaintsData.partyNumber} onChange={e => setComplaintsData(pre => { return { ...pre, partyNumber: e.target.value } })} />
-                            </div>
-                            <div>
-                                <label htmlFor="address" className="text-sm font-semibold">Address</label>
-                                <textarea id="address" rows={5} placeholder="Enter address" className="p-2 border border-border w-full bg-background" value={complaintsData.partyAddress} onChange={e => setComplaintsData(pre => { return { ...pre, partyAddress: e.target.value } })} />
-                            </div>
-                            <div >
-                                <label htmlFor="complaint" className="text-sm font-semibold">Complaint</label>
-                                <textarea id="complaint" rows={5} placeholder="Enter complaint" className="p-2 border border-border w-full bg-background" value={complaintsData.complaint} onChange={e => setComplaintsData(pre => { return { ...pre, complaint: e.target.value } })} />
-                            </div>
-
-                            <div>
-                                <label htmlFor="remakrs" className="text-sm font-semibold">Remarks</label>
-                                <textarea id="remarks" rows={5} placeholder="Enter remarks" className="p-2 border border-border w-full bg-background" value={complaintsData.remarks} onChange={e => setComplaintsData(pre => { return { ...pre, remarks: [e.target.value] } })} />
+                                        <ListboxOptions
+                                            transition
+                                            className="absolute -right-34 z-10 w-[100%] mt-2 origin-top-right rounded-sm bg-background shadow-lg ring-1 ring-black/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
+                                        >
+                                            <div className="p-1">
+                                                {constData.complaintType.map((category) => (
+                                                    <ListboxOption
+                                                        key={category}
+                                                        value={category}
+                                                        className="block px-4 py-2 text-sm text-textSecondary data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
+                                                    >
+                                                        {category}
+                                                    </ListboxOption>
+                                                ))}
+                                            </div>
+                                        </ListboxOptions>
+                                    </div>
+                                </Listbox>
                             </div>
                         </div>
-                    </div>
+                        <div className="">
+                            <label htmlFor="contactpersonName" className="text-sm font-semibold">Contact Person Name</label>
+                            <input id="contactpersonName" key={"address"} type="text" placeholder="Enter Contact Person Name" className="border border-border p-2 w-full bg-background" value={complaintsData.contactPerson} onChange={e => setComplaintsData(pre => { return { ...pre, contactPerson: e.target.value } })} />
+                        </div>
+                        <div>
+                            <label htmlFor="contactNumber" className="text-sm font-semibold">Contact Number</label>
+                            <input id="contactNumber" key={"second"} type="text" placeholder="Enter contact number" className="border border-border p-2 w-full bg-background" value={complaintsData.contactNumber} onChange={e => setComplaintsData(pre => { return { ...pre, contactNumber: e.target.value } })} />
+                        </div>
+                        <div className="">
+                            <label htmlFor="assignedEngineer" className="text-sm font-semibold mr-2">Assigned Engineer</label>
+                            <div id="assignedEngineer">
+                                <Listbox value={complaintsData.attendingEngineer} onChange={e => { setComplaintsData(pre => { return { ...pre, attendingEngineer: e } }) }}>
+                                    <div className="relative">
+                                        <ListboxButton className="flex items-center justify-between hover:bg-buttonHover px-2 border border-border py-2 w-full">
+                                            <div className="text-textSecondary mr-2">{complaintsData.attendingEngineer}</div>
+                                            <ChevronDown className="text-textPrimary" />
+                                        </ListboxButton>
 
-                    <div className="flex flex-col items-center">
-                        <button onClick={saveComplaint} className="bg-button text-buttonTextPrimary px-4 py-1 mt-4 text-lg">
-                            Save
-                        </button>
+                                        <ListboxOptions
+                                            transition
+                                            className="absolute -right-34 h-60 overflow-y-scroll z-10 mt-2 w-full origin-top-right rounded-sm bg-background shadow-lg ring-1 ring-black/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
+                                        >
+                                            <div className="p-1">
+                                                {constData.Engineers.map((category) => (
+                                                    <ListboxOption
+                                                        key={category}
+                                                        value={category}
+                                                        className="block px-4 py-2 text-sm text-textSecondary data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
+                                                    >
+                                                        {category}
+                                                    </ListboxOption>
+                                                ))}
+                                            </div>
+                                        </ListboxOptions>
+                                    </div>
+                                </Listbox>
+                            </div>
+                        </div>
+                        <div>
+                            <label htmlFor="nameOrAddress" className="text-sm font-semibold">Name or Address</label>
+                            <textarea id="nameOrAddress" rows={3} placeholder="Enter name or address details" className="p-2 border border-border w-full bg-background" value={complaintsData.nameOrAddress} onChange={e => setComplaintsData(pre => { return { ...pre, nameOrAddress: e.target.value } })} />
+                        </div>
+                        <div >
+                            <label htmlFor="complaint" className="text-sm font-semibold">Complaint</label>
+                            <textarea id="complaint" rows={3} placeholder="Enter complaint" className="p-2 border border-border w-full bg-background" value={complaintsData.complaint} onChange={e => setComplaintsData(pre => { return { ...pre, complaint: e.target.value } })} />
+                        </div>
+
+                        <div>
+                            <label htmlFor="remakrs" className="text-sm font-semibold">Remarks</label>
+                            <textarea id="remarks" rows={3} placeholder="Enter remarks" className="p-2 border border-border w-full bg-background" value={complaintsData.remarks} onChange={e => setComplaintsData(pre => { return { ...pre, remarks: e.target.value } })} />
+                        </div>
                     </div>
+                </div>
+                <div className="flex items-center gap-x-2 justify-center">
+                    <div className="font-medium">Status</div>
+                    <Listbox value={complaintsData.status} onChange={e => { setComplaintsData(pre => { return { ...pre, status: e } }) }}>
+                        <div className="relative flex justify-center">
+                            <ListboxButton className="flex items-center justify-between hover:bg-buttonHover px-2 border border-border py-2">
+                                <div className="text-textSecondary">{complaintsData.status}</div>
+                                <ChevronDown className="text-textPrimary" />
+                            </ListboxButton>
+
+                            <ListboxOptions
+                                transition
+                                className="absolute -right-34 top-10 z-10 mt-2 origin-top-right rounded-sm bg-background shadow-lg ring-1 ring-black/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
+                            >
+                                <div className="p-1">
+                                    {constData.complaintStatus.map((category) => (
+                                        <ListboxOption
+                                            key={category}
+                                            value={category}
+                                            className="block px-4 py-2 text-sm text-textSecondary data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
+                                        >
+                                            {category}
+                                        </ListboxOption>
+                                    ))}
+                                </div>
+                            </ListboxOptions>
+                        </div>
+                    </Listbox>
+                </div>
+                <div className="flex flex-col items-center">
+                    <button onClick={saveComplaint} className="bg-button text-buttonTextPrimary px-4 py-1 mt-4 text-lg">
+                        Save
+                    </button>
                 </div>
             </motion.div>
         </AnimatePresence >
