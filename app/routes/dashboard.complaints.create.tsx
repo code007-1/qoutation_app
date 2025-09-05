@@ -154,8 +154,8 @@ export default function ComplaintsCreate() {
                         </div>
                     </div>
                 </div>
-                <div className="flex items-center gap-x-2 justify-center">
-                    <div className="font-medium">Status</div>
+                <div className="flex items-center gap-x-2 justify-center text-textSecondary">
+                    <div className="text-sm font-semibold">Status</div>
                     <Listbox value={complaintsData.status} onChange={e => { setComplaintsData(pre => { return { ...pre, status: e } }) }}>
                         <div className="relative flex justify-center">
                             <ListboxButton className="flex items-center justify-between hover:bg-buttonHover px-2 border border-border py-2">

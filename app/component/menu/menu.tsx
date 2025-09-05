@@ -1,11 +1,15 @@
-import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
+import { Button, Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { Link } from "@remix-run/react";
-import { AlignRight, Info, LogOut, NotepadText, RotateCcwKey, ScrollText, UserPen } from "lucide-react";
+import { AlignRight, Info, LogOut, NotebookText, NotepadText, Power, RotateCcwKey, ScrollText, UserPen } from "lucide-react";
 import { useGlobalContext } from "~/modules/gcontext";
 import { useCentralFetcher } from "../centralFetcher";
+import About from "./about123";
+import { useState } from "react";
 
 export default function MainMenu() {
     const { profile, setAccessToken } = useGlobalContext();
+    let [isOpen, setIsOpen] = useState(false);
+
     let text = "";
     if (profile.username) {
         text = profile.username?.slice(0, 1).toLocaleUpperCase() + profile.username?.slice(1);
@@ -26,6 +30,7 @@ export default function MainMenu() {
 
     return (
         <>
+            {isOpen && <About isOpen={isOpen} setIsOpen={setIsOpen} />}
             <Menu as="div" className="relative inline-block text-left">
                 <div>
                     <MenuButton className="flex mr-10 items-center hover:bg-buttonHover px-2">
@@ -33,7 +38,6 @@ export default function MainMenu() {
                         <AlignRight className="text-textPrimary" />
                     </MenuButton>
                 </div>
-
                 <MenuItems
                     transition
                     className="absolute right-10 z-10 mt-2 w-48 origin-top-right divide-y divide-border rounded-sm bg-background shadow-lg ring-1 ring-black/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
@@ -59,10 +63,10 @@ export default function MainMenu() {
                         </MenuItem>
                         <MenuItem>
                             <Link
-                                to="/dashboard/complaints/show"
+                                to="/dashboard/About"
                                 className="flex px-4 py-2 text-sm text-textSecondary data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
                             >
-                                <NotepadText size={20} className="mr-2" />
+                                <NotebookText size={20} className="mr-2" />
                                 Complaint Home
                             </Link>
                         </MenuItem>
@@ -87,20 +91,28 @@ export default function MainMenu() {
                                 Update Password
                             </Link>
                         </MenuItem>
-
+                        <MenuItem>
+                            <button
+                                className="w-full flex px-4 py-2 text-sm text-textSecondary data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
+                                onClick={() => { setIsOpen(true); }}
+                            >
+                                <Info size={20} className="mr-2" />
+                                About
+                            </button>
+                        </MenuItem>
                         <form onSubmit={handleSubmit}>
                             <MenuItem>
                                 <button
                                     type="submit"
                                     className="flex w-full px-4 py-2 text-left text-sm text-textSecondary data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
                                 >
-                                    <LogOut size={20} className="mr-2" />
+                                    <Power size={20} className="mr-2" />
                                     Log Out
                                 </button>
                             </MenuItem>
                         </form>
                     </div>
                 </MenuItems>
-            </Menu>
+            </Menu >
         </>);
 }

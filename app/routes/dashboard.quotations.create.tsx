@@ -40,6 +40,7 @@ export type QuotationData = {
     website?: string;
     pdfColor?: string;
     showLinks?: boolean;
+    todealer?: boolean
 };
 
 export async function createPdf(data: QuotationData | ChallanData, fetcher: any, showCustomerList?: boolean, save: boolean = true, type: string = "quotation") {
@@ -146,17 +147,30 @@ export default function QuotationsCreate() {
                             <Switch
                                 checked={data.showLinks}
                                 onChange={(e) => { setData(pre => { return { ...pre, showLinks: e } }) }}
-                                className={`ml-4 ${data.showLinks ? "bg-button/75" : "bg-buttonHover"}
+                                className={`${data.showLinks ? "bg-button/75" : "bg-buttonHover"}
                                       relative inline-flex h-[24px] w-[40px] shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2`}
                             >
-                                <span className="sr-only">Show Customer Lists : </span>
                                 <span
                                     aria-hidden="true"
                                     className={`${data.showLinks ? "translate-x-4" : "translate-x-0"}
                                         pointer-events-none inline-block h-[20px] w-[20px] transform rounded-full bg-buttonTextPrimary shadow-lg ring-0 transition duration-200 ease-in-out`}
                                 />
                             </Switch>
+                            <div className="text-sm font-semibold ml-10 mr-2">To Dealer</div>
+                            <Switch
+                                checked={data.todealer}
+                                onChange={(e) => { setData(pre => { return { ...pre, todealer: e } }) }}
+                                className={` ${data.todealer ? "bg-button/75" : "bg-buttonHover"}
+                                      relative inline-flex h-[24px] w-[40px] shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2`}
+                            >
+                                <span
+                                    aria-hidden="true"
+                                    className={`${data.todealer ? "translate-x-4" : "translate-x-0"}
+                                        pointer-events-none inline-block h-[20px] w-[20px] transform rounded-full bg-buttonTextPrimary shadow-lg ring-0 transition duration-200 ease-in-out`}
+                                />
+                            </Switch>
                         </div>
+
                         {step === 1 &&
                             <div className="w-1/4 flex justify-end">
                                 <button onClick={addItem} className="bg-button text-buttonTextPrimary px-4 py-1 text-lg">
@@ -247,7 +261,6 @@ export default function QuotationsCreate() {
                                 </div>
                             </>
                         }
-
                         {
                             step === 2 &&
                             <>
@@ -274,6 +287,6 @@ export default function QuotationsCreate() {
                     </div>
                 </div>
             </motion.div>
-        </AnimatePresence>
+        </AnimatePresence >
     </>);
 }

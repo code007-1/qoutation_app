@@ -23,5 +23,22 @@
     "complaintStatus": [
         "Pending",
         "Done"
+    ],
+    "challanType": [
+        "Delivery Challan",
+        "MIS Challan"
+    ],
+    "challanCatorgoies": [
+        "Dealer Sale",
+        "Gem Sale",
+        "Private Sale",
+        "Govt. Sale",
+        "MTNL Sale",
+        "Private Standby",
+        "Private Client Property Return",
+        "Vendor Reparing",
+        "Govt. Standby",
+        "MTNL Standby",
+        "Govt. Client Property Return"
     ]
 }

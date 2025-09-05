@@ -1,390 +1,394 @@
-﻿id,name,description,hsn,price,link
-1,MATRIX SPARSH VP210,Standard SIP Entry-level Phone with PoE,851762,3751,https://www.indiamart.com/proddetail/sparsh-vp-210-matrix-black-ip-telephone-sip-landline-phone-voip-phone-26014798212.html
-2,MATRIX SPARSH VP510E,Standard SIP Premium Phone with PoE,851762,5556,https://www.indiamart.com/proddetail/matrix-black-sparsh-vp-510e-sip-landline-phone-ip-phone-voip-landline-telephone-26014530473.html
-3,MATRIX EON510,Digital Key Phone,851762,5061,https://www.indiamart.com/proddetail/matrix-eon-510-digital-phone-black-digital-key-phone-kts-wired-for-office-and-home-use-26014367862.html
-4,MATRIX DSS532,IP/DSS Console for IP/Digital Phones,851762,3948,
-5,MATRIX SIMADO GFX11,GSM FCT for Voice Applications,851762,4319,https://www.indiamart.com/proddetail/matrix-simado-gfx11-fixed-cellular-terminal-gsm-gateway-device-use-gsm-sim-with-analog-telephones-26020023812.html
-6,MATRIX SIMADO GFX11 4G,GSM/4G FCT for Voice Applications,851762,6794,https://www.indiamart.com/proddetail/4g-matrix-simado-gfx11-fct-device-fixed-cellular-terminal-or-gsm-gateway-device-26015644748.html
-7,MATRIX SIMADO GFX11E,GSM FCT for Emergency Applications,851762,5556,
-8,MATRIX SIMADO GFX11E 4G,GSM/4G FCT for Emergency Applications,851762,8031,
-9,MATRIX SIMADO GFX44,"GSM-FXS Gateway with 4 GSM, 4 FXS Ports",851762,13600,https://www.indiamart.com/proddetail/4-port-matrix-simado-gfx44-gsm-fct-gsm-media-gateway-device-26020093348.html
-10,MATRIX SETU VFX404,"VoIP-FXO-FXS Gateway with 4 FXS, 4 VoIP Channels",851762,9888,https://www.indiamart.com/proddetail/matrix-setu-vfx404-voip-fxo-fxs-gateway-26015675455.html
-11,MATRIX SETU VFX440,"VoIP-FXO-FXS Gateway with 4 FXO, 4 VoIP Channels",851762,11744,https://www.indiamart.com/proddetail/matrix-setu-vfx440-voip-gateway-26020274612.html
-12,MATRIX SETU VFX808,"VoIP-FXO-FXS Gateway with 8 FXS, 8 VoIP Channels",851762,12363,https://www.indiamart.com/proddetail/matrix-setu-vfx808-voip-gateway-or-fxs-gateway-for-epabx-system-26021251112.html
-13,MATRIX SETU VFX880,"VoIP-FXO-FXS Gateway with 8 FXO, 8 VoIP Channels",851762,14838,https://www.indiamart.com/proddetail/matrix-setu-vfx880-voip-ip-sip-to-fxo-gateway-26020516830.html
-14,MATRIX SETU VFX844,"VoIP-FXO-FXS Gateway with 4 FXO, 4 FXS, 8 VoIP Channels",851762,13600,https://www.indiamart.com/proddetail/matrix-setu-vfx844-voip-fxo-fxs-gateway-26020678588.html
-15,MATRIX SETU VFXTH0016,"VoIP-FXO-FXS Gateway with 16 FXS, 16 VoIP Channels",851762,23501,https://www.indiamart.com/proddetail/matrix-setu-vfxth0016-voip-gateway-or-fxs-gateway-for-ip-pbx-epabx-system-26020829633.html
-16,MATRIX SETU VFXTH0024,"VoIP-FXO-FXS Gateway with 24 FXS, 24 VoIP Channels",851762,29379,https://www.indiamart.com/proddetail/matrix-setu-vfxth0024-voip-to-fxs-media-gateway-26020954691.html
-17,MATRIX SETU VFXTH0032,"VoIP-FXO-FXS Gateway with 32 FXS, 32 VoIP Channels",851762,35257,https://www.indiamart.com/proddetail/matrix-setu-vfxth-0032-voip-fxs-gateway-26021083473.html
-18,MATRIX SETU VFXTH0808,"VoIP-FXO-FXS Gateway with 8 FXO, 8 FXS, 16 VoIP Channels",851762,30925,https://www.indiamart.com/proddetail/matrix-setu-vfxth0808-fxs-fxo-media-gateway-2853174691233.html
-19,MATRIX SETU VFXTH3200,"VoIP-FXO-FXS Gateway with 32 FXO, 32 VoIP Channels",851762,49488,https://www.indiamart.com/proddetail/matrix-voip-ip-sip-to-fxo-media-gateway-setu-vfxth3200-26021207697.html
-20,MATRIX SETU VTEP1P,VoIP PRI Gateway,851762,28204,https://www.indiamart.com/proddetail/matrix-setu-vtep1p-1-port-pri-converter-2853178973188.html
-21,MATRIX SETU VTEP2P,VoIP PRI Gateway with 2 PRI Ports,851762,47014,https://www.indiamart.com/proddetail/matrix-setu-vtep2p-2-port-voip-pri-converter-2853179758933.html
-22,MATRIX SETU VTEP3P,VoIP PRI Gateway with 3 PRI Ports,851762,64648,https://www.indiamart.com/proddetail/matrix-setu-vtep3p-3-port-pri-converter-2853180900773.html
-23,MATRIX SETU VTEP4P,VoIP PRI Gateway with 4 PRI Ports,851762,82282,https://www.indiamart.com/proddetail/matrix-setu-vtep4p-4-port-pri-to-voip-gateway-pri-converter-2853181669255.html
-24,MATRIX VISIONPRO206,"SOHO Digital PBX with 2 CO, 6 SLT",851762,6175,
-25,MATRIX VISIONPRO308,"SOHO Digital PBX with 3 CO, 8 SLT",851762,7413,https://www.indiamart.com/proddetail/matrix-vision-pro-308-epabx-system-telephone-intercom-system-26102036455.html
-26,MATRIX VISIONPRO412,"SOHO Digital PBX with 4 CO, 12 SLT",851762,9888,https://www.indiamart.com/proddetail/matrix-vision-pro-412-ip-pbx-system-epabx-system-26102089297.html
-27,MATRIX ETERNITY NENX312,"SOHO IP-PBX with POTS, GSM and VoIP Connectivity",851762,14838,https://www.indiamart.com/proddetail/matrix-eternity-nenx-312-small-ip-pbx-system-epabx-system-26100046297.html
-28,MATRIX ETERNITY NENX416,"SOHO IP-PBX with POTS, GSM and VoIP Connectivity",851762,16694,https://www.indiamart.com/proddetail/matrix-eternity-nenx-416-small-ip-pbx-system-epabx-system-telephone-intercom-system-26100195248.html
-29,MATRIX ETERNITY NENXIP50,"SOHO IP-PBX with POTS, GSM and VoIP Connectivity",851762,16694,https://www.indiamart.com/proddetail/matrix-eternity-nenx-ip-50-small-ip-pbx-system-epabx-system-intercom-system-26100272488.html
-30,MATRIX ETERNITY NE VS,VoIP Server Module for ETERNITY NENX,851762,3700,https://www.indiamart.com/proddetail/eternity-ne-vs-voip-server-module-2854900359755.html
-31,MATRIX ETERNITY NE GSM,GSM Module for Voice Calls,851762,3700,https://www.indiamart.com/proddetail/eternity-ne-gsm-module-for-voice-calls-2854900877255.html
-32,MATRIX ETERNITY NE GSM 4G,GSM 4G Module for Voice Calls,851762,4938,https://www.indiamart.com/proddetail/eternity-ne-gsm-4g-module-for-voice-calls-2854885711473.html
-33,ETERNITY PENX6SAC,IP-PBX with Universal Connectivity and Mobile Extensions,851762,12363,https://www.indiamart.com/proddetail/matrix-eternity-penx-6s-ac-epabx-system-ip-pbx-system-telephone-intercom-system-for-offices-16679600462.html
-34,MATRIX ETERNITY PE CARD SLT4,Expansion Card for SLT,851762,2975,https://www.indiamart.com/proddetail/matrix-eternity-pe-card-slt4-matrix-analog-telephone-extension-card-26470115691.html
-35,MATRIX ETERNITY PE CARD SLT8,Expansion Card for Analog Extensions (SLT),851762,4535,https://www.indiamart.com/proddetail/matrix-eternity-slt8-pe-card-for-matrix-epabx-system-26470164455.html
-36,MATRIX ETERNITY PE CARD DKP8,Expansion Card for Digital Key Phones (DKP),851762,6484,https://www.indiamart.com/proddetail/matrix-eternity-pe-dkp8-card-digital-extension-card-for-matrix-intercom-system-26470217097.html
-37,MATRIX ETERNITY PE CARD CO2+SLT6,Expansion Card for CO and SLT,851762,5185,https://www.indiamart.com/proddetail/matrx-eternity-pe-co2-slt6-card-analog-extension-and-trunk-line-card-26470239733.html
-38,MATRIX ETERNITY PE CARD CO4+SLT4,Expansion Card for CO and SLT,851762,5185,https://www.indiamart.com/proddetail/matrix-eternity-pe-card-co4-slt4-matrix-trunk-line-and-analog-extension-card-26470318755.html
-39,MATRIX ETERNITY PE CARD DKP2+SLT6,Expansion Card for DKP and SLT,851762,5185,https://www.indiamart.com/proddetail/matrix-eternity-dkp2-slt6-pe-card-matrix-digital-and-analog-extension-card-26470352291.html
-40,MATRIX ETERNITY PE CARD CO2+DKP2+SLT4,"Expansion Card for Analog Trunks (CO), DKP and SLT",851762,5185,https://www.indiamart.com/proddetail/matrix-eternity-pe-co2-dkp2-slt4-card-matrix-trunk-line-card-digital-and-analog-extension-card-26470413048.html
-41,MATRIX  ETERNITY PE CARD T1E1PRI ,Expansion Card for T1/E1/PRI Port,851762,10902,https://www.indiamart.com/proddetail/matrix-eternity-t1e1pri-pe-card-for-matrix-intercom-system-26470474297.html
-42,MATRIX ETERNITY PE CARD GSM4,Expansion Card for GSM Ports,851762,16879,https://www.indiamart.com/proddetail/matrix-eternity-gsm4-pe-card-gsm-card-for-matrix-system-26470538788.html
-43,MATRIX ETERNITY PE CARD GSM4 4G,Expansion Card for GSM Ports,851762,25975,https://www.indiamart.com/proddetail/matrix-eternity-pe-gsm4-4g-card-for-matrix-telephone-system-26470595673.html
-44,MATRIX ETERNITY GENX12SAC,ETERNITY GENX Platform with CPU and AC Power Supply,851762,27212,https://www.indiamart.com/proddetail/matrix-eternity-genx12s-dc-epabx-system-interc1om-system-for-small-to-medium-businesses-2852662353788.html
-45,MATRIX ETERNITY GENX12SDC,ETERNITY GENX Platform with CPU Card and 48VDC Power Supply,851762,32657,https://www.indiamart.com/proddetail/matrix-eternity-genx12s-dc-epabx-system-interc1om-system-for-small-to-medium-businesses-2852662353788.html
-46,MATRIX ETERNITY GENX12S PSBB,ETERNITY GENX Platform with CPU and AC Power Supply with Battery Backup,851762,32657,
-47,MATRIX ETERNITY GE CARD SLT8,Expansion Card for SLT,851762,6112,https://www.indiamart.com/proddetail/matrix-eternity-ge-slt8-card-analog-extension-card-for-matrix-intercom-system-26469404362.html
-48,ETERNITY GE CARD SLT16,Expansion Card for SLT,851762,10877,https://www.indiamart.com/proddetail/matrix-eternity-slt16-ge-card-analog-extension-card-for-matrix-telephone-system-26469371830.html
-49,MATRIX ETERNITY GE CARD SLT20,Expansion Card for Analog Extensions (SLT),851762,13599,https://www.indiamart.com/proddetail/matrix-eternity-ge-card-slt20-analog-extension-card-for-matrix-telephone-system-26469313933.html
-50,MATRIX ETERNITY GE CARD DKP8,Expansion Card for DKP,851762,10877,https://www.indiamart.com/proddetail/matrix-eternity-ge-dkp8-card-for-matrix-telephone-system-26469471673.html
-51,MATRIX ETERNITY GE CARD DKP16,ETERNITY GE CARD DKP16,851762,19724,https://www.indiamart.com/proddetail/matrix-eternity-ge-card-dkp16-digital-extension-card-2854924069597.html
-52,MATRIX ETERNITY GE CARD CO8,Expansion Card for CO,851762,10877,https://www.indiamart.com/proddetail/matrix-eternity-co8-ge-trunk-line-card-for-matrix-telephone-system-26469869873.html
-53,MATRIX ETERNITY GE CARD CO16,Expansion Card for CO,851762,19044,https://www.indiamart.com/proddetail/matrix-eternity-ge-card-co16-matrix-trunk-line-card-26469836891.html
-54,MATRIX ETERNITY GE CARD CO4+SLT16,Expansion Card for CO and SLT,851762,19044,https://www.indiamart.com/proddetail/matrix-eternity-ge-card-co4-slt16-matrix-trunk-and-analog-extension-card-26469775512.html
-55,MATRIX ETERNITY GE CARD DKP4+SLT16,Expansion Card for DKP and SLT,851762,19044,https://www.indiamart.com/proddetail/matrix-eternity-ge-dkp4-slt16-card-matrix-digital-and-analog-extensions-card-26469512048.html
-56,MATRIX ETERNITY GE CARD CO4+DKP2+SLT8,"EXPANSION CARD FOR CO, DKP AND SLT",851762,16185,https://www.indiamart.com/proddetail/matrix-eternity-ge-card-co4-dkp2-slt8-matrix-trunk-line-card-digital-and-analog-extension-card-26469645888.html
-57,MATRIX ETERNITY GE CARD CO2+DKP2+SLT16,"EXPANSION CARD FOR CO, DKP AND SLT",851762,19044,https://www.indiamart.com/proddetail/matrix-eternity-ge-card-co2-dkp2-slt16-for-matrix-communication-system-26469690162.html
-58,MATRIX ETERNITY GE CARD CO4+DKP2+SLT12,"EXPANSION CARD FOR ANALOG TRUNKS (CO), DKP AND SLT",851762,19044,https://www.indiamart.com/proddetail/matrix-eternity-co4-dkp2-slt12-ge-card-trunk-line-digital-and-analog-extension-card-26469592048.html
-59,MATRIX ETERNITY GE CARD T1E1PRI SINGLE,EXPANSION CARD FOR T1/E1/PRI PORT,851762,16322,https://www.indiamart.com/proddetail/matrix-eternity-ge-t1e1pri-single-card-for-matrix-intercom-system-26469917897.html
-60,MATRIX ETERNITY GE CARD GSM4,Expansion Card for GSM Ports,851762,20405,
-61,MATRIX ETERNITY GE CARD GSM4 4G,Expansion Card for GSM 4G Ports,851762,29934,https://www.indiamart.com/proddetail/matrix-eternity-gsm4-4g-ge-card-fixed-cellular-terminal-card-26469963788.html
-62,MATRIX ETERNITY GE CARD E&M4,ETERNITY GE CARD E&M4,851762,17002,https://www.indiamart.com/proddetail/eternity-ge-card-e-m4-2854900019433.htmL
-63,MATRIX ETERNITY GE CARD RIC4,EXPANSION CARD FOR RADIO INTERFACE,851762,35924,
-64,MATRIX ETERNITY GE CARD E1FOPRI SINGLE,EXPANSION CARD FOR E1 PRI PORTS OVER FIBER OPTIC,851762,30206,
-65,MATRIX ETERNITY MENX16SAC,ETERNITY MENX Platform with CPU and AC Power Supply Card,851762,0,
-66,MATRIX ETERNITY MENX16SDC,ETERNITY MENX Platform with CPU and DC Power Supply Card,851762,0,
-67,MATRIX ETERNITY MENX RACK,External Cabinet for PLCC Requirements,851762,0,
-68,MATRIX ETERNITY ME CARD PSUNI-500 WATTS,,851762,0,
-69,AC POWER SUPPLY CARD,,851762,0,
-70,MATRIX ETERNITY ME CARD PS48VDC-500 WATTS,,851762,0,
-71,DC POWER SUPPLY CARD,,851762,0,
-72,MATRIX ETERNITY LENX27SDC,ETERNITY LENX Platform with CPU and DC Power Supply Card,851762,0,
-73,MATRIX PSUNI 48VDC1500W,AC to DC Converter for DC Power Supply,851762,0,https://www.indiamart.com/proddetail/matrix-eternity-lenx-27-sdc-epabx-system-ip-pbx-system-intercom-system-for-large-organisations-16679600597.html
-74,MATRIX ETERNITY LE CARD PS48VDC-500 WATTS,,851762,0,
-75,DC POWER SUPPLY CARD,,851762,0,https://www.indiamart.com/proddetail/matrix-eternity-le-card-ps48vdc-500-watts-power-supply-card-26473681130.html
-76,MATRIX ETERNITY MENX-LENX CARD CPU,CPU Card for ETERNITY MENX and ETERNITY LENX,851762,0,
-77,MATRIX ETERNITY ME CARD SLT8,Expansion Card for SLT,851762,0,https://www.indiamart.com/proddetail/matrix-eternity-menx-lenx-card-cpu-card-26473740773.html
-78,MATRIX ETERNITY ME CARD SLT16,Expansion Card for SLT,851762,0,https://www.indiamart.com/proddetail/matrix-eternity-slt8-me-card-matrix-analog-extension-card-for-matrix-telephone-system-2647106367.html
-79,MATRIX ETERNITY ME CARD SLT32,Expansion Card for SLT,851762,0,https://www.indiamart.com/proddetail/matrix-eternity-me-card-slt16-for-matrix-telephone-system-26470998091.html
-80,MATRIX ETERNITY LE CARD SLT48,Expansion Card for SLT,851762,0,https://www.indiamart.com/proddetail/matrix-eternity-me-card-slt32-matrix-analog-extension-cards-26470959730.html
-81,MATRIX ETERNITY ME CARD DKP8,Expansion Card for DKP,851762,0,https://www.indiamart.com/proddetail/matrix-eternity-le-slt48-card-matrix-analog-extension-card-26470910448.html
-82,MATRIX ETERNITY ME CARD DKP16,Expansion Card for DKP,851762,0,https://www.indiamart.com/proddetail/matrix-eternity-me-dkp8-card-matrix-digital-extension-card-for-intercom-system-26471167362.html
-83,MATRIX ETERNITY ME CARD DKP32,Expansion Card for DKP,851762,0,https://www.indiamart.com/proddetail/matrix-eternity-me-card-dkp16-digital-extension-card-26471124112.html
-84,MATRIX ETERNITY ME CARD DKP16LL,Expansion Card for DKP with Long Loop,851762,0,https://www.indiamart.com/proddetail/matrix-eternity-me-dkp32-card-for-matrix-telephone-system-26471094573.html
-85,MATRIX ETERNITY ME CARD DKP32LL,Expansion Card for DKP with Long Loop,851762,0,https://www.indiamart.com/proddetail/matrix-eternity-me-card-dkp16ll-matrix-digital-extensions-card-26471246833.html
-86,MTRIX ETERNITY ME CARD CO8,Expansion Card for CO,851762,0,https://www.indiamart.com/proddetail/matrix-eternity-me-dkp32ll-card-matrix-telephone-system-26471191188.html
-87,MATRIX ETERNITY ME CARD CO16,Expansion Card for CO,851762,0,https://www.indiamart.com/proddetail/matrix-eternity-co8-me-card-trunk-line-card-for-matrix-telephone-system-26473502330.html
-88,MATRIX ETERNITY ME CARD CO8+SLT24,Expansion Card for CO and SLT,851762,0,https://www.indiamart.com/proddetail/matrix-eternity-me-card-co16-matrix-trunk-line-card-26473491455.html
-89,MATRIX ETERNITY ME CARD T1E1PRI SINGLE,,851762,0,https://www.indiamart.com/proddetail/matrix-eternity-me-card-co8-slt24-for-matrix-communication-system-26471298312.html
-90,EXPANSION CARD FOR T1/E1/ PRI PORT,,851762,0,https://www.indiamart.com/proddetail/matrix-eternity-me-t1e1pri-single-card-for-matrix-intercom-system-26473522230.html
-91,MATRIX ETERNITY ME CARD T1E1PRI DUAL,Expansion Card for T1/E1/PRI Ports,851762,0,
-92,MATRIX ETERNITY ME CARD GSM8,Expansion Card for GSM Ports,851762,0,
-93,MATRIX ETERNITY ME CARD GSM8 4G,Expansion Card for GSM 4G Ports,851762,0,https://www.indiamart.com/proddetail/matrix-eternity-gsm8-me-card-gsm-fixed-cellular-terminal-card-26473579030.html
-94,MATRIX ETERNITY ME CARD E1FOPRI SINGLE,,851762,0,https://www.indiamart.com/proddetail/matrix-eternity-gsm8-4g-me-card-gsm-fct-card-26473626188.html
-95,EXPANSION CARD FOR E1 PRI PORTS WITH DIRECT FIBER OPTIC TERMINATION,,851762,0,
-96,MATRIX ETERNITY ME CARD E1FOPRI DUAL,Expansion Card for E1 PRI Ports with Direct Fiber Optic Termination,851762,0,
-97,MATRIX ETERNITY ME CARD E&M4,Expansion Card for E&M Ports,851762,0,https://www.indiamart.com/proddetail/matrix-eternity-me-e1fopri-dual-pri-card-for-matrix-telephone-system-26473536697.html
-98,MATRIX ETERNITY ME CARD E&M8,Expansion Card for E&M Ports,851762,0,https://www.indiamart.com/proddetail/matrix-eternity-me-e-m4-card-for-matrix-telephone-system-26473657797.html
-99,MATRIX ETERNITY ME CARD RIC4,Expansion Card for Radio Interface,851762,0,https://www.indiamart.com/proddetail/matrix-eternity-me-card-e-m8-for-matrix-telephone-system-26473641862.html
-100,MATRIX NX DBM VMS64,VOICEMAIL Daughter-board Module for ETERNITY PENX/GENX/MENX/LENX CPU Cards,851762,5432,https://www.indiamart.com/proddetail/matrix-eternity-me-card-ric4-radio-card-interface-26473668012.html
-101,MATRIX SARVAM VMS CHNL4,License for VOICEMAIL Channels,997331,2877,https://www.indiamart.com/proddetail/matrix-nx-dbm-vms64-voice-module-for-matrix-telephone-system-26469025788.html
-102,MATRIX SARVAM VMS CHNL16,License for VOICEMAIL Channels,997331,13849,
-103,MATRIX NX DBM VOCODER64,VOCODER Daughter-board Module for ETERNITY PENX/GENX/MENX/LENX CPU Cards,997331,8154,
-104,MATRIX SARVAM VOCODER CHNL4,License for VOCODER Channels,997331,2877,
-105,MATRIX SARVAM VOCODER CHNL16,License for VOCODER Channels,997331,13849,
-106,MATRIX SARVAM EXP4 SME,License to Expand 4 Slots in ETERNITY GENX,997331,3454,
-107,MATRIX SARVAM EXP4 ENT,License to Expand 4 Slots in ETERNITY MENX and ETERNITY LENX,997331,0,
-108,MATRIX SARVAM VMS SOHO,License for Voicemail in ETERNITY NENX,997331,3140,
-109,MATRIX SARVAM UCS ENT,License For Unified Communication Server For ENT,997331,0,
-110,MATRIX SARVAM UMG SME,License For Universal Media Gateway For SME - ETERNITY GENX,997331,5764,
-111,MATRIX SARVAM GATEWAY SMB,License for Gateway Functions,997331,1500,
-112,MATRIX SARVAM GATEWAY SME,License for Gateway Functions,997331,4000,
-113,MATRIX SARVAM GATEWAY ENT,License for Gateway Functions,997331,0,
-114,MATRIX SARVAM QSIG SMB,License for QSIG Interface to Connect with other Matrix or Third-party,997331,1500,
-115,MATRIX SARVAM QSIG SME,License for QSIG Interface to Connect with other Matrix or Third-party PBX,997331,4000,
-116,MATRIX SARVAM QSIG ENT,License for QSIG Interface to Connect with other Matrix or Third-party PBX,997331,0,
-117,MATRIX SARVAM HOSPITALITY SMB,License to Enable Hospitality Functions Suit for SARVAM UCS,997331,5502,
-118,MATRIX SARVAM HOSPITALITY SME,License to Enable Hospitality Functions Suite for SARVAM UCS,997331,11435,
-119,MATRIX SARVAM HOSPITALITY ENT,License to Enable Hospitality Functions Suite for SARVAM UCS,997331,0,
-120,MATRIX SARVAM PMS SMB,License to Enable Property Management System Interface for SARVAM UCS,997331,3297,
-121,MATRIX SARVAM PMS SME,License to Enable Property Management System Interface for SARVAM UCS,997331,8074,
-122,MATRIX SARVAM PMS ENT,License to Enable Property Management System Interface for SARVAM UCS,997331,0,
-123,MATRIX SARVAM HOSPITALITY E911 SMB,License to Enabling Direct Dialing of Emergency Number 911,997331,1092,
-124,MATRIX SARVAM HOSPITALITY E911 SME,License for Enabling Direct Dialing of Emergency Number 911,997331,1144,
-125,MATRIX SARVAM HOSPITALITY E911 ENT,License for Enabling Direct Dialing of Emergency Number 911,997331,0,
-126,MATRIX SARVAM PLCC SME,License to Enable Special Features for PLCC Network of Electric Utilities,997331,26389,
-127,MATRIX SARVAM PLCC ENT,License to Enable Special Features for PLCC Network of Electric Utilities,997331,0,
-128,MATRIX SARVAM CTI SOHO,License to Open Interface between PBX and Third-party CTI Application,997331,2615,
-129,MATRIX SARVAM CTI SMB,License to Open Interface between PBX and Third-party CTI Application,997331,3297,
-130,MATRIX SARVAM CTI SME,License to Open Interface between PBX and Third-party CTI Application,997331,8074,
-131,MATRIX SARVAM CTI ENT,License to Open Interface between PBX and Third-party CTI Application,997331,0,
-132,MATRIX SARVAM SMS GATEWAY SOHO,License to Enable SMS Gateway Functionality,997331,2615,
-133,MATRIXX SARVAM SMS GATEWAY SMB,LICENSE TO ENABLE SMS GATEWAY FUNCTIONALITY FOR SARVAM UCS SMB,997331,3297,
-134,MATRIX SARVAM SMS GATEWAY SME,License to Enable SMS Gateway Functionality for SARVAM UCS SME,997331,8074,
-135,MATRIX SARVAM SMS GATEWAY ENT,License to Enable SMS Gateway Functionality for SARVAM UCS ENT,997331,0,
-136,MATRIX SARVAM SMS SERVER SOHO,License to Enable SMS SERVER Functionality,997331,2615,
-137,MATRIX SARVAM SMS SERVER SMB,LICENSE TO ENABLE SMS SERVER FUNCTIONALITY FOR SARVAM UCS SMB,997331,3297,
-138,MATRIX SARVAM SMS SERVER SME,License to Enable SMS Server Functionality for SARVAM UCS SME,997331,8074,
-139,MATRIX SARVAM SMS SERVER ENT,License to Enable SMS Server Functionality for SARVAM UCS ENT,997331,0,
-140,MATRIX SARVAM REDUNDANCY ENT,License to Enable Redundancy Functionality for SARVAM UCS ENT,997331,0,
-141,MATRIX SARVAM IPSUB5,License for IP Subscribers for SARVAM UCS,997331,1722,
-142,MATRIX SARVAM IPSUB10,License for IP Subscribers for SARVAM UCS,997331,3454,
-143,MATRIX SARVAM IPSUB50,License for IP Subscribers for SARVAM UCS,997331,17314,
-144,MATRIX SARVAM IPSUB100,License for IP Subscribers for SARVAM UCS,997331,41569,
-145,MATRIX SARVAM IPSUB500,License for IP Subscribers for SARVAM UCS,997331,0,
-146,MATRIX SARVAM VARTA USER5E,License for VARTA Soft Clients with Essential Features for SARVAM UCS,997331,1722,
-147,MATRIX SARVAM VARTA USER10E,License for VARTA Soft Clients with Essential Features for SARVAM UCS,997331,3454,
-148,MATRIX SARVAM VARTA USER50E,License for VARTA Soft Clients with Essential Features for SARVAM UCS,997331,17314,
-149,MATRIX SARVAM VARTA USER100E,License for VARTA Soft Clients with Essential Features for SARVAM UCS,997331,41569,
-150,MATRIX SARVAM VARTA USER500E,License for VARTA Soft Clients with Essential Features for SARVAM UCS,997331,0,
-151,MATRIX SARVAM VARTA USER5P,License for VARTA Soft Clients with Professional Features for SARVAM UCS,997331,2877,
-152,MATRIX SARVAM VARTA USER10P,License for VARTA Soft Clients with Professional Features for SARVAM UCS,997331,5764,
-153,MATRIX SARVAM VARTA USER50P,License for VARTA Soft Clients with Professional Features for SARVAM UCS,997331,28864,
-154,MATRIX SARVAM VARTA USER100P,License for VARTA Soft Clients with Professional Features for SARVAM UCS,997331,69289,
-155,MATRIX SARVAM VARTA USER500P,License for VARTA Soft Clients with Professional Features for SARVAM UCS,997331,0,
-156,MATRIX SARVAM VARTA USER5C,License for VARTA Soft Clients with Collaboration Features for SARVAM UCS,997331,4032,
-157,MATRIX SARVAM VARTA USER10C,License for VARTA Soft Clients with Collaboration Features for SARVAM UCS,997331,8074,
-158,MATRIX SARVAM VARTA USER50C,License for VARTA Soft Clients with Collaboration Features for SARVAM UCS,997331,40414,
-159,MATRIX SARVAM VARTA USER100C,License for VARTA Soft Clients with Collaboration Features for SARVAM UCS,997331,97009,
-160,MATRIX SARVAM VARTA USER500C,License for VARTA Soft Clients with Collaboration Features for SARVAM UCS,997331,0,
-161,MATRIX SPARK200,Pure IP Hardware Platfrom for Unified Communication Server,997331,29688,
-162,MATRIX PRASAR VOCODER CHNL4,License for VOCODER Channels for PRASAR UCS SME and PRASAR UCS ENT,997331,2615,
-163,MATRIX PRASAR VOCODER CHNL16,License for VOCODER Channels for PRASAR UCS SME and PRASAR UCS ENT,997331,10490,
-164,MATRIX PRASAR VMS CHNL4,License for Voice Mail Channels for PRASAR UCS,997331,2615,
-165,MATRIX PRASAR VMS CHNL16,License for Voice Mail Channels for PRASAR UCS,997331,10490,
-166,MATRIX PRASAR CONF8,License for Conference Channels for PRASAR UCS,997331,3140,
-167,MATRIX PRASAR HOSPITALITY SME,License to Enable Hospitality Functions Suite for PRASAR UCS,997331,10490,
-168,MATRIX PRASAR HOSPITALITY E911 SME,License for Enabling Direct Dialing of Emergency Number 911,997331,1040,
-169,MATRIX PRASAR PMS SME,License To Enable Property Management System Interface for PRASAR UCS,997331,7340,
-170,MATRIX PRASAR REDUNDANCY SME,License to Enable Redundancy Functionality for PRASAR UCS,997331,10490,
-171,MATRIX PRASAR HOSPITALITY ENT,License to Enable Hospitality Functions Suite for PRASAR UCS,997331,10490,
-172,MATRIX PRASAR HOSPITALITY E911 ENT,License for Enabling Direct Dialing of Emergency Number 911,997331,1040,
-173,MATRIX PRASAR PMS ENT,License To Enable Property Management System Interface for PRASAR UCS,997331,7245,
-174,MATRIX PRASAR REDUNDANCY ENT,License to Enable Redundancy Functionality for PRASAR UCS,997331,10490,
-175,MATRIX PRASAR UCS SME TO ENT,License to Scale Software Platform from PRASAR UCS SME to PRASAR UCS ENT,997331,2090,
-176,MATRIX PRASAR IPSUB5,License for IP Subscribers for PRASAR UCS,997331,1565,
-177,MATRIX PRASAR IPSUB10,License for IP Subscribers for PRASAR UCS,997331,3140,
-178,MATRIX PRASAR IPSUB50,License for IP Subscribers for PRASAR UCS,997331,15740,
-179,MATRIX PRASAR IPSUB100,License for IP Subscribers for PRASAR UCS,997331,31490,
-180,MATRIX PRASAR IPSUB500,License for IP Subscribers for PRASAR UCS,997331,157490,
-181,MATRIX PRASAR VARTA USER5E,License for VARTA Soft Clients with Essential Features for PRASAR UCS,997331,1565,
-182,MATRIX PRASAR VARTA USER10E,License for VARTA Soft Clients with Essential Features for PRASAR UCS,997331,3140,
-183,MATRIX PRASAR VARTA USER50E,License for VARTA Soft Clients with Essential Features for PRASAR UCS,997331,15740,
-184,MATRIX PRASAR VARTA USER100E,License for VARTA Soft Clients with Essential Features for PRASAR UCS,997331,31490,
-185,MATRIX PRASAR VARTA USER500E,License for VARTA Soft Clients with Essential Features for PRASAR UCS,997331,157490,
-186,MATRIX PRASAR VARTA USER5P,License for VARTA Soft Clients with Professional Features for PRASAR UCS,997331,2615,
-187,MATRIX PRASAR VARTA USER10P,License for VARTA Soft Clients with Professional Features for PRASAR UCS,997331,5240,
-188,MATRIX PRASAR VARTA USER50P,License for VARTA Soft Clients with Professional Features for PRASAR UCS,997331,26240,
-189,MATRIX PRASAR VARTA USER100P,License for VARTA Soft Clients with Professional Features for PRASAR UCS,997331,52490,
-190,MATRIX PRASAR VARTA USER500P,License for VARTA Soft Clients with Professional Features for PRASAR UCS,997331,262490,
-191,MATRIX PRASAR VARTA USER5C,License for VARTA Soft Clients with Collaboration Features for PRASAR UCS,997331,3665,
-192,MATRIX PRASAR VARTA USER10C,License for VARTA Soft Clients with Collaboration Features for PRASAR UCS,997331,7340,
-193,MATRIX PRASAR VARTA USER50C,License for VARTA Soft Clients with Collaboration Features for PRASAR UCS,997331,36740,
-194,MATRIX PRASAR VARTA USER100C,License for VARTA Soft Clients with Collaboration Features for PRASAR UCS,997331,73490,
-195,MATRIX PRASAR VARTA USER500C,License for VARTA Soft Clients with Collaboration Features for PRASAR UCS,997331,367490,
-196,MATRIX PRASAR AUP,Annual Upgradation Package (AUP) for PRASAR UCS,997331,5240,
-197,MATRIX ANANT,"ANANT contains DELL PowerEdge R260 with pre-installed ANANT UCS Application, MATRIX ",997331,0,
-198,MATRIX ANANT UCS APPLICATION,License for Unified Communication Server for Open Server Platform,997331,0,
-199,MATRIX ANANT VMS CHNL4,License for Voicemail in ANANT UCS,997331,0,
-200,MATRIX ANANT VMS CHNL16,License for Voicemail in ANANT UCS,997331,0,
-201,MATRIX ANANT VMS CHNL32,License for Voicemail in ANANT UCS,997331,0,
-202,MATRIX ANANT CONF8,License for Conference Channels for ANANT UCS,997331,0,
-203,MATRIX ANANT CONF16,License for Conference Channels for ANANT UCS,997331,0,
-204,MATRIX ANANT CONF32,License for Conference Channels for ANANT UCS,997331,0,
-205,MATRIX ANANT IPSUB10,License for IP Subscribers for ANANT UCS,997331,0,
-206,MATRIX ANANT IPSUB50,License for IP Subscribers for ANANT UCS,997331,0,
-207,MATRIX ANANT IPSUB100,License for IP Subscribers for ANANT UCS,997331,0,
-208,MATRIX ANANT IPSUB500,License for IP Subscribers for ANANT UCS,997331,0,
-209,MATRIX ANANT VARTA USER5E,License for VARTA Soft Clients with Essential Features for ANANT UCS,997331,0,
-210,MATRIX ANANT VARTA USER10E,License for VARTA Soft Clients with Essential Features for ANANT UCS,997331,0,
-211,MATRIX ANANT VARTA USER50E,License for VARTA Soft Clients with Essential Features for ANANT UCS,997331,0,
-212,MATRIX ANANT VARTA USER100E,License for VARTA Soft Clients with Essential Features for ANANT UCS,997331,0,
-213,MATRIX ANANT VARTA USER5P,License for VARTA Soft Clients with Professional features for ANANT UCS,997331,0,
-214,MATRIX ANANT VARTA USER10,License for VARTA Soft Clients with Professional features for ANANT UCS,997331,0,
-215,MATRIX ANANT VARTA USER50P,License for VARTA Soft Clients with Professional features for ANANT UCS,997331,0,
-216,MATRIX ANANT VARTA USER100P,License for VARTA Soft Clients with Professional features for ANANT UCS,997331,0,
-217,MATRIX ANANT VARTA USER5C,License for VARTA Soft Clients with Collaboration features for ANANT UCS,997331,0,
-218,MATRIX ANANT VARTA USER10C,License for VARTA Soft Clients with Collaboration features for ANANT UCS,997331,0,
-219,MATRIX ANANT VARTA USER50C,License for VARTA Soft Clients with Collaboration features for ANANT UCS,997331,0,
-220,MATRIX ANANT VARTA USER100C,License for VARTA Soft Clients with Collaboration features for ANANT UCS,997331,0,
-221,MATRIX ANANT HOSPITALITY USER10,License to Enable Hospitality Functions Suite for ANANT UCS,997331,0,
-222,MATRIX ANANT HOSPITALITY USER50,License to Enable Hospitality Functions Suite for ANANT UCS,997331,0,
-223,MATRIX ANANT HOSPITALITY USER100,License to Enable Hospitality Functions Suite for ANANT UCS,997331,0,
-224,ANANT HOSPITALITY USER500,License to Enable Hospitality Functions Suite for ANANT UCS,997331,0,
-225,MATRIX ANANT PMS USER10,License To Enable Property Management System Interface for ANANT UCS,997331,0,
-226,MATRIX ANANT PMS USER50,License To Enable Property Management System Interface for ANANT UCS,997331,0,
-227,MATRIX ANANT PMS USER100,License To Enable Property Management System Interface for ANANT UCS,997331,0,
-228,MATRIX ANANT PMS USER500,License To Enable Property Management System Interface for ANANT UCS,997331,0,
-229,MATRIX ANANT HOSPITALITY E911 USER10,License for Enabling Direct Dialing of Emergency Number 911 ,997331,0,
-230,MATRIX ANANT HOSPITALITY E911 USER50,License for Enabling Direct Dialing of Emergency Number 911 ,997331,0,
-231,MATRIX ANANT HOSPITALITY E911 USER100,LICENSE FOR ENABLING DIRECT DIALING OF EMERGENCY NUMBER 911 ,997331,0,
-232,MATRIX ANANT HOSPITALITY E911 USER500,LICENSE FOR ENABLING DIRECT DIALING OF EMERGENCY NUMBER 911,997331,0,
-233,MATRIX ANANT REDUNDANCY USER10,License to Enable Redundancy Functionality for ANANT UCS,997331,0,
-234,MATRIX ANANT REDUNDANCY USER50,License to Enable Redundancy Functionality for ANANT UCS,997331,0,
-235,MATRIX ANANT REDUNDANCY USER100,License to Enable Redundancy Functionality for ANANT UCS,997331,0,
-236,MATRIX ANANT REDUNDANCY USER500,License to Enable Redundancy Functionality for ANANT UCS,997331,0,
-237,MATRIX ANANT AUP USER10,Annual Upgradation Package (AUP) for ANANT UCS,997331,0,
-238,MATRIX ANANT AUP USER50,Annual Upgradation Package (AUP) for ANANT UCS,997331,0,
-239,MATRIX ANANT AUP USER100,Annual Upgradation Package (AUP) for ANANT UCS,997331,0,
-240,MATRIX ANANT AUP USER500,Annual Upgradation Package (AUP) for ANANT UCS,997331,0,
-241,MATRIX LICENSE DONGLE,License Dongle for Matrix Software Products,997331,660,
-242,NERON 20V IP PBX SYSTEM,"2x Ethernet 10/100 ( 1 LAN+ 1 WAN) 30 Live Call, 250 SIP User, 2 FXO, 1 Vol TE",851769,22500,
-243,NERON 20G/L IP PBX SYSTEM,"2x Ethernet 10/100 ( 1 LAN+ 1 WAN) 30Live Call. 250SIP User, 1 GSM (2G)",851769,16000,https://www.indiamart.com/proddetail/neron-n-20g-ip-pbx-system-ip-based-telephone-intercom-system-2854865549897.html
-244,NERON N30 IP PBX SYSTEM,"2x Ethernet 10/100 ( 1 LAN+ 1 WAN) 30Live Call, 500 SIP User, 4 FXO + 4 FXS",851769,37500,https://www.indiamart.com/proddetail/connect-n30-ip-pbx-system-in-delhi-2856808749362.html
-245,NERON N50 IP PBX SYSTEM,"2x Ethernet 10/100 ( 1 LAN+ 1 WAN) 30 Live Call , 100 SIP User, 8 GSM (2G)",851769,34485,https://www.indiamart.com/proddetail/neron-n-50-ip-pbx-system-ip-based-intercom-system-2854023144073.html
-246,NERON NXG 8000L IP PBX SYSTEM,"4x Giga Ethernet , 60 Live call, 500 SIP Users, 256 GB Call recording Memory, MQTT API, 3 Year Warranty",851769,51175,https://www.indiamart.com/proddetail/neron-nxg-8000l-ip-pbx-system-ip-based-telephone-intercom-system-2854068159833.html
-247,NERON NXG 8404L IP PBX SYSTEM,"4x Giga Ethernet, 4 FXO+4 FXS , 60 Live call 500 SIP Users, 256 GB Call recording Memory, 3 Year Warranty",851769,62675,https://www.indiamart.com/proddetail/neron-nxg-8404-ip-pbx-server-or-epabx-system-2856389948755.html
-248,NERON NXG 8016L IP PBX SYSTEM,"4x Giga Ethernet, 16 FXS, 60 Live call 500 SIP Users, 256 GB Call recording Memory, 3 Year Warranty",851769,74750,https://www.indiamart.com/proddetail/neron-8016-ip-pbx-server-upto-2000-sip-extension-2856391551712.html
-249,NERON NXG 8428L IP PBX SYSTEM,"4x Giga Ethernet, 4 FXO+28 FXS, 60 Live call 500 SIP Users, 256 GB Call recording Memory, 3 Year Warranty",851769,91425,https://www.indiamart.com/proddetail/neron-nxg-8428l-ip-pbx-system-intercom-system-2854068900097.html
-250,NERON NXG 8032L IP PBX SYSTEM,"4x Giga Ethernet, 32 FXS, 60 Live call 500 SIP Users, 128GB Call recording Memory, 3 Year Warranty",851769,87975,https://www.indiamart.com/proddetail/neron-nxg-8032l-ip-pbx-system-ip-server-2854069140062.html
-251,NERON NXG 8000 IP PBX SYSTEM,"4x Giga Ethernet , 1x SFP Port, 200 Live call 2000 SIP Users, 1x sata or SSD connector, 256 GB Internal Memory, MQTT API, 3 Year Warranty, 1 USB",851769,170000,https://www.indiamart.com/proddetail/neron-8000-ip-pbx-server-upto-2000-sip-extensions-2856389871733.html
-252,NERON NXG 8404,"4x Giga Ethernet , 1x SFP Port, 4FXO + 4FXS 200 Live call, 2000 SIP Users, 1x sata or SSD connector, 256 GB Internal Memory, MQTT API, 3 Year Warranty, 1 USB",851769,192500,https://www.indiamart.com/proddetail/neron-nxg-8404-ip-pbx-server-or-epabx-system-2856389948755.html
-253,NERON NXG 8412,"4x Giga Ethernet 1x SFP Port, 4FXO + 12 FXS 200 Live call, 2000 SIP Users, 1x sata or SSD connector, 256 GB Internal Memory, MQTT API, 3 Year Warranty, 1 USB",851769,213500,https://www.indiamart.com/proddetail/neron-nxg-8412-ip-pbx-system-ip-based-intercom-system-2854068390212.html
-254,NERON NXG 8428,"4x Giga Ethernet 1x SFP Port, 4FXO + 28 FXS 200 Live call, 2000 SIP Users, 1x sata or SSD connector, 256 GB Internal Memory, MQTT API, 3 Year Warranty, 1 USB",851769,234500,https://www.indiamart.com/proddetail/neron-nxg-8428-ip-pbx-server-ip-pbx-system-2856392330662.html
-255,NERON NXG 8032,"4x Giga Ethernet 1x SFP Port, 32 FXS 200 Live call, 2000 SIP Users, 1x Sata or SSD connector, 256 GB Internal Memory, MQTT API, 3 Year Warranty, 1 USB",851769,231700,https://www.indiamart.com/proddetail/neron-nxg-8032-ip-pbx-server-ip-pbx-system-2856395960173.html
-256,NERON NXG 8048,"4x Giga Ethernet 1x SFP Port, 48 FXS 200 Live call, 2000 SIP Users, 1x Sata or SSD connector, 1 USB, 256 GB Internal Memory, MQTT API, 3 Year Warranty",851769,249900,https://www.indiamart.com/proddetail/neron-nxg-8048-ip-pbx-server-ip-pbx-system-2856396030455.html
-257,NERON NXG 8444,"4x Giga Ethernet 1x SFP Port, 4FXO + 48 FXS 200 Live call, 2000 SIP Users, 1x sata or SSD connector, 1 USB",851769,252700,https://www.indiamart.com/proddetail/neron-nxg-8444-ip-pbx-server-ip-pbx-system-2856396164691.html
-258,NERON NMG 7048S,"4x Giga Ethernet, 1x SFP, 48 Channel FXS, RJ11 + RJ21 Connector, LCD display, MQTT, 3 Year Warranty",851769,66670,https://www.indiamart.com/proddetail/connect-7048s-fxs-gateway-voip-gateway-2856838822973.html
-259,NERON NMG 7032S,"4x Giga Ethernet, 1x SFP, 32 Channel FXS, RJ11 Connector, LCD display , MQTT, 3 Year Warranty",851769,52982,https://www.indiamart.com/proddetail/neron-nmg-7032s-fxs-media-gateway-2854082526655.html
-260,NERON NMG 7024S,"4x Giga Ethernet, 1x SFP, 24 Channel FXS, RJ11 Connector, LCD display, MQTT, 3 Year Warranty",851769,45312,https://www.indiamart.com/proddetail/connect-nmg-7024s-fxs-media-gateway-voip-gateway-2856835116348.html
-261,NERON NMG 7016S,"4x Giga Ethernet, 1x SFP, 16 Channel FXS, RJ11 Connector, LCD display, MQTT, 3 Year Warranty",851769,24725,https://www.indiamart.com/proddetail/neron-nmg-7016s-16-port-voip-gateway-2854078060055.html
-262,NERON NMG 7032L,"4x10/100 Eth, 32 Channel FXS, RJ11 Connector, LCD display, 1 USB",851769,34500,
-263,NERON NMG 7024L,"4x10/100 Eth, 24 Channel FXS, RJ11 Connector, LCD display, 1 USB",851769,31050,
-264,NERON NMG 7016L,"4x10/100 Eth. 16 Channel FXS, RJ11 Connector, LCD display, 1 USB",851769,24725,
-265,NERON NMG 7004S,"2x Giga Ethernet (1x LAN, 1x WAN) 1x SFP 1Gbps, 4 FXS RJ11 Interface",851769,9405,https://www.indiamart.com/proddetail/connect-nmg-7004s-fxs-gateway-voip-gateway-2856815517762.html
-266,NERON NMG 7004O,"2x Giga Ethernet (1x LAN, 1x WAN) 1x SFP 1Gbps, 4 FXO RJ11 Interface",851769,12711,https://www.indiamart.com/proddetail/neron-nmg-7004o-fxo-gateway-voip-gateway-2854083534312.html
-267,NERON NMG 7008S,"2x Giga Ethernet (1x LAN, 1x WAN) 1x SFP 1Gbps, 8 FXS RJ11 Interface",851769,13623,https://www.indiamart.com/proddetail/neron-nmg-7008s-fxs-voip-media-gateway-2854076003791.html
-268,NERON NMG 7008O,"2x Giga Ethernet (1x LAN, 1x WAN) 1x SFP 1Gbps, 8 FXS RJ11 Interface",851769,16530,https://www.indiamart.com/proddetail/neron-nmg-7008o-fxo-media-gateway-2854083634173.html
-269,NERON 502HD,"2 SIP Account, 10/100 Dual Ethernet, PoE, Wifi 2.4 GHz, WithPSU",851769,3375,https://www.indiamart.com/proddetail/wifi-phone-neron-502hd-business-voip-phone-2854027573448.html
-270,NERON 504HD,"4 SIP Account , 10/100/1000 Dual Ethernet, 2.8"" LCD Display PoE, Wifi 2.4 GHz ,Wilhout PSU",851769,6050,https://www.indiamart.com/proddetail/wireless-enabled-neron-nxp-504hd-business-voip-phone-2854029577488.html
-271,NERON 508HD,"8 SIP Account, 10/100/1000 Dual Ethernet, 3.5"" LCD Display PoE, Wifi 2.4 GHz ,Without PSU",851769,9050,https://www.indiamart.com/proddetail/wireless-ip-phone-neron-nxp-508hd-business-voip-phone-2854029832448.html
-272,NERON 510HD,"10 SIP Accounl, 10/100/1000 Dual Ethernet 4.3"" LCD Touch, Screen Display PoE,  Wifi 2.4+5 GHz ,Without PSU",851769,11100,https://www.indiamart.com/proddetail/wifi-connectivity-ip-phone-neron-510hd-business-voip-phone-2854029966712.html
-273,Neron NXG 08 V GSM Media Gateway,8 Port GSM Gateway with 50 SIP Extensions,851769,100000,
-274,Neron NXG 16 V GSM Media Gateway,16 Port GSM Gateway with 100 SIP Extensions,851769,100000,
-275,Neron NXG 32 V GSM Media Gateway,32 Port GSM Gateway with 50 SIP Extensions,851769,10000,
-276,Dialx,"Unified Communication Solution which have features like monitoring, automation recording and integration",,25000,
-277,installation and commission,,998732,5000,
-278,CLIXXO SIP TO PRI GATEWAY,SIP to PRI Converter,851762,23500,https://www.indiamart.com/proddetail/clixxo-pri-gateway-supports-both-mtls-and-open-vpn-sip-trunk-2855378410997.html
-279,CLIXXO IPX V25 - VIDEO,IP Video Phone,851762,39000,https://www.indiamart.com/proddetail/clixxo-ipx-v25-sip-video-phone-2855666409291.html
-280,CLIXXO IPX V20 VIDEO PHONE,IP Video Phone,851762,23000,https://www.indiamart.com/proddetail/clixxo-ipx-v20-android-ip-video-phone-2855685241755.html
-281,CLIXXO IPX 990 PARTIAL  VIDEO,IP Video Phone,851762,22500,https://www.indiamart.com/proddetail/clixxo-ipx-990-voip-phone-2855664681833.html
-282,CLIXXO IPX 980 GIGABIT,High End IP Phone,851762,12500,https://www.indiamart.com/proddetail/clixxo-ipx-980-enterprise-ip-phone-voip-phone-2855686068491.html
-283,CLIXXO IPX 970 GIGABIT,High End IP Phone,851762,10000,
-284,CLIXXO IPX 940G - GIGABIT,High End IP Phone,851762,6500,https://www.indiamart.com/proddetail/clixxo-ipx-940-sip-phone-voip-phone-2855670882430.html
-285,SUPPLY OF CABLE 2 PAIR IN METERS,,854449,35,
-286,SUPPLY CABLE 5 PAIR IN METERS,,854449,40,
-287,LAYING CHARGES OF 2 PAIR CABLE WITH CLIPPING IN METERS,,,10,
-288,LAYING CHARGES OF 5 PAIR CABLE WITH CLIPPING IN METERS,,,10,
-289,SUPPLY OF 1 INCH CHANNEL IN METERS,,,40,
-290,LAYING OF 1 INCH CHANNEL WITH CLIPPING IN METERS,,,20,
-291,SUPPLY OF CONDUITE PIPE IN METERES,,854449,70,
-292,LAYING CHARGES OF CONDUITE PIPE IN METERES,,,20,
-293,HOLA TF 700,CLI WITH SPEAKERS TELEPHONE,851762,"1,250",
-294,HOLA TF 600,CLI WITHOUT SPEAKER TELEPHONE,851762,999,
-295,HOLA TF 310,BASIC TELEPHONE,85171110,999,
-296,SUPPLY OF 5 PAIR JELLY FILLED CABLE IN MTRS,,854449,70,
-297,Supply of 10 pair Jelly filled Cable in mtrs,,854449,100,
-298,SUPPLY OF 20 PAIR JELLY FILLED CABLE IN MTRS,,854449,180,
-299,SUPPLY OF 50 PAIR JELLY FILLED CABLE IN MTRS,,854449,250,
-300,HANDSET CORD,,854449,50,
-301,SINGLE PIN LINE CORD,,854449,50,
-302,DOUBLE PIN LINE CORD,,854449,100,
-303,BEETLE M71,CLI WITH SPEAKER TELEPHONE,851762,1465,
-304,BEETLE M 500,CLI WITH SPEAKER TELEPHONE,851762,"1,060",
-305,Connect UMGW 32S FXS Gateway,,851762,36135,https://www.indiamart.com/proddetail/connect-umgw-32s-fxs-gateway-26490560497.html
-306,Connect UMGW 4S FXS Media Gateway,,851762,8326,https://www.indiamart.com/proddetail/connect-umgw-4s-fxs-media-gateway-26460041130.html
-307,Connect UMGW 32S FXS Gateway,,851762,36135,https://www.indiamart.com/proddetail/connect-umgw-32s-fxs-gateway-26490560497.html
-308,Connect 216B - Telephone System,2 CO Line + 16 Extensions,851762,6720,https://www.indiamart.com/proddetail/connect-216b-telephone-system-intercom-system-2-co-line-16-extensions-2856938167088.html
-309,Connect 508 HD SIP Phone,,851762,9050,https://www.indiamart.com/proddetail/connect-508-hd-sip-phone-voip-phone-2856808220712.html
-310,Connect IP UMGW 24S FXS Gateway,,851762,31878,https://www.indiamart.com/proddetail/connect-ip-umgw-24s-fxs-gateway-26488213588.html
-311,Connect 1U Server with RPS (upto 500 lines),IP PPBX System,851762,72450,https://www.indiamart.com/proddetail/connect-1u-server-with-rps-upto-500-lines-ip-pbx-system-2852589952788.html
-312,Connect 8 Port Voice Logger,USB Call Recorder,851762,11446,https://www.indiamart.com/proddetail/connect-8-port-voice-logger-usb-call-recorder-2852431924033.html
-313,Connect 7048S FXS Gateway,,851762,66670,https://www.indiamart.com/proddetail/connect-7048s-fxs-gateway-voip-gateway-2856838822973.html
-314,Connect 4 Port Voice Logger ,Call Recorder,851762,7788,https://www.indiamart.com/proddetail/connect-4-port-voice-logger-call-recorder-2852467509388.html
-315,Connect 424B,4 CO Line + 24 Extensions expandable to 32 Extensions Epabx System,851762,10480,https://www.indiamart.com/proddetail/connect-424b-4-co-line-24-extensions-expandable-to-32-extensions-epabx-system-2856938327512.html
-316,Connect NMG 7004S FXS Gateway,,851762,9405,https://www.indiamart.com/proddetail/connect-nmg-7004s-fxs-gateway-voip-gateway-2856815517762.html
-317, Connect T23G 4 Line POE VOIP Phone,,851762,66411,https://www.indiamart.com/proddetail/connect-t23g-4-line-poe-voip-phone-26490989862.html
-318,Connect 7016S FXS Media Gateway,,851762,38350,https://www.indiamart.com/proddetail/connect-7016s-fxs-media-gateway-voip-gateway-2856834040188.html
-319,Connect 7004O FXO Gateway,,851762,12711,https://www.indiamart.com/proddetail/connect-7004o-fxo-gateway-voip-gateway-2856815852912.html
-320,Connect 16 Port Telephone PCIe Voice Logger - Telephone Call Recorder,,851762,13600,https://www.indiamart.com/proddetail/connect-16-port-telephone-pcie-voice-logger-telephone-call-recorder-2852916964812.html
-321,Connect 206B,2 CO Line + 6 Extensions Epabx System/Telephone Intercom System,851762,3140,https://www.indiamart.com/proddetail/connect-108b-epabx-system-telephone-intercom-system-2856878135897.htmL
-322,Connect 308B Epabx System,Intercom System With 3 CO Line + 8 Extensions,851762,4580,https://www.indiamart.com/proddetail/connect-308b-epabx-system-intercom-system-with-3-co-line-8-extensions-2856938028391.html
-323,Connect 8444 IP PBX Server,,851762,252700,https://www.indiamart.com/proddetail/connect-8444-ip-pbx-server-ip-pbx-system-2856848357648.html
-324,Connect UCX Micro 410 IP PBX System,,851762,47250,https://www.indiamart.com/proddetail/connect-ucx-micro-410-ip-pbx-system-epabx-system-pbx-system-2852355773897.html
-325,Connect 7008O FXO Gateway/VoIP Gateway,,851762,16530,https://www.indiamart.com/proddetail/connect-7008o-fxo-gateway-voip-gateway-2856832773597.html
-326,Connect 08 Port Telephone PCIe Voice Logger,Telephone Call Recorder,851762,9950,https://www.indiamart.com/proddetail/connect-08-port-telephone-pcie-voice-logger-telephone-call-recorder-2852915987173.html
-327,Connect N20V IP PBX System / Intercom System,,851762,22500,https://www.indiamart.com/proddetail/connect-n20v-ip-pbx-system-intercom-system-2856803364248.html
-328, Connect T43G IP Phone ,,851762,9660,https://www.indiamart.com/proddetail/connect-t43g-ip-phone-2852654937788.html
-329,Connect N50 IP PBX System / Intercom System,,851762,34485,https://www.indiamart.com/proddetail/connect-n50-ip-pbx-system-intercom-system-2856809077748.html
-330,Connect N30 IP Pbx System In Delhi,,851762,30750,https://www.indiamart.com/proddetail/connect-n30-ip-pbx-system-in-delhi-2856808749362.html
-331,Connect 432B - 4 CO Line + 32 Extensions Epabx System / Telephone Intercom System,,851762,12760,https://www.indiamart.com/proddetail/connect-432b-4-co-line-32-extensions-epabx-system-telephone-intercom-system-2856938632548.html
-332,Connect 510 HD SIP Phone / VoIP Phone,,851762,11100,https://www.indiamart.com/proddetail/connect-510-hd-sip-phone-voip-phone-2856808444491.html
-333,Connect 32 Port Telephone PCIe Voice Logger,Telephone Call Recorder,851762,39500,https://www.indiamart.com/proddetail/connect-32-port-telephone-pcie-voice-logger-telephone-call-recorder-2852917796430.html
-334,Connect 104B Epabx System,,851762,2000,https://www.indiamart.com/proddetail/connect-104b-epabx-system-intercom-system-2856938751830.html
-335,WiFi Phone - Connect 502 HD SIP Phone,,851762,3375,https://www.indiamart.com/proddetail/wifi-phone-connect-502-hd-sip-phone-voip-phone-2856807248973.htmL
-336,Connect GSM 4G Volte Auto Dialer GSM FCT,Automatically Dials call for specified list of numbers,851762,6000,https://www.indiamart.com/proddetail/connect-gsm-4g-volte-auto-dialer-gsm-fct-automatically-dials-call-for-specified-list-of-numbers-2852891038055.html
-337,Connect 232B Analog Intercom System,with 2 CO Line + 24 Extensions expandable to 32 Extensions,851762,9700,https://www.indiamart.com/proddetail/connect-232b-analog-intercom-system-with-2-co-line-24-extensions-expandable-to-32-extensions-2856938262291.html
-338,Connect 312B - Epabx System,Telephone Intercom System With 3 CO Line + 12 Extensions,851762,6260,https://www.indiamart.com/proddetail/connect-312b-epabx-system-telephone-intercom-system-with-3-co-line-12-extensions-2856938110191.html
-339,Connect 8016L IP PBX Server/IP PBX System,,851762,74750,https://www.indiamart.com/proddetail/connect-8016l-ip-pbx-server-ip-pbx-system-2856832216288.html
-340,Connect 8428L IP PBX System in Delhi,,851762,91425,https://www.indiamart.com/proddetail/connect-8428l-ip-pbx-system-in-delhi-2856813736791.html
-341,Connect NXG 8000L IP PBX System,,851762,51175,https://www.indiamart.com/proddetail/connect-nxg-8000l-ip-pbx-system-ip-based-intercom-system-2856804217588.html
-342,Connect NXG 8412L IP PBX System,,851762,77050,https://www.indiamart.com/proddetail/connect-nxg-8412l-ip-pbx-system-intercom-system-2856809995097.html
-343,Connect 8412 IP PBX Server,,851762,213500,https://www.indiamart.com/proddetail/connect-8412-ip-pbx-server-intercom-system-2856846338097.html
-344,Connect NXG 8404L IP PBX System,,851762,51175,https://www.indiamart.com/proddetail/connect-nxg-8404l-ip-pbx-system-ip-pbx-server-2856809574462.html
-345,Connect 8428 IP PBX Server,,851762,234500,https://www.indiamart.com/proddetail/connect-8428-ip-pbx-server-intercom-system-2856847434897.html
-346,Connect 8032 IP PBX Server,,851762,231700,https://www.indiamart.com/proddetail/connect-8032-ip-pbx-server-ip-pbx-system-2856847513748.html
-347,Connect 7008S FXS Gateway,,851762,13623,https://www.indiamart.com/proddetail/connect-7008s-fxs-gateway-voip-gateway-2856832981373.html
-348,Connect NMG 7024S FXS Media Gateway,,851762,45312,https://www.indiamart.com/proddetail/connect-nmg-7024s-fxs-media-gateway-voip-gateway-2856835116348.html
-349,Connect NMG 7032S FXS Media Gateway,,851762,52983,https://www.indiamart.com/proddetail/connect-nmg-7032s-fxs-media-gateway-voip-gateway-2856834201888.html
-350,Connect 8404 IP PBX Server,,851762,192500,https://www.indiamart.com/proddetail/connect-8404-ip-pbx-server-intercom-system-2856845862562.html
-351,Connect NXG 8000 IP PBX Server,,851762,170100,https://www.indiamart.com/proddetail/connect-nxg-8000-ip-pbx-server-ip-pbx-system-2856840917591.html
-352,Connect 8048 IP PBX Server,,851762,249900,https://www.indiamart.com/proddetail/connect-8048-ip-pbx-server-ip-pbx-system-2856848086112.html
-353,Connect IP UMGW 24S FXS Gateway,,851762,31878,https://www.indiamart.com/proddetail/connect-ip-umgw-24s-fxs-gateway-26488213588.html
-354,Connect 1U Server with RPS (upto 500 lines),IP PBX System,851762,72450,https://www.indiamart.com/proddetail/connect-1u-server-with-rps-upto-500-lines-ip-pbx-system-2852589952788.html
-355,Connect N20G IP PBX System,IP based Telephone System,851762,16000,https://www.indiamart.com/proddetail/connect-n20g-ip-pbx-system-ip-based-telephone-system-2856797677962.html
-356,Connect 1U Server with SPS,IP PBX Server,851762,57960,https://www.indiamart.com/proddetail/connect-1u-server-with-sps-ip-pbx-server-26459346633.html
-357,Connect 8032L IP PBX System,,851762,87975,https://www.indiamart.com/proddetail/connect-8032l-ip-pbx-system-ip-pbx-server-2856814511055.html
-358,Connect 105B Epabx System,,851762,2390,https://www.indiamart.com/proddetail/connect-105b-epabx-system-telephone-system-2856878306997.html
-359,Connect 16 Port Telephone Voice Logger,Call Recorder,851762,19293,https://www.indiamart.com/proddetail/connect-16-port-telephone-voice-logger-call-recorder-2852467610462.html
-360,Connect 108B Epabx System,,851762,3140,https://www.indiamart.com/proddetail/connect-108b-epabx-system-telephone-intercom-system-2856878135897.html
-361,Wifi Enabled Connect 504 HD SIP Phone,,851762,6050,https://www.indiamart.com/proddetail/wifi-enabled-connect-504-hd-sip-phone-voip-phone-2856807451662.html
-362,Connect T 58W - 16 VoIP Account Video Phone,,851762,35621,https://www.indiamart.com/proddetail/connect-t-58w-16-voip-account-video-phone-26491595748.html
-363,Connect UMGW 128S FXS Gateway with Dual Power Supply,,851762,171468,https://www.indiamart.com/proddetail/connect-umgw-128s-fxs-gateway-with-dual-power-supply-26490636288.html
-364,Connect UMGW 48 FXS VoIP Gateway,,851762,64185,https://www.indiamart.com/proddetail/connect-umgw-48-fxs-voip-gateway-26490598288.html
-365,Connect UMGW 08 FXO Gateway,,851762,26565,https://www.indiamart.com/proddetail/connect-umgw-08-fxo-gateway-voip-gateway-for-epabx-system-ip-pbx-system-intercom-system-26490669888.html
-366,Connect UMGW 16 DCS FXS Gateway with DC power,,851762,28527,https://www.indiamart.com/proddetail/connect-umgw-16-dcs-fxs-gateway-with-dc-power-26488010073.html
-367,Connect IP UMGW 8S FXS Media Gateway,,851762,12951,https://www.indiamart.com/proddetail/connect-ip-umgw-8s-fxs-media-gateway-for-epabx-system-intercom-system-ip-pbx-system-26487798462.html
-368,Connect Vaani 102P SIP Landline Phone,2 Line Basic with POE,851762,3994,https://www.indiamart.com/proddetail/connect-vaani-102p-sip-landline-phone-ip-telephone-voip-telephone-2-line-basic-with-poe-26490786197.html
-369,Connect 1U Server with RPS (upto 6000 lines),IP PBX System,851762,114715,https://www.indiamart.com/proddetail/connect-1u-server-with-rps-upto-6000-lines-ip-pbx-system-26459379755.html
-370,Connect Umgw 16s Fxs Media,,851762,23457,https://www.indiamart.com/proddetail/connect-umgw-16s-fxs-media-voip-gateway-for-ip-pbx-system-intercom-system-epabx-system-26487916588.html
-371,Connect Vaani 101P Single Line POE SIP Telephone,,851762,2700,https://www.indiamart.com/proddetail/connect-vaani-101p-single-line-poe-sip-telephone-landline-telephone-ip-telephone-26490712248.html
-372,Connect UCX Micro 402 IP PBX System,,851762,31450,https://www.indiamart.com/proddetail/connect-ucx-micro-402-ip-pbx-system-epabx-system-pbx-system-26459995091.html
-373,Connect 4G Volte GSM FCT Device,Fixed Cellular Terminal or GSM Gateway Device (Jio Sim Supported),851762,10500,https://www.indiamart.com/proddetail/aegis-gsm-4g-volte-xn520-autodialer-gsm-fct-automatically-dials-call-for-specified-list-of-numbers-26474833673.html
-374,2G Connect Turbo GSM FCT,Fixed Cellular Terminal Device or GSM Gateway Device,851762,6000,https://www.indiamart.com/proddetail/2g-connect-turbo-gsm-fct-fixed-cellular-terminal-device-or-gsm-gateway-device-2852429643373.html
-375,Connect GSM 4G Volte Turbo FCT Device,Landline Telephone Recorder or GSM Gateway Device,851762,7000,https://www.indiamart.com/proddetail/connect-gsm-4g-volte-turbo-fct-device-landline-telephone-recorder-or-gsm-gateway-device-2852431147412.html
-376,Connect GSM Advance FCT,Fixed Cellular Terminal Device or GSM Gateway,851762,5000,https://www.indiamart.com/proddetail/connect-gsm-advance-fct-fixed-cellular-terminal-device-or-gsm-gateway-2852513201473.html
-377,2G Connect Basic GSM FCT Device,Fixed Cellular Terminal or GSM Gateway Device,851762,2250,https://www.indiamart.com/proddetail/2g-connect-basic-gsm-fct-device-fixed-cellular-terminal-or-gsm-gateway-device-2852431403997.html
-378,Connect 2 Port Voice Logger,Telephone Call Recorder,851762,4189,https://www.indiamart.com/proddetail/connect-2-port-voice-logger-telephone-call-recorder-2852467849812.html
-379,Connect GSM Advance 4G Volte FCT,Fixed Cellular Terminal Device or GSM Gateway Device,851762,6000,https://www.indiamart.com/proddetail/connect-gsm-advance-4g-volte-fct-fixed-cellular-terminal-device-or-gsm-gateway-device-2852470230130.html
-380,Connect 1 Port USB Voice Logger,Telephone Voice Recorder,851762,3658,https://www.indiamart.com/proddetail/connect-1-port-usb-voice-logger-telephone-voice-recorder-2852468928055.html
-381,Connect AJ-2 Standalone Voice Logger,Landline Call Recorder,851762,3658,https://www.indiamart.com/proddetail/connect-1-port-usb-voice-logger-telephone-voice-recorder-2852468928055.html
-382,Connect AJ-2 Standalone Voice Logger,Landline Call Recorder,851762,16850,https://www.indiamart.com/proddetail/connect-aj-2-standalone-voice-logger-landline-call-recorder-2852922529633.html
-383,Connect TQ-08 Standalone Voice Logger,Telephone Voice Recorder,851762,49000,https://www.indiamart.com/proddetail/connect-tq-08-standalone-voice-logger-telephone-voice-recorder-2852954799788.html
-384,Connect TQ-16 Standalone Voice Logger,Telephone Voice Recorder,851762,39500,https://www.indiamart.com/proddetail/connect-tq-16-standalone-voice-logger-telephone-voice-recorder-2852924533488.html
-385,Connect TQ-04 Standalone Voice Logger,Landline Telephone call Recorder,851762,21500,https://www.indiamart.com/proddetail/connect-tq-04-standalone-voice-logger-landline-telephone-call-recorder-2852922749848.html
-386,Connect AR120 One Port Voice Logger,Telephone Call Recorder with Answering Machine,851762,7500,https://www.indiamart.com/proddetail/connect-ar120-one-port-voice-logger-telephone-call-recorder-with-answering-machine-2852922415748.html
-387,Connect AR100 Standalone Voice Logger,Landline Call Recorder,851762,6750,https://www.indiamart.com/proddetail/connect-ar100-standalone-voice-logger-landline-call-recorder-2852922294612.html
-388,Connect AVL02TXE1 PRI Voice Logger,"For recording T1, E1 AND ISDN PRI LINES",851762,65500,https://www.indiamart.com/proddetail/connect-avl02txe1-pri-voice-logger-for-recording-t1-e1-and-isdn-pri-lines-2852918803830.html
-389,Connect AVL01TXE1 PRI Voice Logger,"For recording T1, E1 AND ISDN PRI LINES",851762,47900,https://www.indiamart.com/proddetail/connect-avl01txe1-pri-voice-logger-for-recording-t1-e1-and-isdn-pri-lines-2852918265591.html
+﻿name,description,hsn,price,link
+MATRIX SPARSH VP210,Standard SIP Entry-level Phone with PoE,851762,3751,
+MATRIX SPARSH VP510E,Standard SIP Premium Phone with PoE,851762,5556,
+MATRIX EON510,Digital Key Phone,851762,5061,
+MATRIX DSS532,IP/DSS Console for IP/Digital Phones,851762,3948,
+MATRIX SIMADO GFX11,GSM FCT for Voice Applications,851762,4319,
+MATRIX SIMADO GFX11 4G,GSM/4G FCT for Voice Applications,851762,6794,
+MATRIX SIMADO GFX11E,GSM FCT for Emergency Applications,851762,5556,
+MATRIX SIMADO GFX11E 4G,GSM/4G FCT for Emergency Applications,851762,8031,
+MATRIX SIMADO GFX44,"GSM-FXS Gateway with 4 GSM, 4 FXS Ports",851762,13600,
+MATRIX SETU VFX404,"VoIP-FXO-FXS Gateway with 4 FXS, 4 VoIP Channels",851762,9888,
+MATRIX SETU VFX440,"VoIP-FXO-FXS Gateway with 4 FXO, 4 VoIP Channels",851762,11744,
+MATRIX SETU VFX808,"VoIP-FXO-FXS Gateway with 8 FXS, 8 VoIP Channels",851762,12363,
+MATRIX SETU VFX880,"VoIP-FXO-FXS Gateway with 8 FXO, 8 VoIP Channels",851762,14838,
+MATRIX SETU VFX844,"VoIP-FXO-FXS Gateway with 4 FXO, 4 FXS, 8 VoIP Channels",851762,13600,
+MATRIX SETU VFXTH0016,"VoIP-FXO-FXS Gateway with 16 FXS, 16 VoIP Channels",851762,23501,
+MATRIX SETU VFXTH0024,"VoIP-FXO-FXS Gateway with 24 FXS, 24 VoIP Channels",851762,29379,
+MATRIX SETU VFXTH0032,"VoIP-FXO-FXS Gateway with 32 FXS, 32 VoIP Channels",851762,35257,
+MATRIX SETU VFXTH0808,"VoIP-FXO-FXS Gateway with 8 FXO, 8 FXS, 16 VoIP Channels",851762,30925,
+MATRIX SETU VFXTH3200,"VoIP-FXO-FXS Gateway with 32 FXO, 32 VoIP Channels",851762,49488,
+MATRIX SETU VTEP1P,VoIP PRI Gateway,851762,28204,
+MATRIX SETU VTEP2P,VoIP PRI Gateway with 2 PRI Ports,851762,47014,
+MATRIX SETU VTEP3P,VoIP PRI Gateway with 3 PRI Ports,851762,64648,
+MATRIX SETU VTEP4P,VoIP PRI Gateway with 4 PRI Ports,851762,82282,
+MATRIX VISIONPRO206,"SOHO Digital PBX with 2 CO, 6 SLT",851762,6175,
+MATRIX VISIONPRO308,"SOHO Digital PBX with 3 CO, 8 SLT",851762,7413,
+MATRIX VISIONPRO412,"SOHO Digital PBX with 4 CO, 12 SLT",851762,9888,
+MATRIX ETERNITY NENX312,"SOHO IP-PBX with POTS, GSM and VoIP Connectivity",851762,14838,
+MATRIX ETERNITY NENX416,"SOHO IP-PBX with POTS, GSM and VoIP Connectivity",851762,16694,
+MATRIX ETERNITY NENXIP50,"SOHO IP-PBX with POTS, GSM and VoIP Connectivity",851762,16694,
+MATRIX ETERNITY NE VS,VoIP Server Module for ETERNITY NENX,851762,3700,
+MATRIX ETERNITY NE GSM,GSM Module for Voice Calls,851762,3700,
+MATRIX ETERNITY NE GSM 4G,GSM 4G Module for Voice Calls,851762,4938,
+ETERNITY PENX6SAC,IP-PBX with Universal Connectivity and Mobile Extensions,851762,12363,
+MATRIX ETERNITY PE CARD SLT4,Expansion Card for SLT,851762,2975,
+MATRIX ETERNITY PE CARD SLT8,Expansion Card for Analog Extensions (SLT),851762,4535,
+MATRIX ETERNITY PE CARD DKP8,Expansion Card for Digital Key Phones (DKP),851762,6484,
+MATRIX ETERNITY PE CARD CO2+SLT6,Expansion Card for CO and SLT,851762,5185,
+MATRIX ETERNITY PE CARD CO4+SLT4,Expansion Card for CO and SLT,851762,5185,
+MATRIX ETERNITY PE CARD DKP2+SLT6,Expansion Card for DKP and SLT,851762,5185,
+MATRIX ETERNITY PE CARD CO2+DKP2+SLT4,"Expansion Card for Analog Trunks (CO), DKP and SLT",851762,5185,
+MATRIX  ETERNITY PE CARD T1E1PRI ,Expansion Card for T1/E1/PRI Port,851762,10902,
+MATRIX ETERNITY PE CARD GSM4,Expansion Card for GSM Ports,851762,16879,
+MATRIX ETERNITY PE CARD GSM4 4G,Expansion Card for GSM Ports,851762,25975,
+MATRIX ETERNITY GENX12SAC,ETERNITY GENX Platform with CPU and AC Power Supply,851762,27212,
+MATRIX ETERNITY GENX12SDC,ETERNITY GENX Platform with CPU Card and 48VDC Power Supply,851762,32657,
+MATRIX ETERNITY GENX12S PSBB,ETERNITY GENX Platform with CPU and AC Power Supply with Battery Backup,851762,32657,
+MATRIX ETERNITY GE CARD SLT8,Expansion Card for SLT,851762,6112,
+ETERNITY GE CARD SLT16,Expansion Card for SLT,851762,10877,
+MATRIX ETERNITY GE CARD SLT20,Expansion Card for Analog Extensions (SLT),851762,13599,
+MATRIX ETERNITY GE CARD DKP8,Expansion Card for DKP,851762,10877,
+MATRIX ETERNITY GE CARD DKP16,ETERNITY GE CARD DKP16,851762,19724,
+MATRIX ETERNITY GE CARD CO8,Expansion Card for CO,851762,10877,
+MATRIX ETERNITY GE CARD CO16,Expansion Card for CO,851762,19044,
+MATRIX ETERNITY GE CARD CO4+SLT16,Expansion Card for CO and SLT,851762,19044,
+MATRIX ETERNITY GE CARD DKP4+SLT16,Expansion Card for DKP and SLT,851762,19044,
+MATRIX ETERNITY GE CARD CO4+DKP2+SLT8,"EXPANSION CARD FOR CO, DKP AND SLT",851762,16185,
+MATRIX ETERNITY GE CARD CO2+DKP2+SLT16,"EXPANSION CARD FOR CO, DKP AND SLT",851762,19044,
+MATRIX ETERNITY GE CARD CO4+DKP2+SLT12,"EXPANSION CARD FOR ANALOG TRUNKS (CO), DKP AND SLT",851762,19044,
+MATRIX ETERNITY GE CARD T1E1PRI SINGLE,EXPANSION CARD FOR T1/E1/PRI PORT,851762,16322,
+MATRIX ETERNITY GE CARD GSM4,Expansion Card for GSM Ports,851762,20405,
+MATRIX ETERNITY GE CARD GSM4 4G,Expansion Card for GSM 4G Ports,851762,29934,
+MATRIX ETERNITY GE CARD E&M4,ETERNITY GE CARD E&M4,851762,17002,
+MATRIX ETERNITY GE CARD RIC4,EXPANSION CARD FOR RADIO INTERFACE,851762,35924,
+MATRIX ETERNITY GE CARD E1FOPRI SINGLE,EXPANSION CARD FOR E1 PRI PORTS OVER FIBER OPTIC,851762,30206,
+MATRIX ETERNITY MENX16SAC,ETERNITY MENX Platform with CPU and AC Power Supply Card,851762,0,
+MATRIX ETERNITY MENX16SDC,ETERNITY MENX Platform with CPU and DC Power Supply Card,851762,0,
+MATRIX ETERNITY MENX RACK,External Cabinet for PLCC Requirements,851762,0,
+MATRIX ETERNITY ME CARD PSUNI-500 WATTS,,851762,0,
+AC POWER SUPPLY CARD,,851762,0,
+MATRIX ETERNITY ME CARD PS48VDC-500 WATTS,,851762,0,
+DC POWER SUPPLY CARD,,851762,0,
+MATRIX ETERNITY LENX27SDC,ETERNITY LENX Platform with CPU and DC Power Supply Card,851762,0,
+MATRIX PSUNI 48VDC1500W,AC to DC Converter for DC Power Supply,851762,0,
+MATRIX ETERNITY LE CARD PS48VDC-500 WATTS,,851762,0,
+DC POWER SUPPLY CARD,,851762,0,
+MATRIX ETERNITY MENX-LENX CARD CPU,CPU Card for ETERNITY MENX and ETERNITY LENX,851762,0,
+MATRIX ETERNITY ME CARD SLT8,Expansion Card for SLT,851762,0,
+MATRIX ETERNITY ME CARD SLT16,Expansion Card for SLT,851762,0,
+MATRIX ETERNITY ME CARD SLT32,Expansion Card for SLT,851762,0,
+MATRIX ETERNITY LE CARD SLT48,Expansion Card for SLT,851762,0,
+MATRIX ETERNITY ME CARD DKP8,Expansion Card for DKP,851762,0,
+MATRIX ETERNITY ME CARD DKP16,Expansion Card for DKP,851762,0,
+MATRIX ETERNITY ME CARD DKP32,Expansion Card for DKP,851762,0,
+MATRIX ETERNITY ME CARD DKP16LL,Expansion Card for DKP with Long Loop,851762,0,
+MATRIX ETERNITY ME CARD DKP32LL,Expansion Card for DKP with Long Loop,851762,0,
+MTRIX ETERNITY ME CARD CO8,Expansion Card for CO,851762,0,
+MATRIX ETERNITY ME CARD CO16,Expansion Card for CO,851762,0,
+MATRIX ETERNITY ME CARD CO8+SLT24,Expansion Card for CO and SLT,851762,0,
+MATRIX ETERNITY ME CARD T1E1PRI SINGLE,,851762,0,
+EXPANSION CARD FOR T1/E1/ PRI PORT,,851762,0,
+MATRIX ETERNITY ME CARD T1E1PRI DUAL,Expansion Card for T1/E1/PRI Ports,851762,0,
+MATRIX ETERNITY ME CARD GSM8,Expansion Card for GSM Ports,851762,0,
+MATRIX ETERNITY ME CARD GSM8 4G,Expansion Card for GSM 4G Ports,851762,0,
+MATRIX ETERNITY ME CARD E1FOPRI SINGLE,,851762,0,
+EXPANSION CARD FOR E1 PRI PORTS WITH DIRECT FIBER OPTIC TERMINATION,,851762,0,
+MATRIX ETERNITY ME CARD E1FOPRI DUAL,Expansion Card for E1 PRI Ports with Direct Fiber Optic Termination,851762,0,
+MATRIX ETERNITY ME CARD E&M4,Expansion Card for E&M Ports,851762,0,
+MATRIX ETERNITY ME CARD E&M8,Expansion Card for E&M Ports,851762,0,
+MATRIX ETERNITY ME CARD RIC4,Expansion Card for Radio Interface,851762,0,
+MATRIX NX DBM VMS64,VOICEMAIL Daughter-board Module for ETERNITY PENX/GENX/MENX/LENX CPU Cards,851762,5432,
+MATRIX SARVAM VMS CHNL4,License for VOICEMAIL Channels,997331,2877,
+MATRIX SARVAM VMS CHNL16,License for VOICEMAIL Channels,997331,13849,
+MATRIX NX DBM VOCODER64,VOCODER Daughter-board Module for ETERNITY PENX/GENX/MENX/LENX CPU Cards,997331,8154,
+MATRIX SARVAM VOCODER CHNL4,License for VOCODER Channels,997331,2877,
+MATRIX SARVAM VOCODER CHNL16,License for VOCODER Channels,997331,13849,
+MATRIX SARVAM EXP4 SME,License to Expand 4 Slots in ETERNITY GENX,997331,3454,
+MATRIX SARVAM EXP4 ENT,License to Expand 4 Slots in ETERNITY MENX and ETERNITY LENX,997331,0,
+MATRIX SARVAM VMS SOHO,License for Voicemail in ETERNITY NENX,997331,3140,
+MATRIX SARVAM UCS ENT,License For Unified Communication Server For ENT,997331,0,
+MATRIX SARVAM UMG SME,License For Universal Media Gateway For SME - ETERNITY GENX,997331,5764,
+MATRIX SARVAM GATEWAY SMB,License for Gateway Functions,997331,1500,
+MATRIX SARVAM GATEWAY SME,License for Gateway Functions,997331,4000,
+MATRIX SARVAM GATEWAY ENT,License for Gateway Functions,997331,0,
+MATRIX SARVAM QSIG SMB,License for QSIG Interface to Connect with other Matrix or Third-party,997331,1500,
+MATRIX SARVAM QSIG SME,License for QSIG Interface to Connect with other Matrix or Third-party PBX,997331,4000,
+MATRIX SARVAM QSIG ENT,License for QSIG Interface to Connect with other Matrix or Third-party PBX,997331,0,
+MATRIX SARVAM HOSPITALITY SMB,License to Enable Hospitality Functions Suit for SARVAM UCS,997331,5502,
+MATRIX SARVAM HOSPITALITY SME,License to Enable Hospitality Functions Suite for SARVAM UCS,997331,11435,
+MATRIX SARVAM HOSPITALITY ENT,License to Enable Hospitality Functions Suite for SARVAM UCS,997331,0,
+MATRIX SARVAM PMS SMB,License to Enable Property Management System Interface for SARVAM UCS,997331,3297,
+MATRIX SARVAM PMS SME,License to Enable Property Management System Interface for SARVAM UCS,997331,8074,
+MATRIX SARVAM PMS ENT,License to Enable Property Management System Interface for SARVAM UCS,997331,0,
+MATRIX SARVAM HOSPITALITY E911 SMB,License to Enabling Direct Dialing of Emergency Number 911,997331,1092,
+MATRIX SARVAM HOSPITALITY E911 SME,License for Enabling Direct Dialing of Emergency Number 911,997331,1144,
+MATRIX SARVAM HOSPITALITY E911 ENT,License for Enabling Direct Dialing of Emergency Number 911,997331,0,
+MATRIX SARVAM PLCC SME,License to Enable Special Features for PLCC Network of Electric Utilities,997331,26389,
+MATRIX SARVAM PLCC ENT,License to Enable Special Features for PLCC Network of Electric Utilities,997331,0,
+MATRIX SARVAM CTI SOHO,License to Open Interface between PBX and Third-party CTI Application,997331,2615,
+MATRIX SARVAM CTI SMB,License to Open Interface between PBX and Third-party CTI Application,997331,3297,
+MATRIX SARVAM CTI SME,License to Open Interface between PBX and Third-party CTI Application,997331,8074,
+MATRIX SARVAM CTI ENT,License to Open Interface between PBX and Third-party CTI Application,997331,0,
+MATRIX SARVAM SMS GATEWAY SOHO,License to Enable SMS Gateway Functionality,997331,2615,
+MATRIXX SARVAM SMS GATEWAY SMB,LICENSE TO ENABLE SMS GATEWAY FUNCTIONALITY FOR SARVAM UCS SMB,997331,3297,
+MATRIX SARVAM SMS GATEWAY SME,License to Enable SMS Gateway Functionality for SARVAM UCS SME,997331,8074,
+MATRIX SARVAM SMS GATEWAY ENT,License to Enable SMS Gateway Functionality for SARVAM UCS ENT,997331,0,
+MATRIX SARVAM SMS SERVER SOHO,License to Enable SMS SERVER Functionality,997331,2615,
+MATRIX SARVAM SMS SERVER SMB,LICENSE TO ENABLE SMS SERVER FUNCTIONALITY FOR SARVAM UCS SMB,997331,3297,
+MATRIX SARVAM SMS SERVER SME,License to Enable SMS Server Functionality for SARVAM UCS SME,997331,8074,
+MATRIX SARVAM SMS SERVER ENT,License to Enable SMS Server Functionality for SARVAM UCS ENT,997331,0,
+MATRIX SARVAM REDUNDANCY ENT,License to Enable Redundancy Functionality for SARVAM UCS ENT,997331,0,
+MATRIX SARVAM IPSUB5,License for IP Subscribers for SARVAM UCS,997331,1722,
+MATRIX SARVAM IPSUB10,License for IP Subscribers for SARVAM UCS,997331,3454,
+MATRIX SARVAM IPSUB50,License for IP Subscribers for SARVAM UCS,997331,17314,
+MATRIX SARVAM IPSUB100,License for IP Subscribers for SARVAM UCS,997331,41569,
+MATRIX SARVAM IPSUB500,License for IP Subscribers for SARVAM UCS,997331,0,
+MATRIX SARVAM VARTA USER5E,License for VARTA Soft Clients with Essential Features for SARVAM UCS,997331,1722,
+MATRIX SARVAM VARTA USER10E,License for VARTA Soft Clients with Essential Features for SARVAM UCS,997331,3454,
+MATRIX SARVAM VARTA USER50E,License for VARTA Soft Clients with Essential Features for SARVAM UCS,997331,17314,
+MATRIX SARVAM VARTA USER100E,License for VARTA Soft Clients with Essential Features for SARVAM UCS,997331,41569,
+MATRIX SARVAM VARTA USER500E,License for VARTA Soft Clients with Essential Features for SARVAM UCS,997331,0,
+MATRIX SARVAM VARTA USER5P,License for VARTA Soft Clients with Professional Features for SARVAM UCS,997331,2877,
+MATRIX SARVAM VARTA USER10P,License for VARTA Soft Clients with Professional Features for SARVAM UCS,997331,5764,
+MATRIX SARVAM VARTA USER50P,License for VARTA Soft Clients with Professional Features for SARVAM UCS,997331,28864,
+MATRIX SARVAM VARTA USER100P,License for VARTA Soft Clients with Professional Features for SARVAM UCS,997331,69289,
+MATRIX SARVAM VARTA USER500P,License for VARTA Soft Clients with Professional Features for SARVAM UCS,997331,0,
+MATRIX SARVAM VARTA USER5C,License for VARTA Soft Clients with Collaboration Features for SARVAM UCS,997331,4032,
+MATRIX SARVAM VARTA USER10C,License for VARTA Soft Clients with Collaboration Features for SARVAM UCS,997331,8074,
+MATRIX SARVAM VARTA USER50C,License for VARTA Soft Clients with Collaboration Features for SARVAM UCS,997331,40414,
+MATRIX SARVAM VARTA USER100C,License for VARTA Soft Clients with Collaboration Features for SARVAM UCS,997331,97009,
+MATRIX SARVAM VARTA USER500C,License for VARTA Soft Clients with Collaboration Features for SARVAM UCS,997331,0,
+MATRIX SPARK200,Pure IP Hardware Platfrom for Unified Communication Server,997331,29688,
+MATRIX PRASAR VOCODER CHNL4,License for VOCODER Channels for PRASAR UCS SME and PRASAR UCS ENT,997331,2615,
+MATRIX PRASAR VOCODER CHNL16,License for VOCODER Channels for PRASAR UCS SME and PRASAR UCS ENT,997331,10490,
+MATRIX PRASAR VMS CHNL4,License for Voice Mail Channels for PRASAR UCS,997331,2615,
+MATRIX PRASAR VMS CHNL16,License for Voice Mail Channels for PRASAR UCS,997331,10490,
+MATRIX PRASAR CONF8,License for Conference Channels for PRASAR UCS,997331,3140,
+MATRIX PRASAR HOSPITALITY SME,License to Enable Hospitality Functions Suite for PRASAR UCS,997331,10490,
+MATRIX PRASAR HOSPITALITY E911 SME,License for Enabling Direct Dialing of Emergency Number 911,997331,1040,
+MATRIX PRASAR PMS SME,License To Enable Property Management System Interface for PRASAR UCS,997331,7340,
+MATRIX PRASAR REDUNDANCY SME,License to Enable Redundancy Functionality for PRASAR UCS,997331,10490,
+MATRIX PRASAR HOSPITALITY ENT,License to Enable Hospitality Functions Suite for PRASAR UCS,997331,10490,
+MATRIX PRASAR HOSPITALITY E911 ENT,License for Enabling Direct Dialing of Emergency Number 911,997331,1040,
+MATRIX PRASAR PMS ENT,License To Enable Property Management System Interface for PRASAR UCS,997331,7245,
+MATRIX PRASAR REDUNDANCY ENT,License to Enable Redundancy Functionality for PRASAR UCS,997331,10490,
+MATRIX PRASAR UCS SME TO ENT,License to Scale Software Platform from PRASAR UCS SME to PRASAR UCS ENT,997331,2090,
+MATRIX PRASAR IPSUB5,License for IP Subscribers for PRASAR UCS,997331,1565,
+MATRIX PRASAR IPSUB10,License for IP Subscribers for PRASAR UCS,997331,3140,
+MATRIX PRASAR IPSUB50,License for IP Subscribers for PRASAR UCS,997331,15740,
+MATRIX PRASAR IPSUB100,License for IP Subscribers for PRASAR UCS,997331,31490,
+MATRIX PRASAR IPSUB500,License for IP Subscribers for PRASAR UCS,997331,157490,
+MATRIX PRASAR VARTA USER5E,License for VARTA Soft Clients with Essential Features for PRASAR UCS,997331,1565,
+MATRIX PRASAR VARTA USER10E,License for VARTA Soft Clients with Essential Features for PRASAR UCS,997331,3140,
+MATRIX PRASAR VARTA USER50E,License for VARTA Soft Clients with Essential Features for PRASAR UCS,997331,15740,
+MATRIX PRASAR VARTA USER100E,License for VARTA Soft Clients with Essential Features for PRASAR UCS,997331,31490,
+MATRIX PRASAR VARTA USER500E,License for VARTA Soft Clients with Essential Features for PRASAR UCS,997331,157490,
+MATRIX PRASAR VARTA USER5P,License for VARTA Soft Clients with Professional Features for PRASAR UCS,997331,2615,
+MATRIX PRASAR VARTA USER10P,License for VARTA Soft Clients with Professional Features for PRASAR UCS,997331,5240,
+MATRIX PRASAR VARTA USER50P,License for VARTA Soft Clients with Professional Features for PRASAR UCS,997331,26240,
+MATRIX PRASAR VARTA USER100P,License for VARTA Soft Clients with Professional Features for PRASAR UCS,997331,52490,
+MATRIX PRASAR VARTA USER500P,License for VARTA Soft Clients with Professional Features for PRASAR UCS,997331,262490,
+MATRIX PRASAR VARTA USER5C,License for VARTA Soft Clients with Collaboration Features for PRASAR UCS,997331,3665,
+MATRIX PRASAR VARTA USER10C,License for VARTA Soft Clients with Collaboration Features for PRASAR UCS,997331,7340,
+MATRIX PRASAR VARTA USER50C,License for VARTA Soft Clients with Collaboration Features for PRASAR UCS,997331,36740,
+MATRIX PRASAR VARTA USER100C,License for VARTA Soft Clients with Collaboration Features for PRASAR UCS,997331,73490,
+MATRIX PRASAR VARTA USER500C,License for VARTA Soft Clients with Collaboration Features for PRASAR UCS,997331,367490,
+MATRIX PRASAR AUP,Annual Upgradation Package (AUP) for PRASAR UCS,997331,5240,
+MATRIX ANANT,"ANANT contains DELL PowerEdge R260 with pre-installed ANANT UCS Application, MATRIX ",997331,0,
+MATRIX ANANT UCS APPLICATION,License for Unified Communication Server for Open Server Platform,997331,0,
+MATRIX ANANT VMS CHNL4,License for Voicemail in ANANT UCS,997331,0,
+MATRIX ANANT VMS CHNL16,License for Voicemail in ANANT UCS,997331,0,
+MATRIX ANANT VMS CHNL32,License for Voicemail in ANANT UCS,997331,0,
+MATRIX ANANT CONF8,License for Conference Channels for ANANT UCS,997331,0,
+MATRIX ANANT CONF16,License for Conference Channels for ANANT UCS,997331,0,
+MATRIX ANANT CONF32,License for Conference Channels for ANANT UCS,997331,0,
+MATRIX ANANT IPSUB10,License for IP Subscribers for ANANT UCS,997331,0,
+MATRIX ANANT IPSUB50,License for IP Subscribers for ANANT UCS,997331,0,
+MATRIX ANANT IPSUB100,License for IP Subscribers for ANANT UCS,997331,0,
+MATRIX ANANT IPSUB500,License for IP Subscribers for ANANT UCS,997331,0,
+MATRIX ANANT VARTA USER5E,License for VARTA Soft Clients with Essential Features for ANANT UCS,997331,0,
+MATRIX ANANT VARTA USER10E,License for VARTA Soft Clients with Essential Features for ANANT UCS,997331,0,
+MATRIX ANANT VARTA USER50E,License for VARTA Soft Clients with Essential Features for ANANT UCS,997331,0,
+MATRIX ANANT VARTA USER100E,License for VARTA Soft Clients with Essential Features for ANANT UCS,997331,0,
+MATRIX ANANT VARTA USER5P,License for VARTA Soft Clients with Professional features for ANANT UCS,997331,0,
+MATRIX ANANT VARTA USER10,License for VARTA Soft Clients with Professional features for ANANT UCS,997331,0,
+MATRIX ANANT VARTA USER50P,License for VARTA Soft Clients with Professional features for ANANT UCS,997331,0,
+MATRIX ANANT VARTA USER100P,License for VARTA Soft Clients with Professional features for ANANT UCS,997331,0,
+MATRIX ANANT VARTA USER5C,License for VARTA Soft Clients with Collaboration features for ANANT UCS,997331,0,
+MATRIX ANANT VARTA USER10C,License for VARTA Soft Clients with Collaboration features for ANANT UCS,997331,0,
+MATRIX ANANT VARTA USER50C,License for VARTA Soft Clients with Collaboration features for ANANT UCS,997331,0,
+MATRIX ANANT VARTA USER100C,License for VARTA Soft Clients with Collaboration features for ANANT UCS,997331,0,
+MATRIX ANANT HOSPITALITY USER10,License to Enable Hospitality Functions Suite for ANANT UCS,997331,0,
+MATRIX ANANT HOSPITALITY USER50,License to Enable Hospitality Functions Suite for ANANT UCS,997331,0,
+MATRIX ANANT HOSPITALITY USER100,License to Enable Hospitality Functions Suite for ANANT UCS,997331,0,
+ANANT HOSPITALITY USER500,License to Enable Hospitality Functions Suite for ANANT UCS,997331,0,
+MATRIX ANANT PMS USER10,License To Enable Property Management System Interface for ANANT UCS,997331,0,
+MATRIX ANANT PMS USER50,License To Enable Property Management System Interface for ANANT UCS,997331,0,
+MATRIX ANANT PMS USER100,License To Enable Property Management System Interface for ANANT UCS,997331,0,
+MATRIX ANANT PMS USER500,License To Enable Property Management System Interface for ANANT UCS,997331,0,
+MATRIX ANANT HOSPITALITY E911 USER10,License for Enabling Direct Dialing of Emergency Number 911 ,997331,0,
+MATRIX ANANT HOSPITALITY E911 USER50,License for Enabling Direct Dialing of Emergency Number 911 ,997331,0,
+MATRIX ANANT HOSPITALITY E911 USER100,LICENSE FOR ENABLING DIRECT DIALING OF EMERGENCY NUMBER 911 ,997331,0,
+MATRIX ANANT HOSPITALITY E911 USER500,LICENSE FOR ENABLING DIRECT DIALING OF EMERGENCY NUMBER 911,997331,0,
+MATRIX ANANT REDUNDANCY USER10,License to Enable Redundancy Functionality for ANANT UCS,997331,0,
+MATRIX ANANT REDUNDANCY USER50,License to Enable Redundancy Functionality for ANANT UCS,997331,0,
+MATRIX ANANT REDUNDANCY USER100,License to Enable Redundancy Functionality for ANANT UCS,997331,0,
+MATRIX ANANT REDUNDANCY USER500,License to Enable Redundancy Functionality for ANANT UCS,997331,0,
+MATRIX ANANT AUP USER10,Annual Upgradation Package (AUP) for ANANT UCS,997331,0,
+MATRIX ANANT AUP USER50,Annual Upgradation Package (AUP) for ANANT UCS,997331,0,
+MATRIX ANANT AUP USER100,Annual Upgradation Package (AUP) for ANANT UCS,997331,0,
+MATRIX ANANT AUP USER500,Annual Upgradation Package (AUP) for ANANT UCS,997331,0,
+MATRIX LICENSE DONGLE,License Dongle for Matrix Software Products,997331,660,
+NERON 20V IP PBX SYSTEM,"2x Ethernet 10/100 ( 1 LAN+ 1 WAN) 30 Live Call, 250 SIP User, 2 FXO, 1 Vol TE",851769,22500,
+NERON 20G/L IP PBX SYSTEM,"2x Ethernet 10/100 ( 1 LAN+ 1 WAN) 30Live Call. 250SIP User, 1 GSM (2G)",851769,16000,
+NERON N30 IP PBX SYSTEM,"2x Ethernet 10/100 ( 1 LAN+ 1 WAN) 30Live Call, 500 SIP User, 4 FXO + 4 FXS",851769,37500,
+NERON N50 IP PBX SYSTEM,"2x Ethernet 10/100 ( 1 LAN+ 1 WAN) 30 Live Call , 100 SIP User, 8 GSM (2G)",851769,34485,
+NERON NXG 8000L IP PBX SYSTEM,"4x Giga Ethernet , 60 Live call, 500 SIP Users, 256 GB Call recording Memory, MQTT API",851769,51175,
+NERON NXG 8404L IP PBX SYSTEM,"4x Giga Ethernet, 4 FXO+4 FXS , 60 Live call 500 SIP Users, 256 GB Call recording Memory",851769,62675,
+NERON NXG 8016L IP PBX SYSTEM,"4x Giga Ethernet, 16 FXS, 60 Live call 500 SIP Users, 256 GB Call recording Memory",851769,74750,
+NERON NXG 8428L IP PBX SYSTEM,"4x Giga Ethernet, 4 FXO+28 FXS, 60 Live call 500 SIP Users, 256 GB Call recording Memory",851769,91425,
+NERON NXG 8032L IP PBX SYSTEM,"4x Giga Ethernet, 32 FXS, 60 Live call 500 SIP Users, 128GB Call recording Memory",851769,87975,
+NERON NXG 8000 IP PBX SYSTEM,"4x Giga Ethernet , 1x SFP Port, 200 Live call 2000 SIP Users, 1x sata or SSD connector, 256 GB Internal Memory, MQTT API, 1 USB",851769,170000,
+NERON NXG 8404,"4x Giga Ethernet , 1x SFP Port, 4FXO + 4FXS 200 Live call, 2000 SIP Users, 1x sata or SSD connector, 256 GB Internal Memory, MQTT API, 1 USB",851769,192500,
+NERON NXG 8412,"4x Giga Ethernet 1x SFP Port, 4FXO + 12 FXS 200 Live call, 2000 SIP Users, 1x sata or SSD connector, 256 GB Internal Memory, MQTT API, 1 USB",851769,213500,
+NERON NXG 8428,"4x Giga Ethernet 1x SFP Port, 4FXO + 28 FXS 200 Live call, 2000 SIP Users, 1x sata or SSD connector, 256 GB Internal Memory, MQTT API,  1 USB",851769,234500,
+NERON NXG 8032,"4x Giga Ethernet 1x SFP Port, 32 FXS 200 Live call, 2000 SIP Users, 1x Sata or SSD connector, 256 GB Internal Memory, MQTT API, 1 USB",851769,231700,
+NERON NXG 8048,"4x Giga Ethernet 1x SFP Port, 48 FXS 200 Live call, 2000 SIP Users, 1x Sata or SSD connector, 1 USB, 256 GB Internal Memory, MQTT API, ",851769,249900,
+NERON NXG 8444,"4x Giga Ethernet 1x SFP Port, 4FXO + 48 FXS 200 Live call, 2000 SIP Users, 1x sata or SSD connector, 1 USB",851769,252700,
+NERON NMG 7048S,"4x Giga Ethernet, 1x SFP, 48 Channel FXS, RJ11 + RJ21 Connector, LCD display, MQTT",851769,66670,
+NERON NMG 7032S,"4x Giga Ethernet, 1x SFP, 32 Channel FXS, RJ11 Connector, LCD display , MQTT",851769,52982,
+NERON NMG 7024S,"4x Giga Ethernet, 1x SFP, 24 Channel FXS, RJ11 Connector, LCD display, MQTT",851769,45312,
+NERON NMG 7016S,"4x Giga Ethernet, 1x SFP, 16 Channel FXS, RJ11 Connector, LCD display, MQTT",851769,24725,
+NERON NMG 7032L,"4x10/100 Eth, 32 Channel FXS, RJ11 Connector, LCD display, 1 USB",851769,34500,
+NERON NMG 7024L,"4x10/100 Eth, 24 Channel FXS, RJ11 Connector, LCD display, 1 USB",851769,31050,
+NERON NMG 7016L,"4x10/100 Eth. 16 Channel FXS, RJ11 Connector, LCD display, 1 USB",851769,24725,
+NERON NMG 7004S,"2x Giga Ethernet (1x LAN, 1x WAN) 1x SFP 1Gbps, 4 FXS RJ11 Interface",851769,9405,
+NERON NMG 7004O,"2x Giga Ethernet (1x LAN, 1x WAN) 1x SFP 1Gbps, 4 FXO RJ11 Interface",851769,12711,
+NERON NMG 7008S,"2x Giga Ethernet (1x LAN, 1x WAN) 1x SFP 1Gbps, 8 FXS RJ11 Interface",851769,13623,
+NERON NMG 7008O,"2x Giga Ethernet (1x LAN, 1x WAN) 1x SFP 1Gbps, 8 FXS RJ11 Interface",851769,16530,
+NERON 502HD,"2 SIP Account, 10/100 Dual Ethernet, PoE, Wifi 2.4 GHz, WithPSU",851769,3375,
+NERON 504HD,"4 SIP Account , 10/100/1000 Dual Ethernet, 2.8"" LCD Display PoE, Wifi 2.4 GHz ,Wilhout PSU",851769,6050,
+NERON 508HD,"8 SIP Account, 10/100/1000 Dual Ethernet, 3.5"" LCD Display PoE, Wifi 2.4 GHz ,Without PSU",851769,9050,
+NERON 510HD,"10 SIP Accounl, 10/100/1000 Dual Ethernet 4.3"" LCD Touch, Screen Display PoE,  Wifi 2.4+5 GHz ,Without PSU",851769,11100,
+Neron NXG 08 V GSM Media Gateway,8 Port GSM Gateway with 50 SIP Extensions,851769,100000,
+Neron NXG 16 V GSM Media Gateway,16 Port GSM Gateway with 100 SIP Extensions,851769,100000,
+Neron NXG 32 V GSM Media Gateway,32 Port GSM Gateway with 50 SIP Extensions,851769,100000,
+Dialx,"Unified Communication Solution which have features like monitoring, automation recording and integration",,25000,
+installation and commission,,998732,5000,
+CLIXXO SIP TO PRI GATEWAY,SIP to PRI Converter,851762,23500,
+CLIXXO IPX V25 - VIDEO,IP Video Phone,851762,39000,
+CLIXXO IPX V20 VIDEO PHONE,IP Video Phone,851762,23000,
+CLIXXO IPX 990 PARTIAL  VIDEO,IP Video Phone,851762,22500,
+CLIXXO IPX 980 GIGABIT,High End IP Phone,851762,12500,
+CLIXXO IPX 970 GIGABIT,High End IP Phone,851762,10000,
+CLIXXO IPX 940G - GIGABIT,High End IP Phone,851762,6500,
+SUPPLY OF CABLE 2 PAIR IN METERS,,854449,35,
+SUPPLY CABLE 5 PAIR IN METERS,,854449,40,
+LAYING CHARGES OF 2 PAIR CABLE WITH CLIPPING IN METERS,,,10,
+LAYING CHARGES OF 5 PAIR CABLE WITH CLIPPING IN METERS,,,10,
+SUPPLY OF 1 INCH CHANNEL IN METERS,,,40,
+LAYING OF 1 INCH CHANNEL WITH CLIPPING IN METERS,,,20,
+SUPPLY OF CONDUITE PIPE IN METERES,,854449,70,
+LAYING CHARGES OF CONDUITE PIPE IN METERES,,,20,
+HOLA TF 700,CLI WITH SPEAKERS TELEPHONE,851762,"1,250",
+HOLA TF 600,CLI WITHOUT SPEAKER TELEPHONE,851762,999,
+HOLA TF 310,BASIC TELEPHONE,85171110,999,
+SUPPLY OF 5 PAIR JELLY FILLED CABLE IN MTRS,,854449,70,
+Supply of 10 pair Jelly filled Cable in mtrs,,854449,100,
+SUPPLY OF 20 PAIR JELLY FILLED CABLE IN MTRS,,854449,180,
+SUPPLY OF 50 PAIR JELLY FILLED CABLE IN MTRS,,854449,250,
+HANDSET CORD,,854449,50,
+SINGLE PIN LINE CORD,,854449,50,
+DOUBLE PIN LINE CORD,,854449,100,
+BEETLE M71,CLI WITH SPEAKER TELEPHONE,851762,1465,
+BEETLE M 500,CLI WITH SPEAKER TELEPHONE,851762,"1,060",
+Connect UMGW 32S FXS Gateway,,851762,36135,
+Connect UMGW 4S FXS Media Gateway,,851762,8326,
+Connect UMGW 32S FXS Gateway,,851762,36135,
+Connect 216B - Telephone System,2 CO Line + 16 Extensions,851762,6720,
+Connect 508 HD SIP Phone,,851762,9050,
+Connect IP UMGW 24S FXS Gateway,,851762,31878,
+Connect 1U Server with RPS (upto 500 lines),IP PPBX System,851762,72450,
+Connect 8 Port Voice Logger,USB Call Recorder,851762,11446,
+Connect 7048S FXS Gateway,,851762,66670,
+Connect 4 Port Voice Logger ,Call Recorder,851762,7788,
+Connect 424B,4 CO Line + 24 Extensions expandable to 32 Extensions Epabx System,851762,10480,
+Connect NMG 7004S FXS Gateway,,851762,9405,
+ Connect T23G 4 Line POE VOIP Phone,,851762,66411,
+Connect 7016S FXS Media Gateway,,851762,38350,
+Connect 7004O FXO Gateway,,851762,12711,
+Connect 16 Port Telephone PCIe Voice Logger - Telephone Call Recorder,,851762,13600,
+Connect 206B,2 CO Line + 6 Extensions Epabx System/Telephone Intercom System,851762,3140,
+Connect 308B Epabx System,Intercom System With 3 CO Line + 8 Extensions,851762,4580,
+Connect 8444 IP PBX Server,,851762,252700,
+Connect UCX Micro 410 IP PBX System,,851762,47250,
+Connect 7008O FXO Gateway/VoIP Gateway,,851762,16530,
+Connect 08 Port Telephone PCIe Voice Logger,Telephone Call Recorder,851762,9950,
+Connect N20V IP PBX System / Intercom System,,851762,22500,
+ Connect T43G IP Phone ,,851762,9660,
+Connect N50 IP PBX System / Intercom System,,851762,34485,
+Connect N30 IP Pbx System In Delhi,,851762,30750,
+Connect 432B - 4 CO Line + 32 Extensions Epabx System / Telephone Intercom System,,851762,12760,
+Connect 510 HD SIP Phone / VoIP Phone,,851762,11100,
+Connect 32 Port Telephone PCIe Voice Logger,Telephone Call Recorder,851762,39500,
+Connect 104B Epabx System,,851762,2000,
+WiFi Phone - Connect 502 HD SIP Phone,,851762,3375,
+Connect GSM 4G Volte Auto Dialer GSM FCT,Automatically Dials call for specified list of numbers,851762,6000,
+Connect 232B Analog Intercom System,with 2 CO Line + 24 Extensions expandable to 32 Extensions,851762,9700,
+Connect 312B - Epabx System,Telephone Intercom System With 3 CO Line + 12 Extensions,851762,6260,
+Connect 8016L IP PBX Server/IP PBX System,,851762,74750,
+Connect 8428L IP PBX System in Delhi,,851762,91425,
+Connect NXG 8000L IP PBX System,,851762,51175,
+Connect NXG 8412L IP PBX System,,851762,77050,
+Connect 8412 IP PBX Server,,851762,213500,
+Connect NXG 8404L IP PBX System,,851762,51175,
+Connect 8428 IP PBX Server,,851762,234500,
+Connect 8032 IP PBX Server,,851762,231700,
+Connect 7008S FXS Gateway,,851762,13623,
+Connect NMG 7024S FXS Media Gateway,,851762,45312,
+Connect NMG 7032S FXS Media Gateway,,851762,52983,
+Connect 8404 IP PBX Server,,851762,192500,
+Connect NXG 8000 IP PBX Server,,851762,170100,
+Connect 8048 IP PBX Server,,851762,249900,
+Connect IP UMGW 24S FXS Gateway,,851762,31878,
+Connect 1U Server with RPS (upto 500 lines),IP PBX System,851762,72450,
+Connect N20G IP PBX System,IP based Telephone System,851762,16000,
+Connect 1U Server with SPS,IP PBX Server,851762,57960,
+Connect 8032L IP PBX System,,851762,87975,
+Connect 105B Epabx System,,851762,2390,
+Connect 16 Port Telephone Voice Logger,Call Recorder,851762,19293,
+Connect 108B Epabx System,,851762,3140,
+Wifi Enabled Connect 504 HD SIP Phone,,851762,6050,
+Connect T 58W - 16 VoIP Account Video Phone,,851762,35621,
+Connect UMGW 128S FXS Gateway with Dual Power Supply,,851762,171468,
+Connect UMGW 48 FXS VoIP Gateway,,851762,64185,
+Connect UMGW 08 FXO Gateway,,851762,26565,
+Connect UMGW 16 DCS FXS Gateway with DC power,,851762,28527,
+Connect IP UMGW 8S FXS Media Gateway,,851762,12951,
+Connect Vaani 102P SIP Landline Phone,2 Line Basic with POE,851762,3994,
+Connect 1U Server with RPS (upto 6000 lines),IP PBX System,851762,114715,
+Connect Umgw 16s Fxs Media,,851762,23457,
+Connect Vaani 101P Single Line POE SIP Telephone,,851762,2700,
+Connect UCX Micro 402 IP PBX System,,851762,31450,
+Connect 4G Volte GSM FCT Device,Fixed Cellular Terminal or GSM Gateway Device (Jio Sim Supported),851762,10500,
+2G Connect Turbo GSM FCT,Fixed Cellular Terminal Device or GSM Gateway Device,851762,6000,
+Connect GSM 4G Volte Turbo FCT Device,Landline Telephone Recorder or GSM Gateway Device,851762,7000,
+Connect GSM Advance FCT,Fixed Cellular Terminal Device or GSM Gateway,851762,5000,
+2G Connect Basic GSM FCT Device,Fixed Cellular Terminal or GSM Gateway Device,851762,2250,
+Connect 2 Port Voice Logger,Telephone Call Recorder,851762,4189,
+Connect GSM Advance 4G Volte FCT,Fixed Cellular Terminal Device or GSM Gateway Device,851762,6000,
+Connect 1 Port USB Voice Logger,Telephone Voice Recorder,851762,3658,
+Connect AJ-2 Standalone Voice Logger,Landline Call Recorder,851762,3658,
+Connect AJ-2 Standalone Voice Logger,Landline Call Recorder,851762,16850,
+Connect TQ-08 Standalone Voice Logger,Telephone Voice Recorder,851762,49000,
+Connect TQ-16 Standalone Voice Logger,Telephone Voice Recorder,851762,39500,
+Connect TQ-04 Standalone Voice Logger,Landline Telephone call Recorder,851762,21500,
+Connect AR120 One Port Voice Logger,Telephone Call Recorder with Answering Machine,851762,7500,
+Connect AR100 Standalone Voice Logger,Landline Call Recorder,851762,6750,
+Connect AVL02TXE1 PRI Voice Logger,"For recording T1, E1 AND ISDN PRI LINES",851762,65500,
+Connect AVL01TXE1 PRI Voice Logger,"For recording T1, E1 AND ISDN PRI LINES",851762,47900,
+Alcatel Lucent 20 SIP Phone,"ALE-20 Dual Port Gigabit Ethernet Essential Desk Phone, Dual Stack NOE SIP 2.8 inch 132x64 B&W display",851762,9738,
+Alcatel Lucent 20h Hybrd Digital/SIP Phone,"ALE-20h Single Port Hybrid Digital IP Essential Desk Phone, Dual Stack NOE-SIP, 2.8 inch 132x64 B&W display with backlight HD Audio, 1 USB-A, 1USB-C, Ships without Network Cable",851762,10923,
+Alcatel Lucent 30h Hybrd Digital/SIP Phone,"ALE-30h Single Port Hybrid Digital IP Essential Desk Phone, Dual Stack NOE-SIP, 3.5 inch 320x240 color Display HD Audio, 1 USB-A, USB-C, Ships without Network cable.",851762,13115,
+Alcaltel Lucent Oxo Connect Digital IP Unified Communication System,Alcaltel Lucent Oxo Connect Digital IP Unified Communication System in the capacity of ,,0,

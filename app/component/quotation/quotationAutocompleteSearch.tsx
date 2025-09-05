@@ -121,7 +121,7 @@ export default function QuotationAutocompleteSearch({ index }: { index: number }
                         onBlur={handleBlur}
                         onFocus={handleFocus}
                         onKeyDown={handleKeyDown}
-                        className="w-full p-2 border border-border bg-background text-textPrimary focus:outline-textPrimary"
+                        className="w-full p-2 border border-border bg-background text-textPrimary focus:outline-textPrimary h-full"
                         placeholder="Search Product..."
                         autoComplete="off"
                     />

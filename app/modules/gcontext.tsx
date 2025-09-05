@@ -98,10 +98,11 @@ export const initialComplaintsData = () => {
         type: "Government",
         contactPerson: "",
         contactNumber: "",
+        nameOrAddress: "Teen Telecommunication Pvt. Ltd. \nG-57, Vikas Marg, Near Metro Pillar No.41, \nDelhi - 110092",
+        recordedby: "",
         complaint: "",
         address: "",
         attendingEngineer: "Not Assigned",
-        madeby: "",
         remarks: "",
         status: "pending"
     }

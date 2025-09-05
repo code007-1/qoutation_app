@@ -52,7 +52,7 @@ export const QuotationsColumns: ColumnDef<any, any>[] = [
         accessorKey: "to",
         header: "To",
         cell: (user: any) => {
-            return <span>{user.row.original.to}</span>
+            return <span>{user.row.original.to} ({user.row.original.todealer ? "DL" : "C"})</span>
         },
         filterFn: (row, columnId, filterValue) => {
             return row.original[columnId].toLowerCase().includes(filterValue);

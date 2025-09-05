@@ -7,6 +7,7 @@ import { Listbox, ListboxButton, ListboxOption, ListboxOptions } from "@headless
 import { ChevronDown } from "lucide-react";
 import { createPdf } from "./dashboard.quotations.create";
 import { useCentralFetcher } from "~/component/centralFetcher";
+import constData from "../../assets/data.json";
 
 export type ChallanItems = {
     id: number;
@@ -66,8 +67,6 @@ export default function CreateChallan() {
         }
         setChallanData((pre) => { return { ...pre, no: no, from: from, fromAddress: fromAddress, email: profile.email, website: profile.website, contact: profile.contact, pdfColor: String(profile.pdfColor), madeby: profile.username || "", date: new Date().toISOString().split("T")[0] } });
     }, []);
-
-    const challanCatorgoies = ["Dealer Sale", "Gem Sale", "Private Sale", "Govt. Sale", "MTNL Sale", "Private Standby", "Private Client Property Return", "Vendor Reparing", "Govt. Standby", "MTNL Standby", "Govt. Client Property Return"];
 
     return (<>
         <AnimatePresence>
@@ -132,7 +131,7 @@ export default function CreateChallan() {
                                                         className="absolute -right-34 z-10 mt-2 w-[75%] origin-top-right rounded-sm bg-background shadow-lg ring-1 ring-black/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
                                                     >
                                                         <div className="p-1">
-                                                            {["Delivery Challan", "MIS Challan"].map((type) => (
+                                                            {constData.challanType.map((type) => (
                                                                 <ListboxOption
                                                                     key={type}
                                                                     value={type}
@@ -160,7 +159,7 @@ export default function CreateChallan() {
                                                         className="absolute -right-34 z-10 mt-2 w-[75%] origin-top-right rounded-sm bg-background shadow-lg ring-1 ring-black/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
                                                     >
                                                         <div className="p-1">
-                                                            {challanCatorgoies.map((category) => (
+                                                            {constData.challanCatorgoies.map((category) => (
                                                                 <ListboxOption
                                                                     key={category}
                                                                     value={category}
