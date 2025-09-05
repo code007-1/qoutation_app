@@ -34,7 +34,7 @@ export default function MainMenu() {
                 <table className="font-medium text-textSecondary">
                     <tr><td>Company : </td><td >Teen Telecommunication Pvt. Ltd.</td></tr>
                     <tr><td>Product Developer : </td><td >Saurav</td></tr>
-                    <tr><td>Product Consultant : </td><td >s</td></tr>
+                    <tr><td>Product Consultant : </td><td >Gunjan</td></tr>
                     <tr><td>Version : </td><td >1.1.0</td></tr>
                 </table>
             </Dialog>
@@ -108,6 +108,8 @@ export default function MainMenu() {
                                 About
                             </button>
                         </MenuItem>
+                    </div>
+                    <div className="p-1">
                         <form onSubmit={handleSubmit}>
                             <MenuItem>
                                 <button
