@@ -175,19 +175,19 @@ const QuotationsTableUI: FC<TableProps> = ({
                 />
                 <button
                     onClick={() => setOpen(true)}
-                    className="bg-button text-buttonTextPrimary p-2"
+                    className="button p-2"
                 >
                     Advance Filter
                 </button>
                 <button
                     onClick={() => { search() }}
-                    className="bg-button text-buttonTextPrimary p-2"
+                    className="button p-2"
                 >
                     Reset Advance Filter
                 </button>
                 <button
                     onClick={() => { refresh() }}
-                    className="bg-button text-buttonTextPrimary p-2"
+                    className="button p-2"
                 >
                     Refresh Data
                 </button>
@@ -195,7 +195,7 @@ const QuotationsTableUI: FC<TableProps> = ({
                     <div className="w-full flex justify-end">
                         <button
                             onClick={() => { search() }}
-                            className=" bg-button text-buttonTextPrimary p-2"
+                            className="button p-2"
                         >
                             Load More
                         </button>
@@ -235,7 +235,7 @@ const QuotationsTableUI: FC<TableProps> = ({
                                     <button
                                         type="button"
                                         onClick={() => { search(query); setOpen(false); }}
-                                        className="bg-button text-buttonTextPrimary px-4 py-1 mt-4 text-lg"
+                                        className="button px-4 py-1 mt-4 text-lg"
                                     >
                                         Search
                                     </button>

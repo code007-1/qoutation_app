@@ -3,7 +3,7 @@ import { Link } from "@remix-run/react";
 import { AlignRight, Info, LogOut, NotebookText, NotepadText, Power, RotateCcwKey, ScrollText, UserPen } from "lucide-react";
 import { useGlobalContext } from "~/modules/gcontext";
 import { useCentralFetcher } from "../centralFetcher";
-import About from "./about123";
+import { Dialog } from "./about";
 import { useState } from "react";
 
 export default function MainMenu() {
@@ -30,7 +30,15 @@ export default function MainMenu() {
 
     return (
         <>
-            {isOpen && <About isOpen={isOpen} setIsOpen={setIsOpen} />}
+            <Dialog open={isOpen} onClose={() => setIsOpen(false)} title="About imaGine">
+                <table className="font-medium text-textSecondary">
+                    <tr><td>Company : </td><td >Teen Telecommunication Pvt. Ltd.</td></tr>
+                    <tr><td>Product Developer : </td><td >Saurav</td></tr>
+                    <tr><td>Product Consultant : </td><td >s</td></tr>
+                    <tr><td>Version : </td><td >1.1.0</td></tr>
+                </table>
+            </Dialog>
+            {/*isOpen && <About isOpen={isOpen} setIsOpen={setIsOpen} />*/}
             <Menu as="div" className="relative inline-block text-left">
                 <div>
                     <MenuButton className="flex mr-10 items-center hover:bg-buttonHover px-2">
@@ -63,7 +71,7 @@ export default function MainMenu() {
                         </MenuItem>
                         <MenuItem>
                             <Link
-                                to="/dashboard/About"
+                                to="/dashboard/complaints/show"
                                 className="flex px-4 py-2 text-sm text-textSecondary data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
                             >
                                 <NotebookText size={20} className="mr-2" />

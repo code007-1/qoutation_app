@@ -88,6 +88,7 @@ export default function App() {
         <div className={`${theme}`}>
           <NotificationProvider>
             <Outlet />
+            <div id="modal-root" />
           </NotificationProvider>
         </div>
       </motion.div>

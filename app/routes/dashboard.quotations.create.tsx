@@ -173,7 +173,7 @@ export default function QuotationsCreate() {
 
                         {step === 1 &&
                             <div className="w-1/4 flex justify-end">
-                                <button onClick={addItem} className="bg-button text-buttonTextPrimary px-4 py-1 text-lg">
+                                <button onClick={addItem} className="button px-4 py-1 text-lg">
                                     Add Item
                                 </button>
                             </div>}
@@ -207,7 +207,7 @@ export default function QuotationsCreate() {
                                     </div>
                                 </div>
                             </div>
-                            <button onClick={() => setStep(1)} className="bg-button text-buttonTextPrimary px-4 py-1 mt-4 text-lg">
+                            <button onClick={() => setStep(1)} className="button px-4 py-1 mt-4 text-lg">
                                 Next
                             </button>
                         </>
@@ -252,10 +252,10 @@ export default function QuotationsCreate() {
                                     </div>
                                 </div>
                                 <div className="flex justify-center space-x-4">
-                                    <button onClick={() => setStep(0)} className="bg-button text-buttonTextPrimary px-4 py-1 mt-2 text-lg">
+                                    <button onClick={() => setStep(0)} className="button px-4 py-1 mt-2 text-lg">
                                         Back
                                     </button>
-                                    <button onClick={() => { setData((pre) => { return { ...pre, items: [...items] } }); setStep(2) }} className="bg-button text-buttonTextPrimary px-4 py-1 mt-2 text-lg">
+                                    <button onClick={() => { setData((pre) => { return { ...pre, items: [...items] } }); setStep(2) }} className="button px-4 py-1 mt-2 text-lg">
                                         Next
                                     </button>
                                 </div>
@@ -275,11 +275,11 @@ export default function QuotationsCreate() {
                                     </div>
                                 </div>
                                 <div className="flex justify-center space-x-4">
-                                    <button onClick={() => setStep(1)} className="bg-button text-buttonTextPrimary px-4 py-1 mt-4 text-lg">
+                                    <button onClick={() => setStep(1)} className="button px-4 py-1 mt-4 text-lg">
                                         Back
                                     </button>
                                     <form onSubmit={(e) => { createPdf(data, fetcher, profile?.showCustomerList); e.preventDefault(); navigate("/dashboard/quotations/show") }}>
-                                        <button className="bg-button text-buttonTextPrimary px-4 py-1 mt-4 text-lg" type="submit">Generate Quotation PDF</button>
+                                        <button className="button px-4 py-1 mt-4 text-lg" type="submit">Generate Quotation PDF</button>
                                     </form>
                                 </div>
                             </>

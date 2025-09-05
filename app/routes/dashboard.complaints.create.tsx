@@ -183,7 +183,7 @@ export default function ComplaintsCreate() {
                     </Listbox>
                 </div>
                 <div className="flex flex-col items-center">
-                    <button onClick={saveComplaint} className="bg-button text-buttonTextPrimary px-4 py-1 mt-4 text-lg">
+                    <button onClick={saveComplaint} className="button px-4 py-1 mt-4 text-lg">
                         Save
                     </button>
                 </div>

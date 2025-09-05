@@ -12,6 +12,17 @@ body {
 }
 */
 
+@layer components {
+  .button {
+    @apply bg-button;
+    @apply text-buttonTextPrimary;
+  }
+
+  .button:hover {
+    @apply bg-button/75;
+  }
+}
+
 body {
   font-family: "Oxanium", "sans-serif";
   font-optical-sizing: auto;

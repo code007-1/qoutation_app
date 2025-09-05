@@ -93,7 +93,7 @@ export default function CreateChallan() {
 
                         {step === 1 &&
                             <div className="w-[10%] flex justify-end">
-                                <button onClick={addItem} className="bg-button text-buttonTextPrimary px-4 py-1 text-lg">
+                                <button onClick={addItem} className="button px-4 py-1 text-lg">
                                     Add Item
                                 </button>
                             </div>}
@@ -198,7 +198,7 @@ export default function CreateChallan() {
                                     </div>
                                 </div>
                             </div>
-                            <button onClick={() => setStep(1)} className="bg-button text-buttonTextPrimary px-4 py-1 mt-4 text-lg">
+                            <button onClick={() => setStep(1)} className="button px-4 py-1 mt-4 text-lg">
                                 Next
                             </button>
                         </>
@@ -220,12 +220,12 @@ export default function CreateChallan() {
                                     </div>
                                 </div>
                                 <div className="flex justify-center space-x-4">
-                                    <button onClick={() => setStep(0)} className="bg-button text-buttonTextPrimary px-4 py-1 mt-4 text-lg">
+                                    <button onClick={() => setStep(0)} className="button px-4 py-1 mt-4 text-lg">
                                         Back
                                     </button>
 
                                     <form onSubmit={(e) => { const updatedChallanData = { ...challanData, items: challanItems }; setChallanData(pre => { return { ...pre, items: challanItems } }); createPdf(updatedChallanData, fetcher, false, true, "challan"); e.preventDefault(); navigate("/dashboard/challan/show"); }}>
-                                        <button className="bg-button text-buttonTextPrimary px-4 py-1 mt-4 text-lg" type="submit">Generate Challan PDF</button>
+                                        <button className="button px-4 py-1 mt-4 text-lg" type="submit">Generate Challan PDF</button>
                                     </form>
                                 </div>
                             </>
