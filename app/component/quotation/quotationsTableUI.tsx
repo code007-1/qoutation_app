@@ -113,7 +113,6 @@ const QuotationsTableUI: FC<TableProps> = ({
     return (
         <div className="">
             <div className="flex space-x-4 items-center align-middle">
-
                 <Listbox value={type} onChange={setType}>
                     <div className="relative">
                         <ListboxButton className="flex items-center hover:bg-buttonHover px-2 border border-border py-2">

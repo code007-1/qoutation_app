@@ -8,6 +8,7 @@ export const action: ActionFunction = async ({ request }) => {
         return new Response(JSON.stringify({ error: "No data available" }), { status: 200 });
     }
     else {
+        console.log("query is : ", query.toLowerCase(), rows["name"].toLowerCase());
         // Filter rows based on the query
         const filteredRows = rows.filter((row: any) => {
             return row.name.toLowerCase().includes(query.toLowerCase());

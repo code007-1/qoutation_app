@@ -39,7 +39,7 @@ export default function MainMenu() {
                 </table>
             </Dialog>
             {/*isOpen && <About isOpen={isOpen} setIsOpen={setIsOpen} />*/}
-            <Menu as="div" className="relative inline-block text-left">
+            <Menu as="div" className="relative inline-block text-left text-sm text-textSecondary">
                 <div>
                     <MenuButton className="flex mr-10 items-center hover:bg-buttonHover px-2">
                         <div className="text-textPrimary text-xl mr-2">{text}</div>
@@ -48,22 +48,22 @@ export default function MainMenu() {
                 </div>
                 <MenuItems
                     transition
-                    className="absolute right-10 z-10 mt-2 w-48 origin-top-right divide-y divide-border rounded-sm bg-background shadow-lg ring-1 ring-black/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
+                    className="absolute right-10 z-10 mt-2 w-52 origin-top-right divide-y divide-border rounded-sm bg-background shadow-lg ring-1 ring-black/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
                 >
                     <div className="p-1">
                         <MenuItem>
                             <Link
                                 to="/dashboard/quotations/show"
-                                className="flex px-4 py-2 text-sm text-textSecondary data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
+                                className="flex px-4 py-2 data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
                             >
-                                <ScrollText size={20} className="mr-2" />
+                                <ScrollText size={20} className="mr-2 " />
                                 Quotation Home
                             </Link>
                         </MenuItem>
                         <MenuItem>
                             <Link
                                 to="/dashboard/challan/show"
-                                className="flex px-4 py-2 text-sm text-textSecondary data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
+                                className="flex px-4 py-2 data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
                             >
                                 <NotepadText size={20} className="mr-2" />
                                 Challan Home
@@ -72,7 +72,7 @@ export default function MainMenu() {
                         <MenuItem>
                             <Link
                                 to="/dashboard/complaints/show"
-                                className="flex px-4 py-2 text-sm text-textSecondary data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
+                                className="flex px-4 py-2 data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
                             >
                                 <NotebookText size={20} className="mr-2" />
                                 Complaint Home
@@ -84,7 +84,7 @@ export default function MainMenu() {
                         <MenuItem>
                             <Link
                                 to="/dashboard/settings/profile"
-                                className="flex px-4 py-2 text-sm text-textSecondary data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
+                                className="flex px-4 py-2 data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
                             >
                                 <UserPen size={20} className="mr-2" />
                                 Profile Settings
@@ -93,7 +93,7 @@ export default function MainMenu() {
                         <MenuItem>
                             <Link
                                 to="/dashboard/settings/password"
-                                className="flex px-4 py-2 text-sm text-textSecondary data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
+                                className="flex px-4 py-2 data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
                             >
                                 <RotateCcwKey size={20} className="mr-2" />
                                 Update Password
@@ -101,7 +101,7 @@ export default function MainMenu() {
                         </MenuItem>
                         <MenuItem>
                             <button
-                                className="w-full flex px-4 py-2 text-sm text-textSecondary data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
+                                className="w-full flex px-4 py-2 data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
                                 onClick={() => { setIsOpen(true); }}
                             >
                                 <Info size={20} className="mr-2" />

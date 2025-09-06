@@ -61,7 +61,7 @@ export const QuotationsColumns: ColumnDef<any, any>[] = [
 
     {
         accessorKey: "discount",
-        header: "Discount",
+        header: "Avg. Disc.",
         cell: (user: any) => {
             return <span>{user.row.original.discount} %</span>
         },
@@ -71,10 +71,10 @@ export const QuotationsColumns: ColumnDef<any, any>[] = [
     },
     {
         accessorKey: "addon",
-        header: "Avg. Addon %",
+        header: "Avg. Addon",
         cell: (user: any) => {
             const avg = user.row.original.items.reduce((acc: number, item: { addon?: number }) => acc + (item.addon ?? 0), 0) / (user.row.original.items.length || 1);
-            return <span>{avg} %</span>
+            return <span>{avg.toFixed(2)} %</span>
         },
         filterFn: (row, columnId, filterValue) => {
             return row.original[columnId] == filterValue;

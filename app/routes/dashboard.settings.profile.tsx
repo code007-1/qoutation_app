@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { useCentralFetcher } from "~/component/centralFetcher";
 import { useGlobalContext } from "~/modules/gcontext";
 import { useNotification } from "~/modules/notificationContext";
-import { Tab, TabGroup, TabList, TabPanel, TabPanels, Switch } from "@headlessui/react";
+import { Tab, TabGroup, TabList, TabPanel, TabPanels, Switch, Listbox, ListboxButton, ListboxOptions, ListboxOption } from "@headlessui/react";
+import { ChevronDown } from "lucide-react";
 
 export type profile = {
     username?: string,
@@ -57,6 +58,34 @@ export default function SettingsProfile() {
 
                 <TabPanels className="">
                     <TabPanel key={"General Profile Settings"} className="">
+                        <div className="flex w-full justify-center items-center gap-x-2">
+                            <div className="font-semibold text-black">Select Profile</div>
+                            <Listbox value={"Teen Tele"} onChange={e => { }} className="w-[50%]">
+                                <div className="relative flex justify-center">
+                                    <ListboxButton className="w-full flex items-center justify-between hover:bg-buttonHover px-2 border border-border py-2">
+                                        <div className="text-textSecondary">{"Teen Tele"}</div>
+                                        <ChevronDown className="text-textPrimary" />
+                                    </ListboxButton>
+
+                                    <ListboxOptions
+                                        transition
+                                        className="w-full absolute -right-34 top-10 z-10 mt-2 origin-top-right rounded-sm bg-background shadow-lg ring-1 ring-black/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
+                                    >
+                                        <div className="p-1">
+                                            {["Teen Tele", "Som System", "AB Link"].map((category) => (
+                                                <ListboxOption
+                                                    key={category}
+                                                    value={category}
+                                                    className="block px-4 py-2 text-sm text-textSecondary data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
+                                                >
+                                                    {category}
+                                                </ListboxOption>
+                                            ))}
+                                        </div>
+                                    </ListboxOptions>
+                                </div>
+                            </Listbox>
+                        </div>
                         <div className="grid grid-cols-2 gap-4 text-textPrimary mt-4">
                             <div>
                                 Contact Number <input type="text" name="contactNumber" placeholder="+91 ...." className="border border-border p-2 bg-background w-full" value={profile?.contact} onChange={(e) => { setProfile((pre) => { return { ...pre, contact: e.target.value } }) }} />

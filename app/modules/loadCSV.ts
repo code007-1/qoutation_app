@@ -14,10 +14,10 @@ function LoadData() {
     }
 
     else {
-        fs.createReadStream("./assets/data.csv") // Replace "file.csv" with your file path
+        fs.createReadStream("./assets/data with links.csv") // Replace "file.csv" with your file path
             .pipe(csv())
             .on("data", (row) => {
-                //console.log(row); // Each row is an object
+                console.log(row); // Each row is an object
                 rows.push(row);
             })
             .on("end", () => {

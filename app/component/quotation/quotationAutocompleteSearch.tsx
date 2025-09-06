@@ -67,7 +67,7 @@ export default function QuotationAutocompleteSearch({ index }: { index: number }
     const handleSuggestionClick = (suggestion: QuoteItems) => {
         setItems(pre => {
             return pre.map((item, i) => i == index
-                ? { id: suggestion.id, hsn: suggestion.hsn, name: suggestion.name, price: suggestion.price, quantity: 1, description: suggestion.description || "", link: suggestion.link, addon: 0 }
+                ? { id: suggestion.id, hsn: suggestion.hsn, name: suggestion.name, price: suggestion.price, quantity: 1, description: suggestion.description || "", link: suggestion.link, addon: 0, discount: 0 }
                 : item)
         });
         setShowSuggestions(false);
@@ -100,7 +100,7 @@ export default function QuotationAutocompleteSearch({ index }: { index: number }
             setShowSuggestions(false);
             setItems(pre => {
                 return pre.map((item, i) => i === index
-                    ? { id: filtered[highlighted].id, hsn: filtered[highlighted].hsn, name: filtered[highlighted].name, price: filtered[highlighted].price, quantity: 1, description: filtered[highlighted].description || "", link: filtered[highlighted].link, addon: 0 }
+                    ? { id: filtered[highlighted].id, hsn: filtered[highlighted].hsn, name: filtered[highlighted].name, price: filtered[highlighted].price, quantity: 1, description: filtered[highlighted].description || "", link: filtered[highlighted].link, addon: 0, discount: 0 }
                     : item)
             }
             );
@@ -111,7 +111,7 @@ export default function QuotationAutocompleteSearch({ index }: { index: number }
 
     return (
         <div className="flex relative w-auto gap-x-2">
-            <div className="grid grid-cols-11 gap-x-2 w-[98%]">
+            <div className="grid grid-cols-12 gap-x-2 w-[98%]">
                 <div className="col-span-3 relative">
                     <input
                         ref={inputRef}
@@ -195,7 +195,20 @@ export default function QuotationAutocompleteSearch({ index }: { index: number }
                         })
                     }}
                 />
-
+                <input
+                    type="number"
+                    placeholder="Discount"
+                    className="border p-2 border-border bg-background text-textPrimary focus:outline-textPrimary"
+                    value={items[index]?.discount}
+                    min={0}
+                    onChange={(e) => {
+                        setItems(pre => {
+                            return pre.map((item, i) => i === index
+                                ? { ...items[index], discount: Number(e.target.value || undefined) }
+                                : item);
+                        })
+                    }}
+                />
                 <input
                     type="number"
                     placeholder="Addon %"

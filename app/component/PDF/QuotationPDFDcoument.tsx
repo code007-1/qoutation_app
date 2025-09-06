@@ -104,7 +104,7 @@ export default function QuotationPDFDocument(data: QuotationData, showCustomerLi
                         <Text style={[styles.tableCellHeader, { width: "40%" }]} key="item">Item</Text>
                         <Text style={[styles.tableCellHeader, { flexGrow: 1, flexBasis: 0 }]} key="quantity">Quantity</Text>
                         <Text style={[styles.tableCellHeader, { flexGrow: 1, flexBasis: 0 }]} key="price">Price</Text>
-                        {data.discount != 0 && <Text style={[styles.tableCellHeader, { flexGrow: 1, flexBasis: 0 }]} key="discount">Discount</Text>}
+                        {<Text style={[styles.tableCellHeader, { flexGrow: 1, flexBasis: 0 }]} key="discount">Discount</Text>}
                         <Text style={[styles.tableCellHeader, { flexGrow: 1, flexBasis: 0 }]} key="amount">Amount</Text>
                     </View>
 
@@ -122,8 +122,8 @@ export default function QuotationPDFDocument(data: QuotationData, showCustomerLi
                                 </View>
                                 <Text style={styles.tableCell} key="quantityvalue">{e[1].quantity}</Text>
                                 <Text style={styles.tableCell} key="pricevalue">Rs.{Math.round(e[1].price * (1 + 0.01 * (e[1].addon ?? 0))).toLocaleString("en-IN")}</Text>
-                                {data.discount != 0 && <Text style={styles.tableCell} key="discountvalue">{data.discount} %</Text>}
-                                <Text style={styles.tableCell} key="amountvalue">Rs.{Math.round(e[1].price * (1 + 0.01 * (e[1].addon ?? 0)) * e[1].quantity * (1 - data.discount * 0.01)).toLocaleString("en-IN")}</Text>
+                                {<Text style={styles.tableCell} key="discountvalue">{e[1].discount} %</Text>}
+                                <Text style={styles.tableCell} key="amountvalue">Rs.{Math.round(e[1].price * (1 + 0.01 * (e[1].addon ?? 0)) * e[1].quantity * (1 - e[1].discount * 0.01)).toLocaleString("en-IN")}</Text>
                             </View>);
                     })}
                     <View style={Object.entries(data.items).length % 2 === 0 ? styles.tableRowEven : styles.tableRowOdd} key="nested-view-7">
@@ -131,24 +131,24 @@ export default function QuotationPDFDocument(data: QuotationData, showCustomerLi
                         <Text style={[styles.tableCellTotals, { width: "40%", textDecoration: "none", fontStyle: "italic" }]} key="taxablevalue">Taxable Value</Text>
                         <Text style={styles.tableCell} key="blank2"></Text>
                         <Text style={styles.tableCell} key="blank3"></Text>
-                        {data.discount != 0 && <Text style={styles.tableCell} key="blank4"></Text>}
-                        <Text style={[styles.tableCellTotals, { flexGrow: 1, flexBasis: 0 }]} key="blank5">Rs.{Math.round(data.amount * (1 - data.discount * 0.01)).toLocaleString("en-IN")}</Text>
+                        {<Text style={styles.tableCell} key="blank4"></Text>}
+                        <Text style={[styles.tableCellTotals, { flexGrow: 1, flexBasis: 0 }]} key="blank5">Rs.{Math.round(data.amount).toLocaleString("en-IN")}</Text>
                     </View>
                     <View style={Object.entries(data.items).length % 2 === 0 ? styles.tableRowOdd : styles.tableRowEven} key="nested-view-8">
                         <Text style={styles.tableCellSno} key="blank4"></Text>
                         <Text style={[styles.tableCellTotals, { width: "40%", textDecoration: "none", fontStyle: "italic" }]} key="blank5">Tax @ {data.tax}%</Text>
                         <Text style={styles.tableCell} key="blank6"></Text>
                         <Text style={styles.tableCell} key="blank7"></Text>
-                        {data.discount != 0 && <Text style={styles.tableCell} key="blank8"></Text>}
-                        <Text style={[styles.tableCellTotals, { flexGrow: 1, flexBasis: 0 }]} key="blank9">Rs.{(Math.round(data.amount * (1 - data.discount * 0.01) * data.tax * 0.01)).toLocaleString("en-IN")}</Text>
+                        {<Text style={styles.tableCell} key="blank8"></Text>}
+                        <Text style={[styles.tableCellTotals, { flexGrow: 1, flexBasis: 0 }]} key="blank9">Rs.{(Math.round(data.amount * data.tax * 0.01)).toLocaleString("en-IN")}</Text>
                     </View>
                     <View style={Object.entries(data.items).length % 2 === 0 ? styles.tableRowEven : styles.tableRowOdd} key="nested-view-9">
                         <Text style={styles.tableCellSno} key="blank8"></Text>
                         <Text style={[styles.tableCellTotals, { width: "40%", textDecoration: "none", fontStyle: "italic" }]} key="blank9">Total Amount</Text>
                         <Text style={styles.tableCell} key="blank10"></Text>
                         <Text style={styles.tableCell} key="blank11"></Text>
-                        {data.discount != 0 && <Text style={styles.tableCell} key="blank12"></Text>}
-                        <Text style={[styles.tableCellTotals, { flexGrow: 1, flexBasis: 0 }]} key="blank13">Rs.{Math.round(data.amount * (1 + data.tax * 0.01) * (1 - data.discount * 0.01)).toLocaleString("en-IN")}</Text>
+                        {<Text style={styles.tableCell} key="blank12"></Text>}
+                        <Text style={[styles.tableCellTotals, { flexGrow: 1, flexBasis: 0 }]} key="blank13">Rs.{Math.round(data.amount * (1 + data.tax * 0.01)).toLocaleString("en-IN")}</Text>
                     </View>
                 </View>
                 {data.additionalInfo !== "" && <View key="nested-view-10">
