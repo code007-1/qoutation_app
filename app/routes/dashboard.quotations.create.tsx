@@ -14,6 +14,7 @@ export type QuoteItems = {
     name: string;
     price: number;
     addon: number;
+    discount: number;
     quantity: number;
     description?: string;
     link?: string;
@@ -32,7 +33,6 @@ export type QuotationData = {
     to: string;
     toAddress: string;
     tax: number;
-    discount: number;
     amount: number;
     madeby: string;
     email?: string;
@@ -85,7 +85,7 @@ export default function QuotationsCreate() {
         setItems(pre => {
             return [
                 ...pre,
-                { id: 0, hsn: "", name: "", description: "", price: 0, quantity: 0, link: "#", addon: 0 }
+                { id: 0, hsn: "", name: "", description: "", price: 0, quantity: 0, link: "#", addon: 0, discount: 0 }
             ]
         });
     }
@@ -97,7 +97,7 @@ export default function QuotationsCreate() {
     }, [step])
 
     useEffect(() => {
-        const amount = Object.entries(items).reduce((acc, [_, item]) => acc + (item.price * item.quantity * (1 + 0.01 * item.addon)), 0);
+        const amount = Object.entries(items).reduce((acc, [_, item]) => acc + (item.price * item.quantity * (1 + 0.01 * item.addon) * (1 - item.discount * 0.01)), 0);
         setData(pre => { return { ...pre, amount: amount } });
     }, [items]);
 
@@ -106,7 +106,7 @@ export default function QuotationsCreate() {
         let no = d.getTime().toString();
         let fromAddress = profile.address;
         let from = profile.company;
-        let itemswithAddon = items;
+        let itemswithAddonandDiscount = items;
         let intro = profile.intro ?? "";
         let date = d.toISOString().split("T")[0];
 
@@ -117,13 +117,14 @@ export default function QuotationsCreate() {
             intro = data.intro;
             date = data.date;
 
-            itemswithAddon = itemswithAddon.map((item) => {
+            itemswithAddonandDiscount = itemswithAddonandDiscount.map((item) => {
                 if (!item.addon) item.addon = 0;
+                if (!item.discount) item.discount = 0;
                 return item;
             });
         }
-        setItems(itemswithAddon);
-        setData((pre) => { return { ...pre, no: no, from: from, fromAddress: fromAddress, email: profile.email, website: profile.website, contact: profile.contact, pdfColor: String(profile.pdfColor), madeby: profile.username || "", date: date, showLinks: data?.showLinks !== undefined ? data.showLinks : false, items: itemswithAddon, intro: intro, terms: profile.terms ?? data.terms, additionalInfo: profile.additionalInfo ?? data.additionalInfo } });
+        setItems(itemswithAddonandDiscount);
+        setData((pre) => { return { ...pre, no: no, from: from, fromAddress: fromAddress, email: profile.email, website: profile.website, contact: profile.contact, pdfColor: String(profile.pdfColor), madeby: profile.username || "", date: date, showLinks: data?.showLinks !== undefined ? data.showLinks : false, items: itemswithAddonandDiscount, intro: intro, terms: profile.terms ?? data.terms, additionalInfo: profile.additionalInfo ?? data.additionalInfo } });
     }, [])
 
     return (<>
@@ -216,12 +217,13 @@ export default function QuotationsCreate() {
                             step === 1 && <>
                                 <div className="mt-4 space-y-2 overflow-y-auto h-[calc(100vh-220px)] w-full">
                                     <div className="flex relative w-auto gap-x-2">
-                                        <div className="grid grid-cols-11 gap-x-2 w-[98%]">
+                                        <div className="grid grid-cols-12 gap-x-2 w-[98%]">
                                             <div className="col-span-3 p-2">Name</div>
                                             <div className="col-span-4 p-2">Description</div>
                                             <div className="col-span-1 p-2">HSN</div>
                                             <div className="col-span-1 p-2">Quantity</div>
                                             <div className="col-span-1 p-2">Price</div>
+                                            <div className="col-span-1 p-2">Discount</div>
                                             <div className="col-span-1 p-2">Addon %</div>
                                         </div>
                                         <button className="invisible p-2"><Minus className="text-textSecondary" /></button>
@@ -243,12 +245,8 @@ export default function QuotationsCreate() {
                                         <input id="tax" type="number" placeholder="Enter Tax Percentage" className="border border-border p-2 w-25 bg-background" value={data.tax} onChange={e => setData(pre => { return { ...pre, tax: parseFloat(e.target.value) } })} />
                                     </div>
                                     <div className="flex items-center">
-                                        <label htmlFor="discount" className="text-sm font-semibold mr-4">Discount (%)</label>
-                                        <input id="discount" type="number" placeholder="Enter Discount Percentage" className="border border-border p-2 w-25 bg-background" value={data.discount} onChange={e => setData(pre => { return { ...pre, discount: parseFloat(e.target.value) } })} />
-                                    </div>
-                                    <div className="flex items-center">
                                         <div className="text-sm font-semibold mr-4">Total:</div>
-                                        <div className="">Rs.{Number((data.amount * (1 + data.tax * 0.01) * (1 - data.discount * 0.01)).toFixed(2)).toLocaleString("en-IN")}</div>
+                                        <div className="">Rs.{Number((data.amount * (1 + data.tax * 0.01)).toFixed(2)).toLocaleString("en-IN")}</div>
                                     </div>
                                 </div>
                                 <div className="flex justify-center space-x-4">
