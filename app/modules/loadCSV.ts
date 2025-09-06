@@ -15,7 +15,7 @@ export const loadDataPromise: Promise<any[]> = new Promise((resolve, reject) => 
             rows.push(row);
         })
         .on("end", () => {
-            console.log("CSV file successfully processed.", rows);
+            console.log("CSV file successfully processed.");
             resolve(rows);
         })
         .on("error", (err) => {

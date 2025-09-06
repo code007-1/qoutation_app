@@ -113,6 +113,7 @@ const QuotationsTableUI: FC<TableProps> = ({
     return (
         <div className="">
             <div className="flex space-x-4 items-center align-middle">
+
                 <Listbox value={type} onChange={setType}>
                     <div className="relative">
                         <ListboxButton className="flex items-center hover:bg-buttonHover px-2 border border-border py-2">
@@ -234,7 +235,7 @@ const QuotationsTableUI: FC<TableProps> = ({
                                     <button
                                         type="button"
                                         onClick={() => { search(query); setOpen(false); }}
-                                        className="button px-4 py-1 mt-4 text-lg"
+                                        className="bg-button text-buttonTextPrimary px-4 py-1 mt-4 text-lg"
                                     >
                                         Search
                                     </button>
