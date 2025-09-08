@@ -10,11 +10,13 @@ export const JWT_REFRESH_KEY = "123!@#$@SDFASDAD";
 export const JWT_ACCESS_KEY = "!#SDAS@#!!@XZZXC";
 export const localStringFormat = "en-IN";
 
-export var userProfile: profile = { address: "G-57, Vikas Marg, Near Metro Pillar No.41, \nDelhi - 110092", company: "Teen Telecommunication Pvt. Ltd.", contact: "+91 7065577059/60", email: "sales@teentelecommunication.com", pdfColor: "222", showCustomerList: true }
+export var userProfile: profile = { generalInfo: [{ contact: "+91 7065577059/60", address: "G-57, Vikas Marg, Near Metro Pillar No.41, \nDelhi - 110092", company: "Teen Telecommunication Pvt. Ltd.", website: "https://teentelecommunication.com", email: "sales@teentelecommunication.com" }], quotationInfo: [{ pdfColor: "222", showCustomerList: true }] };
 
 export function updateProfile(result: any) {
     userProfile.username = result.username;
-    userProfile.contact = result.contact;
+    userProfile.generalInfo = result.generalInfo;
+    userProfile.quotationInfo = result.quotationInfo;
+    /*userProfile.contact = result.contact;
     userProfile.email = result.email;
     userProfile.website = result.website;
     userProfile.company = result.company;
@@ -23,7 +25,7 @@ export function updateProfile(result: any) {
     userProfile.showCustomerList = result?.showCustomerList;
     userProfile.terms = result?.terms;
     userProfile.additionalInfo = result?.additionalInfo;
-    userProfile.intro = result?.intro;
+    userProfile.intro = result?.intro;*/
 }
 
 // utitlity functions

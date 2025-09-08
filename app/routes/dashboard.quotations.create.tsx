@@ -4,9 +4,9 @@ import { useGlobalContext } from "~/modules/gcontext";
 import QuotationAutocompleteSearch from "~/component/quotation/quotationAutocompleteSearch";
 import { AnimatePresence, motion } from "framer-motion";
 import { useCentralFetcher } from "~/component/centralFetcher";
-import { Switch } from "@headlessui/react";
+import { Listbox, ListboxButton, ListboxOption, ListboxOptions, Switch } from "@headlessui/react";
 import { ChallanData } from "./dashboard.challan.create";
-import { Minus } from "lucide-react";
+import { ChevronDown, Minus } from "lucide-react";
 
 export type QuoteItems = {
     id: number;
@@ -74,9 +74,10 @@ export default function QuotationsCreate() {
     const location = useLocation();
     const passedData = location.state;
 
-    const { items, setItems, data, setData, setHeaderText, profile } = useGlobalContext();
+    const { items, setItems, data, setData, setHeaderText, profile, selectedProfile, setSelectedProfile } = useGlobalContext();
     const [step, setStep] = useState<number>(0);
     const fetcher = useCentralFetcher();
+    const names = profile?.generalInfo.map((p) => p.company) || [];
 
     const navigate = useNavigate();
 
@@ -104,10 +105,10 @@ export default function QuotationsCreate() {
     useEffect(() => {
         const d = new Date();
         let no = d.getTime().toString();
-        let fromAddress = profile.address;
-        let from = profile.company;
+        let fromAddress = profile.generalInfo[selectedProfile].address || "";
+        let from = profile.generalInfo[selectedProfile].company;
         let itemswithAddonandDiscount = items;
-        let intro = profile.intro ?? "";
+        let intro = profile.quotationInfo[selectedProfile].intro ?? "";
         let date = d.toISOString().split("T")[0];
 
         if (passedData && passedData?.editing === true) {
@@ -124,8 +125,23 @@ export default function QuotationsCreate() {
             });
         }
         setItems(itemswithAddonandDiscount);
-        setData((pre) => { return { ...pre, no: no, from: from, fromAddress: fromAddress, email: profile.email, website: profile.website, contact: profile.contact, pdfColor: String(profile.pdfColor), madeby: profile.username || "", date: date, showLinks: data?.showLinks !== undefined ? data.showLinks : false, items: itemswithAddonandDiscount, intro: intro, terms: profile.terms ?? data.terms, additionalInfo: profile.additionalInfo ?? data.additionalInfo } });
+        setData((pre) => { return { ...pre, no: no, from: from, fromAddress: fromAddress, email: profile.generalInfo[selectedProfile].email, website: profile.generalInfo[selectedProfile].website, contact: profile.generalInfo[selectedProfile].contact, pdfColor: String(profile.quotationInfo[selectedProfile].pdfColor), madeby: profile.username || "", date: date, showLinks: data?.showLinks !== undefined ? data.showLinks : false, items: itemswithAddonandDiscount, intro: intro, terms: profile.quotationInfo[selectedProfile].terms ?? data.terms, additionalInfo: profile.quotationInfo[selectedProfile].additionalInfo ?? data.additionalInfo } });
     }, [])
+
+    useEffect(() => {
+        if (profile) {
+            let fromAddress = profile.generalInfo[selectedProfile].address || "";
+            let from = profile.generalInfo[selectedProfile].company;
+            let email = profile.generalInfo[selectedProfile].email || "";
+            let website = profile.generalInfo[selectedProfile].website || "";
+            let contact = profile.generalInfo[selectedProfile].contact || "";
+            let pdfColor = String(profile.quotationInfo[selectedProfile].pdfColor);
+            let intro = profile.quotationInfo[selectedProfile].intro || "";
+            let terms = profile.quotationInfo[selectedProfile].terms || "";
+            let additionalInfo = profile.quotationInfo[selectedProfile].additionalInfo || "";
+            setData(pre => { return { ...pre, from: from, fromAddress: fromAddress, email: email, website: website, contact: contact, pdfColor: pdfColor, intro: intro, terms: terms, additionalInfo: additionalInfo } });
+        }
+    }, [selectedProfile])
 
     return (<>
         <AnimatePresence>
@@ -170,6 +186,34 @@ export default function QuotationsCreate() {
                                         pointer-events-none inline-block h-[20px] w-[20px] transform rounded-full bg-buttonTextPrimary shadow-lg ring-0 transition duration-200 ease-in-out`}
                                 />
                             </Switch>
+
+                            <div className="ml-10 w-72">
+                                <Listbox value={profile.generalInfo[selectedProfile].company} onChange={e => { setSelectedProfile(names.indexOf(e)) }}>
+                                    <div className="relative flex justify-center">
+                                        <ListboxButton className="w-full flex items-center justify-between hover:bg-buttonHover border border-border py-2">
+                                            <div className="text-textSecondary">{profile.generalInfo[selectedProfile].company}</div>
+                                            <ChevronDown className="text-textPrimary" />
+                                        </ListboxButton>
+
+                                        <ListboxOptions
+                                            transition
+                                            className="w-full absolute -right-34 top-10 z-10 mt-2 origin-top-right rounded-sm bg-background shadow-lg ring-1 ring-black/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
+                                        >
+                                            <div className="p-1">
+                                                {names.map((category) => (
+                                                    <ListboxOption
+                                                        key={category}
+                                                        value={category}
+                                                        className="block px-4 py-2 text-sm text-textSecondary data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
+                                                    >
+                                                        {category}
+                                                    </ListboxOption>
+                                                ))}
+                                            </div>
+                                        </ListboxOptions>
+                                    </div>
+                                </Listbox>
+                            </div>
                         </div>
 
                         {step === 1 &&
@@ -223,7 +267,7 @@ export default function QuotationsCreate() {
                                             <div className="col-span-1 p-2">HSN</div>
                                             <div className="col-span-1 p-2">Quantity</div>
                                             <div className="col-span-1 p-2">Price</div>
-                                            <div className="col-span-1 p-2">Discount</div>
+                                            <div className="col-span-1 p-2">Discount %</div>
                                             <div className="col-span-1 p-2">Addon %</div>
                                         </div>
                                         <button className="invisible p-2"><Minus className="text-textSecondary" /></button>
@@ -276,7 +320,7 @@ export default function QuotationsCreate() {
                                     <button onClick={() => setStep(1)} className="button px-4 py-1 mt-4 text-lg">
                                         Back
                                     </button>
-                                    <form onSubmit={(e) => { createPdf(data, fetcher, profile?.showCustomerList); e.preventDefault(); navigate("/dashboard/quotations/show") }}>
+                                    <form onSubmit={(e) => { createPdf(data, fetcher, profile?.quotationInfo[selectedProfile].showCustomerList); e.preventDefault(); navigate("/dashboard/quotations/show") }}>
                                         <button className="button px-4 py-1 mt-4 text-lg" type="submit">Generate Quotation PDF</button>
                                     </form>
                                 </div>
