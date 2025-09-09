@@ -40,7 +40,7 @@ export default function CreateChallan() {
     const location = useLocation();
     const passedData = location.state;
 
-    const { challanItems, setChallanItems, challanData, setChallanData, setHeaderText, profile } = useGlobalContext();
+    const { challanItems, setChallanItems, challanData, setChallanData, setHeaderText, profile, selectedProfile } = useGlobalContext();
     const [step, setStep] = useState<number>(0);
     const fetcher = useCentralFetcher();
 
@@ -57,8 +57,8 @@ export default function CreateChallan() {
 
     useEffect(() => {
         let no = new Date().getTime().toString();
-        let fromAddress = profile.address;
-        let from = profile.company;
+        let fromAddress = profile.generalInfo[selectedProfile].address;
+        let from = profile.generalInfo[selectedProfile].company;
 
         if (passedData && passedData?.editing === true) {
             no = challanData.no;

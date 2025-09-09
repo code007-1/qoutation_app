@@ -35,6 +35,7 @@ export default function MainMenu() {
                     <tr><td>Company : </td><td >Teen Telecommunication Pvt. Ltd.</td></tr>
                     <tr><td>Product Developer : </td><td >Saurav</td></tr>
                     <tr><td>Product Consultant : </td><td >Gunjan</td></tr>
+                    <tr><td>Visionary and Stakeholder : </td><td >Mukesh Kalra</td></tr>
                     <tr><td>Version : </td><td >1.1.0</td></tr>
                 </table>
             </Dialog>

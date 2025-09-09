@@ -41,6 +41,7 @@ export type QuotationData = {
     pdfColor?: string;
     showLinks?: boolean;
     todealer?: boolean
+    madeByInfo?: string
 };
 
 export async function createPdf(data: QuotationData | ChallanData, fetcher: any, showCustomerList?: boolean, save: boolean = true, type: string = "quotation") {
@@ -110,6 +111,7 @@ export default function QuotationsCreate() {
         let itemswithAddonandDiscount = items;
         let intro = profile.quotationInfo[selectedProfile].intro ?? "";
         let date = d.toISOString().split("T")[0];
+        let madeByInfo = profile.generalInfo[selectedProfile].madeByInfo;
 
         if (passedData && passedData?.editing === true) {
             no = data.no;
@@ -117,6 +119,7 @@ export default function QuotationsCreate() {
             from = data.from;
             intro = data.intro;
             date = data.date;
+            madeByInfo = data.madeByInfo ? data.madeByInfo : "";
 
             itemswithAddonandDiscount = itemswithAddonandDiscount.map((item) => {
                 if (!item.addon) item.addon = 0;
@@ -125,23 +128,23 @@ export default function QuotationsCreate() {
             });
         }
         setItems(itemswithAddonandDiscount);
-        setData((pre) => { return { ...pre, no: no, from: from, fromAddress: fromAddress, email: profile.generalInfo[selectedProfile].email, website: profile.generalInfo[selectedProfile].website, contact: profile.generalInfo[selectedProfile].contact, pdfColor: String(profile.quotationInfo[selectedProfile].pdfColor), madeby: profile.username || "", date: date, showLinks: data?.showLinks !== undefined ? data.showLinks : false, items: itemswithAddonandDiscount, intro: intro, terms: profile.quotationInfo[selectedProfile].terms ?? data.terms, additionalInfo: profile.quotationInfo[selectedProfile].additionalInfo ?? data.additionalInfo } });
+        setData((pre) => { return { ...pre, no: no, from: from, fromAddress: fromAddress, email: profile.generalInfo[selectedProfile].email, website: profile.generalInfo[selectedProfile].website, contact: profile.generalInfo[selectedProfile].contact, pdfColor: String(profile.quotationInfo[selectedProfile].pdfColor), madeby: profile.username || "", date: date, showLinks: data?.showLinks !== undefined ? data.showLinks : false, items: itemswithAddonandDiscount, intro: intro, terms: profile.quotationInfo[selectedProfile].terms ?? data.terms, additionalInfo: profile.quotationInfo[selectedProfile].additionalInfo ?? data.additionalInfo, madeByInfo: madeByInfo } });
     }, [])
 
-    useEffect(() => {
+    function updateData(index: number) {
         if (profile) {
-            let fromAddress = profile.generalInfo[selectedProfile].address || "";
-            let from = profile.generalInfo[selectedProfile].company;
-            let email = profile.generalInfo[selectedProfile].email || "";
-            let website = profile.generalInfo[selectedProfile].website || "";
-            let contact = profile.generalInfo[selectedProfile].contact || "";
-            let pdfColor = String(profile.quotationInfo[selectedProfile].pdfColor);
-            let intro = profile.quotationInfo[selectedProfile].intro || "";
-            let terms = profile.quotationInfo[selectedProfile].terms || "";
-            let additionalInfo = profile.quotationInfo[selectedProfile].additionalInfo || "";
+            let fromAddress = profile.generalInfo[index].address || "";
+            let from = profile.generalInfo[index].company;
+            let email = profile.generalInfo[index].email || "";
+            let website = profile.generalInfo[index].website || "";
+            let contact = profile.generalInfo[index].contact || "";
+            let pdfColor = String(profile.quotationInfo[index].pdfColor);
+            let intro = profile.quotationInfo[index].intro || "";
+            let terms = profile.quotationInfo[index].terms || "";
+            let additionalInfo = profile.quotationInfo[index].additionalInfo || "";
             setData(pre => { return { ...pre, from: from, fromAddress: fromAddress, email: email, website: website, contact: contact, pdfColor: pdfColor, intro: intro, terms: terms, additionalInfo: additionalInfo } });
         }
-    }, [selectedProfile])
+    }
 
     return (<>
         <AnimatePresence>
@@ -158,9 +161,9 @@ export default function QuotationsCreate() {
                             <div className="text-sm font-semibold mr-2">Quotation No.</div>
                             {/*<input type="text" name="no" placeholder="Enter Quotation No." className="border border-border p-2 mb-2 mr-5 w-25 bg-background" value={data.no} onChange={e => setData((pre) => { return { ...pre, no: e.target.value }; })} />*/}
                             <div className="text-sm">{data.no}</div>
-                            <div className="text-sm font-semibold ml-10 mr-2">Date</div>
-                            <input type="date" color="white" name="date" id="date" pattern="\d{4}-\d{2}-\d{2}" placeholder="Date" className="border border-border w-25 h-10 bg-background" value={data.date} onChange={e => setData(pre => { return { ...pre, date: e.target.value } })} />
-                            <div className="text-sm font-semibold ml-10 mr-2">Show Links</div>
+                            <div className="text-sm font-semibold ml-4 mr-2">Date</div>
+                            <input type="date" color="white" name="date" id="date" pattern="\d{4}-\d{2}-\d{2}" placeholder="Date" className="border border-border w-28 h-10 bg-background" value={data.date} onChange={e => setData(pre => { return { ...pre, date: e.target.value } })} />
+                            <div className="text-sm font-semibold ml-4 mr-2">Show Links</div>
                             <Switch
                                 checked={data.showLinks}
                                 onChange={(e) => { setData(pre => { return { ...pre, showLinks: e } }) }}
@@ -173,7 +176,7 @@ export default function QuotationsCreate() {
                                         pointer-events-none inline-block h-[20px] w-[20px] transform rounded-full bg-buttonTextPrimary shadow-lg ring-0 transition duration-200 ease-in-out`}
                                 />
                             </Switch>
-                            <div className="text-sm font-semibold ml-10 mr-2">To Dealer</div>
+                            <div className="text-sm font-semibold ml-4 mr-2">To Dealer</div>
                             <Switch
                                 checked={data.todealer}
                                 onChange={(e) => { setData(pre => { return { ...pre, todealer: e } }) }}
@@ -187,11 +190,15 @@ export default function QuotationsCreate() {
                                 />
                             </Switch>
 
-                            <div className="ml-10 w-72">
-                                <Listbox value={profile.generalInfo[selectedProfile].company} onChange={e => { setSelectedProfile(names.indexOf(e)) }}>
+                            <div className="w-auto ml-4">
+                                <Listbox value={profile.generalInfo[selectedProfile].company} onChange={e => {
+                                    const index = names.indexOf(e);
+                                    setSelectedProfile(index);
+                                    updateData(index);
+                                }}>
                                     <div className="relative flex justify-center">
                                         <ListboxButton className="w-full flex items-center justify-between hover:bg-buttonHover border border-border py-2">
-                                            <div className="text-textSecondary">{profile.generalInfo[selectedProfile].company}</div>
+                                            <div className="text-textSecondary truncate text-nowrap overflow-hidden w-48">{profile.generalInfo[selectedProfile].company}</div>
                                             <ChevronDown className="text-textPrimary" />
                                         </ListboxButton>
 
@@ -267,8 +274,8 @@ export default function QuotationsCreate() {
                                             <div className="col-span-1 p-2">HSN</div>
                                             <div className="col-span-1 p-2">Quantity</div>
                                             <div className="col-span-1 p-2">Price</div>
-                                            <div className="col-span-1 p-2">Discount %</div>
-                                            <div className="col-span-1 p-2">Addon %</div>
+                                            <div className="col-span-1 p-2">Discount</div>
+                                            <div className="col-span-1 p-2">Addon</div>
                                         </div>
                                         <button className="invisible p-2"><Minus className="text-textSecondary" /></button>
                                     </div>
@@ -315,6 +322,10 @@ export default function QuotationsCreate() {
                                         <label htmlFor="additionalInformation" className="text-sm font-semibold">Additional Information</label>
                                         <textarea id="additionalInformation" rows={5} placeholder="Enter Additional Information....." className="p-2 border border-border w-full bg-background" value={data.additionalInfo} onChange={e => setData(pre => { return { ...pre, additionalInfo: e.target.value } })} />
                                     </div>
+                                </div>
+                                <div className="w-full">
+                                    <label htmlFor="additionalInformation" className="text-sm font-semibold">User Signature</label>
+                                    <textarea id="additionalInformation" rows={5} placeholder="Enter Made by Info....." className="p-2 border border-border w-full bg-background" value={data.madeByInfo} onChange={e => setData(pre => { return { ...pre, madeByInfo: e.target.value } })} />
                                 </div>
                                 <div className="flex justify-center space-x-4">
                                     <button onClick={() => setStep(1)} className="button px-4 py-1 mt-4 text-lg">

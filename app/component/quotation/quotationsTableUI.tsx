@@ -28,7 +28,6 @@ interface TableProps {
 
 
 // The main table 
-
 const QuotationsTableUI: FC<TableProps> = ({
     data,
     columns,
@@ -93,7 +92,7 @@ const QuotationsTableUI: FC<TableProps> = ({
         !isFetching && (!memoizedData || memoizedData.length === 0);
 
     const navigate = useNavigate();
-    const { setData, setItems, profile } = useGlobalContext();
+    const { setData, setItems, profile, selectedProfile } = useGlobalContext();
     const fetcher = useCentralFetcher();
     const [open, setOpen] = useState(false);
     const [query, setQuery] = useState({ start: "", end: "", to: "" });
@@ -284,7 +283,7 @@ const QuotationsTableUI: FC<TableProps> = ({
                                                 if (cell.column.id === "edit") handleEdit(row.original)
                                                 else if (cell.column.id === "copy") handleCopy(row.original)
                                                 else if (cell.column.id === "delete") deleteQuotation(row.original.no)
-                                                else createPdf(row.original, fetcher, profile.showCustomerList, false);
+                                                else createPdf(row.original, fetcher, profile.quotationInfo[selectedProfile].showCustomerList, false);
                                             }}
                                             key={cell.id}
                                             className="text-textSecondary text-base text-left p-2"

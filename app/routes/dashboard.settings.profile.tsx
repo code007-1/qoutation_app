@@ -11,6 +11,7 @@ export type generalInfo = {
     website?: string,
     company: string,
     address?: string,
+    madeByInfo?: string;
 }
 
 export type quotationInfo = {
@@ -71,7 +72,7 @@ export default function SettingsProfile() {
                             >
                                 <div className="flex justify-between items-center w-full">
                                     <div className="overflow-ellipsis text-nowrap overflow-hidden">{name}</div>
-                                    <div className="w-min text-textSecondary hover:text-textPrimary px-2 ml-2" onClick={() => {
+                                    <div className="w-min text-textSecondary hover:text-buttonText px-2 ml-2" onClick={() => {
                                         if (selectedProfile === 0 && profile?.generalInfo.length === 1) return;
                                         setProfile((pre) => {
                                             const updatedGeneralInfo = pre.generalInfo.filter((_, i) => i !== idx);
@@ -80,7 +81,7 @@ export default function SettingsProfile() {
                                             else if (selectedProfile > idx) setSelectedProfile((pre) => pre - 1);
                                             return { ...pre, generalInfo: updatedGeneralInfo, quotationInfo: updatedQuotationInfo };
                                         })
-                                    }}><Trash2 /></div>
+                                    }}><Trash2 className={`${selectedProfile === idx && "text-buttonHover/75 hover:text-buttonText"}`} /></div>
                                 </div>
                             </Radio>
                         ))}
@@ -149,12 +150,21 @@ export default function SettingsProfile() {
                                             })
                                         }} />
                                     </div>
+                                    <div>
+                                        User Signature <textarea rows={3} placeholder="Enter User Signature" className="border border-border p-2 w-full bg-background" value={profile?.generalInfo[selectedProfile]?.madeByInfo || ""} onChange={(e) => {
+                                            setProfile((pre) => {
+                                                const updatedGeneralInfo = [...pre.generalInfo];
+                                                updatedGeneralInfo[selectedProfile] = { ...updatedGeneralInfo[selectedProfile], madeByInfo: e.target.value };
+                                                return { ...pre, generalInfo: updatedGeneralInfo };
+                                            })
+                                        }} />
+                                    </div>
                                 </div>
                             </TabPanel>
                             <TabPanel key={"Quotation Related Settings"} className="">
                                 <div className="grid grid-cols-2 gap-4 text-textPrimary mt-4">
                                     <div>
-                                        Terms and Conditions <textarea rows={5} placeholder="Enter Address" className="border border-border p-2 w-full bg-background" value={profile?.quotationInfo[selectedProfile]?.terms} onChange={(e) => {
+                                        Terms and Conditions <textarea rows={5} placeholder="Enter Terms and Coditions" className="border border-border p-2 w-full bg-background" value={profile?.quotationInfo[selectedProfile]?.terms} onChange={(e) => {
                                             setProfile((pre) => {
                                                 const updatedQuotationInfo = [...pre.quotationInfo];
                                                 updatedQuotationInfo[selectedProfile] = { ...updatedQuotationInfo[selectedProfile], terms: e.target.value };
@@ -163,7 +173,7 @@ export default function SettingsProfile() {
                                         }} />
                                     </div>
                                     <div>
-                                        Additional Information <textarea rows={5} placeholder="Enter Address" className="border border-border p-2 w-full bg-background" value={profile?.quotationInfo[selectedProfile]?.additionalInfo} onChange={(e) => {
+                                        Additional Information <textarea rows={5} placeholder="Enter Additional Info" className="border border-border p-2 w-full bg-background" value={profile?.quotationInfo[selectedProfile]?.additionalInfo} onChange={(e) => {
                                             setProfile((pre) => {
                                                 const updatedQuotationInfo = [...pre.quotationInfo];
                                                 updatedQuotationInfo[selectedProfile] = { ...updatedQuotationInfo[selectedProfile], additionalInfo: e.target.value };
@@ -172,7 +182,7 @@ export default function SettingsProfile() {
                                         }} />
                                     </div>
                                     <div>
-                                        Introuductory Text <textarea rows={3} placeholder="Enter Address" className="border border-border p-2 w-full bg-background" value={profile?.quotationInfo[selectedProfile]?.intro} onChange={(e) => {
+                                        Introuductory Text <textarea rows={3} placeholder="Enter Introductory Text" className="border border-border p-2 w-full bg-background" value={profile?.quotationInfo[selectedProfile]?.intro} onChange={(e) => {
                                             setProfile((pre) => {
                                                 const updatedQuotationInfo = [...pre.quotationInfo];
                                                 updatedQuotationInfo[selectedProfile] = { ...updatedQuotationInfo[selectedProfile], intro: e.target.value };

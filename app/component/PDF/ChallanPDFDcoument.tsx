@@ -1,4 +1,4 @@
-import { Document, Page, Text, View, StyleSheet, Image, Link, Font } from "@react-pdf/renderer";
+import { Document, Page, Text, View, StyleSheet } from "@react-pdf/renderer";
 import { Watermark } from "~/component/watermark";
 import { ChallanData } from "~/routes/dashboard.challan.create";
 import { Svg, Line } from "@react-pdf/renderer";

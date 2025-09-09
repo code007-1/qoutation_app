@@ -1,5 +1,5 @@
 import { LoaderFunction } from "@remix-run/node";
-import { insertOnetoDb } from "~/modules/dbOnline";
+//import { insertOnetoDb } from "~/modules/dbOnline";
 import { commitSession, getSession } from "~/modules/sessions";
 import { verifyAccessToken } from "~/modules/utils";
 

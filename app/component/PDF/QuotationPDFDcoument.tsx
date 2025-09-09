@@ -1,5 +1,5 @@
 import { Document, Page, Text, View, StyleSheet, Image, Link, Font } from "@react-pdf/renderer";
-import { Watermark } from "../Watermark";
+import { Watermark } from "../watermark";
 import { QuotationData } from "~/routes/dashboard.quotations.create";
 
 export default function QuotationPDFDocument(data: QuotationData, showCustomerList: boolean = true) {
@@ -55,11 +55,15 @@ export default function QuotationPDFDocument(data: QuotationData, showCustomerLi
     </>;
 
     const footer = <>
-        <View fixed style={{ flexDirection: "row", width: "90%", position: "absolute", bottom: 20, fontSize: 10, color: "black" }} key="footer">
-            <Text style={{ width: "33%" }} key="blankfooterpart" ></Text>
-            <Text style={{ width: "34%", textAlign: "center", fontStyle: "italic" }} key="footerwebsite">{data.website} </Text >
-            <Text style={{ width: "33%", textAlign: "right", fontStyle: "italic" }} render={({ pageNumber, totalPages }) => `Page ${pageNumber} of ${totalPages}`} key="footerpageno" />
-        </View>
+        <View fixed style={{ width: "90%", position: "absolute", bottom: 20, fontSize: 10, color: "#6E6E6E" }} key="footer">
+            <Text style={{ width: "100%", textAlign: "center" }} key="blankfooterpart1" >This is computer generated quotation, so no need for sign and stamp</Text>
+            <Text style={styles.newline}>{"\n"}</Text>
+            <View style={{ flexDirection: "row", width: "100%" }} >
+                <Text style={{ width: "33%" }} key="blankfooterpart2" ></Text>
+                <Text style={{ width: "34%", textAlign: "center", fontStyle: "italic" }} key="footerwebsite">{data.website} </Text >
+                <Text style={{ width: "33%", textAlign: "right", fontStyle: "italic" }} render={({ pageNumber, totalPages }) => `Page ${pageNumber} of ${totalPages}`} key="footerpageno" />
+            </View>
+        </View >
     </>;
 
     return (
@@ -162,6 +166,10 @@ export default function QuotationPDFDocument(data: QuotationData, showCustomerLi
                     <Text style={styles.fromto} key="termsandconditions">Terms and Conditions</Text>
                     <Text style={styles.newline} key="blank13">{"\n"}</Text>
                     <Text style={styles.terms} key="termsandconditionsvalue">{data.terms} {"\n"}</Text>
+                </View>}
+                <Text style={styles.newline} key="blank15">{"\n\n\n"}</Text>
+                {data.madeByInfo !== "" && <View key="nested-view-12">
+                    <Text style={styles.terms} key="userSignature">{data.madeByInfo} {"\n"}</Text>
                 </View>}
                 {showCustomerList &&
                     <>

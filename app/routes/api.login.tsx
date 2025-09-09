@@ -1,4 +1,4 @@
-import { ActionFunction, json } from "@remix-run/node";
+import { ActionFunction } from "@remix-run/node";
 import { insertOnetoDb, search } from "~/modules/dbOnline";
 import { commitSession, getSession } from "~/modules/sessions";
 

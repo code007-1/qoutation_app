@@ -1,5 +1,5 @@
 import { X } from "lucide-react";
-import React, { createContext, useContext, useState, ReactNode } from "react";
+import { createContext, useContext, useState, ReactNode } from "react";
 
 // Define the structure of a notification
 interface Notification {
