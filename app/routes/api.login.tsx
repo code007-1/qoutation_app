@@ -24,7 +24,8 @@ export const action: ActionFunction = async ({ request }) => {
                     time: Date(),
                     userip: ip.host,
                     userAgent: request.headers.get("user-agent"),
-                    username: username
+                    username: username,
+                    permissions: result[0]?.permissions?.join(","),
                 }
 
                 const refresh = sign(data, JWT_REFRESH_KEY, { expiresIn: "1d" });

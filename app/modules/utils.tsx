@@ -69,8 +69,9 @@ export async function verifyAccessToken(request: any) {
 
     try {
         const verfied = verify(accessToken, JWT_ACCESS_KEY);
-        if (verfied)
-            return;
+        if (verfied) {
+            return (verfied as { permissions: string })?.permissions;
+        }
         throw new Response("user not authorized", { status: 401 });
     }
     catch (error) {

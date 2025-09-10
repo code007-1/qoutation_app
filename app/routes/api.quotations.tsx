@@ -4,7 +4,10 @@ import { verifyAccessToken } from "~/modules/utils";
 
 export const loader: LoaderFunction = async ({ request, params }) => {
     try {
-        await verifyAccessToken(request);
+        const permissions = await verifyAccessToken(request);
+        if (!permissions?.includes("read"))
+            return new Response("user not authorized to read", { status: 405 });
+
         const url = new URL(request.url);
         const limit = 1000;
         const skip = Number(url.searchParams.get("skip")) || 0;

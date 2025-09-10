@@ -1,7 +1,6 @@
 import { ActionFunction } from "@remix-run/node";
 import { rows } from "~/modules/loadCSV";
 
-
 export const action: ActionFunction = async ({ request }) => {
     const query = await request.json();
     if (rows.length === 0) {

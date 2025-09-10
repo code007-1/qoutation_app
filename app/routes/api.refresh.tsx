@@ -5,7 +5,7 @@ const { sign, verify } = pkg;
 import { commitSession, getSession } from "~/modules/sessions";
 import { JWT_ACCESS_KEY, JWT_REFRESH_KEY, userProfile, updateProfile } from "~/modules/utils";
 
-async function verifyRefreshToken(cookies: string, hostip: string, userAgent: string): Promise<boolean | string> {
+async function verifyRefreshToken(cookies: string, hostip: string, userAgent: string): Promise<boolean | { username: string, permissions: string }> {
     const session = await getSession(cookies);
     const rToken = session.get("rToken");
 
@@ -17,7 +17,7 @@ async function verifyRefreshToken(cookies: string, hostip: string, userAgent: st
     try {
         const decoded = verify(rToken as string, JWT_REFRESH_KEY);
         if ((decoded as any)["userip"] === hostip && (decoded as any)["userAgent"] === userAgent) {
-            return (decoded as any)["username"];
+            return { username: (decoded as any)["username"], permissions: (decoded as any)["permissions"] };
         }
         console.log("refresh token isn't matching");
         return false;
@@ -44,9 +44,9 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
                     time: Date(),
                     userip: ip.host,
                     userAgent: request.headers.get("user-agent"),
-                    username: verified
+                    username: (verified as any)["username"],
+                    permissions: (verified as any)["permissions"],
                 }
-
                 const result = await search("unnamed", "users", { username: verified }, 1, 0);
 
                 if (result && result.length > 0)

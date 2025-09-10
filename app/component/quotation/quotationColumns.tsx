@@ -13,6 +13,10 @@ export const sortButton = (column: any, name: string) => {
     )
 }
 
+export function FormatAmountToINR(amount: number) {
+    return Math.round(amount).toLocaleString("en-US");
+}
+
 export const QuotationsColumns: ColumnDef<any, any>[] = [
 
     {
@@ -89,7 +93,7 @@ export const QuotationsColumns: ColumnDef<any, any>[] = [
             //console.log("asd", user.row.original.amount, user.row.original.to);
             if (!user.row.original.amount)
                 return "";
-            return <span>Rs.{Math.round(user.row.original.amount).toLocaleString("en-US")}</span>
+            return <span>Rs.{FormatAmountToINR(user.row.original.amount)}</span>
         },
     },
     {
