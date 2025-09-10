@@ -36,7 +36,7 @@ export default function MainMenu() {
                     <tr><td>Product Developer : </td><td >Saurav</td></tr>
                     <tr><td>Product Consultant : </td><td >Gunjan</td></tr>
                     <tr><td>Visionary and Stakeholder : </td><td >Mukesh Kalra</td></tr>
-                    <tr><td>Version : </td><td >1.1.0</td></tr>
+                    <tr><td>Version : </td><td >1.2.0</td></tr>
                 </table>
             </Dialog>
             {/*isOpen && <About isOpen={isOpen} setIsOpen={setIsOpen} />*/}

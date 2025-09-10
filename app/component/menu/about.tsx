@@ -1,3 +1,4 @@
+import { Link } from "@remix-run/react";
 import { X } from "lucide-react";
 import { useEffect, useId, useRef, useState } from "react";
 import { createPortal } from "react-dom";
@@ -96,7 +97,8 @@ export function Dialog({ open, onClose, title, children, titleId }: DialogProps)
                     {children}
                 </div>
 
-                <div className="flex justify-end gap-2 p-4">
+                <div className="flex justify-between gap-2 p-4">
+                    <Link to="/dashboard/changelog" className="inline-flex font-semibold items-center gap-2 px-4 py-2 text-buttonTextPrimary bg-button hover:bg-button/75">Change Logs</Link>
                     <button
                         onClick={onClose}
                         className="inline-flex font-semibold items-center gap-2 px-4 py-2 text-buttonTextPrimary bg-button hover:bg-button/75"
