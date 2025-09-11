@@ -25,7 +25,7 @@ export const action: ActionFunction = async ({ request }) => {
                     userip: ip.host,
                     userAgent: request.headers.get("user-agent"),
                     username: username,
-                    permissions: result[0]?.permissions?.join(","),
+                    permissions: result[0]?.permissions,
                 }
 
                 const refresh = sign(data, JWT_REFRESH_KEY, { expiresIn: "1d" });
@@ -42,7 +42,7 @@ export const action: ActionFunction = async ({ request }) => {
                     const quote = await getQoute();
                     response = { token: access, profile: userProfile, quote: quote };
                 }
-                else { response = { token: access, profile: userProfile }; }
+                else { response = { token: access, profile: userProfile, permissions: result[0]?.permissions }; }
                 await insertOnetoDb({ "by": username, "action": "logging in", "result": "succeded", "when": new Date().toISOString() }, "unnamed", "logs");
                 return Response.json(response, { headers: { "Set-Cookie": await commitSession(session) } });
             }

@@ -27,3 +27,37 @@ if (process.env.NODE_ENV !== 'production') {
         format: winston.format.simple(),
     }));
 }*/
+
+import crypto from 'crypto';
+//const crypto = require('crypto');
+
+const algorithm = 'aes-256-cbc';
+const key = crypto.randomBytes(32); // Store this securely!
+const iv = crypto.randomBytes(16);  // Initialization vector
+
+console.log("iv : ", iv);
+
+function encrypt(text) {
+    const cipher = crypto.createCipheriv(algorithm, key, iv);
+    let encrypted = cipher.update(text, 'utf8', 'hex');
+    encrypted += cipher.final('hex');
+    return { iv: iv.toString('hex'), encryptedData: encrypted };
+}
+
+function decrypt(encryptedObj) {
+    const decipher = crypto.createDecipheriv(
+        algorithm,
+        key,
+        Buffer.from(encryptedObj.iv, 'hex')
+    );
+    let decrypted = decipher.update(encryptedObj.encryptedData, 'hex', 'utf8');
+    decrypted += decipher.final('utf8');
+    return decrypted;
+}
+
+// Example usage
+const encrypted = encrypt('Sensitive Info');
+console.log('Encrypted:', encrypted);
+
+const decrypted = decrypt(encrypted);
+console.log('Decrypted:', decrypted);

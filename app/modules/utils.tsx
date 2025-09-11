@@ -2,7 +2,6 @@ import pkg from "jsonwebtoken";
 const { verify } = pkg;
 
 import { createCookie } from "@remix-run/node";
-//import { MetaFunction } from "@remix-run/react";
 import { count, search } from "./dbOnline";
 import { profile } from "~/routes/dashboard.settings.profile";
 
@@ -16,31 +15,13 @@ export function updateProfile(result: any) {
     userProfile.username = result.username;
     userProfile.generalInfo = result.generalInfo;
     userProfile.quotationInfo = result.quotationInfo;
-    /*userProfile.contact = result.contact;
-    userProfile.email = result.email;
-    userProfile.website = result.website;
-    userProfile.company = result.company;
-    userProfile.address = result.address;
-    userProfile.pdfColor = result.pdfColor;
-    userProfile.showCustomerList = result?.showCustomerList;
-    userProfile.terms = result?.terms;
-    userProfile.additionalInfo = result?.additionalInfo;
-    userProfile.intro = result?.intro;*/
 }
-
-// utitlity functions
-const refresTokenCookie = createCookie("rToken", {
-    httpOnly: true, // Prevent client-side accesss
-    //secure: true, // Only send over HTTPS
-    //sameSite: "none", // For cross-site requests
-    sameSite: "lax",
-    maxAge: 1000 * 60 * 60 * 24
-});
 
 export type loginData = {
     token?: string,
     quote?: string
     profile: profile
+    permissions: string
 };
 
 export type logoutData = {
@@ -79,6 +60,7 @@ export async function verifyAccessToken(request: any) {
         throw new Response("Internal server error", { status: 401 });
     }
 }
+
 
 function rgb_to_hsv(r: number, g: number, b: number) {
 

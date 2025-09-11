@@ -9,13 +9,14 @@ export default function Index() {
   const loginFetcher = useFetcher<loginData>();
   const isSubmitting = loginFetcher.state === "submitting";
   const navigate = useNavigate();
-  const { setAccessToken, setProfile, setGQuote, theme, toggleTheme, appName } = useGlobalContext();
+  const { setAccessToken, setProfile, setGQuote, theme, toggleTheme, appName, setPermissions } = useGlobalContext();
   const { addNotifications } = useNotification();
 
   useEffect(() => {
     if (loginFetcher.data?.token) {
       setAccessToken(loginFetcher.data.token); // Store the fetched data in state
       localStorage.setItem("login", "y");
+      setPermissions(loginFetcher.data.permissions || "read");
       if (loginFetcher.data?.quote)
         navigate("/dashboard/welcome");
       else

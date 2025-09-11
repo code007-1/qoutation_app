@@ -53,7 +53,7 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
                     updateProfile(result[0]);
 
                 const access = sign(data, JWT_ACCESS_KEY, { expiresIn: "10m" });
-                return Response.json({ token: access, profile: userProfile });
+                return Response.json({ token: access, profile: userProfile, permissions: (verified as any)["permissions"] });
             }
 
             const session = await getSession();

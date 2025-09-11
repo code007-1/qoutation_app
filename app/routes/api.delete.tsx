@@ -5,7 +5,7 @@ import { verifyAccessToken } from "~/modules/utils";
 export const action: ActionFunction = async ({ request, params }) => {
     try {
         const permissions = await verifyAccessToken(request);
-        if (!permissions?.includes("delete"))
+        if (!permissions.includes("delete"))
             return new Response("user not authorized to delete", { status: 405 });
 
         const { no, username, type } = await request.json();

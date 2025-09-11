@@ -27,11 +27,10 @@ export default function Welcome() {
                                 {date == 11 ? message : gQuote}
                             </div>
                             <div className="text-md font-Kalam">
-                                {"Please naraz mt rha kro mujhse, i can't stay without talking to you...."}
+                                {"Please naraz mt rha kro mujhse, i miss you....."}
                             </div>
                             <button className="bg-blue-600 w-min text-white text-base font-mono px-2 py-1 mt-4" onClick={(e) => navigate("/dashboard/home")}>Next</button>
                         </div>
-
                     </div>
                 </motion.div>
             </AnimatePresence>

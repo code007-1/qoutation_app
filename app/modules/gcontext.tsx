@@ -27,6 +27,8 @@ interface AppContextType {
     setProfile: React.Dispatch<React.SetStateAction<profile>>;
     selectedProfile: number;
     setSelectedProfile: React.Dispatch<React.SetStateAction<number>>;
+    permissions: string;
+    setPermissions: React.Dispatch<React.SetStateAction<string>>;
 
     // quotation related variables
     quoteData: QuotationData[];
@@ -122,6 +124,7 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
     const [gQuote, setGQuote] = useState<string | undefined>();
     const [profile, setProfile] = useState<profile>({ generalInfo: [{ contact: "+91 7065577059/60", address: "G-57, Vikas Marg, Near Metro Pillar No.41, \nDelhi - 110092", company: "Teen Telecommunication Pvt. Ltd.", website: "https://teentelecommunication.com", email: "sales@teentelecommunication.com" }], quotationInfo: [{ pdfColor: "222", showCustomerList: true }] });
     const [selectedProfile, setSelectedProfile] = useState(0);
+    const [permissions, setPermissions] = useState<string>("");
 
     // quotation related variables
     const [quoteData, setQuoteData] = useState<QuotationData[]>([]); // data loaded from db of old quotations
@@ -164,7 +167,7 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
     };
 
     return (
-        <appContext.Provider value={{ theme, setTheme, toggleTheme, accessToken, setAccessToken, items, setItems, data, setData, headerText, setHeaderText, gQuote, setGQuote, profile, setProfile, selectedProfile, setSelectedProfile, dataCount, setDataCount, quoteData, setQuoteData, homeLink, setHomeLink, setAppName, appName, oldChallanData, setOldChallanData, challanDataCount, setChallanDataCount, challanItems, setChallanItems, challanData, setChallanData, complaintsData, setComplaintsData }}>
+        <appContext.Provider value={{ theme, setTheme, toggleTheme, accessToken, setAccessToken, items, setItems, data, setData, headerText, setHeaderText, gQuote, setGQuote, profile, setProfile, selectedProfile, setSelectedProfile, dataCount, setDataCount, quoteData, setQuoteData, homeLink, setHomeLink, setAppName, appName, oldChallanData, setOldChallanData, challanDataCount, setChallanDataCount, challanItems, setChallanItems, challanData, setChallanData, complaintsData, setComplaintsData, permissions, setPermissions }}>
             {children}
         </appContext.Provider>
     );

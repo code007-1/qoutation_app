@@ -1,5 +1,6 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, Copy, Pencil, Trash2 } from "lucide-react";
+import { useGlobalContext } from "~/modules/gcontext";
 
 export const sortButton = (column: any, name: string) => {
     return (
@@ -17,104 +18,109 @@ export function FormatAmountToINR(amount: number) {
     return Math.round(amount).toLocaleString("en-US");
 }
 
-export const QuotationsColumns: ColumnDef<any, any>[] = [
+export function useQuotationsColumns() {
+    const { permissions } = useGlobalContext();
 
-    {
-        accessorKey: "no",
-        header: "Qoutation #",
-        cell: (user: any) => {
-            return <span>{user.row.original.no}</span>
+    const columns: ColumnDef<any, any>[] = [
+        {
+            accessorKey: "no",
+            header: "Qoutation #",
+            cell: (user: any) => {
+                return <span>{user.row.original.no}</span>
+            },
+            filterFn: (row, columnId, filterValue) => {
+                return row.original[columnId].toLowerCase().includes(filterValue);
+            },
         },
-        filterFn: (row, columnId, filterValue) => {
-            return row.original[columnId].toLowerCase().includes(filterValue);
-        },
-    },
 
-    {
-        accessorKey: "madeby",
-        header: "Made By",
-        cell: (user: any) => {
-            return <span>{user.row.original.madeby}</span>
+        {
+            accessorKey: "madeby",
+            header: "Made By",
+            cell: (user: any) => {
+                return <span>{user.row.original.madeby}</span>
+            },
+            filterFn: (row, columnId, filterValue) => {
+                return row.original[columnId].toLowerCase().includes(filterValue);
+            },
         },
-        filterFn: (row, columnId, filterValue) => {
-            return row.original[columnId].toLowerCase().includes(filterValue);
-        },
-    },
 
-    {
-        accessorKey: "date",
-        header: "Date",
-        cell: (user: any) => {
-            return <span>{user.row.original.date}</span>
+        {
+            accessorKey: "date",
+            header: "Date",
+            cell: (user: any) => {
+                return <span>{user.row.original.date}</span>
+            },
+            filterFn: (row, columnId, filterValue) => {
+                return row.original[columnId].toLowerCase().includes(filterValue);
+            }
         },
-        filterFn: (row, columnId, filterValue) => {
-            return row.original[columnId].toLowerCase().includes(filterValue);
-        }
-    },
 
-    {
-        accessorKey: "to",
-        header: "To",
-        cell: (user: any) => {
-            return <span>{user.row.original.to} ({user.row.original.todealer ? "DL" : "C"})</span>
+        {
+            accessorKey: "to",
+            header: "To",
+            cell: (user: any) => {
+                return <span>{user.row.original.to} ({user.row.original.todealer ? "DL" : "C"})</span>
+            },
+            filterFn: (row, columnId, filterValue) => {
+                return row.original[columnId].toLowerCase().includes(filterValue);
+            },
         },
-        filterFn: (row, columnId, filterValue) => {
-            return row.original[columnId].toLowerCase().includes(filterValue);
-        },
-    },
 
-    {
-        accessorKey: "discount",
-        header: "Avg. Disc.",
-        cell: (user: any) => {
-            const avg = user.row.original.items.reduce((acc: number, item: { discount?: number }) => acc + (item.discount ?? 0), 0) / (user.row.original.items.length || 1);
-            return <span>{avg.toFixed(2)} %</span>
+        {
+            accessorKey: "discount",
+            header: "Avg. Disc.",
+            cell: (user: any) => {
+                const avg = user.row.original.items.reduce((acc: number, item: { discount?: number }) => acc + (item.discount ?? 0), 0) / (user.row.original.items.length || 1);
+                return <span>{avg.toFixed(2)} %</span>
+            },
+            filterFn: (row, columnId, filterValue) => {
+                return row.original[columnId] == filterValue;
+            },
         },
-        filterFn: (row, columnId, filterValue) => {
-            return row.original[columnId] == filterValue;
+        {
+            accessorKey: "addon",
+            header: "Avg. Addon",
+            cell: (user: any) => {
+                const avg = user.row.original.items.reduce((acc: number, item: { addon?: number }) => acc + (item.addon ?? 0), 0) / (user.row.original.items.length || 1);
+                return <span>{avg.toFixed(2)} %</span>
+            },
+            filterFn: (row, columnId, filterValue) => {
+                return row.original[columnId] == filterValue;
+            },
         },
-    },
-    {
-        accessorKey: "addon",
-        header: "Avg. Addon",
-        cell: (user: any) => {
-            const avg = user.row.original.items.reduce((acc: number, item: { addon?: number }) => acc + (item.addon ?? 0), 0) / (user.row.original.items.length || 1);
-            return <span>{avg.toFixed(2)} %</span>
-        },
-        filterFn: (row, columnId, filterValue) => {
-            return row.original[columnId] == filterValue;
-        },
-    },
 
-    {
-        accessorKey: "amount",
-        header: "Amount",
-        cell: (user: any) => {
-            //console.log("asd", user.row.original.amount, user.row.original.to);
-            if (!user.row.original.amount)
-                return "";
-            return <span>Rs.{FormatAmountToINR(user.row.original.amount)}</span>
+        {
+            accessorKey: "amount",
+            header: "Amount",
+            cell: (user: any) => {
+                if (!user.row.original.amount)
+                    return "";
+                return <span>Rs.{FormatAmountToINR(user.row.original.amount)}</span>
+            },
         },
-    },
-    {
-        accessorKey: "edit",
-        header: () => <div className="text-center">Edit</div>,
-        cell: (user: any) => {
-            return <center><Pencil /></center>
+        {
+            accessorKey: "edit",
+            header: () => <div className="text-center">Edit</div>,
+            cell: (user: any) => {
+                return <center><Pencil /></center>
+            },
         },
-    },
-    {
-        accessorKey: "copy",
-        header: () => <div className="text-center">Copy</div>,
-        cell: (user: any) => {
-            return <center><Copy /></center>
+        {
+            accessorKey: "copy",
+            header: () => <div className="text-center">Copy</div>,
+            cell: (user: any) => {
+                return <center><Copy /></center>
+            },
         },
-    },
-    {
-        accessorKey: "delete",
-        header: () => <div className="text-center">Delete</div>,
-        cell: (user: any) => {
-            return <center> <Trash2 /></center>
-        },
-    },
-];
+        // Conditionally add delete column
+        ...(permissions.includes("delete") ? [{
+            accessorKey: "delete",
+            header: () => <div className="text-center">Delete</div>,
+            cell: (user: any) => {
+                return <center> <Trash2 /></center>
+            },
+        }] : []),
+    ];
+
+    return columns;
+}
