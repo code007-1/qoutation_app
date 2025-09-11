@@ -5,8 +5,8 @@ import { verifyAccessToken } from "~/modules/utils";
 export const loader: LoaderFunction = async ({ request, params }) => {
     try {
         const permissions = await verifyAccessToken(request);
-        if (!permissions?.includes("create"))
-            return new Response("user not authorized to delete", { status: 405 });
+        if (!permissions?.includes("read"))
+            return new Response("user not authorized to read", { status: 405 });
 
         const url = new URL(request.url);
         const limit = 1000;

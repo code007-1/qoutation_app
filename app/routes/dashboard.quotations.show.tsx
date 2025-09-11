@@ -4,6 +4,7 @@ import QuotationsTableUI from "~/component/quotation/quotationsTableUI";
 import { createQuotation, initialQuotationData, useGlobalContext } from "~/modules/gcontext";
 import { useCentralFetcher } from "~/component/centralFetcher";
 import { useNotification } from "~/modules/notificationContext";
+import { quotationDeleteAPIURL, quotationReadAPIURL } from "~/component/statics";
 
 const QuotationsShow = () => {
     // Initiate your states
@@ -14,7 +15,7 @@ const QuotationsShow = () => {
     const { quoteData, setHeaderText, dataCount, setDataCount, setQuoteData, setData, setItems, profile } = useGlobalContext();
     async function getQoutes() {
         setLoading(true);
-        const response = await fetcher(`/api/quotations`);
+        const response = await fetcher(`${quotationReadAPIURL}`);
         if (response.status === 200) {
             const data = await response.json()
             setQuoteData(data);
@@ -30,7 +31,7 @@ const QuotationsShow = () => {
         setLoading(true);
         let response;
         if (query) {
-            response = await fetcher(`/api/quotations?start=${query.start}&end=${query.end}&to=${query.to}`);
+            response = await fetcher(`${quotationReadAPIURL}?start=${query.start}&end=${query.end}&to=${query.to}`);
             if (response.status === 200) {
                 const data = await response.json();
                 setQuoteData(data);
@@ -44,7 +45,7 @@ const QuotationsShow = () => {
         }
         else {
             setLoading(true);
-            response = await fetcher(`/api/quotations?skip=${dataCount}`);
+            response = await fetcher(`${quotationReadAPIURL}?skip=${dataCount}`);
             if (response.status === 200) {
                 const data = await response.json();
                 if (dataCount == 0) {
@@ -64,7 +65,7 @@ const QuotationsShow = () => {
     }
 
     async function handleDeletequotation(no: string) {
-        const result = await fetcher("/api/delete", { method: "POST", body: JSON.stringify({ "no": no, "username": profile.username, type: "quotations" }) });
+        const result = await fetcher(quotationDeleteAPIURL, { method: "POST", body: JSON.stringify({ "no": no, "username": profile.username, type: "quotations" }) });
         if (result.status !== 200) {
             addNotifications({
                 title: "Error while deletion...",

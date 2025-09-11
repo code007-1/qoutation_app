@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import { complaintColumn } from "~/component/complaints/complaintColumns";
-import QuotationsTableUI from "~/component/quotation/quotationsTableUI";
+import { useComplaintsColumn } from "~/component/complaints/complaintColumns";
 import { createComplaint, initialQuotationData, useGlobalContext } from "~/modules/gcontext";
 import { useCentralFetcher } from "~/component/centralFetcher";
 import { useNotification } from "~/modules/notificationContext";
+import { complaintReadAPIURL } from "~/component/statics";
+import ComplaintTableUI from "~/component/complaints/complaintTableUI";
 
 const ComplaintShow = () => {
     // Initiate your states
@@ -14,7 +15,7 @@ const ComplaintShow = () => {
     const { quoteData, setHeaderText, dataCount, setDataCount, setQuoteData, setData, setItems, profile } = useGlobalContext();
     async function getQoutes() {
         setLoading(true);
-        const response = await fetcher(`/api/complaints`);
+        const response = await fetcher(`${complaintReadAPIURL}`);
         if (response.status === 200) {
             const data = await response.json()
             setQuoteData(data);
@@ -30,7 +31,7 @@ const ComplaintShow = () => {
         setLoading(true);
         let response;
         if (query) {
-            response = await fetcher(`/api/quotations?start=${query.start}&end=${query.end}&to=${query.to}`);
+            response = await fetcher(`${complaintReadAPIURL}?start=${query.start}&end=${query.end}&to=${query.to}`);
             if (response.status === 200) {
                 const data = await response.json();
                 setQuoteData(data);
@@ -43,7 +44,7 @@ const ComplaintShow = () => {
         }
         else {
             setLoading(true);
-            response = await fetcher(`/api/quotations?skip=${dataCount}`);
+            response = await fetcher(`${complaintReadAPIURL}?skip=${dataCount}`);
             if (response.status === 200) {
                 const data = await response.json();
                 if (dataCount == 0) {
@@ -87,11 +88,11 @@ const ComplaintShow = () => {
         <>
             <section className="mt-5">
                 <div>
-                    <QuotationsTableUI
+                    <ComplaintTableUI
                         data={quoteData}
-                        columns={complaintColumn}
+                        columns={useComplaintsColumn()}
                         searchLabel="Search by Name or job title"
-                        EmptyText="No Quotations Found!"
+                        EmptyText="No Complaints Data Found!"
                         isFetching={loading}
                         search={handleAdvanceSearch}
                         refresh={getQoutes}

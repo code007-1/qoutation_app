@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import { ChallanColumn } from "~/component/challan/challanColumns";
+import { useChallanColumns } from "~/component/challan/challanColumns";
 import { createChallan, initialChallanData, useGlobalContext } from "~/modules/gcontext";
 import { useCentralFetcher } from "~/component/centralFetcher";
 import { useNotification } from "~/modules/notificationContext";
 import ChallanTableUI from "~/component/challan/challanTableUI";
+import { challanReadAPIURL } from "~/component/statics";
 
 const QuotationsShow = () => {
     // Initiate your states
@@ -14,7 +15,7 @@ const QuotationsShow = () => {
     const { setHeaderText, challanDataCount, setChallanDataCount, setOldChallanData, setChallanData, setChallanItems, profile, oldChallanData } = useGlobalContext();
     async function getChallans() {
         setLoading(true);
-        const response = await fetcher(`/api/challans`);
+        const response = await fetcher(`${challanReadAPIURL}`);
         if (response.status === 200) {
             const data = await response.json()
             setOldChallanData(data);
@@ -30,7 +31,7 @@ const QuotationsShow = () => {
         setLoading(true);
         let response;
         if (query) {
-            response = await fetcher(`/api/challans?sno=${query.sno}`);
+            response = await fetcher(`${challanReadAPIURL}?sno=${query.sno}`);
             if (response.status === 200) {
                 const data = await response.json();
                 setOldChallanData(data);
@@ -44,7 +45,7 @@ const QuotationsShow = () => {
         }
         else {
             setLoading(true);
-            response = await fetcher(`/api/challans?skip=${challanDataCount}`);
+            response = await fetcher(`${challanReadAPIURL}?skip=${challanDataCount}`);
             if (response.status === 200) {
                 const data = await response.json();
                 if (challanDataCount == 0) {
@@ -90,7 +91,7 @@ const QuotationsShow = () => {
                 <div>
                     <ChallanTableUI
                         data={oldChallanData}
-                        columns={ChallanColumn}
+                        columns={useChallanColumns()}
                         searchLabel="Search by Name or job title"
                         EmptyText="No Challans Found!"
                         isFetching={loading}

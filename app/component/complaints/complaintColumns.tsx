@@ -1,5 +1,6 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, Copy, Pencil, Trash2 } from "lucide-react";
+import { useGlobalContext } from "~/modules/gcontext";
 
 export const sortButton = (column: any, name: string) => {
     return (
@@ -13,86 +14,91 @@ export const sortButton = (column: any, name: string) => {
     )
 }
 
-export const complaintColumn: ColumnDef<any, any>[] = [
-    {
-        accessorKey: "no",
-        header: "Complaint #",
-        cell: (user: any) => {
-            return <span>{user.row.original.no}</span>
+export function useComplaintsColumn() {
+    const { permissions } = useGlobalContext();
+
+    const column: ColumnDef<any, any>[] = [
+        {
+            accessorKey: "no",
+            header: "Complaint #",
+            cell: (user: any) => {
+                return <span>{user.row.original.no}</span>
+            },
+            filterFn: (row, columnId, filterValue) => {
+                return row.original[columnId].toLowerCase().includes(filterValue);
+            },
         },
-        filterFn: (row, columnId, filterValue) => {
-            return row.original[columnId].toLowerCase().includes(filterValue);
+        {
+            accessorKey: "recordedby",
+            header: "Recorded By",
+            cell: (user: any) => {
+                return <span>{user.row.original.recordedby}</span>
+            },
+            filterFn: (row, columnId, filterValue) => {
+                return row.original[columnId].toLowerCase().includes(filterValue);
+            },
         },
-    },
-    {
-        accessorKey: "recordedby",
-        header: "Recorded By",
-        cell: (user: any) => {
-            return <span>{user.row.original.recordedby}</span>
+        {
+            accessorKey: "date",
+            header: "Date",
+            cell: (user: any) => {
+                return <span>{user.row.original.date}</span>
+            },
+            filterFn: (row, columnId, filterValue) => {
+                return row.original[columnId].toLowerCase().includes(filterValue);
+            }
         },
-        filterFn: (row, columnId, filterValue) => {
-            return row.original[columnId].toLowerCase().includes(filterValue);
+        {
+            accessorKey: "type",
+            header: "Type",
+            cell: (user: any) => {
+                return <span>{user.row.original.type}</span>
+            },
+            filterFn: (row, columnId, filterValue) => {
+                return row.original[columnId].toLowerCase().includes(filterValue);
+            },
         },
-    },
-    {
-        accessorKey: "date",
-        header: "Date",
-        cell: (user: any) => {
-            return <span>{user.row.original.date}</span>
+        {
+            accessorKey: "complaint",
+            header: "Complaint",
+            cell: (user: any) => {
+                return <span>{user.row.original.complaint}</span>
+            },
+            filterFn: (row, columnId, filterValue) => {
+                return row.original[columnId].toLowerCase().includes(filterValue);
+            },
         },
-        filterFn: (row, columnId, filterValue) => {
-            return row.original[columnId].toLowerCase().includes(filterValue);
-        }
-    },
-    {
-        accessorKey: "type",
-        header: "Type",
-        cell: (user: any) => {
-            return <span>{user.row.original.type}</span>
+        {
+            accessorKey: "status",
+            header: "Status",
+            cell: (user: any) => {
+                return <span>{user.row.original.status}</span>
+            },
+            filterFn: (row, columnId, filterValue) => {
+                return row.original[columnId].toLowerCase().includes(filterValue);
+            },
         },
-        filterFn: (row, columnId, filterValue) => {
-            return row.original[columnId].toLowerCase().includes(filterValue);
+        {
+            accessorKey: "edit",
+            header: () => <div className="text-center">Edit</div>,
+            cell: (user: any) => {
+                return <center><Pencil /></center>
+            },
         },
-    },
-    {
-        accessorKey: "complaint",
-        header: "Complaint",
-        cell: (user: any) => {
-            return <span>{user.row.original.complaint}</span>
+        {
+            accessorKey: "copy",
+            header: () => <div className="text-center">Copy</div>,
+            cell: (user: any) => {
+                return <center><Copy /></center>
+            },
         },
-        filterFn: (row, columnId, filterValue) => {
-            return row.original[columnId].toLowerCase().includes(filterValue);
-        },
-    },
-    {
-        accessorKey: "status",
-        header: "Status",
-        cell: (user: any) => {
-            return <span>{user.row.original.status}</span>
-        },
-        filterFn: (row, columnId, filterValue) => {
-            return row.original[columnId].toLowerCase().includes(filterValue);
-        },
-    },
-    {
-        accessorKey: "edit",
-        header: () => <div className="text-center">Edit</div>,
-        cell: (user: any) => {
-            return <center><Pencil /></center>
-        },
-    },
-    {
-        accessorKey: "copy",
-        header: () => <div className="text-center">Copy</div>,
-        cell: (user: any) => {
-            return <center><Copy /></center>
-        },
-    },
-    {
-        accessorKey: "delete",
-        header: () => <div className="text-center">Delete</div>,
-        cell: (user: any) => {
-            return <center> <Trash2 /></center>
-        },
-    },
-];
+        ...(permissions.includes("delete") ? [{
+            accessorKey: "delete",
+            header: () => <div className="text-center">Delete</div>,
+            cell: (user: any) => {
+                return <center> <Trash2 /></center>
+            },
+        }] : []),
+    ];
+    return column;
+}

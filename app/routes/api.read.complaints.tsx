@@ -5,18 +5,18 @@ import { verifyAccessToken } from "~/modules/utils";
 export const loader: LoaderFunction = async ({ request, params }) => {
     try {
         const permissions = await verifyAccessToken(request);
-        if (!permissions?.includes("create"))
-            return new Response("user not authorized to delete", { status: 405 });
+        if (!permissions?.includes("read"))
+            return new Response("user not authorized to read", { status: 405 });
 
         const url = new URL(request.url);
         const limit = 1000;
         const skip = Number(url.searchParams.get("skip")) || 0;
 
-        const sno = url.searchParams.get("sno") || "";
+        const challanno = url.searchParams.get("challanno") || "";
 
-        if (sno != "") {
-            const query = { "items.sno": sno };
-            const result = await sortedSearch("unnamed", "challans", query, limit, 0, -1, "_id");
+        if (challanno != "") {
+            const query = { "no": challanno };
+            const result = await sortedSearch("unnamed", "complaints", query, limit, 0, -1, "_id");
             return Response.json(result, { status: 200 });
         }
         else {

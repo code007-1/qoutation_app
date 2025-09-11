@@ -1,8 +1,5 @@
-import { Link } from "@remix-run/react";
-import { X } from "lucide-react";
 import { useEffect, useId, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import { useGlobalContext } from "~/modules/gcontext";
 
 type DialogProps = {
     open: boolean;
@@ -13,12 +10,10 @@ type DialogProps = {
     titleId?: string;
 };
 
-export function Dialog({ open, onClose, title, children, titleId }: DialogProps) {
+export function Dialog({ open, onClose, children, titleId }: DialogProps) {
     const backdropRef = useRef<HTMLDivElement | null>(null);
-    const closeBtnRef = useRef<HTMLButtonElement | null>(null);
     const [mounted, setMounted] = useState(false);
     const _titleId = titleId ?? useId();
-    const { profile } = useGlobalContext();
 
     // Mount portal only on client
     useEffect(() => {
@@ -48,13 +43,6 @@ export function Dialog({ open, onClose, title, children, titleId }: DialogProps)
         return () => window.removeEventListener("keydown", onKeyDown);
     }, [open, onClose]);
 
-    // Focus management: move focus to close button when opened
-    useEffect(() => {
-        if (open) {
-            closeBtnRef.current?.focus();
-        }
-    }, [open]);
-
     const onBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
         // Only close if the click is on the backdrop itself (not inside dialog panel)
         if (e.target === backdropRef.current) onClose();
@@ -79,33 +67,7 @@ export function Dialog({ open, onClose, title, children, titleId }: DialogProps)
                 className="mx-4 w-full max-w-lg bg-background shadow-xl outline-none"
                 onMouseDown={(e) => e.stopPropagation()}
             >
-                <div className="flex items-center justify-between p-4 bg-headerBackground">
-                    <h2 id={_titleId} className="text-lg font-semibold text-textPrimary">
-                        {title}
-                    </h2>
-                    <button
-                        ref={closeBtnRef}
-                        onClick={onClose}
-                        className="inline-flex h-9 w-9 items-center justify-center bg-button hover:bg-button/75"
-                        aria-label="Close dialog"
-                    >
-                        <X className="h-6 w-6 text-buttonTextPrimary" />
-                    </button>
-                </div>
-
-                <div className="p-4">
-                    {children}
-                </div>
-
-                <div className="flex justify-between gap-2 p-4">
-                    <Link to="/dashboard/changelog" className="inline-flex font-semibold items-center gap-2 px-4 py-2 text-buttonTextPrimary bg-button hover:bg-button/75">Change Logs</Link>
-                    <button
-                        onClick={onClose}
-                        className="inline-flex font-semibold items-center gap-2 px-4 py-2 text-buttonTextPrimary bg-button hover:bg-button/75"
-                    >
-                        {profile.username === "gunjan" ? "Okie" : "Close"}
-                    </button>
-                </div>
+                {children}
             </div>
         </div>,
         modalRoot as Element
