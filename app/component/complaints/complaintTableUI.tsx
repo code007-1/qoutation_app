@@ -2,12 +2,13 @@ import { useNavigate } from "@remix-run/react";
 import { ChevronDown, ChevronLeft, ChevronRight, X } from "lucide-react";
 import { FC, memo, useEffect, useId, useMemo, useRef, useState } from "react";
 import { useGlobalContext } from "~/modules/gcontext";
-import { createPdf, QuotationData } from "~/routes/dashboard.quotations.create";
+import { createPdf } from "~/routes/dashboard.quotations.create";
 import { useCentralFetcher } from "../centralFetcher";
 import { Listbox, ListboxButton, ListboxOption, ListboxOptions } from "@headlessui/react";
 import { Dialog } from "../menu/about";
 
 import { Cell, ColumnDef, ColumnFiltersState, flexRender, getCoreRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, PaginationState, Row, SortingState, useReactTable } from "@tanstack/react-table";
+import { ComplaintsData } from "~/routes/dashboard.complaints.create";
 
 interface TableProps {
     data: any[];
@@ -25,9 +26,8 @@ interface TableProps {
     children?: React.ReactNode | React.ReactElement
     handleRow?: () => void,
     refresh: () => void,
-    deleteQuotation: (no: string) => void
+    deleteComplaints: (no: string) => void
 }
-
 
 // The main table 
 const CompalintsTableUI: FC<TableProps> = ({
@@ -46,7 +46,7 @@ const CompalintsTableUI: FC<TableProps> = ({
     children,
     handleRow,
     refresh,
-    deleteQuotation
+    deleteComplaints
 }) => {
 
     const memoizedData = useMemo(() => data, [data]);
@@ -54,21 +54,25 @@ const CompalintsTableUI: FC<TableProps> = ({
     const memoisedHeaderComponent = useMemo(() => headerComponent, [headerComponent]);
     const [sorting, setSorting] = useState<SortingState>([]);
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-    const [type, setType] = useState<string>("no");
+    const [filtersType, setFilterType] = useState<string>("Complaint #");
+
+    const filterTypes = ["Complaint #", "Recorded By", "Date", "Status", "Type"];
 
     function getType(type: string) {
-        if (type === "no") return "Complaint #";
-        else if (type === "recordedby") return "Recorded By";
-        else if (type === "date") return "Date";
-        else if (type === "status") return "Status";
-        else if (type === "type") return "Type";
-        else type;
+        switch (type) {
+            case "Complaint #": return "no";
+            case "Recorded By": return "recordedby";
+            case "Date": return "date";
+            case "Status": return "status";
+            case "Type": return "type";
+            default:
+                return type;
+        }
     }
 
     const [pagination, setPagination] = useState<PaginationState>({ pageIndex: 0, pageSize: 10 })
 
-
-    const { getHeaderGroups, getRowModel, getAllColumns, getColumn, firstPage, getCanNextPage, getCanPreviousPage, getState, getPageCount, setPageIndex, setPageSize, lastPage, nextPage, previousPage, getRowCount } = useReactTable({
+    const { getHeaderGroups, getRowModel, getAllColumns, getColumn, getCanNextPage, getCanPreviousPage, getState, getPageCount, setPageSize } = useReactTable({
         data: memoizedData,
         columns: memoizedColumns,
         getCoreRowModel: getCoreRowModel(),
@@ -93,21 +97,19 @@ const CompalintsTableUI: FC<TableProps> = ({
         !isFetching && (!memoizedData || memoizedData.length === 0);
 
     const navigate = useNavigate();
-    const { setData, setItems, profile, selectedProfile } = useGlobalContext();
+    const { setComplaintsData, profile, selectedProfile } = useGlobalContext();
     const fetcher = useCentralFetcher();
     const [open, setOpen] = useState(false);
     const [query, setQuery] = useState({ start: "", end: "", to: "" });
 
-    function handleEdit(row: QuotationData) {
-        setData(row);
-        setItems(row.items);
-        navigate("/dashboard/quotations/create", { state: { editing: true } });
+    function handleEdit(row: ComplaintsData) {
+        setComplaintsData(row);
+        navigate("/dashboard/complaints/create", { state: { editing: true } });
     }
 
-    function handleCopy(row: QuotationData) {
-        setData(row);
-        setItems(row.items);
-        navigate("/dashboard/quotations/create", { state: { editing: false } });
+    function handleCopy(row: ComplaintsData) {
+        setComplaintsData(row);
+        navigate("/dashboard/complaints/create", { state: { editing: false } });
     }
 
     const _titleId = useId();
@@ -162,11 +164,10 @@ const CompalintsTableUI: FC<TableProps> = ({
 
             <div className="">
                 <div className="flex space-x-4 items-center align-middle">
-
-                    <Listbox value={type} onChange={setType}>
+                    <Listbox value={filtersType} onChange={setFilterType}>
                         <div className="relative">
                             <ListboxButton className="flex items-center hover:bg-buttonHover px-2 border border-border py-2">
-                                <div className="text-textSecondary mr-2">{getType(type)}</div>
+                                <div className="text-textSecondary mr-2">{filtersType}</div>
                                 <ChevronDown className="text-textPrimary" />
                             </ListboxButton>
 
@@ -175,7 +176,7 @@ const CompalintsTableUI: FC<TableProps> = ({
                                 className="absolute -right-34 z-10 mt-2 w-[136px] origin-top-right rounded-sm bg-background shadow-lg ring-1 ring-black/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
                             >
                                 <div className="p-1">
-                                    {["Complaint #", "Recorded By", "Date", "Status", "Type"].map((item) => <ListboxOption
+                                    {filterTypes.map((item) => <ListboxOption
                                         key={item}
                                         value={item}
                                         className="block px-4 py-2 text-sm text-textSecondary data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
@@ -188,9 +189,9 @@ const CompalintsTableUI: FC<TableProps> = ({
                     </Listbox>
                     <input
                         placeholder="Filter....."
-                        value={(getColumn(type)?.getFilterValue() as string) ?? ""}
+                        value={(getColumn(getType(filtersType))?.getFilterValue() as string) ?? ""}
                         onChange={(event) =>
-                            getColumn(type)?.setFilterValue(event.target.value)
+                            getColumn(getType(filtersType))?.setFilterValue(event.target.value)
                         }
                         className="border p-2 w-[20%] border-border bg-background text-textPrimary focus:outline-textPrimary"
                     />
@@ -253,8 +254,8 @@ const CompalintsTableUI: FC<TableProps> = ({
                                                 onClick={(e) => {
                                                     if (cell.column.id === "edit") handleEdit(row.original)
                                                     else if (cell.column.id === "copy") handleCopy(row.original)
-                                                    else if (cell.column.id === "delete") deleteQuotation(row.original.no)
-                                                    else createPdf(row.original, fetcher, profile.quotationInfo[selectedProfile].showCustomerList, false);
+                                                    else if (cell.column.id === "delete") deleteComplaints(row.original.no)
+                                                    //else createPdf(row.original, fetcher, profile.quotationInfo[selectedProfile].showCustomerList, false);
                                                 }}
                                                 key={cell.id}
                                                 className="text-textSecondary text-base text-left p-2"

@@ -12,7 +12,7 @@ const QuotationsShow = () => {
     const { addNotifications } = useNotification();
     const fetcher = useCentralFetcher();
 
-    const { quoteData, setHeaderText, dataCount, setDataCount, setQuoteData, setData, setItems, profile } = useGlobalContext();
+    const { oldQuotationData: quoteData, setHeaderText, quotationDataCount: dataCount, setQuotationDataCount: setDataCount, setOldQuotationData: setQuoteData, setQuotationData: setData, setQuotationItems: setItems, profile } = useGlobalContext();
     async function getQoutes() {
         setLoading(true);
         const response = await fetcher(`${quotationReadAPIURL}`);

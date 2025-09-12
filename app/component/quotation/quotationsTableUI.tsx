@@ -94,7 +94,7 @@ const QuotationsTableUI: FC<TableProps> = ({
         !isFetching && (!memoizedData || memoizedData.length === 0);
 
     const navigate = useNavigate();
-    const { setData, setItems, profile, selectedProfile } = useGlobalContext();
+    const { setQuotationData: setData, setQuotationItems: setItems, profile, selectedProfile } = useGlobalContext();
     const fetcher = useCentralFetcher();
     const [open, setOpen] = useState(false);
     const [query, setQuery] = useState({ start: "", end: "", to: "" });

@@ -12,10 +12,12 @@ export const loader: LoaderFunction = async ({ request, params }) => {
         const limit = 1000;
         const skip = Number(url.searchParams.get("skip")) || 0;
 
-        const challanno = url.searchParams.get("challanno") || "";
+        const start = url.searchParams.get("start") || "";
+        const end = url.searchParams.get("end") || "";
+        const to = url.searchParams.get("to") || "";
 
-        if (challanno != "") {
-            const query = { "no": challanno };
+        if (start != "" || end != "" || to != "") {
+            const query = { "date": { $gte: start, $lte: end } };
             const result = await sortedSearch("unnamed", "complaints", query, limit, 0, -1, "_id");
             return Response.json(result, { status: 200 });
         }

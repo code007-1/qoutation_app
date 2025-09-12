@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useComplaintsColumn } from "~/component/complaints/complaintColumns";
-import { createComplaint, initialQuotationData, useGlobalContext } from "~/modules/gcontext";
+import { createComplaint, initialComplaintsData, useGlobalContext } from "~/modules/gcontext";
 import { useCentralFetcher } from "~/component/centralFetcher";
 import { useNotification } from "~/modules/notificationContext";
 import { complaintReadAPIURL } from "~/component/statics";
@@ -12,14 +12,14 @@ const ComplaintShow = () => {
     const { addNotifications } = useNotification();
     const fetcher = useCentralFetcher();
 
-    const { quoteData, setHeaderText, dataCount, setDataCount, setQuoteData, setData, setItems, profile } = useGlobalContext();
+    const { oldComplaintsData, setHeaderText, complaintsDataCount, setComplaintsDataCount, setOldComplaintsData, setComplaintsData, profile } = useGlobalContext();
     async function getQoutes() {
         setLoading(true);
         const response = await fetcher(`${complaintReadAPIURL}`);
         if (response.status === 200) {
             const data = await response.json()
-            setQuoteData(data);
-            setDataCount(data.length);
+            setOldComplaintsData(data);
+            setComplaintsDataCount(data.length);
         }
         else {
             addNotifications({ title: "Failure...", message: "Fail to load data." });
@@ -34,26 +34,26 @@ const ComplaintShow = () => {
             response = await fetcher(`${complaintReadAPIURL}?start=${query.start}&end=${query.end}&to=${query.to}`);
             if (response.status === 200) {
                 const data = await response.json();
-                setQuoteData(data);
+                setOldComplaintsData(data);
             }
             else if (response.status != 200) {
                 addNotifications({ title: "Failure...", message: "Fail to load data." });
             }
-            setDataCount(0);
+            setComplaintsDataCount(0);
             setLoading(false);
         }
         else {
             setLoading(true);
-            response = await fetcher(`${complaintReadAPIURL}?skip=${dataCount}`);
+            response = await fetcher(`${complaintReadAPIURL}?skip=${complaintsDataCount}`);
             if (response.status === 200) {
                 const data = await response.json();
-                if (dataCount == 0) {
-                    setQuoteData(data);
-                    setDataCount(data.length);
+                if (complaintsDataCount == 0) {
+                    setOldComplaintsData(data);
+                    setComplaintsDataCount(data.length);
                 }
                 else {
-                    setQuoteData(pre => { return [...pre, ...data] });
-                    setDataCount(quoteData.length + data.length);
+                    setOldComplaintsData(pre => { return [...pre, ...data] });
+                    setComplaintsDataCount(oldComplaintsData.length + data.length);
                 }
             }
             else if (response.status != 200) {
@@ -64,7 +64,7 @@ const ComplaintShow = () => {
     }
 
     async function handleDeleteComplaint(no: string) {
-        const result = await fetcher("/api/delete", { method: "POST", body: JSON.stringify({ "no": no, "username": profile.username, type: "quotations" }) });
+        const result = await fetcher("/api/delete", { method: "POST", body: JSON.stringify({ "no": no, "username": profile.username, type: "complaints" }) });
         if (result.status !== 200) {
             addNotifications({
                 title: "Error while deletion...",
@@ -72,15 +72,14 @@ const ComplaintShow = () => {
             });
         }
         else {
-            setQuoteData((pre: any) => { return pre.filter((item: any) => item.no === no ? false : true) });
+            setOldComplaintsData((pre: any) => { return pre.filter((item: any) => item.no === no ? false : true) });
         }
     }
 
     useEffect(() => {
-        setData(initialQuotationData());
-        setItems([]);
+        setComplaintsData(initialComplaintsData());
         setHeaderText(createComplaint);
-        if (dataCount === 0)
+        if (complaintsDataCount === 0)
             getQoutes();
     }, []);
 
@@ -89,14 +88,14 @@ const ComplaintShow = () => {
             <section className="mt-5">
                 <div>
                     <ComplaintTableUI
-                        data={quoteData}
+                        data={oldComplaintsData}
                         columns={useComplaintsColumn()}
                         searchLabel="Search by Name or job title"
                         EmptyText="No Complaints Data Found!"
                         isFetching={loading}
                         search={handleAdvanceSearch}
                         refresh={getQoutes}
-                        deleteQuotation={handleDeleteComplaint}
+                        deleteComplaints={handleDeleteComplaint}
                     />
                 </div>
             </section>

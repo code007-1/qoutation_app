@@ -14,6 +14,8 @@ export const action: ActionFunction = async ({ request, params }) => {
             result = await deleteOneFromDB(no, "unnamed", "challans");
         else if (type === "quotations")
             result = await deleteOneFromDB(no, "unnamed", "quotations");
+        else if (type === "complaints")
+            result = await deleteOneFromDB(no, "unnamed", "complaints");
         else
             return new Response(`nothing to deleted`, { status: 500 });
 

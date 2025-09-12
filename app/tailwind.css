@@ -134,3 +134,16 @@ body {
   --border: 255, 0, 110;
   /* Neon pink border */
 }
+
+.glass {
+  --header: 255, 255, 255, 1;
+  --headerBackground: 240, 240, 240, 1;
+  --textPrimary: 0, 0, 0, 1;
+  --textSecondary: 0, 0, 0, 1;
+  --buttonTextPrimary: 255, 255, 255, 1;
+  --button: 50, 50, 50, 0.5;
+  --buttonHover: 255, 255, 255, 1;
+  --background: 255, 255, 255, 0.9;
+  --border: 255, 255, 255, 0.6;
+  --backdropBlur: blur(12px);
+}

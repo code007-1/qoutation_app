@@ -31,14 +31,14 @@ interface AppContextType {
     setPermissions: React.Dispatch<React.SetStateAction<string>>;
 
     // quotation related variables
-    quoteData: QuotationData[];
-    setQuoteData: React.Dispatch<React.SetStateAction<QuotationData[]>>;
-    dataCount: number;
-    setDataCount: React.Dispatch<React.SetStateAction<number>>;
-    items: QuoteItems[];
-    setItems: React.Dispatch<React.SetStateAction<QuoteItems[]>>;
-    data: QuotationData;
-    setData: React.Dispatch<React.SetStateAction<QuotationData>>;
+    oldQuotationData: QuotationData[];
+    setOldQuotationData: React.Dispatch<React.SetStateAction<QuotationData[]>>;
+    quotationDataCount: number;
+    setQuotationDataCount: React.Dispatch<React.SetStateAction<number>>;
+    quotationItems: QuoteItems[];
+    setQuotationItems: React.Dispatch<React.SetStateAction<QuoteItems[]>>;
+    quotationData: QuotationData;
+    setQuotationData: React.Dispatch<React.SetStateAction<QuotationData>>;
 
     // challan related variables
     oldChallanData: ChallanData[];
@@ -49,8 +49,14 @@ interface AppContextType {
     setChallanItems: React.Dispatch<React.SetStateAction<ChallanItems[]>>;
     challanData: ChallanData;
     setChallanData: React.Dispatch<React.SetStateAction<ChallanData>>;
+
+    //complaints related variables
     complaintsData: ComplaintsData;
     setComplaintsData: React.Dispatch<React.SetStateAction<ComplaintsData>>;
+    complaintsDataCount: number;
+    setComplaintsDataCount: React.Dispatch<React.SetStateAction<number>>;
+    oldComplaintsData: ComplaintsData[];
+    setOldComplaintsData: React.Dispatch<React.SetStateAction<ComplaintsData[]>>;
 }
 
 const appContext = createContext<AppContextType | null>(null);
@@ -102,7 +108,7 @@ export const initialComplaintsData = () => {
         type: "Government",
         contactPerson: "",
         contactNumber: "",
-        nameOrAddress: "Teen Telecommunication Pvt. Ltd. \nG-57, Vikas Marg, Near Metro Pillar No.41, \nDelhi - 110092",
+        nameOrAddress: "",
         recordedby: "",
         complaint: "",
         address: "",
@@ -127,10 +133,10 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
     const [permissions, setPermissions] = useState<string>("");
 
     // quotation related variables
-    const [quoteData, setQuoteData] = useState<QuotationData[]>([]); // data loaded from db of old quotations
-    const [dataCount, setDataCount] = useState<number>(0); // count of data loaded from db
-    const [items, setItems] = useState<QuoteItems[]>([]); // items added to the current quotation being created
-    const [data, setData] = useState<QuotationData>(initialQuotationData()); // data of the whole current quotation being created
+    const [oldQuotationData, setOldQuotationData] = useState<QuotationData[]>([]); // data loaded from db of old quotations
+    const [quotationDataCount, setQuotationDataCount] = useState<number>(0); // count of data loaded from db
+    const [quotationItems, setQuotationItems] = useState<QuoteItems[]>([]); // items added to the current quotation being created
+    const [quotationData, setQuotationData] = useState<QuotationData>(initialQuotationData()); // data of the whole current quotation being created
 
     // challan related variables
     const [oldChallanData, setOldChallanData] = useState<ChallanData[]>([]); // data loaded from db of old quotations
@@ -139,8 +145,8 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
     const [challanData, setChallanData] = useState<ChallanData>(initialChallanData()); // data of the whole current quotation being created
 
     // complaint related variables
-    const [oldComplaints, setOldCompliants] = useState<ComplaintsData>();
-    const [compliantsDataCount, setComplaintsDataCount] = useState<number>(0);
+    const [oldComplaintsData, setOldComplaintsData] = useState<ComplaintsData[]>([]);
+    const [complaintsDataCount, setComplaintsDataCount] = useState<number>(0);
     const [complaintsData, setComplaintsData] = useState<ComplaintsData>(initialComplaintsData());
 
     const toggleTheme = () => {
@@ -158,6 +164,8 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
                     return "sunsetBloom";
                 case "sunsetBloom":
                     return "cyberpunkPulse";
+                //case "cyberpunkPulse":
+                //return "glass";
                 default:
                     return "light"; // Fallback to light theme
             }
@@ -167,7 +175,7 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
     };
 
     return (
-        <appContext.Provider value={{ theme, setTheme, toggleTheme, accessToken, setAccessToken, items, setItems, data, setData, headerText, setHeaderText, gQuote, setGQuote, profile, setProfile, selectedProfile, setSelectedProfile, dataCount, setDataCount, quoteData, setQuoteData, homeLink, setHomeLink, setAppName, appName, oldChallanData, setOldChallanData, challanDataCount, setChallanDataCount, challanItems, setChallanItems, challanData, setChallanData, complaintsData, setComplaintsData, permissions, setPermissions }}>
+        <appContext.Provider value={{ theme, setTheme, toggleTheme, accessToken, setAccessToken, quotationItems, setQuotationItems, quotationData, setQuotationData, headerText, setHeaderText, gQuote, setGQuote, profile, setProfile, selectedProfile, setSelectedProfile, quotationDataCount, setQuotationDataCount, oldQuotationData, setOldQuotationData, homeLink, setHomeLink, setAppName, appName, oldChallanData, setOldChallanData, challanDataCount, setChallanDataCount, challanItems, setChallanItems, challanData, setChallanData, complaintsData, setComplaintsData, permissions, setPermissions, oldComplaintsData, setOldComplaintsData, complaintsDataCount, setComplaintsDataCount }}>
             {children}
         </appContext.Provider>
     );

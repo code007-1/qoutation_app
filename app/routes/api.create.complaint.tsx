@@ -8,11 +8,11 @@ export const action: ActionFunction = async ({ request, params }) => {
         await verifyAccessToken(request);
         const data = await request.json();
 
-        await insertOrUpdateOnetoDb(data);
+        await insertOrUpdateOnetoDb(data, "unnamed", "complaints");
 
-        await insertOnetoDb({ "by": data.madeby, "action": `saving complaint`, "result": "succeded", "when": new Date().toISOString() }, "unnamed", "logs");
+        await insertOnetoDb({ "by": data.recordedby, "action": `saving complaint`, "result": "succeded", "when": new Date().toISOString() }, "unnamed", "logs");
         // finally create the Response with the correct Content-Type header for a PDF
-        return new Response("complain saved succefully", { status: 200 });
+        return new Response("complaint saved succefully", { status: 200 });
     }
     catch (error) {
         console.error("error while saving quotation : ", error);

@@ -31,18 +31,18 @@ export default function QuotationAutocompleteSearch({ index }: { index: number }
     const inputRef = useRef<HTMLInputElement>(null);
     const [hasFocus, setFocus] = useState(false);
 
-    const { setItems, items } = useGlobalContext();
+    const { setQuotationItems, quotationItems } = useGlobalContext();
 
     useEffect(() => {
         if (hasFocus) {
-            if (items[index].name.trim() === "") {
+            if (quotationItems[index].name.trim() === "") {
                 setFiltered([]);
                 setShowSuggestions(false);
-            } else if (showSuggestions || filtered.length != 1 || filtered[0].name.toLowerCase() != items[index].name.toLowerCase()) {
+            } else if (showSuggestions || filtered.length != 1 || filtered[0].name.toLowerCase() != quotationItems[index].name.toLowerCase()) {
                 fetch(`${quotationAndChallanDataSearch}`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(items[index].name),
+                    body: JSON.stringify(quotationItems[index].name),
                 })
                     .then(async (res) => {
                         const filteredList: QuoteItems[] = await res.json();
@@ -55,18 +55,18 @@ export default function QuotationAutocompleteSearch({ index }: { index: number }
                     });
             }
         }
-    }, [items[index].name]);
+    }, [quotationItems[index].name]);
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setItems((pre) => {
+        setQuotationItems((pre) => {
             return pre.map((item, i) => i === index
-                ? { ...items[index], name: e.target.value }
+                ? { ...quotationItems[index], name: e.target.value }
                 : item)
         });
     };
 
     const handleSuggestionClick = (suggestion: QuoteItems) => {
-        setItems(pre => {
+        setQuotationItems(pre => {
             return pre.map((item, i) => i == index
                 ? { id: suggestion.id, hsn: suggestion.hsn, name: suggestion.name, price: suggestion.price, quantity: 1, description: suggestion.description || "", link: suggestion.link, addon: 0, discount: 0 }
                 : item)
@@ -99,7 +99,7 @@ export default function QuotationAutocompleteSearch({ index }: { index: number }
             //setInput(filtered[highlighted].label);
             setFiltered([filtered[highlighted]]);
             setShowSuggestions(false);
-            setItems(pre => {
+            setQuotationItems(pre => {
                 return pre.map((item, i) => i === index
                     ? { id: filtered[highlighted].id, hsn: filtered[highlighted].hsn, name: filtered[highlighted].name, price: filtered[highlighted].price, quantity: 1, description: filtered[highlighted].description || "", link: filtered[highlighted].link, addon: 0, discount: 0 }
                     : item)
@@ -117,7 +117,7 @@ export default function QuotationAutocompleteSearch({ index }: { index: number }
                     <input
                         ref={inputRef}
                         type="text"
-                        value={items[index].name}
+                        value={quotationItems[index].name}
                         onChange={handleInputChange}
                         onBlur={handleBlur}
                         onFocus={handleFocus}
@@ -144,12 +144,12 @@ export default function QuotationAutocompleteSearch({ index }: { index: number }
                 <textarea
                     placeholder="Any prodcut description..."
                     className="p-2 border col-span-4 border-border bg-background text-textPrimary focus:outline-textPrimary"
-                    value={items[index].description}
+                    value={quotationItems[index].description}
                     rows={1}
                     onChange={(e) => {
-                        setItems(pre => {
+                        setQuotationItems(pre => {
                             return pre.map((item, i) => i === index
-                                ? { ...items[index], description: e.target.value }
+                                ? { ...quotationItems[index], description: e.target.value }
                                 : item);
                         })
                     }}
@@ -158,11 +158,11 @@ export default function QuotationAutocompleteSearch({ index }: { index: number }
                     type="string"
                     placeholder="HSN"
                     className="border p-2 border-border bg-background text-textPrimary focus:outline-textPrimary"
-                    value={items[index]?.hsn}
+                    value={quotationItems[index]?.hsn}
                     onChange={(e) => {
-                        setItems(pre => {
+                        setQuotationItems(pre => {
                             return pre.map((item, i) => i === index
-                                ? { ...items[index], hsn: e.target.value }
+                                ? { ...quotationItems[index], hsn: e.target.value }
                                 : item);
                         })
                     }}
@@ -171,12 +171,12 @@ export default function QuotationAutocompleteSearch({ index }: { index: number }
                     type="number"
                     placeholder="Quantity"
                     className="border p-2 border-border bg-background text-textPrimary focus:outline-textPrimary"
-                    value={items[index]?.quantity}
+                    value={quotationItems[index]?.quantity}
                     min={0}
                     onChange={(e) => {
-                        setItems(pre => {
+                        setQuotationItems(pre => {
                             return pre.map((item, i) => i === index
-                                ? { ...items[index], quantity: Number(e.target.value || undefined) }
+                                ? { ...quotationItems[index], quantity: Number(e.target.value || undefined) }
                                 : item);
                         })
                     }}
@@ -186,12 +186,12 @@ export default function QuotationAutocompleteSearch({ index }: { index: number }
                     type="number"
                     placeholder="Price"
                     className="border p-2 border-border bg-background text-textPrimary focus:outline-textPrimary"
-                    value={items[index]?.price}
+                    value={quotationItems[index]?.price}
                     min={0}
                     onChange={(e) => {
-                        setItems(pre => {
+                        setQuotationItems(pre => {
                             return pre.map((item, i) => i === index
-                                ? { ...items[index], price: Number(e.target.value || undefined) }
+                                ? { ...quotationItems[index], price: Number(e.target.value || undefined) }
                                 : item);
                         })
                     }}
@@ -200,12 +200,12 @@ export default function QuotationAutocompleteSearch({ index }: { index: number }
                     type="number"
                     placeholder="Discount"
                     className="border p-2 border-border bg-background text-textPrimary focus:outline-textPrimary"
-                    value={items[index]?.discount}
+                    value={quotationItems[index]?.discount}
                     min={0}
                     onChange={(e) => {
-                        setItems(pre => {
+                        setQuotationItems(pre => {
                             return pre.map((item, i) => i === index
-                                ? { ...items[index], discount: Number(e.target.value || undefined) }
+                                ? { ...quotationItems[index], discount: Number(e.target.value || undefined) }
                                 : item);
                         })
                     }}
@@ -214,19 +214,19 @@ export default function QuotationAutocompleteSearch({ index }: { index: number }
                     type="number"
                     placeholder="Addon %"
                     className="border p-2 border-border bg-background text-textPrimary focus:outline-textPrimary"
-                    value={items[index]?.addon}
+                    value={quotationItems[index]?.addon}
                     min={0}
                     onChange={(e) => {
-                        setItems(pre => {
+                        setQuotationItems(pre => {
                             return pre.map((item, i) => i === index
-                                ? { ...items[index], addon: Number(e.target.value || undefined) }
+                                ? { ...quotationItems[index], addon: Number(e.target.value || undefined) }
                                 : item);
                         })
                     }}
                 />
             </div>
             <button className="hover:bg-headerBackground bg-buttonHover p-2" onClick={(e) => {
-                setItems(pre =>
+                setQuotationItems(pre =>
                     pre.filter((_, i) => i != index)
                 );
             }}>

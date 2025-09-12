@@ -31,7 +31,7 @@ export default function ComplaintsCreate() {
     const fetcher = useCentralFetcher();
 
     function saveComplaint() {
-        fetcher(`/api/savecomplaint`, {
+        fetcher(`/api/create/complaint`, {
             method: "POST", headers: { "Content-Type": "application/json" },
             body: JSON.stringify(complaintsData),
         })
@@ -48,7 +48,7 @@ export default function ComplaintsCreate() {
             date = complaintsData.date;
             time = complaintsData.time;
         }
-        setComplaintsData((pre) => { return { ...pre, no: no, madeby: profile.username || "", date: date, time: time } });
+        setComplaintsData((pre) => { return { ...pre, no: no, recordedby: profile.username || "", date: date, time: time } });
         setHeaderText("Complaint Details");
     }, [])
 

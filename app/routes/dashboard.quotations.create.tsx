@@ -76,7 +76,7 @@ export default function QuotationsCreate() {
     const location = useLocation();
     const passedData = location.state;
 
-    const { items, setItems, data, setData, setHeaderText, profile, selectedProfile, setSelectedProfile } = useGlobalContext();
+    const { quotationItems, setQuotationItems, quotationData, setQuotationData, setHeaderText, profile, selectedProfile, setSelectedProfile } = useGlobalContext();
     const [step, setStep] = useState<number>(0);
     const fetcher = useCentralFetcher();
     const names = profile?.generalInfo.map((p) => p.company) || [];
@@ -85,7 +85,7 @@ export default function QuotationsCreate() {
 
     function addItem() {
         //const newKey = new Date().getTime() + 1;
-        setItems(pre => {
+        setQuotationItems(pre => {
             return [
                 ...pre,
                 { id: 0, hsn: "", name: "", description: "", price: 0, quantity: 0, link: "#", addon: 0, discount: 0 }
@@ -100,27 +100,27 @@ export default function QuotationsCreate() {
     }, [step])
 
     useEffect(() => {
-        const amount = Object.entries(items).reduce((acc, [_, item]) => acc + (item.price * item.quantity * (1 + 0.01 * item.addon) * (1 - item.discount * 0.01)), 0);
-        setData(pre => { return { ...pre, amount: amount } });
-    }, [items]);
+        const amount = Object.entries(quotationItems).reduce((acc, [_, item]) => acc + (item.price * item.quantity * (1 + 0.01 * item.addon) * (1 - item.discount * 0.01)), 0);
+        setQuotationData(pre => { return { ...pre, amount: amount } });
+    }, [quotationItems]);
 
     useEffect(() => {
         const d = new Date();
         let no = d.getTime().toString();
         let fromAddress = profile.generalInfo[selectedProfile].address || "";
         let from = profile.generalInfo[selectedProfile].company;
-        let itemswithAddonandDiscount = items;
+        let itemswithAddonandDiscount = quotationItems;
         let intro = profile.quotationInfo[selectedProfile].intro ?? "";
         let date = d.toISOString().split("T")[0];
         let madeByInfo = profile.generalInfo[selectedProfile].madeByInfo;
 
         if (passedData && passedData?.editing === true) {
-            no = data.no;
-            fromAddress = data.fromAddress;
-            from = data.from;
-            intro = data.intro;
-            date = data.date;
-            madeByInfo = data.madeByInfo ? data.madeByInfo : "";
+            no = quotationData.no;
+            fromAddress = quotationData.fromAddress;
+            from = quotationData.from;
+            intro = quotationData.intro;
+            date = quotationData.date;
+            madeByInfo = quotationData.madeByInfo ? quotationData.madeByInfo : "";
 
             itemswithAddonandDiscount = itemswithAddonandDiscount.map((item) => {
                 if (!item.addon) item.addon = 0;
@@ -128,8 +128,8 @@ export default function QuotationsCreate() {
                 return item;
             });
         }
-        setItems(itemswithAddonandDiscount);
-        setData((pre) => { return { ...pre, no: no, from: from, fromAddress: fromAddress, email: profile.generalInfo[selectedProfile].email, website: profile.generalInfo[selectedProfile].website, contact: profile.generalInfo[selectedProfile].contact, pdfColor: String(profile.quotationInfo[selectedProfile].pdfColor), madeby: profile.username || "", date: date, showLinks: data?.showLinks !== undefined ? data.showLinks : false, items: itemswithAddonandDiscount, intro: intro, terms: profile.quotationInfo[selectedProfile].terms ?? data.terms, additionalInfo: profile.quotationInfo[selectedProfile].additionalInfo ?? data.additionalInfo, madeByInfo: madeByInfo } });
+        setQuotationItems(itemswithAddonandDiscount);
+        setQuotationData((pre) => { return { ...pre, no: no, from: from, fromAddress: fromAddress, email: profile.generalInfo[selectedProfile].email, website: profile.generalInfo[selectedProfile].website, contact: profile.generalInfo[selectedProfile].contact, pdfColor: String(profile.quotationInfo[selectedProfile].pdfColor), madeby: profile.username || "", date: date, showLinks: quotationData?.showLinks !== undefined ? quotationData.showLinks : false, items: itemswithAddonandDiscount, intro: intro, terms: profile.quotationInfo[selectedProfile].terms ?? quotationData.terms, additionalInfo: profile.quotationInfo[selectedProfile].additionalInfo ?? quotationData.additionalInfo, madeByInfo: madeByInfo } });
     }, [])
 
     function updateData(index: number) {
@@ -143,7 +143,7 @@ export default function QuotationsCreate() {
             let intro = profile.quotationInfo[index].intro || "";
             let terms = profile.quotationInfo[index].terms || "";
             let additionalInfo = profile.quotationInfo[index].additionalInfo || "";
-            setData(pre => { return { ...pre, from: from, fromAddress: fromAddress, email: email, website: website, contact: contact, pdfColor: pdfColor, intro: intro, terms: terms, additionalInfo: additionalInfo } });
+            setQuotationData(pre => { return { ...pre, from: from, fromAddress: fromAddress, email: email, website: website, contact: contact, pdfColor: pdfColor, intro: intro, terms: terms, additionalInfo: additionalInfo } });
         }
     }
 
@@ -161,32 +161,32 @@ export default function QuotationsCreate() {
                         <div className="flex items-center w-3/4">
                             <div className="text-sm font-semibold mr-2">Quotation No.</div>
                             {/*<input type="text" name="no" placeholder="Enter Quotation No." className="border border-border p-2 mb-2 mr-5 w-25 bg-background" value={data.no} onChange={e => setData((pre) => { return { ...pre, no: e.target.value }; })} />*/}
-                            <div className="text-sm">{data.no}</div>
+                            <div className="text-sm">{quotationData.no}</div>
                             <div className="text-sm font-semibold ml-4 mr-2">Date</div>
-                            <input type="date" color="white" name="date" id="date" pattern="\d{4}-\d{2}-\d{2}" placeholder="Date" className="border border-border w-28 h-10 bg-background" value={data.date} onChange={e => setData(pre => { return { ...pre, date: e.target.value } })} />
+                            <input type="date" color="white" name="date" id="date" pattern="\d{4}-\d{2}-\d{2}" placeholder="Date" className="border border-border w-28 h-10 bg-background" value={quotationData.date} onChange={e => setQuotationData(pre => { return { ...pre, date: e.target.value } })} />
                             <div className="text-sm font-semibold ml-4 mr-2">Show Links</div>
                             <Switch
-                                checked={data.showLinks}
-                                onChange={(e) => { setData(pre => { return { ...pre, showLinks: e } }) }}
-                                className={`${data.showLinks ? "bg-button/75" : "bg-buttonHover"}
+                                checked={quotationData.showLinks}
+                                onChange={(e) => { setQuotationData(pre => { return { ...pre, showLinks: e } }) }}
+                                className={`${quotationData.showLinks ? "bg-button/75" : "bg-buttonHover"}
                                       relative inline-flex h-[24px] w-[40px] shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2`}
                             >
                                 <span
                                     aria-hidden="true"
-                                    className={`${data.showLinks ? "translate-x-4" : "translate-x-0"}
+                                    className={`${quotationData.showLinks ? "translate-x-4" : "translate-x-0"}
                                         pointer-events-none inline-block h-[20px] w-[20px] transform rounded-full bg-buttonTextPrimary shadow-lg ring-0 transition duration-200 ease-in-out`}
                                 />
                             </Switch>
                             <div className="text-sm font-semibold ml-4 mr-2">To Dealer</div>
                             <Switch
-                                checked={data.todealer}
-                                onChange={(e) => { setData(pre => { return { ...pre, todealer: e } }) }}
-                                className={` ${data.todealer ? "bg-button/75" : "bg-buttonHover"}
+                                checked={quotationData.todealer}
+                                onChange={(e) => { setQuotationData(pre => { return { ...pre, todealer: e } }) }}
+                                className={` ${quotationData.todealer ? "bg-button/75" : "bg-buttonHover"}
                                       relative inline-flex h-[24px] w-[40px] shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2`}
                             >
                                 <span
                                     aria-hidden="true"
-                                    className={`${data.todealer ? "translate-x-4" : "translate-x-0"}
+                                    className={`${quotationData.todealer ? "translate-x-4" : "translate-x-0"}
                                         pointer-events-none inline-block h-[20px] w-[20px] transform rounded-full bg-buttonTextPrimary shadow-lg ring-0 transition duration-200 ease-in-out`}
                                 />
                             </Switch>
@@ -236,27 +236,27 @@ export default function QuotationsCreate() {
                         {step === 0 && <>
                             <div className="w-full">
                                 <label htmlFor="introductorytext" className="text-sm font-semibold">Introductory text</label>
-                                <textarea id="introductorytext" rows={3} placeholder="Enter Introductory Text" className="p-2 border border-border rounded w-full mb-2 bg-background" value={data.intro} onChange={e => setData(pre => { return { ...pre, intro: e.target.value } })} />
+                                <textarea id="introductorytext" rows={3} placeholder="Enter Introductory Text" className="p-2 border border-border rounded w-full mb-2 bg-background" value={quotationData.intro} onChange={e => setQuotationData(pre => { return { ...pre, intro: e.target.value } })} />
                             </div>
                             <div className="mx-10 flex space-x-10 w-full">
                                 <div className="w-full space-y-2">
                                     <div>
                                         <label htmlFor="firstPartyName" className="text-sm font-semibold">First Party Name</label>
-                                        <input id="firstPartyName" key={"frist"} type="text" placeholder="Enter First Party Name" className="border border-border p-2 w-full bg-background" value={data.from} onChange={e => setData(pre => { return { ...pre, from: e.target.value } })} />
+                                        <input id="firstPartyName" key={"frist"} type="text" placeholder="Enter First Party Name" className="border border-border p-2 w-full bg-background" value={quotationData.from} onChange={e => setQuotationData(pre => { return { ...pre, from: e.target.value } })} />
                                     </div>
                                     <div>
                                         <label htmlFor="firstPartyAddress" className="text-sm font-semibold">First Party Address</label>
-                                        <textarea id="firstPartyAddress" rows={5} placeholder="Enter First Party Address" className="p-2 border border-border w-full bg-background" value={data.fromAddress} onChange={e => setData(pre => { return { ...pre, fromAddress: e.target.value } })} />
+                                        <textarea id="firstPartyAddress" rows={5} placeholder="Enter First Party Address" className="p-2 border border-border w-full bg-background" value={quotationData.fromAddress} onChange={e => setQuotationData(pre => { return { ...pre, fromAddress: e.target.value } })} />
                                     </div>
                                 </div>
                                 <div className="w-full space-y-2">
                                     <div>
                                         <label htmlFor="secondPartyName" className="text-sm font-semibold">Second Party Name</label>
-                                        <input id="secondPartyName" key={"second"} type="text" placeholder="Enter Second Party Name" className="border border-border p-2 w-full bg-background" value={data.to} onChange={e => setData(pre => { return { ...pre, to: e.target.value } })} />
+                                        <input id="secondPartyName" key={"second"} type="text" placeholder="Enter Second Party Name" className="border border-border p-2 w-full bg-background" value={quotationData.to} onChange={e => setQuotationData(pre => { return { ...pre, to: e.target.value } })} />
                                     </div>
                                     <div>
                                         <label htmlFor="secondPartyAddress" className="text-sm font-semibold">Second Party Address</label>
-                                        <textarea id="secondPartyAddress" rows={5} placeholder="Enter Second Party Address" className="p-2 border border-border w-full bg-background" value={data.toAddress} onChange={e => setData(pre => { return { ...pre, toAddress: e.target.value } })} />
+                                        <textarea id="secondPartyAddress" rows={5} placeholder="Enter Second Party Address" className="p-2 border border-border w-full bg-background" value={quotationData.toAddress} onChange={e => setQuotationData(pre => { return { ...pre, toAddress: e.target.value } })} />
                                     </div>
                                 </div>
                             </div>
@@ -281,7 +281,7 @@ export default function QuotationsCreate() {
                                         <button className="invisible p-2"><Minus className="text-textSecondary" /></button>
                                     </div>
                                     {
-                                        items.map((_, index) => {
+                                        quotationItems.map((_, index) => {
                                             return <>
                                                 <QuotationAutocompleteSearch key={index} index={index} />
                                             </>;
@@ -290,22 +290,22 @@ export default function QuotationsCreate() {
                                 <div className="flex justify-between w-full">
                                     <div className="flex items-center">
                                         <div className="text-sm font-semibold mr-4">Taxable Value:</div>
-                                        <div className="">Rs.{data.amount.toLocaleString("en-IN")}</div>
+                                        <div className="">Rs.{quotationData.amount.toLocaleString("en-IN")}</div>
                                     </div>
                                     <div className="flex items-center">
                                         <label htmlFor="tax" className="text-sm font-semibold mr-4">Tax (%)</label>
-                                        <input id="tax" type="number" placeholder="Enter Tax Percentage" className="border border-border p-2 w-25 bg-background" value={data.tax} onChange={e => setData(pre => { return { ...pre, tax: parseFloat(e.target.value) } })} />
+                                        <input id="tax" type="number" placeholder="Enter Tax Percentage" className="border border-border p-2 w-25 bg-background" value={quotationData.tax} onChange={e => setQuotationData(pre => { return { ...pre, tax: parseFloat(e.target.value) } })} />
                                     </div>
                                     <div className="flex items-center">
                                         <div className="text-sm font-semibold mr-4">Total:</div>
-                                        <div className="">Rs.{Number((data.amount * (1 + data.tax * 0.01)).toFixed(2)).toLocaleString("en-IN")}</div>
+                                        <div className="">Rs.{Number((quotationData.amount * (1 + quotationData.tax * 0.01)).toFixed(2)).toLocaleString("en-IN")}</div>
                                     </div>
                                 </div>
                                 <div className="flex justify-center space-x-4">
                                     <button onClick={() => setStep(0)} className="button px-4 py-1 mt-2 text-lg">
                                         Back
                                     </button>
-                                    <button onClick={() => { setData((pre) => { return { ...pre, items: [...items] } }); setStep(2) }} className="button px-4 py-1 mt-2 text-lg">
+                                    <button onClick={() => { setQuotationData((pre) => { return { ...pre, items: [...quotationItems] } }); setStep(2) }} className="button px-4 py-1 mt-2 text-lg">
                                         Next
                                     </button>
                                 </div>
@@ -317,22 +317,22 @@ export default function QuotationsCreate() {
                                 <div className="flex w-full space-x-10">
                                     <div className="w-full">
                                         <label htmlFor="termsAndConditions" className="text-sm font-semibold">Terms and Conditions</label>
-                                        <textarea id="termsAndConditions" rows={5} placeholder="Enter Terms and Conditions....." className="p-2 border border-border w-full bg-background" value={data.terms} onChange={e => setData(pre => { return { ...pre, terms: e.target.value } })} />
+                                        <textarea id="termsAndConditions" rows={5} placeholder="Enter Terms and Conditions....." className="p-2 border border-border w-full bg-background" value={quotationData.terms} onChange={e => setQuotationData(pre => { return { ...pre, terms: e.target.value } })} />
                                     </div>
                                     <div className="w-full">
                                         <label htmlFor="additionalInformation" className="text-sm font-semibold">Additional Information</label>
-                                        <textarea id="additionalInformation" rows={5} placeholder="Enter Additional Information....." className="p-2 border border-border w-full bg-background" value={data.additionalInfo} onChange={e => setData(pre => { return { ...pre, additionalInfo: e.target.value } })} />
+                                        <textarea id="additionalInformation" rows={5} placeholder="Enter Additional Information....." className="p-2 border border-border w-full bg-background" value={quotationData.additionalInfo} onChange={e => setQuotationData(pre => { return { ...pre, additionalInfo: e.target.value } })} />
                                     </div>
                                 </div>
                                 <div className="w-full">
                                     <label htmlFor="additionalInformation" className="text-sm font-semibold">User Signature</label>
-                                    <textarea id="additionalInformation" rows={5} placeholder="Enter Made by Info....." className="p-2 border border-border w-full bg-background" value={data.madeByInfo} onChange={e => setData(pre => { return { ...pre, madeByInfo: e.target.value } })} />
+                                    <textarea id="additionalInformation" rows={5} placeholder="Enter Made by Info....." className="p-2 border border-border w-full bg-background" value={quotationData.madeByInfo} onChange={e => setQuotationData(pre => { return { ...pre, madeByInfo: e.target.value } })} />
                                 </div>
                                 <div className="flex justify-center space-x-4">
                                     <button onClick={() => setStep(1)} className="button px-4 py-1 mt-4 text-lg">
                                         Back
                                     </button>
-                                    <form onSubmit={(e) => { createPdf(data, fetcher, profile?.quotationInfo[selectedProfile].showCustomerList); e.preventDefault(); navigate("/dashboard/quotations/show") }}>
+                                    <form onSubmit={(e) => { createPdf(quotationData, fetcher, profile?.quotationInfo[selectedProfile].showCustomerList); e.preventDefault(); navigate("/dashboard/quotations/show") }}>
                                         <button className="button px-4 py-1 mt-4 text-lg" type="submit">Generate Quotation PDF</button>
                                     </form>
                                 </div>
