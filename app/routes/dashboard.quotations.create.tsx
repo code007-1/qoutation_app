@@ -113,6 +113,7 @@ export default function QuotationsCreate() {
         let intro = profile.quotationInfo[selectedProfile].intro ?? "";
         let date = d.toISOString().split("T")[0];
         let madeByInfo = profile.generalInfo[selectedProfile].madeByInfo;
+        let madeby = profile.username || "";
 
         if (passedData && passedData?.editing === true) {
             no = quotationData.no;
@@ -120,7 +121,8 @@ export default function QuotationsCreate() {
             from = quotationData.from;
             intro = quotationData.intro;
             date = quotationData.date;
-            madeByInfo = quotationData.madeByInfo ? quotationData.madeByInfo : "";
+            madeByInfo = quotationData.madeByInfo ?? "";
+            madeby = quotationData.madeby ?? "";
 
             itemswithAddonandDiscount = itemswithAddonandDiscount.map((item) => {
                 if (!item.addon) item.addon = 0;
@@ -129,7 +131,7 @@ export default function QuotationsCreate() {
             });
         }
         setQuotationItems(itemswithAddonandDiscount);
-        setQuotationData((pre) => { return { ...pre, no: no, from: from, fromAddress: fromAddress, email: profile.generalInfo[selectedProfile].email, website: profile.generalInfo[selectedProfile].website, contact: profile.generalInfo[selectedProfile].contact, pdfColor: String(profile.quotationInfo[selectedProfile].pdfColor), madeby: profile.username || "", date: date, showLinks: quotationData?.showLinks !== undefined ? quotationData.showLinks : false, items: itemswithAddonandDiscount, intro: intro, terms: profile.quotationInfo[selectedProfile].terms ?? quotationData.terms, additionalInfo: profile.quotationInfo[selectedProfile].additionalInfo ?? quotationData.additionalInfo, madeByInfo: madeByInfo } });
+        setQuotationData((pre) => { return { ...pre, no: no, from: from, fromAddress: fromAddress, email: profile.generalInfo[selectedProfile].email, website: profile.generalInfo[selectedProfile].website, contact: profile.generalInfo[selectedProfile].contact, pdfColor: String(profile.quotationInfo[selectedProfile].pdfColor), madeby: madeby, date: date, showLinks: quotationData?.showLinks !== undefined ? quotationData.showLinks : false, items: itemswithAddonandDiscount, intro: intro, terms: profile.quotationInfo[selectedProfile].terms ?? quotationData.terms, additionalInfo: profile.quotationInfo[selectedProfile].additionalInfo ?? quotationData.additionalInfo, madeByInfo: madeByInfo } });
     }, [])
 
     function updateData(index: number) {

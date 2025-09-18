@@ -56,7 +56,7 @@ export default function QuotationPDFDocument(data: QuotationData, showCustomerLi
 
     const footer = <>
         <View fixed style={{ width: "90%", position: "absolute", bottom: 20, fontSize: 10, color: "#6E6E6E" }} key="footer">
-            <Text style={{ width: "100%", textAlign: "center" }} key="blankfooterpart1" >This is computer generated quotation, so no need for sign and stamp</Text>
+            <Text style={{ width: "100%", textAlign: "center" }} key="blankfooterpart1" >This is computer generated quotation, So no need for sign and stamp</Text>
             <Text style={styles.newline}>{"\n"}</Text>
             <View style={{ flexDirection: "row", width: "100%" }} >
                 <Text style={{ width: "33%" }} key="blankfooterpart2" ></Text>
@@ -168,8 +168,8 @@ export default function QuotationPDFDocument(data: QuotationData, showCustomerLi
                     <Text style={styles.terms} key="termsandconditionsvalue">{data.terms} {"\n"}</Text>
                 </View>}
                 <Text style={styles.newline} key="blank15">{"\n\n\n"}</Text>
-                {data.madeByInfo !== "" && <View key="nested-view-12">
-                    <Text style={styles.terms} key="userSignature">{data.madeByInfo} {"\n"}</Text>
+                {data.madeBy !== "" && <View key="nested-view-12">
+                    <Text style={styles.terms} key="userSignature">{data.madeBy} {"\n"}</Text>
                 </View>}
                 {showCustomerList &&
                     <>

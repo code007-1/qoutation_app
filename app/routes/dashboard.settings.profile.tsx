@@ -81,7 +81,7 @@ export default function SettingsProfile() {
                                             else if (selectedProfile > idx) setSelectedProfile((pre) => pre - 1);
                                             return { ...pre, generalInfo: updatedGeneralInfo, quotationInfo: updatedQuotationInfo };
                                         })
-                                    }}><Trash2 className={`${selectedProfile === idx && "text-buttonHover/75 hover:text-buttonText"}`} /></div>
+                                    }}><Trash2 tabIndex={0} className={`${selectedProfile === idx && "text-buttonHover/75 hover:text-buttonText"}`} /></div>
                                 </div>
                             </Radio>
                         ))}

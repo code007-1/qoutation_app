@@ -9,6 +9,13 @@ export const JWT_REFRESH_KEY = "123!@#$@SDFASDAD";
 export const JWT_ACCESS_KEY = "!#SDAS@#!!@XZZXC";
 export const localStringFormat = "en-IN";
 
+export const quotationCollectionName = "quotation";
+export const challanCollectionName = "challans";
+export const complaintCollectionName = "complaints";
+export const logsCollectionName = "logs";
+export const dbName = "unnamed";
+
+
 export var userProfile: profile = { generalInfo: [{ contact: "+91 7065577059/60", address: "G-57, Vikas Marg, Near Metro Pillar No.41, \nDelhi - 110092", company: "Teen Telecommunication Pvt. Ltd.", website: "https://teentelecommunication.com", email: "sales@teentelecommunication.com" }], quotationInfo: [{ pdfColor: "222", showCustomerList: true }] };
 
 export function updateProfile(result: any) {

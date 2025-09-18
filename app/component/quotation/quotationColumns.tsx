@@ -15,7 +15,7 @@ export const sortButton = (column: any, name: string) => {
 }
 
 export function FormatAmountToINR(amount: number) {
-    return Math.round(amount).toLocaleString("en-US");
+    return Math.round(amount).toLocaleString("en-IN");
 }
 
 export function useQuotationsColumns() {

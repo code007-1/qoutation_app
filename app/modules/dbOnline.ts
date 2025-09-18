@@ -34,7 +34,7 @@ async function run() {
         }
     }
     catch (error) {
-        console.error("Error connecting to MongoDB:", error);
+        throw console.error("Error connecting to MongoDB:", error);
     }
 }
 //run();
@@ -44,7 +44,7 @@ export async function search(db: string = "unnamed", collection: string = "qouta
         await run();
         return await client.db(db).collection(collection).find(query).skip(skip).limit(limit).toArray();//{ name: { $regex: query, $options: "i" } }
     }
-    catch (error) { console.log("error while saerching in db : ", error); }
+    catch (error) { throw console.error("error while saerching in db : ", error); }
     //finally { await client.close(); }
 }
 
@@ -53,7 +53,7 @@ export async function sortedSearch(db: string = "unnamed", collection: string = 
         await run();
         return await client.db(db).collection(collection).find(query).sort({ _id: -1 }).skip(skip).limit(limit).toArray();//{ name: { $regex: query, $options: "i" } }
     }
-    catch (error) { console.log("error while saerching in db : ", error); }
+    catch (error) { console.log("error while searching in db : ", error); }
     //finally { await client.close(); }
 }
 
@@ -63,7 +63,7 @@ export async function count(db: string = "unnamed", collection: string = "qoutat
         await run();
         return await client.db(db).collection(collection).countDocuments(query);//{ name: { $regex: query, $options: "i" } }
     }
-    catch (error) { console.log("error while saerching in db : ", error); }
+    catch (error) { console.log("error while searching in db : ", error); }
     //finally { await client.close(); }
 }
 
@@ -72,7 +72,7 @@ export async function update(db: string = "unnamed", collection: string = "users
         await run();
         return await client.db(db).collection(collection).updateOne(query, updateDoc);//{ name: { $regex: query, $options: "i" } }
     }
-    catch (error) { console.log("error while saerching in db : ", error); }
+    catch (error) { console.log("error while upadting in db : ", error); }
     //finally { await client.close(); }
 }
 

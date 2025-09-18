@@ -1,6 +1,6 @@
 import { insertOnetoDb, insertOrUpdateOnetoDb } from "~/modules/dbOnline";
 import { ActionFunction } from "@remix-run/node";
-import { verifyAccessToken } from "~/modules/utils";
+import { complaintCollectionName, dbName, logsCollectionName, verifyAccessToken } from "~/modules/utils";
 
 //export let loader: LoaderFunction = async ({ request, params }) => {
 export const action: ActionFunction = async ({ request, params }) => {
@@ -8,9 +8,9 @@ export const action: ActionFunction = async ({ request, params }) => {
         await verifyAccessToken(request);
         const data = await request.json();
 
-        await insertOrUpdateOnetoDb(data, "unnamed", "complaints");
+        await insertOrUpdateOnetoDb(data, dbName, complaintCollectionName);
 
-        await insertOnetoDb({ "by": data.recordedby, "action": `saving complaint`, "result": "succeded", "when": new Date().toISOString() }, "unnamed", "logs");
+        await insertOnetoDb({ "by": data.recordedby, "action": `saving complaint`, "result": "succeded", "when": new Date().toISOString() }, dbName, logsCollectionName);
         // finally create the Response with the correct Content-Type header for a PDF
         return new Response("complaint saved succefully", { status: 200 });
     }

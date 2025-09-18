@@ -2,8 +2,9 @@ import { renderToStream } from "@react-pdf/renderer";
 import { ActionFunction } from "@remix-run/node";
 import ChallanPDFDocument from "~/component/PDF/ChallanPDFDcoument";
 import QuotationPDFDocument from "~/component/PDF/QuotationPDFDcoument";
+//import { SaveOrUpdate } from "~/modules/dbOffline";
 import { insertOnetoDb, insertOrUpdateOnetoDb } from "~/modules/dbOnline";
-import { verifyAccessToken } from "~/modules/utils";
+import { challanCollectionName, dbName, logsCollectionName, quotationCollectionName, verifyAccessToken } from "~/modules/utils";
 
 export const action: ActionFunction = async ({ request, params }) => {
     try {
@@ -16,22 +17,22 @@ export const action: ActionFunction = async ({ request, params }) => {
         const url = new URL(request.url);
         const save = url.searchParams.get("save") || "true";
         const showCustomerList = url.searchParams.get("showCustomerList");
-        const type = url.searchParams.get("type") || "quotation";
+        const type = url.searchParams.get("type") || quotationCollectionName;
 
         if (save === "true") {
-            if (type === "quotation")
+            if (type === quotationCollectionName)
                 await insertOrUpdateOnetoDb(data);
             else if (type === "challan")
-                await insertOrUpdateOnetoDb(data, "unnamed", "challans");
+                await insertOrUpdateOnetoDb(data, dbName, challanCollectionName);
             else {
                 console.error("unknown data type while saving to db");
                 throw new Response("Internal server error", { status: 500 });
             }
-            await insertOnetoDb({ "by": data.madeby, "action": `${type} pdf creation`, "result": "succeded", "when": new Date().toISOString() }, "unnamed", "logs");
+            await insertOnetoDb({ "by": data.madeby, "action": `${type} pdf creation`, "result": "succeded", "when": new Date().toISOString() }, dbName, logsCollectionName);
         }
 
         let stream;
-        if (type === "quotation")
+        if (type === quotationCollectionName)
             stream = await renderToStream(QuotationPDFDocument({ ...data }, showCustomerList === "false" ? false : true));
         else
             stream = await renderToStream(ChallanPDFDocument({ ...data }));

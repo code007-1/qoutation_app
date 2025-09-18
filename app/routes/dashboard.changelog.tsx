@@ -17,11 +17,20 @@ export default function ChangeLog() {
                         <h3 className="font-semibold text-textPrimary text-lg">Features</h3>
                         <ul className="list-disc list-inside text-textSecondary mt-2 font-medium">
                             <li>Dynamically Create and Edit almost every part of Quotations, Challans for any type of product with enhanched flexibility.</li>
+                            <li>Record Complaints, Edit it's Stats or Delete it.</li>
                             <li>Attach Customer List as Goodwill Sign.</li>
                             <li>Read, filter thorugh various fields for advance search.</li>
                             <li>Delete old made quotation according to user role and permissions.</li>
                             <li>Have different profiles that can be used while creating quotation or challans as different vendors.</li>
                             <li>Real Time Data Sync and Access to all quotations and challans from any device from anywhere in world (software with internet connection is required).</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 className="text-lg font-semibold text-textPrimary">Version 1.2.1 - 18-09-2025</h3>
+                        <ul className="list-disc list-inside text-textSecondary mt-2 font-medium">
+                            <li>Previous Bills updated with latest data type, So Fixed Amount NAN Error</li>
+                            <li>Amount previously showed in US Format now in INR Format.</li>
+                            <li>Made By Attribute now stays to first time creator.</li>
                         </ul>
                     </div>
                     <div>
