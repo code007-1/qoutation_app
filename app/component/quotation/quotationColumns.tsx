@@ -73,9 +73,6 @@ export function useQuotationsColumns() {
                 const avg = user.row.original.items.reduce((acc: number, item: { discount?: number }) => acc + (item.discount ?? 0), 0) / (user.row.original.items.length || 1);
                 return <span>{avg.toFixed(2)} %</span>
             },
-            filterFn: (row, columnId, filterValue) => {
-                return row.original[columnId] == filterValue;
-            },
         },
         {
             accessorKey: "addon",
@@ -83,9 +80,6 @@ export function useQuotationsColumns() {
             cell: (user: any) => {
                 const avg = user.row.original.items.reduce((acc: number, item: { addon?: number }) => acc + (item.addon ?? 0), 0) / (user.row.original.items.length || 1);
                 return <span>{avg.toFixed(2)} %</span>
-            },
-            filterFn: (row, columnId, filterValue) => {
-                return row.original[columnId] == filterValue;
             },
         },
 

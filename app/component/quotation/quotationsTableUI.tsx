@@ -61,8 +61,6 @@ const QuotationsTableUI: FC<TableProps> = ({
         else if (type === "madeby") return "Made By";
         else if (type === "date") return "Date";
         else if (type === "to") return "To";
-        else if (type === "discount") return "Discount";
-        else if (type === "amount") return "Amount";
         else type;
     }
 
@@ -176,41 +174,15 @@ const QuotationsTableUI: FC<TableProps> = ({
                                 className="absolute -right-34 z-10 mt-2 w-[136px] origin-top-right rounded-sm bg-background shadow-lg ring-1 ring-black/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
                             >
                                 <div className="p-1">
-                                    <ListboxOption
-                                        key={"no"}
-                                        value={"no"}
-                                        className="block px-4 py-2 text-sm text-textSecondary data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
-                                    >
-                                        Quotation #
-                                    </ListboxOption>
-                                    <ListboxOption
-                                        key={"madeby"}
-                                        value={"madeby"}
-                                        className="block px-4 py-2 text-sm text-textSecondary data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
-                                    >
-                                        Made By
-                                    </ListboxOption>
-                                    <ListboxOption
-                                        key={"date"}
-                                        value={"date"}
-                                        className="block px-4 py-2 text-sm text-textSecondary data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
-                                    >
-                                        Date
-                                    </ListboxOption>
-                                    <ListboxOption
-                                        key={"to"}
-                                        value={"to"}
-                                        className="block px-4 py-2 text-sm text-textSecondary data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
-                                    >
-                                        To
-                                    </ListboxOption>
-                                    <ListboxOption
-                                        key={"discount"}
-                                        value={"discount"}
-                                        className="block px-4 py-2 text-sm text-textSecondary data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
-                                    >
-                                        Discount
-                                    </ListboxOption>
+                                    {["no", "madeby", "date", "to"].map((item) => (
+                                        <ListboxOption
+                                            key={item}
+                                            value={item}
+                                            className="block px-4 py-2 text-sm text-textSecondary data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
+                                        >
+                                            {getType(item)}
+                                        </ListboxOption>
+                                    ))}
                                 </div>
                             </ListboxOptions>
                         </div>

@@ -133,15 +133,15 @@ export default function CreateChallan() {
                                 </Listbox>
                             </div>
                         </div>
-
+                        {step === 1 &&
+                            <div className="w-[10%] flex justify-end">
+                                <button onClick={addItem} className="button px-4 py-1 text-lg">
+                                    Add Item
+                                </button>
+                            </div>}
                     </div>
 
-                    {step === 1 &&
-                        <div className="w-[10%] flex justify-end">
-                            <button onClick={addItem} className="button px-4 py-1 text-lg">
-                                Add Item
-                            </button>
-                        </div>}
+
                     {/*<div className="w-1/2 flex justify-end">
                             <Link to={"/dashboard/showquotations"} className="bg-button text-buttonTextPrimary px-4 py-1 text-lg" onClick={(e) => { setHeaderText(createQuotation); }}>
                                 Cancel
@@ -260,8 +260,12 @@ export default function CreateChallan() {
                             </div>
                             <div className="flex justify-between w-full">
                                 <div className="flex items-center">
+                                    <div className="text-sm font-semibold mr-4">Total Items:</div>
+                                    <div className="">{challanItems.length}</div>
+                                </div>
+                                <div className="flex items-center">
                                     <div className="text-sm font-semibold mr-4">Total Quantity:</div>
-                                    <div className="">Rs.{"11"}</div>
+                                    <div className="">{challanItems.reduce((acc, item) => acc + item.quantity, 0)}</div>
                                 </div>
                             </div>
                             <div className="flex justify-center space-x-4">
