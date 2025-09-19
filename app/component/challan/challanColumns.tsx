@@ -30,6 +30,16 @@ export function useChallanColumns() {
             },
         },
         {
+            accessorKey: "billno",
+            header: "Bill #",
+            cell: (user: any) => {
+                return <span>{user.row.original?.billno ?? ""}</span>
+            },
+            filterFn: (row, columnId, filterValue) => {
+                return row.original[columnId].toLowerCase().filter((item: ChallanItems) => item.sno?.some(i => i.toLowerCase().includes(filterValue.toLowerCase()))).length > 0;
+            },
+        },
+        {
             accessorKey: "madeby",
             header: "Made By",
             cell: (user: any) => {

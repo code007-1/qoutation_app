@@ -46,10 +46,10 @@ export default function QuotationPDFDocument(data: QuotationData, showCustomerLi
             <Text style={styles.title} key={"header-from"}>{data.from}</Text>
             <Text style={styles.newline} key={"header-newline"}>{"\n"}</Text>
             <Text key={"netsted-text-1"}>
-                <Text style={styles.companyDetails} key={"contactno"}>Contact No: </Text>
-                <Text style={{ fontSize: 10 }} key={"contactnovalue"}>{data.contact}</Text>
-                <Text style={styles.companyDetails} key={"emailid"}>     Email Id: </Text>
-                <Link src={`mailto:${data.email}`} style={{ fontSize: 11, textDecoration: "underline", color: "#384388" }} key={"emailidvalue"}>{data.email}</Link>
+                {data.contact != "" && <><Text style={styles.companyDetails} key={"contactno"}>Contact No: </Text>
+                    <Text style={{ fontSize: 10 }} key={"contactnovalue"}>{data.contact}</Text></>}
+                {data.email != "" && <><Text style={styles.companyDetails} key={"emailid"}>     Email Id: </Text>
+                    <Link src={`mailto:${data.email}`} style={{ fontSize: 11, textDecoration: "underline", color: "#384388" }} key={"emailidvalue"}>{data.email}</Link></>}
             </Text>
         </View>
     </>;
@@ -168,8 +168,8 @@ export default function QuotationPDFDocument(data: QuotationData, showCustomerLi
                     <Text style={styles.terms} key="termsandconditionsvalue">{data.terms} {"\n"}</Text>
                 </View>}
                 <Text style={styles.newline} key="blank15">{"\n\n\n"}</Text>
-                {data.madeBy !== "" && <View key="nested-view-12">
-                    <Text style={styles.terms} key="userSignature">{data.madeBy} {"\n"}</Text>
+                {data.madeby !== "" && <View key="nested-view-12">
+                    <Text style={styles.terms} key="userSignature">{data.madeby} {"\n"}</Text>
                 </View>}
                 {showCustomerList &&
                     <>

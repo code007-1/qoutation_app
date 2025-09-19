@@ -28,6 +28,7 @@ export type ChallanData = {
     to: string;
     toAddress: string;
     orderno?: string;
+    billno?: string;
     modeofdispatch?: string;
     madeby: string;
     email?: string;
@@ -60,13 +61,17 @@ export default function CreateChallan() {
         let no = new Date().getTime().toString();
         let fromAddress = profile?.generalInfo[selectedProfile]?.address ?? "";
         let from = profile.generalInfo[selectedProfile].company;
+        let billno = "";
+        let madeby = profile.username ?? "";
 
         if (passedData && passedData?.editing === true) {
             no = challanData.no;
             fromAddress = challanData.fromAddress;
             from = challanData.from;
+            billno = challanData.billno ?? "";
+            madeby = challanData.madeby;
         }
-        setChallanData((pre) => { return { ...pre, no: no, from: from, fromAddress: fromAddress, email: profile.generalInfo[selectedProfile].email ?? "", website: profile.generalInfo[selectedProfile].website, contact: profile.generalInfo[selectedProfile].contact, pdfColor: String(profile.quotationInfo[selectedProfile].pdfColor), madeby: profile.username || "", date: new Date().toISOString().split("T")[0] } });
+        setChallanData((pre) => { return { ...pre, no: no, from: from, fromAddress: fromAddress, email: profile.generalInfo[selectedProfile].email ?? "", website: profile.generalInfo[selectedProfile].website, contact: profile.generalInfo[selectedProfile].contact, pdfColor: String(profile.quotationInfo[selectedProfile].pdfColor), madeby: madeby, date: new Date().toISOString().split("T")[0], billno: billno } });
     }, []);
 
     function updateData(index: number) {
@@ -99,9 +104,9 @@ export default function CreateChallan() {
                             </div>
                             <div className="flex items-center gap-x-4">
                                 <div className="text-sm font-semibold">Date</div>
-                                <input type="date" color="white" name="date" id="date" pattern="\d{4}-\d{2}-\d{2}" placeholder="Date" className="border border-border w-25 h-10 bg-background" value={challanData.date} onChange={e => setChallanData(pre => { return { ...pre, date: e.target.value } })} />
+                                <input type="date" color="white" name="date" id="date" pattern="\d{4}-\d{2}-\d{2}" placeholder="Date" className="px-2 border border-border w-36 h-10 bg-background" value={challanData.date} onChange={e => setChallanData(pre => { return { ...pre, date: e.target.value } })} />
                             </div>
-                            <div className="w-auto">
+                            <div className="w-auto mr-10">
                                 <Listbox value={profile.generalInfo[selectedProfile].company} onChange={e => {
                                     const index = names.indexOf(e);
                                     setSelectedProfile(index);
@@ -109,7 +114,7 @@ export default function CreateChallan() {
                                 }}>
                                     <div className="relative flex justify-center">
                                         <ListboxButton className="w-full flex items-center justify-between hover:bg-buttonHover border border-border py-2">
-                                            <div className="text-textSecondary truncate text-nowrap overflow-hidden w-48">{profile.generalInfo[selectedProfile].company}</div>
+                                            <div className="text-textSecondary truncate text-nowrap overflow-hidden w-48 px-2">{profile.generalInfo[selectedProfile].company}</div>
                                             <ChevronDown className="text-textPrimary" />
                                         </ListboxButton>
 
@@ -131,6 +136,10 @@ export default function CreateChallan() {
                                         </ListboxOptions>
                                     </div>
                                 </Listbox>
+                            </div>
+                            <div className="flex items-center gap-x-4">
+                                <div className="text-sm font-semibold">Bill No.</div>
+                                <input type="text" color="white" name="billno" id="billno" placeholder="Bill No." className="p-2 border border-border w- h-10 bg-background" value={challanData.billno} onChange={e => setChallanData(pre => { return { ...pre, billno: e.target.value } })} />
                             </div>
                         </div>
                         {step === 1 &&

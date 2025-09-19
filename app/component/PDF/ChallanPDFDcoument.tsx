@@ -4,49 +4,6 @@ import { ChallanData } from "~/routes/dashboard.challan.create";
 import { Svg, Line } from "@react-pdf/renderer";
 
 export default function ChallanPDFDocument(data: ChallanData) {
-    /*const data: ChallanData = {
-        no: "12312312sad213123asd",
-        date: "2023-10-01",
-        items: [{
-            id: 1, name: "MATRIX NXDBM VOCODER 64", quantity: 5,
-            sno: ["123", "1233", "432", "12", "412"],
-            unit: "pcs"
-        },
-        {
-            id: 1, name: "MATRIX PENX 6S EPABX SYSTEM", quantity: 5,
-            sno: ["123", "1233", "432", "12", "412", "123", "1233", "432", "12", "412", "123", "1233", "432", "12", "412", "123", "1233", "432", "12", "412"],
-            unit: "pcs"
-        },
-        {
-            id: 1, name: "MATRIX NXDBM VOCODER 64", quantity: 5,
-            sno: ["123", "1233", "432", "12", "412"],
-            unit: "pcs"
-        },
-        {
-            id: 1, name: "MATRIX PENX 6S EPABX SYSTEM", quantity: 5,
-            sno: ["123", "1233", "432", "12", "412", "123", "1233", "432", "12", "412", "123", "1233", "432", "12", "412", "123", "1233", "432", "12", "412"],
-            unit: "pcs"
-        },
-        {
-            id: 1, name: "MATRIX NXDBM VOCODER 64", quantity: 5,
-            sno: ["123", "1233", "432", "12", "412"],
-            unit: "pcs"
-        },
-        ],
-        from: "Teen Telecommunication Pvt. Ltd.",
-        fromAddress: "G-57, Vikas Marg, Laxmi Nagar, Near Metro Pillar No. 41, Delihi - 110092",
-        to: "M/s Someone",
-        toAddress: "At Some Place",
-        madeby: "Unknown",
-        contact: "+91 7669976659/+91 7669976660",
-        email: "sales@teentelecommunication.com",
-        website: "https://teentelecommunication.com",
-        pdfColor: "222",
-        type: "Delivery Challan",
-        category: "Delivery Challan",
-        orderno: "",
-        modeofdispatch: "Courier",
-    };*/
     const hue = data.pdfColor ? data.pdfColor : "222";
 
     const styles = StyleSheet.create({
@@ -71,37 +28,24 @@ export default function ChallanPDFDocument(data: ChallanData) {
     var dated = data.date.split("-");
     const date = dated[2] + "-" + dated[1] + "-" + dated[0];
 
-    const HorizontalLine = ({ width = 500, color = "black", thickness = 0.5 }) => (
-        <Svg height="10" width={width.toString()}>
-            <Line
-                x1="0"
-                y1="5"
-                x2={width.toString()}
-                y2="5"
-                strokeWidth={thickness}
-                stroke={color}
-            />
-        </Svg>
-    );
-
     const header = <>
         <View fixed style={styles.header} key="nested-view-1">
             <Text style={styles.title} key="challan-from">{data.from}</Text>
             <Text style={styles.newline} key="blank1">{"\n"}</Text>
-            <Text style={styles.companyDetails} key="nested-view-2">
+            {data.fromAddress != "" && <Text style={styles.companyDetails} key="nested-view-2">
                 <Text style={{ fontWeight: "bold" }} key="address">Address:- </Text>
                 <Text key="addressvalue"> {data.fromAddress}</Text>
-            </Text>
+            </Text>}
 
-            <Text style={styles.companyDetails} key="nested-view-3">
+            {data.contact != "" && <Text style={styles.companyDetails} key="nested-view-3">
                 <Text style={{ fontWeight: "bold" }} key="contact">Contact No:- </Text>
                 <Text key="contactvalue">{data.contact}</Text>
-            </Text>
+            </Text>}
 
-            <Text style={styles.companyDetails} key="companydetail">
+            {data.email != "" && <Text style={styles.companyDetails} key="companydetail">
                 <Text style={{ fontWeight: "bold" }} key="emailid">Email Id:- </Text>
                 <Text key="emailvalue">{data.email}</Text>
-            </Text>
+            </Text>}
 
             <Text style={styles.newline} key="blank2">{"\n\n"}</Text>
             <View style={styles.rowContainer} key="nested-view-4">
