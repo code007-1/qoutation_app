@@ -168,8 +168,8 @@ export default function QuotationPDFDocument(data: QuotationData, showCustomerLi
                     <Text style={styles.terms} key="termsandconditionsvalue">{data.terms} {"\n"}</Text>
                 </View>}
                 <Text style={styles.newline} key="blank15">{"\n\n\n"}</Text>
-                {data.madeby !== "" && <View key="nested-view-12">
-                    <Text style={styles.terms} key="userSignature">{data.madeby} {"\n"}</Text>
+                {data.madeByInfo !== "" && <View key="nested-view-12">
+                    <Text style={styles.terms} key="userSignature">{data.madeByInfo} {"\n"}</Text>
                 </View>}
                 {showCustomerList &&
                     <>

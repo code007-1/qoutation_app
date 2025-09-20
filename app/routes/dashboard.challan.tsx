@@ -5,7 +5,7 @@ export default function DashboardChallan() {
 
     return (
         <>
-            <div className="h-screen w-screen bg-background">
+            <div className="min-h-screen w-screen bg-background">
                 <Header />
                 <div className="mx-10">
                     <Outlet />

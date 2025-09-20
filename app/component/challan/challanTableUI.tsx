@@ -83,9 +83,8 @@ const ChallanTableUI: FC<TableProps> = ({
         getFilteredRowModel: getFilteredRowModel(),
         getPaginationRowModel: getPaginationRowModel(),
         autoResetPageIndex: false,
-        state: {
-            sorting, columnFilters, pagination
-        },
+        state: { sorting, columnFilters, pagination },
+        meta: { handleEdit: handleEdit, handleCopy: handleCopy, deleteChallan: deleteChallan },
         //pageCount,
     });
 
@@ -257,10 +256,10 @@ const ChallanTableUI: FC<TableProps> = ({
                                         {row.getVisibleCells().map((cell) => (
                                             <td
                                                 onClick={(e) => {
-                                                    if (cell.column.id === "edit") handleEdit(row.original)
-                                                    else if (cell.column.id === "copy") handleCopy(row.original)
-                                                    else if (cell.column.id === "delete") deleteChallan(row.original.no)
-                                                    else createPdf(row.original, fetcher, false, false, "challan");
+                                                    //if (cell.column.id === "edit") handleEdit(row.original)
+                                                    //else if (cell.column.id === "copy") handleCopy(row.original)
+                                                    //else if (cell.column.id === "delete") deleteChallan(row.original.no)
+                                                    if (cell.column.id !== "actions") createPdf(row.original, fetcher, false, false, "challan");
                                                 }}
                                                 key={cell.id}
                                                 className="text-textSecondary text-base text-left p-2"

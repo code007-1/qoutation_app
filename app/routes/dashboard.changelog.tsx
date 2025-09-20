@@ -9,7 +9,7 @@ export default function ChangeLog() {
     }, [])
 
     return (
-        <div className="h-screen w-screen bg-background">
+        <div className="min-h-screen w-screen bg-background">
             <Header />
             <div className="mx-10">
                 <div className="space-y-6 overflow-y-auto">
@@ -26,42 +26,45 @@ export default function ChangeLog() {
                         </ul>
                     </div>
                     <div>
-                        <h3 className="text-lg font-semibold text-textPrimary">Version 1.2.1 - 18-09-2025</h3>
+                        <h3 className="text-lg font-semibold text-textPrimary">Version 1.2.1 - 21-09-2025</h3>
                         <ul className="list-disc list-inside text-textSecondary mt-2 font-medium">
-                            <li>Previous Bills updated with latest data type, So Fixed Amount NAN Error</li>
-                            <li>Amount previously showed in US Format now in INR Format.</li>
-                            <li>Made By Attribute now stays to first time creator.</li>
+                            <li>Feature: Now Actions Button for Edit, Copy and Delete, Instead of seperate columns.</li>
+                            <li>Bug: Previous Bills updated with latest data type, So Fixed Amount NAN Error.</li>
+                            <li>Bug: Amount previously showed in US Format now in INR Format.</li>
+                            <li>Bug: Made By Attribute now stays to first time creator.</li>
+                            <li>Bug: Quotation Made by info i.e., User Signature now shows correctly.</li>
+                            <li>Bug: Background Color now applies to whole page instead of upto content size</li>
                         </ul>
                     </div>
                     <div>
                         <h3 className="text-lg font-semibold text-textPrimary">Version 1.2.0 - 10-09-2025</h3>
                         <ul className="list-disc list-inside text-textSecondary mt-2 font-medium">
-                            <li>Added user roles and permissions for better access control.</li>
-                            <li>Improved security by implementing stronger password policies.</li>
-                            <li>Enhanced UI with better responsiveness and accessibility features.</li>
-                            <li>Fixed bugs related to PDF generation and challan Creation.</li>
-                            <li>Optimized database queries for faster data retrieval.</li>
+                            <li>Feature: Added user roles and permissions for better access control.</li>
+                            <li>Optmization: Improved security by implementing stronger password policies.</li>
+                            <li>Optmization: Enhanced UI with better responsiveness and accessibility features.</li>
+                            <li>Optmization: Optimized database queries for faster data retrieval.</li>
+                            <li>Bug: Fixed bugs related to PDF generation and challan Creation.</li>
                         </ul>
                     </div>
                     <div>
                         <h3 className="text-lg font-semibold text-textPrimary">Version 1.1.0 - 15-08-2025</h3>
                         <ul className="list-disc list-inside text-textSecondary mt-2 font-medium">
-                            <li>Added Addon % on SI Price for quotation creation.</li>
-                            <li>Added Discount % on SI Price for quotation creation.</li>
-                            <li>Improved performance of the dashboard with lazy loading techniques.</li>
-                            <li>Fixed UI glitches.</li>
-                            <li>Updated third-party libraries to their latest versions.</li>
+                            <li>Feature: Added Addon % on SI Price for quotation creation.</li>
+                            <li>Feature: Added Discount % on SI Price for quotation creation.</li>
+                            <li>Optimization: Improved performance of the dashboard with lazy loading techniques.</li>
+                            <li>Optimization: Updated third-party libraries to their latest versions.</li>
+                            <li>Bug: Fixed UI glitches.</li>
                         </ul>
                     </div>
                     <div>
                         <h3 className="text-lg font-semibold text-textPrimary">Version 1.0.0 - 18-07-2025</h3>
                         <ul className="list-disc list-inside text-textSecondary font-medium mt-2">
-                            <li>Initial release of the application with core features.</li>
-                            <li>User authentication and profile management.</li>
-                            <li>Basic CRUD operations for quotations and challans.</li>
-                            <li>PDF generation for quotations and challans.</li>
-                            <li>Notification system for user actions.</li>
-                            <li>Multliple Theme Support.</li>
+                            <li>Feature: Initial release of the application with core features.</li>
+                            <li>Feature: User authentication and profile management.</li>
+                            <li>Feature: Basic CRUD operations for quotations and challans.</li>
+                            <li>Feature: PDF generation for quotations and challans.</li>
+                            <li>Feature: Notification system for user actions.</li>
+                            <li>Feature: Multliple Theme Support.</li>
                         </ul>
                     </div>
                 </div>
