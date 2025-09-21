@@ -4,7 +4,7 @@ import { useGlobalContext } from "~/modules/gcontext";
 import ChallanAutocompleteSearch from "~/component/challan/challanAutocompleteSearch";
 import { AnimatePresence, motion } from "framer-motion";
 import { Listbox, ListboxButton, ListboxOption, ListboxOptions } from "@headlessui/react";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, Minus } from "lucide-react";
 import { createPdf } from "./dashboard.quotations.create";
 import { useCentralFetcher } from "~/component/centralFetcher";
 import constData from "../../assets/data.json";
@@ -112,7 +112,8 @@ export default function CreateChallan() {
                                     setSelectedProfile(index);
                                     updateData(index);
                                 }}>
-                                    <div className="relative flex justify-center">
+                                    <div className="relative flex justify-center items-center gap-x-4">
+                                        <div className="text-sm font-semibold">Profile</div>
                                         <ListboxButton className="w-full flex items-center justify-between hover:bg-buttonHover border border-border py-2">
                                             <div className="text-textSecondary truncate text-nowrap overflow-hidden w-48 px-2">{profile.generalInfo[selectedProfile].company}</div>
                                             <ChevronDown className="text-textPrimary" />
@@ -260,6 +261,13 @@ export default function CreateChallan() {
                     {
                         step === 1 && <>
                             <div className="mt-4 space-y-2 overflow-y-auto h-[calc(100vh-280px)] w-full">
+                                <div className="w-full grid grid-cols-10 gap-x-2">
+                                    <div className="col-span-3 p-2">Name</div>
+                                    <div className="col-span-4 p-2">Serial Numbers</div>
+                                    <div className="col-span-1 p-2">Quantity</div>
+                                    <div className="col-span-1 p-2">Unit</div>
+                                    <button className="col-span-1 invisible p-2"><Minus className="text-textSecondary" /></button>
+                                </div>
                                 {
                                     challanItems.map((_, index) => {
                                         return <>
