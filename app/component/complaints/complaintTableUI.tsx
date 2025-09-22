@@ -83,9 +83,8 @@ const CompalintsTableUI: FC<TableProps> = ({
         getFilteredRowModel: getFilteredRowModel(),
         getPaginationRowModel: getPaginationRowModel(),
         autoResetPageIndex: false,
-        state: {
-            sorting, columnFilters, pagination
-        },
+        state: { sorting, columnFilters, pagination },
+        meta: { handleEdit: handleEdit, handleCopy: handleCopy, deleteComplaints: deleteComplaints },
         //pageCount,
     });
 
@@ -252,10 +251,9 @@ const CompalintsTableUI: FC<TableProps> = ({
                                         {row.getVisibleCells().map((cell) => (
                                             <td
                                                 onClick={(e) => {
-                                                    if (cell.column.id === "edit") handleEdit(row.original)
-                                                    else if (cell.column.id === "copy") handleCopy(row.original)
-                                                    else if (cell.column.id === "delete") deleteComplaints(row.original.no)
-                                                    //else createPdf(row.original, fetcher, profile.quotationInfo[selectedProfile].showCustomerList, false);
+                                                    //if (cell.column.id === "edit") handleEdit(row.original)
+                                                    //else if (cell.column.id === "copy") handleCopy(row.original)
+                                                    //else if (cell.column.id === "delete") deleteComplaints(row.original.no)
                                                 }}
                                                 key={cell.id}
                                                 className="text-textSecondary text-base text-left p-2"

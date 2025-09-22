@@ -33,7 +33,7 @@ export default function ChangeLog() {
                         </ul>
                     </div>
                     <div>
-                        <h3 className="text-lg font-semibold text-textPrimary">Version 1.2.1 - 18-09-2025</h3>
+                        <h3 className="text-lg font-semibold text-textPrimary">Version 1.2.1 - 21-09-2025</h3>
                         <ul className="list-disc list-inside text-textSecondary mt-2 font-medium">
                             <li>Previous Bills updated with latest data type, So Fixed Amount NAN Error</li>
                             <li>Amount previously showed in US Format now in INR Format.</li>

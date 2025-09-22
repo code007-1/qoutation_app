@@ -113,7 +113,7 @@ export default function QuotationsCreate() {
         let intro = profile.quotationInfo[selectedProfile].intro ?? "";
         let date = d.toISOString().split("T")[0];
         let madeByInfo = profile.generalInfo[selectedProfile].madeByInfo;
-        let madeby = profile.username || "";
+        let madeby = profile.username ?? "";
 
         if (passedData && passedData?.editing === true) {
             no = quotationData.no;
@@ -121,8 +121,8 @@ export default function QuotationsCreate() {
             from = quotationData.from;
             intro = quotationData.intro;
             date = quotationData.date;
-            madeByInfo = quotationData.madeByInfo ?? "";
-            madeby = quotationData.madeby ?? "";
+            madeByInfo = quotationData?.madeByInfo;
+            madeby = quotationData?.madeby;
 
             itemswithAddonandDiscount = itemswithAddonandDiscount.map((item) => {
                 if (!item.addon) item.addon = 0;

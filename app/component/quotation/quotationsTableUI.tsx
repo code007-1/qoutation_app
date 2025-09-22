@@ -78,9 +78,8 @@ const QuotationsTableUI: FC<TableProps> = ({
         getFilteredRowModel: getFilteredRowModel(),
         getPaginationRowModel: getPaginationRowModel(),
         autoResetPageIndex: false,
-        state: {
-            sorting, columnFilters, pagination
-        },
+        state: { sorting, columnFilters, pagination },
+        meta: { handleEdit: handleEdit, handleCopy: handleCopy, deleteQuotation: deleteQuotation },
         //pageCount,
     });
 
@@ -252,10 +251,10 @@ const QuotationsTableUI: FC<TableProps> = ({
                                         {row.getVisibleCells().map((cell) => (
                                             <td
                                                 onClick={(e) => {
-                                                    if (cell.column.id === "edit") handleEdit(row.original)
-                                                    else if (cell.column.id === "copy") handleCopy(row.original)
-                                                    else if (cell.column.id === "delete") deleteQuotation(row.original.no)
-                                                    else createPdf(row.original, fetcher, profile.quotationInfo[selectedProfile].showCustomerList, false);
+                                                    /* if (cell.column.id === "edit") handleEdit(row.original)
+                                                     else if (cell.column.id === "copy") handleCopy(row.original)
+                                                     else if (cell.column.id === "delete") deleteQuotation(row.original.no)*/
+                                                    if (cell.column.id !== "actions") createPdf(row.original, fetcher, profile.quotationInfo[selectedProfile].showCustomerList, false);
                                                 }}
                                                 key={cell.id}
                                                 className="text-textSecondary text-base text-left p-2"
