@@ -145,7 +145,8 @@ export default function QuotationsCreate() {
             let intro = profile.quotationInfo[index].intro || "";
             let terms = profile.quotationInfo[index].terms || "";
             let additionalInfo = profile.quotationInfo[index].additionalInfo || "";
-            setQuotationData(pre => { return { ...pre, from: from, fromAddress: fromAddress, email: email, website: website, contact: contact, pdfColor: pdfColor, intro: intro, terms: terms, additionalInfo: additionalInfo } });
+            let madeByInfo = profile.generalInfo[index].madeByInfo || "";
+            setQuotationData(pre => { return { ...pre, from: from, fromAddress: fromAddress, email: email, website: website, contact: contact, pdfColor: pdfColor, intro: intro, terms: terms, additionalInfo: additionalInfo, madeByInfo: madeByInfo } });
         }
     }
 

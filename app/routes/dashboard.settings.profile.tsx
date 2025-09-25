@@ -164,7 +164,8 @@ export default function SettingsProfile() {
                             <TabPanel key={"Quotation Related Settings"} className="">
                                 <div className="grid grid-cols-2 gap-4 text-textPrimary mt-4">
                                     <div>
-                                        Terms and Conditions <textarea rows={5} placeholder="Enter Terms and Coditions" className="border border-border p-2 w-full bg-background" value={profile?.quotationInfo[selectedProfile]?.terms} onChange={(e) => {
+                                        Terms and Conditions
+                                        <textarea rows={5} placeholder="Enter Terms and Coditions" className="border border-border p-2 w-full bg-background" value={profile?.quotationInfo[selectedProfile]?.terms || ""} onChange={(e) => {
                                             setProfile((pre) => {
                                                 const updatedQuotationInfo = [...pre.quotationInfo];
                                                 updatedQuotationInfo[selectedProfile] = { ...updatedQuotationInfo[selectedProfile], terms: e.target.value };
@@ -173,7 +174,7 @@ export default function SettingsProfile() {
                                         }} />
                                     </div>
                                     <div>
-                                        Additional Information <textarea rows={5} placeholder="Enter Additional Info" className="border border-border p-2 w-full bg-background" value={profile?.quotationInfo[selectedProfile]?.additionalInfo} onChange={(e) => {
+                                        Additional Information <textarea rows={5} placeholder="Enter Additional Info" className="border border-border p-2 w-full bg-background" value={profile?.quotationInfo[selectedProfile]?.additionalInfo ?? ""} onChange={(e) => {
                                             setProfile((pre) => {
                                                 const updatedQuotationInfo = [...pre.quotationInfo];
                                                 updatedQuotationInfo[selectedProfile] = { ...updatedQuotationInfo[selectedProfile], additionalInfo: e.target.value };
@@ -182,7 +183,7 @@ export default function SettingsProfile() {
                                         }} />
                                     </div>
                                     <div>
-                                        Introuductory Text <textarea rows={3} placeholder="Enter Introductory Text" className="border border-border p-2 w-full bg-background" value={profile?.quotationInfo[selectedProfile]?.intro} onChange={(e) => {
+                                        Introuductory Text <textarea rows={3} placeholder="Enter Introductory Text" className="border border-border p-2 w-full bg-background" value={profile?.quotationInfo[selectedProfile]?.intro ?? ""} onChange={(e) => {
                                             setProfile((pre) => {
                                                 const updatedQuotationInfo = [...pre.quotationInfo];
                                                 updatedQuotationInfo[selectedProfile] = { ...updatedQuotationInfo[selectedProfile], intro: e.target.value };
@@ -191,7 +192,7 @@ export default function SettingsProfile() {
                                         }} />
                                     </div>
                                     <div>
-                                        PDF Accent Color <input max={360} min={0} title="Hue Value for Color (0, 360)" type="number" name="pdfColor" placeholder="Enter Color HUE Value" className="border border-border p-2 w-full bg-background" value={profile?.quotationInfo[selectedProfile]?.pdfColor} onChange={(e) => {
+                                        PDF Accent Color <input max={360} min={0} title="Hue Value for Color (0, 360)" type="number" name="pdfColor" placeholder="Enter Color HUE Value" className="border border-border p-2 w-full bg-background" value={profile?.quotationInfo[selectedProfile]?.pdfColor ?? 222} onChange={(e) => {
                                             setProfile((pre) => {
                                                 const updatedQuotationInfo = [...pre.quotationInfo];
                                                 updatedQuotationInfo[selectedProfile] = { ...updatedQuotationInfo[selectedProfile], pdfColor: e.target.value };
@@ -201,21 +202,21 @@ export default function SettingsProfile() {
                                         <div className="mt-4 flex items-center">
                                             <div>Show Customer Lists : </div>
                                             <Switch
-                                                checked={profile?.quotationInfo[selectedProfile]?.showCustomerList || true}
+                                                checked={profile?.quotationInfo[selectedProfile]?.showCustomerList}
                                                 onChange={(e) => {
                                                     setProfile((pre) => {
+                                                        console.log("show customer list : ", profile?.quotationInfo[selectedProfile]?.showCustomerList, e);
                                                         const updatedQuotationInfo = [...pre.quotationInfo];
                                                         updatedQuotationInfo[selectedProfile] = { ...updatedQuotationInfo[selectedProfile], showCustomerList: e };
                                                         return { ...pre, quotationInfo: updatedQuotationInfo };
                                                     })
                                                 }}
-                                                className={`ml-4 ${profile?.quotationInfo[selectedProfile]?.showCustomerList || true ? "bg-button/75" : "bg-buttonHover"}
+                                                className={`ml-4 ${profile?.quotationInfo[selectedProfile]?.showCustomerList == true ? "bg-button/75" : "bg-buttonHover"}
           relative inline-flex h-[24px] w-[40px] shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2`}
                                             >
-                                                <span className="sr-only">Show Customer Lists : </span>
                                                 <span
                                                     aria-hidden="true"
-                                                    className={`${profile?.quotationInfo[selectedProfile]?.showCustomerList || true ? "translate-x-4" : "translate-x-0"}
+                                                    className={`${profile?.quotationInfo[selectedProfile]?.showCustomerList == true ? "translate-x-4" : "translate-x-0"}
             pointer-events-none inline-block h-[20px] w-[20px] transform rounded-full bg-buttonTextPrimary shadow-lg ring-0 transition duration-200 ease-in-out`}
                                                 />
                                             </Switch>

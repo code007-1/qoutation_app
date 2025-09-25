@@ -5,6 +5,7 @@ import { useGlobalContext } from "~/modules/gcontext";
 import { useCentralFetcher } from "../centralFetcher";
 import { Dialog } from "./about";
 import { useEffect, useId, useRef, useState } from "react";
+import { version } from "package.json";
 
 export default function MainMenu() {
     const { profile, setAccessToken } = useGlobalContext();
@@ -62,7 +63,7 @@ export default function MainMenu() {
                         <tr><td>Product Consultant : </td><td >Gunjan</td></tr>
                         <tr><td>Data Curator : </td><td >Gauri, Gunjan, Seema</td></tr>
                         <tr><td>Visionary and Stakeholder : </td><td >Mukesh Kalra</td></tr>
-                        <tr><td>Version : </td><td >1.2.0</td></tr>
+                        <tr><td>Version : </td><td >{version}</td></tr>
                     </table>
                 </div>
 
