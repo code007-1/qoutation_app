@@ -131,7 +131,7 @@ export default function QuotationsCreate() {
             });
         }
         setQuotationItems(itemswithAddonandDiscount);
-        setQuotationData((pre) => { return { ...pre, no: no, from: from, fromAddress: fromAddress, email: profile.generalInfo[selectedProfile].email, website: profile.generalInfo[selectedProfile].website, contact: profile.generalInfo[selectedProfile].contact, pdfColor: String(profile.quotationInfo[selectedProfile].pdfColor), madeby: madeby, date: date, showLinks: quotationData?.showLinks !== undefined ? quotationData.showLinks : false, items: itemswithAddonandDiscount, intro: intro, terms: profile.quotationInfo[selectedProfile].terms ?? quotationData.terms, additionalInfo: profile.quotationInfo[selectedProfile].additionalInfo ?? quotationData.additionalInfo, madeByInfo: madeByInfo } });
+        setQuotationData((pre) => { return { ...pre, no: no, from: from, fromAddress: fromAddress, email: profile.generalInfo[selectedProfile].email, website: profile.generalInfo[selectedProfile].website, contact: profile.generalInfo[selectedProfile].contact, pdfColor: String(profile.quotationInfo[selectedProfile].pdfColor), madeby: madeby, date: date, showLinks: quotationData?.showLinks !== undefined ? quotationData.showLinks : false, items: itemswithAddonandDiscount, intro: intro, terms: quotationData.terms ?? profile.quotationInfo[selectedProfile].terms, additionalInfo: quotationData.additionalInfo ?? profile.quotationInfo[selectedProfile].additionalInfo, madeByInfo: madeByInfo } });
     }, [])
 
     function updateData(index: number) {

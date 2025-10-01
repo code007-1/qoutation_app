@@ -9,12 +9,12 @@ export default function ChangeLog() {
     }, [])
 
     return (
-        <div className="h-screen w-screen bg-background">
+        <div className="min-h-screen w-screen bg-background">
             <Header />
             <div className="mx-10">
                 <div className="space-y-6 overflow-y-auto">
                     <div>
-                        <h3 className="font-semibold text-textPrimary text-lg">Features</h3>
+                        <h3 className="mt-4 font-semibold text-textPrimary text-lg">Features</h3>
                         <ul className="list-disc list-inside text-textSecondary mt-2 font-medium">
                             <li>Dynamically Create and Edit almost every part of Quotations, Challans for any type of product with enhanched flexibility.</li>
                             <li>Record Complaints, Edit it's Stats or Delete it.</li>
@@ -26,10 +26,11 @@ export default function ChangeLog() {
                         </ul>
                     </div>
                     <div>
-                        <h3 className="text-lg font-semibold text-textPrimary">Version 1.2.2 - 19-09-2025</h3>
+                        <h3 className="text-lg font-semibold text-textPrimary">Version 1.2.2 - 25-09-2025</h3>
                         <ul className="list-disc list-inside text-textSecondary mt-2 font-medium">
                             <li>Total Quantity and Items now shows correctly in challan creation section.</li>
                             <li>Bill No field addded in Challan section.</li>
+                            <li>Show Customer List Switch fixed, now working properly.</li>
                         </ul>
                     </div>
                     <div>
