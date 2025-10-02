@@ -79,12 +79,14 @@ const client = new MongoClient(uri, {
 });
 
 
-async function load() {
+async function FixSomething() {
     await client.connect();
     // Send a ping to confirm a successful connection
     await client.db("unnamed").command({ ping: 1 });
 
     let data = await client.db("unnamed").collection("quotations").find({}).toArray();//{ name: { $regex: query, $options: "i" } }
+
+    //fixing
     data = data.map((d) => {
         const avgdiscount = d.items.reduce((acc, item) => acc + (item.discount ?? 0), 0) / (d.items.length || 1);
         const avgaddon = d.items.reduce((acc, item) => acc + (item.addon ?? 0), 0) / (d.items.length || 1);
@@ -92,12 +94,10 @@ async function load() {
     });
 
     // Write data to JSON file
-    //writeFileSync("quotations.json", JSON.stringify(data, null, 2));
-
-
+    writeFileSync("quotations.json", JSON.stringify(data, null, 2));
 
     // Prepare bulk operations for all documents
-    const bulkOps = data.map(d => {
+    /*const bulkOps = data.map(d => {
         const { _id, ...restData } = d;
         return {
             updateOne: {
@@ -111,9 +111,9 @@ async function load() {
     if (bulkOps.length > 0) {
         const result = await client.db("unnamed").collection("quotations").bulkWrite(bulkOps);
         console.log("Bulk operation result:", result);
-    }
+    }*/
 
     client.close();
 }
 
-load();
+FixSomething();
