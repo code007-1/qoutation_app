@@ -105,33 +105,42 @@ export default function QuotationsCreate() {
     }, [quotationItems]);
 
     useEffect(() => {
-        const d = new Date();
-        let no = d.getTime().toString();
-        let fromAddress = profile.generalInfo[selectedProfile].address || "";
-        let from = profile.generalInfo[selectedProfile].company;
-        let itemswithAddonandDiscount = quotationItems;
-        let intro = profile.quotationInfo[selectedProfile].intro ?? "";
-        let date = d.toISOString().split("T")[0];
-        let madeByInfo = profile.generalInfo[selectedProfile].madeByInfo;
-        let madeby = profile.username ?? "";
+        // copying existing quotation
+        if (passedData && passedData?.editing === false) {
+            const d = new Date();
+            const no = d.getTime().toString();
+            const date = d.toISOString().split("T")[0];
 
-        if (passedData && passedData?.editing === true) {
-            no = quotationData.no;
-            fromAddress = quotationData.fromAddress;
-            from = quotationData.from;
-            intro = quotationData.intro;
-            date = quotationData.date;
-            madeByInfo = quotationData?.madeByInfo;
-            madeby = quotationData?.madeby;
+            setQuotationData((pre) => { return { ...pre, no: no, date: date } });
+        }
+        // editing existing quotation
+        else if (passedData && passedData?.editing === true) {
+            return;
+        }
+        // new quotation
+        else {
+            const d = new Date();
+            let no = d.getTime().toString();
 
-            itemswithAddonandDiscount = itemswithAddonandDiscount.map((item) => {
-                if (!item.addon) item.addon = 0;
-                if (!item.discount) item.discount = 0;
-                return item;
+            setQuotationData((pre) => {
+                return {
+                    ...pre, no: no,
+                    from: profile.generalInfo[selectedProfile].company,
+                    fromAddress: profile.generalInfo[selectedProfile].address || "",
+                    email: profile.generalInfo[selectedProfile].email,
+                    website: profile.generalInfo[selectedProfile].website,
+                    contact: profile.generalInfo[selectedProfile].contact,
+                    pdfColor: String(profile.quotationInfo[selectedProfile].pdfColor),
+                    madeby: profile.username ?? "",
+                    date: d.toISOString().split("T")[0],
+                    showLinks: false,
+                    intro: profile.generalInfo[selectedProfile].madeByInfo ?? "",
+                    terms: profile.quotationInfo[selectedProfile].terms ?? "",
+                    additionalInfo: profile.quotationInfo[selectedProfile].additionalInfo ?? "",
+                    madeByInfo: profile.generalInfo[selectedProfile].madeByInfo || ""
+                }
             });
         }
-        setQuotationItems(itemswithAddonandDiscount);
-        setQuotationData((pre) => { return { ...pre, no: no, from: from, fromAddress: fromAddress, email: profile.generalInfo[selectedProfile].email, website: profile.generalInfo[selectedProfile].website, contact: profile.generalInfo[selectedProfile].contact, pdfColor: String(profile.quotationInfo[selectedProfile].pdfColor), madeby: madeby, date: date, showLinks: quotationData?.showLinks !== undefined ? quotationData.showLinks : false, items: itemswithAddonandDiscount, intro: intro, terms: quotationData.terms ?? profile.quotationInfo[selectedProfile].terms, additionalInfo: quotationData.additionalInfo ?? profile.quotationInfo[selectedProfile].additionalInfo, madeByInfo: madeByInfo } });
     }, [])
 
     function updateData(index: number) {

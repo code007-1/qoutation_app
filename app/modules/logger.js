@@ -61,3 +61,12 @@ console.log('Encrypted:', encrypted);
 
 const decrypted = decrypt(encrypted);
 console.log('Decrypted:', decrypted);
+
+function (n, target) {
+    for (i = 0; i < n / 2; i++) {
+        for (j = 0; j < n; j++) {
+            if (i + j == target)
+                return target
+        }
+    }
+}

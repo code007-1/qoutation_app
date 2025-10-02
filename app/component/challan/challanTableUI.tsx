@@ -110,7 +110,7 @@ const ChallanTableUI: FC<TableProps> = ({
     function handleCopy(row: ChallanData) {
         setChallanData(row);
         setChallanItems(row.items);
-        navigate("/dashboard/challan/create");
+        navigate("/dashboard/challan/create", { state: { editing: false } });
     }
 
     const _titleId = useId();
