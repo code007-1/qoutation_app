@@ -71,16 +71,18 @@ export function useQuotationsColumns() {
             accessorKey: "discount",
             header: "Avg. Disc.",
             cell: (user: any) => {
-                const avg = user.row.original.items.reduce((acc: number, item: { discount?: number }) => acc + (item.discount ?? 0), 0) / (user.row.original.items.length || 1);
-                return <span>{avg.toFixed(2)} %</span>
+                //const avg = user.row.original.items.reduce((acc: number, item: { discount?: number }) => acc + (item.discount ?? 0), 0) / (user.row.original.items.length || 1);
+                //return <span>{avg.toFixed(2)} %</span>
+                return <span>{user.row.original.avgdiscount} %</span>
             },
         },
         {
             accessorKey: "addon",
             header: "Avg. Addon",
             cell: (user: any) => {
-                const avg = user.row.original.items.reduce((acc: number, item: { addon?: number }) => acc + (item.addon ?? 0), 0) / (user.row.original.items.length || 1);
-                return <span>{avg.toFixed(2)} %</span>
+                //const avg = user.row.original.items.reduce((acc: number, item: { addon?: number }) => acc + (item.addon ?? 0), 0) / (user.row.original.items.length || 1);
+                //return <span>{avg.toFixed(2)} %</span>
+                return <span>{user.row.original.avgaddon} %</span>
             },
         },
 

@@ -43,6 +43,8 @@ export type QuotationData = {
     showLinks?: boolean;
     todealer?: boolean
     madeByInfo?: string
+    avgdiscount: number,
+    avgaddon: number
 };
 
 export async function createPdf(data: QuotationData | ChallanData, fetcher: any, showCustomerList?: boolean, save: boolean = true, type: string = "quotation") {
@@ -101,7 +103,9 @@ export default function QuotationsCreate() {
 
     useEffect(() => {
         const amount = Object.entries(quotationItems).reduce((acc, [_, item]) => acc + (item.price * item.quantity * (1 + 0.01 * item.addon) * (1 - item.discount * 0.01)), 0);
-        setQuotationData(pre => { return { ...pre, amount: amount } });
+        const avgdiscount = Object.entries(quotationItems).reduce((acc, [_, item]) => acc + (item.discount ?? 0), 0) / (quotationItems.length || 1);
+        const avgaddon = Object.entries(quotationItems).reduce((acc, [_, item]) => acc + (item.addon ?? 0), 0) / (quotationItems.length || 1);
+        setQuotationData(pre => { return { ...pre, amount: amount, avgdiscount: Number(avgdiscount.toFixed(2)), avgaddon: Number(avgaddon.toFixed(2)) } });
     }, [quotationItems]);
 
     useEffect(() => {
@@ -134,10 +138,12 @@ export default function QuotationsCreate() {
                     madeby: profile.username ?? "",
                     date: d.toISOString().split("T")[0],
                     showLinks: false,
-                    intro: profile.generalInfo[selectedProfile].madeByInfo ?? "",
+                    intro: profile.quotationInfo[selectedProfile].intro ?? "",
                     terms: profile.quotationInfo[selectedProfile].terms ?? "",
                     additionalInfo: profile.quotationInfo[selectedProfile].additionalInfo ?? "",
-                    madeByInfo: profile.generalInfo[selectedProfile].madeByInfo || ""
+                    madeByInfo: profile.generalInfo[selectedProfile].madeByInfo || "",
+                    avgdiscount: 0,
+                    avgaddon: 0
                 }
             });
         }

@@ -51,11 +51,10 @@ export default function ComplaintsCreate() {
             return;
         }
         else {
-            let no = "Govt-1";
             const d = new Date().toISOString().split("T");
             const date = d[0];
             const time = d[1].split(".")[0];
-            setComplaintsData((pre) => { return { ...pre, no: no, recordedby: profile.username || "", date: date, time: time } });
+            setComplaintsData((pre) => { return { ...pre, no: "Govt-1", recordedby: profile.username || "", date: date, time: time } });
         }
         setHeaderText("Complaint Details");
     }, [])

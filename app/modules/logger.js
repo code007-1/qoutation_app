@@ -26,7 +26,7 @@ if (process.env.NODE_ENV !== 'production') {
     logger.add(new winston.transports.Console({
         format: winston.format.simple(),
     }));
-}*/
+}
 
 import crypto from 'crypto';
 //const crypto = require('crypto');
@@ -62,11 +62,58 @@ console.log('Encrypted:', encrypted);
 const decrypted = decrypt(encrypted);
 console.log('Decrypted:', decrypted);
 
-function (n, target) {
-    for (i = 0; i < n / 2; i++) {
-        for (j = 0; j < n; j++) {
-            if (i + j == target)
-                return target
-        }
+*/
+
+import { MongoClient, ServerApiVersion } from "mongodb";
+import { writeFileSync } from "fs";
+
+const uri = "mongodb+srv://spttcpl:9ziRq5mLRppCobx8@cluster0.bbixzsn.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+
+// Create a MongoClient with a MongoClientOptions object to set the Stable API version
+const client = new MongoClient(uri, {
+    serverApi: {
+        version: ServerApiVersion.v1,
+        strict: true,
+        deprecationErrors: true,
     }
+});
+
+
+async function load() {
+    await client.connect();
+    // Send a ping to confirm a successful connection
+    await client.db("unnamed").command({ ping: 1 });
+
+    let data = await client.db("unnamed").collection("quotations").find({}).toArray();//{ name: { $regex: query, $options: "i" } }
+    data = data.map((d) => {
+        const avgdiscount = d.items.reduce((acc, item) => acc + (item.discount ?? 0), 0) / (d.items.length || 1);
+        const avgaddon = d.items.reduce((acc, item) => acc + (item.addon ?? 0), 0) / (d.items.length || 1);
+        return { ...d, avgdiscount: Number(avgdiscount.toFixed(2)), avgaddon: Number(avgaddon.toFixed(2)) };
+    });
+
+    // Write data to JSON file
+    //writeFileSync("quotations.json", JSON.stringify(data, null, 2));
+
+
+
+    // Prepare bulk operations for all documents
+    const bulkOps = data.map(d => {
+        const { _id, ...restData } = d;
+        return {
+            updateOne: {
+                filter: { no: d.no },
+                update: { $set: { ...restData } },
+                upsert: true
+            }
+        };
+    });
+
+    if (bulkOps.length > 0) {
+        const result = await client.db("unnamed").collection("quotations").bulkWrite(bulkOps);
+        console.log("Bulk operation result:", result);
+    }
+
+    client.close();
 }
+
+load();

@@ -20,7 +20,6 @@ const QuotationsShow = () => {
             const data = await response.json()
             setOldQuotationData(data);
             setQuotationDataCount(data.length);
-            console.log(data);
         }
         else {
             addNotifications({ title: "Failure...", message: "Fail to load data." });
