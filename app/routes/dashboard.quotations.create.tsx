@@ -105,33 +105,38 @@ export default function QuotationsCreate() {
     }, [quotationItems]);
 
     useEffect(() => {
-        const d = new Date();
-        let no = d.getTime().toString();
-        let fromAddress = profile.generalInfo[selectedProfile].address || "";
-        let from = profile.generalInfo[selectedProfile].company;
-        let itemswithAddonandDiscount = quotationItems;
-        let intro = profile.quotationInfo[selectedProfile].intro ?? "";
-        let date = d.toISOString().split("T")[0];
-        let madeByInfo = profile.generalInfo[selectedProfile].madeByInfo;
-        let madeby = profile.username ?? "";
-
-        if (passedData && passedData?.editing === true) {
-            no = quotationData.no;
-            fromAddress = quotationData.fromAddress;
-            from = quotationData.from;
-            intro = quotationData.intro;
-            date = quotationData.date;
-            madeByInfo = quotationData?.madeByInfo;
-            madeby = quotationData?.madeby;
-
-            itemswithAddonandDiscount = itemswithAddonandDiscount.map((item) => {
+        if (passedData && passedData?.type === "copy") {
+            let itemswithAddonandDiscount = quotationItems.map((item) => {
                 if (!item.addon) item.addon = 0;
                 if (!item.discount) item.discount = 0;
                 return item;
             });
+            setQuotationItems(itemswithAddonandDiscount);
+            setQuotationData((pre) => { return { ...pre, no: new Date().getTime().toString(), items: itemswithAddonandDiscount } });
         }
-        setQuotationItems(itemswithAddonandDiscount);
-        setQuotationData((pre) => { return { ...pre, no: no, from: from, fromAddress: fromAddress, email: profile.generalInfo[selectedProfile].email, website: profile.generalInfo[selectedProfile].website, contact: profile.generalInfo[selectedProfile].contact, pdfColor: String(profile.quotationInfo[selectedProfile].pdfColor), madeby: madeby, date: date, showLinks: quotationData?.showLinks !== undefined ? quotationData.showLinks : false, items: itemswithAddonandDiscount, intro: intro, terms: quotationData.terms ?? profile.quotationInfo[selectedProfile].terms, additionalInfo: quotationData.additionalInfo ?? profile.quotationInfo[selectedProfile].additionalInfo, madeByInfo: madeByInfo } });
+
+        else if (passedData && passedData?.type === "edit") {
+            let itemswithAddonandDiscount = quotationItems.map((item) => {
+                if (!item.addon) item.addon = 0;
+                if (!item.discount) item.discount = 0;
+                return item;
+            });
+            setQuotationItems(itemswithAddonandDiscount);
+            setQuotationData((pre) => { return { ...pre, items: itemswithAddonandDiscount } });
+        }
+        else {
+            const d = new Date();
+            let no = d.getTime().toString();
+            let fromAddress = profile.generalInfo[selectedProfile].address || "";
+            let from = profile.generalInfo[selectedProfile].company;
+            let intro = profile.quotationInfo[selectedProfile].intro ?? "";
+            let date = d.toISOString().split("T")[0];
+            let madeByInfo = profile.generalInfo[selectedProfile].madeByInfo;
+            let madeby = profile.username ?? "";
+            let additionalInfo = profile.quotationInfo[selectedProfile].additionalInfo ?? "";
+            let terms = profile.quotationInfo[selectedProfile].terms ?? "";
+            setQuotationData((pre) => { return { ...pre, no: no, from: from, fromAddress: fromAddress, email: profile.generalInfo[selectedProfile].email, website: profile.generalInfo[selectedProfile].website, contact: profile.generalInfo[selectedProfile].contact, pdfColor: String(profile.quotationInfo[selectedProfile].pdfColor), madeby: madeby, date: date, showLinks: quotationData?.showLinks !== undefined ? quotationData.showLinks : false, intro: intro, terms: terms, additionalInfo: additionalInfo, madeByInfo: madeByInfo } });
+        }
     }, [])
 
     function updateData(index: number) {
