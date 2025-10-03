@@ -6,7 +6,7 @@ import { useNotification } from "~/modules/notificationContext";
 import ChallanTableUI from "~/component/challan/challanTableUI";
 import { challanReadAPIURL } from "~/component/statics";
 
-const QuotationsShow = () => {
+const ChallanShow = () => {
     // Initiate your states
     const [loading, setLoading] = useState(false);
     const { addNotifications } = useNotification();
@@ -105,4 +105,4 @@ const QuotationsShow = () => {
     );
 };
 
-export default QuotationsShow;
+export default ChallanShow;

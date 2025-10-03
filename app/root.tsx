@@ -1,5 +1,5 @@
 import { Links, Meta, Outlet, Scripts, ScrollRestoration, useLocation } from "@remix-run/react";
-import type { LinksFunction } from "@remix-run/node";
+import type { LinksFunction, MetaFunction } from "@remix-run/node";
 import "./tailwind.css";
 import { AppProvider, useGlobalContext } from "./modules/gcontext";
 import { useEffect } from "react";
@@ -19,6 +19,12 @@ export const links: LinksFunction = () => [
   },
 ];
 
+export const meta: MetaFunction = () => {
+  return [
+    { title: "Imagine" } // ← Your app name here
+  ];
+};
+
 export function Layout({ children }: { children: React.ReactNode }) {
 
   return (
@@ -26,6 +32,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta title="a" />
 
         <Meta />
         <Links />

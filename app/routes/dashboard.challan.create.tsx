@@ -58,20 +58,33 @@ export default function CreateChallan() {
     }, [step]);
 
     useEffect(() => {
-        let no = new Date().getTime().toString();
-        let fromAddress = profile?.generalInfo[selectedProfile]?.address ?? "";
-        let from = profile.generalInfo[selectedProfile].company;
-        let billno = "";
-        let madeby = profile.username ?? "";
-
-        if (passedData && passedData?.editing === true) {
-            no = challanData.no;
-            fromAddress = challanData.fromAddress;
-            from = challanData.from;
-            billno = challanData.billno ?? "";
-            madeby = challanData.madeby;
+        // copying existing challan
+        if (passedData && passedData?.editing === false) {
+            const d = new Date();
+            setChallanData((pre) => { return { ...pre, no: d.getTime().toString(), date: d.toISOString().split("T")[0] } });
         }
-        setChallanData((pre) => { return { ...pre, no: no, from: from, fromAddress: fromAddress, email: profile.generalInfo[selectedProfile].email ?? "", website: profile.generalInfo[selectedProfile].website, contact: profile.generalInfo[selectedProfile].contact, pdfColor: String(profile.quotationInfo[selectedProfile].pdfColor), madeby: madeby, date: new Date().toISOString().split("T")[0], billno: billno } });
+        // editing existing challan
+        else if (passedData && passedData?.editing === true) {
+            return;
+        }
+        // new challan
+        else {
+            const d = new Date();
+            setChallanData((pre) => {
+                return {
+                    ...pre, no: d.getTime().toString(),
+                    from: profile.generalInfo[selectedProfile].company,
+                    fromAddress: profile?.generalInfo[selectedProfile]?.address ?? "",
+                    email: profile.generalInfo[selectedProfile].email ?? "",
+                    website: profile.generalInfo[selectedProfile].website,
+                    contact: profile.generalInfo[selectedProfile].contact,
+                    pdfColor: String(profile.quotationInfo[selectedProfile].pdfColor),
+                    madeby: profile.username ?? "",
+                    date: d.toISOString().split("T")[0],
+                    billno: ""
+                }
+            });
+        }
     }, []);
 
     function updateData(index: number) {
@@ -301,3 +314,4 @@ export default function CreateChallan() {
         </AnimatePresence >
     </>);
 }
+

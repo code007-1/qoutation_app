@@ -38,17 +38,24 @@ export default function ComplaintsCreate() {
     }
 
     useEffect(() => {
-        let no = "Govt-1";
-        const d = new Date().toISOString().split("T");
-        let date = d[0];
-        let time = d[1].split(".")[0];
-
-        if (passedData && passedData?.editing === true) {
-            no = complaintsData.no;
-            date = complaintsData.date;
-            time = complaintsData.time;
+        // copying existing complaint
+        if (passedData && passedData?.editing === false) {
+            const d = new Date().toISOString().split("T");
+            const date = d[0];
+            const time = d[1].split(".")[0];
+            setComplaintsData((pre) => { return { ...pre, no: "Govt-1", recordedby: profile.username || "", date: date, time: time } });
         }
-        setComplaintsData((pre) => { return { ...pre, no: no, recordedby: profile.username || "", date: date, time: time } });
+
+        // editing existing complaint
+        else if (passedData && passedData?.editing === true) {
+            return;
+        }
+        else {
+            const d = new Date().toISOString().split("T");
+            const date = d[0];
+            const time = d[1].split(".")[0];
+            setComplaintsData((pre) => { return { ...pre, no: "Govt-1", recordedby: profile.username || "", date: date, time: time } });
+        }
         setHeaderText("Complaint Details");
     }, [])
 

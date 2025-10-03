@@ -80,6 +80,8 @@ export const initialQuotationData = () => {
         discount: 0,
         amount: 0,
         madeby: "",
+        avgdiscount: 0,
+        avgaddon: 0
     }
 }
 

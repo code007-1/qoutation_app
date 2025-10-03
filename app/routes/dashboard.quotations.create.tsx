@@ -43,6 +43,8 @@ export type QuotationData = {
     showLinks?: boolean;
     todealer?: boolean
     madeByInfo?: string
+    avgdiscount: number,
+    avgaddon: number
 };
 
 export async function createPdf(data: QuotationData | ChallanData, fetcher: any, showCustomerList?: boolean, save: boolean = true, type: string = "quotation") {
@@ -101,41 +103,49 @@ export default function QuotationsCreate() {
 
     useEffect(() => {
         const amount = Object.entries(quotationItems).reduce((acc, [_, item]) => acc + (item.price * item.quantity * (1 + 0.01 * item.addon) * (1 - item.discount * 0.01)), 0);
-        setQuotationData(pre => { return { ...pre, amount: amount } });
+        const avgdiscount = Object.entries(quotationItems).reduce((acc, [_, item]) => acc + (item.discount ?? 0), 0) / (quotationItems.length || 1);
+        const avgaddon = Object.entries(quotationItems).reduce((acc, [_, item]) => acc + (item.addon ?? 0), 0) / (quotationItems.length || 1);
+        setQuotationData(pre => { return { ...pre, amount: amount, avgdiscount: Number(avgdiscount.toFixed(2)), avgaddon: Number(avgaddon.toFixed(2)) } });
     }, [quotationItems]);
 
     useEffect(() => {
-        if (passedData && passedData?.type === "copy") {
-            let itemswithAddonandDiscount = quotationItems.map((item) => {
-                if (!item.addon) item.addon = 0;
-                if (!item.discount) item.discount = 0;
-                return item;
-            });
-            setQuotationItems(itemswithAddonandDiscount);
-            setQuotationData((pre) => { return { ...pre, no: new Date().getTime().toString(), items: itemswithAddonandDiscount } });
-        }
+        // copying existing quotation
+        if (passedData && passedData?.editing === false) {
+            const d = new Date();
+            const no = d.getTime().toString();
+            const date = d.toISOString().split("T")[0];
 
-        else if (passedData && passedData?.type === "edit") {
-            let itemswithAddonandDiscount = quotationItems.map((item) => {
-                if (!item.addon) item.addon = 0;
-                if (!item.discount) item.discount = 0;
-                return item;
-            });
-            setQuotationItems(itemswithAddonandDiscount);
-            setQuotationData((pre) => { return { ...pre, items: itemswithAddonandDiscount } });
+            setQuotationData((pre) => { return { ...pre, no: no, date: date } });
         }
+        // editing existing quotation
+        else if (passedData && passedData?.editing === true) {
+            return;
+        }
+        // new quotation
         else {
             const d = new Date();
             let no = d.getTime().toString();
-            let fromAddress = profile.generalInfo[selectedProfile].address || "";
-            let from = profile.generalInfo[selectedProfile].company;
-            let intro = profile.quotationInfo[selectedProfile].intro ?? "";
-            let date = d.toISOString().split("T")[0];
-            let madeByInfo = profile.generalInfo[selectedProfile].madeByInfo;
-            let madeby = profile.username ?? "";
-            let additionalInfo = profile.quotationInfo[selectedProfile].additionalInfo ?? "";
-            let terms = profile.quotationInfo[selectedProfile].terms ?? "";
-            setQuotationData((pre) => { return { ...pre, no: no, from: from, fromAddress: fromAddress, email: profile.generalInfo[selectedProfile].email, website: profile.generalInfo[selectedProfile].website, contact: profile.generalInfo[selectedProfile].contact, pdfColor: String(profile.quotationInfo[selectedProfile].pdfColor), madeby: madeby, date: date, showLinks: quotationData?.showLinks !== undefined ? quotationData.showLinks : false, intro: intro, terms: terms, additionalInfo: additionalInfo, madeByInfo: madeByInfo } });
+
+            setQuotationData((pre) => {
+                return {
+                    ...pre, no: no,
+                    from: profile.generalInfo[selectedProfile].company,
+                    fromAddress: profile.generalInfo[selectedProfile].address || "",
+                    email: profile.generalInfo[selectedProfile].email,
+                    website: profile.generalInfo[selectedProfile].website,
+                    contact: profile.generalInfo[selectedProfile].contact,
+                    pdfColor: String(profile.quotationInfo[selectedProfile].pdfColor),
+                    madeby: profile.username ?? "",
+                    date: d.toISOString().split("T")[0],
+                    showLinks: false,
+                    intro: profile.quotationInfo[selectedProfile].intro ?? "",
+                    terms: profile.quotationInfo[selectedProfile].terms ?? "",
+                    additionalInfo: profile.quotationInfo[selectedProfile].additionalInfo ?? "",
+                    madeByInfo: profile.generalInfo[selectedProfile].madeByInfo || "",
+                    avgdiscount: 0,
+                    avgaddon: 0
+                }
+            });
         }
     }, [])
 

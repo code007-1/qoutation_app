@@ -16,7 +16,6 @@ export default function Index() {
     if (loginFetcher.data?.token) {
       setAccessToken(loginFetcher.data.token); // Store the fetched data in state
       localStorage.setItem("login", "y");
-      console.log("permissions are : ", loginFetcher.data.permissions);
       setPermissions(loginFetcher.data.permissions || "read");
       if (loginFetcher.data?.quote)
         navigate("/dashboard/welcome");

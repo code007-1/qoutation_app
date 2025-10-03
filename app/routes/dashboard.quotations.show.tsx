@@ -12,14 +12,14 @@ const QuotationsShow = () => {
     const { addNotifications } = useNotification();
     const fetcher = useCentralFetcher();
 
-    const { oldQuotationData: quoteData, setHeaderText, quotationDataCount: dataCount, setQuotationDataCount: setDataCount, setOldQuotationData: setQuoteData, setQuotationData: setData, setQuotationItems: setItems, profile } = useGlobalContext();
+    const { oldQuotationData, setHeaderText, quotationDataCount, setQuotationDataCount, setOldQuotationData, setQuotationData, setQuotationItems, profile } = useGlobalContext();
     async function getQoutes() {
         setLoading(true);
         const response = await fetcher(`${quotationReadAPIURL}`);
         if (response.status === 200) {
             const data = await response.json()
-            setQuoteData(data);
-            setDataCount(data.length);
+            setOldQuotationData(data);
+            setQuotationDataCount(data.length);
         }
         else {
             addNotifications({ title: "Failure...", message: "Fail to load data." });
@@ -34,27 +34,27 @@ const QuotationsShow = () => {
             response = await fetcher(`${quotationReadAPIURL}?start=${query.start}&end=${query.end}&to=${query.to}`);
             if (response.status === 200) {
                 const data = await response.json();
-                setQuoteData(data);
+                setOldQuotationData(data);
 
             }
             else if (response.status != 200) {
                 addNotifications({ title: "Failure...", message: "Fail to load data." });
             }
-            setDataCount(0);
+            setQuotationDataCount(0);
             setLoading(false);
         }
         else {
             setLoading(true);
-            response = await fetcher(`${quotationReadAPIURL}?skip=${dataCount}`);
+            response = await fetcher(`${quotationReadAPIURL}?skip=${quotationDataCount}`);
             if (response.status === 200) {
                 const data = await response.json();
-                if (dataCount == 0) {
-                    setQuoteData(data);
-                    setDataCount(data.length);
+                if (quotationDataCount == 0) {
+                    setOldQuotationData(data);
+                    setQuotationDataCount(data.length);
                 }
                 else {
-                    setQuoteData(pre => { return [...pre, ...data] });
-                    setDataCount(quoteData.length + data.length);
+                    setOldQuotationData(pre => { return [...pre, ...data] });
+                    setQuotationDataCount(oldQuotationData.length + data.length);
                 }
             }
             else if (response.status != 200) {
@@ -73,15 +73,15 @@ const QuotationsShow = () => {
             });
         }
         else {
-            setQuoteData((pre: any) => { return pre.filter((item: any) => item.no === no ? false : true) });
+            setOldQuotationData((pre: any) => { return pre.filter((item: any) => item.no === no ? false : true) });
         }
     }
 
     useEffect(() => {
-        setData(initialQuotationData());
-        setItems([]);
+        setQuotationData(initialQuotationData());
+        setQuotationItems([]);
         setHeaderText(createQuotation);
-        if (dataCount === 0)
+        if (quotationDataCount === 0)
             getQoutes();
     }, []);
 
@@ -90,7 +90,7 @@ const QuotationsShow = () => {
             <section className="mt-5">
                 <div>
                     <QuotationsTableUI
-                        data={quoteData}
+                        data={oldQuotationData}
                         columns={useQuotationsColumns()}
                         searchLabel="Search by Name or job title"
                         EmptyText="No Quotations Found!"

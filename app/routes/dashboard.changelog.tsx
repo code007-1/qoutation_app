@@ -26,8 +26,9 @@ export default function ChangeLog() {
                         </ul>
                     </div>
                     <div>
-                        <h3 className="text-lg font-semibold text-textPrimary">Version 1.2.2 - 25-09-2025</h3>
+                        <h3 className="text-lg font-semibold text-textPrimary">Version 1.2.2 - 02-10-2025</h3>
                         <ul className="list-disc list-inside text-textSecondary mt-2 font-medium">
+                            <li>Avg Discount and Avg Addon now shows correctly.</li>
                             <li>Total Quantity and Items now shows correctly in challan creation section.</li>
                             <li>Bill No field addded in Challan section.</li>
                             <li>Show Customer List Switch fixed, now working properly.</li>
