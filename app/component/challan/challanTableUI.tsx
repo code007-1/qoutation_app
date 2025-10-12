@@ -111,7 +111,7 @@ const ChallanTableUI: FC<TableProps> = ({
             const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
             const link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
-            link.setAttribute('download', 'challan.csv');
+            link.setAttribute('download', `challan-${new Date().toISOString().split("T")[0]}.csv`);
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
