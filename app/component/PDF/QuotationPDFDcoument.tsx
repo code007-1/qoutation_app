@@ -168,12 +168,17 @@ export default function QuotationPDFDocument(data: QuotationData, showCustomerLi
                     <Text style={styles.terms} key="termsandconditionsvalue">{data.terms} {"\n"}</Text>
                 </View>}
                 <Text style={styles.newline} key="blank15">{"\n\n\n"}</Text>
+                {(data.bankInfo && data?.bankInfo != "") && <View key="nested-view-12">
+                    <Text style={styles.fromto} key="bankinfot">Bank Details {"\n"}</Text>
+                    <Text style={styles.terms} key="bankinfotext">{data.bankInfo} {"\n"}</Text>
+                </View>}
+                <Text style={styles.newline} key="blank15">{"\n\n\n"}</Text>
                 {data.madeByInfo !== "" && <View key="nested-view-12">
                     <Text style={styles.terms} key="userSignature">{data.madeByInfo} {"\n"}</Text>
                 </View>}
                 {showCustomerList &&
                     <>
-                        <Text break={true} style={{ fontSize: 14, fontWeight: "bold", textAlign: "center" }} key="customerlist">Out Customers List</Text>
+                        <Text break={true} style={{ fontSize: 14, fontWeight: "bold", textAlign: "center" }} key="customerlist">Our Customers List</Text>
                         <Image style={styles.backgroundImage} src={"public/All.jpg"} key="image" />
                     </>}
                 {footer}

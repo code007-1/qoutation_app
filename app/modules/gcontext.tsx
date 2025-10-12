@@ -81,7 +81,8 @@ export const initialQuotationData = () => {
         amount: 0,
         madeby: "",
         avgdiscount: 0,
-        avgaddon: 0
+        avgaddon: 0,
+        bankInfo: ""
     }
 }
 
@@ -91,7 +92,7 @@ export const initialChallanData = () => {
         date: new Date().toISOString().split("T")[0], // Default to today"s date
         items: [],
         type: "Delivery Challan",
-        category: "Delivery Challan",
+        category: "Dealer Sale",
         from: "Teen Telecommunication Pvt. Ltd.",
         fromAddress: "G-57, Vikas Marg, Near Metro Pillar No.41, \nDelhi - 110092",
         to: "",

@@ -38,14 +38,8 @@ const ChallanTableUI: FC<TableProps> = ({
     skeletonCount = 10,
     skeletonHeight = 28,
     headerComponent,
-    pageCount,
     search,
-    onClickRow,
-    page,
-    searchLabel = "Search",
     EmptyText,
-    children,
-    handleRow,
     refresh,
     deleteChallan
 }) => {
@@ -100,6 +94,30 @@ const ChallanTableUI: FC<TableProps> = ({
     const fetcher = useCentralFetcher();
     const [open, setOpen] = useState(false);
     const [query, setQuery] = useState({ sno: "" });
+
+    // Function to initiate CSV download
+    function downloadCSV(rows: Row<any>[]) {
+        if (rows.length === 0) {
+            alert('No data to export');
+        } else {
+            let csvData = "Challan No, Bill No, Order No, From, To, Date, Category, Type, Made By, Items and Serial Numbers\n";
+
+            rows.map((item: any) => {
+                csvData += item.original.no.toString() + "," + item.original.billno + ", " + item.original.orderno + "," + item.original.from +
+                    "," + item.original.to + "," + item.original.date + "," + item.original.category + "," + item.original.type + "," + item.original.madeby + "," +
+                    "\"" + item.original.items.map((singleItem: any) => { return singleItem.name + " - " + singleItem.sno?.join(" & ") }).join("\n") + "\"\n";
+            })
+
+            const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.setAttribute('download', 'challan.csv');
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    }
+
 
     function handleEdit(row: ChallanData) {
         setChallanData(row);
@@ -212,6 +230,12 @@ const ChallanTableUI: FC<TableProps> = ({
                         className="button p-2"
                     >
                         Refresh Data
+                    </button>
+                    <button
+                        onClick={() => { downloadCSV(getRowModel().rows) }}
+                        className="button p-2"
+                    >
+                        Export
                     </button>
                     <div className="flex-1">
                         <div className="w-full flex justify-end">
