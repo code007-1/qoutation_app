@@ -83,7 +83,7 @@ export default function ComplaintsCreate() {
                             <div id="complaintType">
                                 <Listbox value={complaintsData.type} onChange={e => { setComplaintsData(pre => { return { ...pre, type: e } }) }}>
                                     <div className="relative">
-                                        <ListboxButton className="flex items-center justify-between hover:bg-buttonHover px-2 border border-border py-2 w-full">
+                                        <ListboxButton className="flex items-center justify-between hover:bg-buttonHover p-2 border border-border w-full">
                                             <div className="text-textSecondary">{complaintsData.type}</div>
                                             <ChevronDown className="text-textPrimary" />
                                         </ListboxButton>

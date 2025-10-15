@@ -23,6 +23,14 @@ export default function ChangeLog() {
                             <li>Delete old made quotation according to user role and permissions.</li>
                             <li>Have different profiles that can be used while creating quotation or challans as different vendors.</li>
                             <li>Real Time Data Sync and Access to all quotations and challans from any device from anywhere in world (software with internet connection is required).</li>
+                            <li>Export Challans to CSV File.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 className="text-lg font-semibold text-textPrimary">Version 1.3.0 - 12-10-2025</h3>
+                        <ul className="list-disc list-inside text-textSecondary mt-2 font-medium">
+                            <li>Export to CSV option added for challans</li>
+                            <li>Added Bank Details option for Quotations</li>
                         </ul>
                     </div>
                     <div>

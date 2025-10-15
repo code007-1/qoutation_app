@@ -113,11 +113,11 @@ export default function CreateChallan() {
                             <div className="flex items-center gap-x-2">
                                 <div className="text-sm font-semibold">Challan No.</div>
                                 {/*<input type="text" name="no" placeholder="Enter Qoutation No." className="border border-border p-2 mb-2 mr-5 w-25 bg-background" value={data.no} onChange={e => setData((pre) => { return { ...pre, no: e.target.value }; })} />*/}
-                                <div className="text-sm">{challanData.no}</div>
+                                <div className="bg-headerBackground p-2">{challanData.no}</div>
                             </div>
                             <div className="flex items-center gap-x-4">
                                 <div className="text-sm font-semibold">Date</div>
-                                <input type="date" color="white" name="date" id="date" pattern="\d{4}-\d{2}-\d{2}" placeholder="Date" className="px-2 border border-border w-36 h-10 bg-background" value={challanData.date} onChange={e => setChallanData(pre => { return { ...pre, date: e.target.value } })} />
+                                <input type="date" color="white" name="date" id="date" pattern="\d{4}-\d{2}-\d{2}" placeholder="Date" className="p-2 bg-headerBackground w-36 h-10" value={challanData.date} onChange={e => setChallanData(pre => { return { ...pre, date: e.target.value } })} />
                             </div>
                             <div className="w-auto mr-10">
                                 <Listbox value={profile.generalInfo[selectedProfile].company} onChange={e => {
@@ -127,7 +127,7 @@ export default function CreateChallan() {
                                 }}>
                                     <div className="relative flex justify-center items-center gap-x-4">
                                         <div className="text-sm font-semibold">Profile</div>
-                                        <ListboxButton className="w-full flex items-center justify-between hover:bg-buttonHover border border-border py-2">
+                                        <ListboxButton className="w-full flex items-center justify-between hover:bg-buttonHover bg-headerBackground p-2">
                                             <div className="text-textSecondary truncate text-nowrap overflow-hidden w-48 px-2">{profile.generalInfo[selectedProfile].company}</div>
                                             <ChevronDown className="text-textPrimary" />
                                         </ListboxButton>
@@ -189,7 +189,7 @@ export default function CreateChallan() {
                                         <div className="text-sm font-semibold">Challan Type</div>
                                         <Listbox value={challanData.type} onChange={(e) => { setChallanData(pre => { return { ...pre, type: e } }) }}>
                                             <div className="relative">
-                                                <ListboxButton className="w-[75%] flex items-center justify-between hover:bg-buttonHover px-2 border border-border py-2">
+                                                <ListboxButton className="w-[75%] flex items-center justify-between hover:bg-buttonHover bg-headerBackground p-2">
                                                     <div className="text-textSecondary mr-2">{challanData.type}</div>
                                                     <ChevronDown className="text-textPrimary" />
                                                 </ListboxButton>
@@ -217,7 +217,7 @@ export default function CreateChallan() {
                                         <div className="text-sm font-semibold">Challan Category</div>
                                         <Listbox value={challanData.category} onChange={e => { setChallanData(pre => { return { ...pre, category: e } }) }}>
                                             <div className="relative">
-                                                <ListboxButton className="w-[75%] flex items-center justify-between hover:bg-buttonHover px-2 border border-border py-2">
+                                                <ListboxButton className="w-[75%] flex items-center justify-between hover:bg-buttonHover p-2 bg-headerBackground">
                                                     <div className="text-textSecondary mr-2">{challanData.category}</div>
                                                     <ChevronDown className="text-textPrimary" />
                                                 </ListboxButton>

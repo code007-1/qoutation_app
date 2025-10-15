@@ -33,7 +33,7 @@ const QuotationsShow = () => {
         if (query) {
             response = await fetcher(`${quotationReadAPIURL}?start=${query.start}&end=${query.end}&to=${query.to}`);
             if (response.status === 200) {
-                const data = await response.json();
+                const data = await response.json(); 
                 setOldQuotationData(data);
 
             }
