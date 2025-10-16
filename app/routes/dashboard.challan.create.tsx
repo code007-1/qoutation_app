@@ -8,6 +8,7 @@ import { ChevronDown, Minus } from "lucide-react";
 import { createPdf } from "./dashboard.quotations.create";
 import { useCentralFetcher } from "~/component/centralFetcher";
 import constData from "../../assets/data.json";
+import { challans } from "~/component/statics";
 
 export type ChallanItems = {
     id: number;
@@ -303,7 +304,7 @@ export default function CreateChallan() {
                                     Back
                                 </button>
 
-                                <form onSubmit={(e) => { const updatedChallanData = { ...challanData, items: challanItems }; setChallanData(pre => { return { ...pre, items: challanItems } }); createPdf(updatedChallanData, fetcher, false, true, "challan"); e.preventDefault(); navigate("/dashboard/challan/show"); }}>
+                                <form onSubmit={(e) => { const updatedChallanData = { ...challanData, items: challanItems }; setChallanData(pre => { return { ...pre, items: challanItems } }); createPdf(updatedChallanData, fetcher, false, true, challans); e.preventDefault(); navigate("/dashboard/challan/show"); }}>
                                     <button className="button px-4 py-1 mt-4 text-lg" type="submit">Generate Challan PDF</button>
                                 </form>
                             </div>

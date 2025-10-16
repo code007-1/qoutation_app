@@ -99,13 +99,13 @@ const QuotationsTableUI: FC<TableProps> = ({
     function handleEdit(row: QuotationData) {
         setData(row);
         setItems(row.items);
-        navigate("/dashboard/quotations/create", { state: { type: "edit" } });
+        navigate("/dashboard/quotations/create", { state: { editing: true } });
     }
 
     function handleCopy(row: QuotationData) {
         setData(row);
         setItems(row.items);
-        navigate("/dashboard/quotations/create", { state: { type: "copy" } });
+        navigate("/dashboard/quotations/create", { state: { editing: false } });
     }
 
     const _titleId = useId();

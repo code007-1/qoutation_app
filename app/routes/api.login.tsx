@@ -5,7 +5,7 @@ import { commitSession, getSession } from "~/modules/sessions";
 import pkg from "jsonwebtoken";
 const { sign } = pkg;
 import bcrypt from "bcrypt";
-import { getQoute, JWT_ACCESS_KEY, JWT_REFRESH_KEY, userProfile, updateProfile } from "~/modules/utils";
+import { getQoute, JWT_ACCESS_KEY, JWT_REFRESH_KEY, userProfile, updateProfile, dbName, logsCollectionName, usersCollectionName } from "~/modules/utils";
 
 export const action: ActionFunction = async ({ request }) => {
     try {
@@ -13,7 +13,7 @@ export const action: ActionFunction = async ({ request }) => {
         const username = (formData.get("username") as string).trim().toLowerCase();
         const password = formData.get("password") as string;
 
-        const result = await search("unnamed", "users", { username: username }, 1, 0);
+        const result = await search(dbName, usersCollectionName, { username: username }, 1, 0);
 
         if (result && result.length > 0) {
             const verified = await bcrypt.compare(password, result[0].password);
@@ -43,13 +43,13 @@ export const action: ActionFunction = async ({ request }) => {
                     response = { token: access, profile: userProfile, quote: quote };
                 }
                 else { response = { token: access, profile: userProfile, permissions: result[0]?.permissions }; }
-                await insertOnetoDb({ "by": username, "action": "logging in", "result": "succeded", "when": new Date().toISOString() }, "unnamed", "logs");
+                await insertOnetoDb({ "by": username, "action": "logging in", "result": "succeded", "when": new Date().toISOString() }, dbName, logsCollectionName);
                 return Response.json(response, { headers: { "Set-Cookie": await commitSession(session) } });
             }
-            await insertOnetoDb({ "by": username, "action": "logging in", "result": "wrong password", "when": new Date().toISOString() }, "unnamed", "logs");
+            await insertOnetoDb({ "by": username, "action": "logging in", "result": "wrong password", "when": new Date().toISOString() }, dbName, logsCollectionName);
             return new Response("Wrong password", { status: 404 });
         }
-        await insertOnetoDb({ "by": username, "action": "logging in", "result": "user not found", "when": new Date().toISOString() }, "unnamed", "logs");
+        await insertOnetoDb({ "by": username, "action": "logging in", "result": "user not found", "when": new Date().toISOString() }, dbName, logsCollectionName);
         return new Response("User not found", { status: 404 });
     }
     catch (error) {

@@ -1,6 +1,6 @@
 import { LoaderFunction } from "@remix-run/node";
 import { sortedSearch } from "~/modules/dbOnline";
-import { verifyAccessToken } from "~/modules/utils";
+import { dbName, quotationCollectionName, verifyAccessToken } from "~/modules/utils";
 
 export const loader: LoaderFunction = async ({ request, params }) => {
     try {
@@ -18,11 +18,11 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
         if (start != "" || end != "" || to != "") {
             const query = { "date": { $gte: start, $lte: end } };
-            const result = await sortedSearch("unnamed", "quotations", query, limit, 0, -1, "_id");
+            const result = await sortedSearch(dbName, quotationCollectionName, query, limit, 0, -1, "_id");
             return Response.json(result, { status: 200 });
         }
         else {
-            const result = await sortedSearch("unnamed", "quotations", {}, limit, skip, -1, "_id");
+            const result = await sortedSearch(dbName, quotationCollectionName, {}, limit, skip, -1, "_id");
             return Response.json(result, { status: 200 });
         }
     }

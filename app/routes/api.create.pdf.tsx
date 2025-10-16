@@ -22,7 +22,7 @@ export const action: ActionFunction = async ({ request, params }) => {
         if (save === "true") {
             if (type === quotationCollectionName)
                 await insertOrUpdateOnetoDb(data);
-            else if (type === "challan")
+            else if (type === challanCollectionName)
                 await insertOrUpdateOnetoDb(data, dbName, challanCollectionName);
             else {
                 console.error("unknown data type while saving to db");

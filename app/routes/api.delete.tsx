@@ -1,6 +1,6 @@
 import { ActionFunction } from "@remix-run/node";
 import { deleteOneFromDB, insertOnetoDb } from "~/modules/dbOnline";
-import { verifyAccessToken } from "~/modules/utils";
+import { challanCollectionName, complaintCollectionName, dbName, logsCollectionName, quotationCollectionName, verifyAccessToken } from "~/modules/utils";
 
 export const action: ActionFunction = async ({ request, params }) => {
     try {
@@ -11,20 +11,20 @@ export const action: ActionFunction = async ({ request, params }) => {
         const { no, username, type } = await request.json();
         var result;
         if (type === "challans")
-            result = await deleteOneFromDB(no, "unnamed", "challans");
+            result = await deleteOneFromDB(no, dbName, challanCollectionName);
         else if (type === "quotations")
-            result = await deleteOneFromDB(no, "unnamed", "quotations");
+            result = await deleteOneFromDB(no, dbName, quotationCollectionName);
         else if (type === "complaints")
-            result = await deleteOneFromDB(no, "unnamed", "complaints");
+            result = await deleteOneFromDB(no, dbName, complaintCollectionName);
         else
             return new Response(`nothing to deleted`, { status: 500 });
 
         if (result != undefined && result > 0) {
-            await insertOnetoDb({ "by": username, "action": `deleting ${type} ${no}`, "result": "succeded", "when": new Date().toISOString() }, "unnamed", "logs");
+            await insertOnetoDb({ "by": username, "action": `deleting ${type} ${no}`, "result": "succeded", "when": new Date().toISOString() }, dbName, logsCollectionName);
             return new Response(`${type} deleted`, { status: 200 });
         }
         else {
-            await insertOnetoDb({ "by": username, "action": `deleting ${type} ${no}`, "result": "failed", "when": new Date().toISOString() }, "unnamed", "logs");
+            await insertOnetoDb({ "by": username, "action": `deleting ${type} ${no}`, "result": "failed", "when": new Date().toISOString() }, dbName, logsCollectionName);
             return new Response(`${type} not deleted`, { status: 500 });
         }
     }

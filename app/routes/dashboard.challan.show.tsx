@@ -4,7 +4,7 @@ import { createChallan, initialChallanData, useGlobalContext } from "~/modules/g
 import { useCentralFetcher } from "~/component/centralFetcher";
 import { useNotification } from "~/modules/notificationContext";
 import ChallanTableUI from "~/component/challan/challanTableUI";
-import { challanReadAPIURL } from "~/component/statics";
+import { challanReadAPIURL, challans } from "~/component/statics";
 
 const ChallanShow = () => {
     // Initiate your states
@@ -65,7 +65,7 @@ const ChallanShow = () => {
     }
 
     async function handleDeleteChallan(no: string) {
-        const result = await fetcher("/api/delete", { method: "POST", body: JSON.stringify({ "no": no, "username": profile.username, type: "challans" }) });
+        const result = await fetcher("/api/delete", { method: "POST", body: JSON.stringify({ "no": no, "username": profile.username, type: challans }) });
         if (result.status !== 200) {
             addNotifications({
                 title: "Error while deletion...",

@@ -3,7 +3,7 @@ import pkg from "jsonwebtoken";
 import { search } from "~/modules/dbOnline";
 const { sign, verify } = pkg;
 import { commitSession, getSession } from "~/modules/sessions";
-import { JWT_ACCESS_KEY, JWT_REFRESH_KEY, userProfile, updateProfile } from "~/modules/utils";
+import { JWT_ACCESS_KEY, JWT_REFRESH_KEY, userProfile, updateProfile, dbName, usersCollectionName } from "~/modules/utils";
 
 async function verifyRefreshToken(cookies: string, hostip: string, userAgent: string): Promise<boolean | { username: string, permissions: string }> {
     const session = await getSession(cookies);
@@ -47,7 +47,7 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
                     username: (verified as any)["username"],
                     permissions: (verified as any)["permissions"],
                 }
-                const result = await search("unnamed", "users", { username: verified }, 1, 0);
+                const result = await search(dbName, usersCollectionName, { username: verified }, 1, 0);
 
                 if (result && result.length > 0)
                     updateProfile(result[0]);

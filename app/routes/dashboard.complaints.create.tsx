@@ -6,6 +6,7 @@ import { useCentralFetcher } from "~/component/centralFetcher";
 import { Listbox, ListboxButton, ListboxOption, ListboxOptions } from "@headlessui/react";
 import { ChevronDown } from "lucide-react";
 import constData from "../../assets/data.json";
+import { useNotification } from "~/modules/notificationContext";
 
 export type ComplaintsData = {
     no: string;
@@ -29,12 +30,25 @@ export default function ComplaintsCreate() {
     const { complaintsData, setComplaintsData, setHeaderText, profile } = useGlobalContext();
     const [step, setStep] = useState<number>(0);
     const fetcher = useCentralFetcher();
+    const { addNotifications } = useNotification();
 
-    function saveComplaint() {
-        fetcher(`/api/create/complaint`, {
+    async function saveComplaint() {
+        const result = await fetcher(`/api/create/complaint`, {
             method: "POST", headers: { "Content-Type": "application/json" },
             body: JSON.stringify(complaintsData),
-        })
+        });
+        if (result.status === 200) {
+            addNotifications({
+                title: "Complaint saved...",
+                message: `Complaint saved sucessfully`,
+            });
+        }
+        else {
+            addNotifications({
+                title: "Error...",
+                message: `Some error occcured while saving complaint`,
+            });
+        }
     }
 
     useEffect(() => {

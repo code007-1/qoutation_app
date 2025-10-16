@@ -7,7 +7,7 @@ import { useCentralFetcher } from "~/component/centralFetcher";
 import { Listbox, ListboxButton, ListboxOption, ListboxOptions, Switch } from "@headlessui/react";
 import { ChallanData } from "./dashboard.challan.create";
 import { ChevronDown, Minus } from "lucide-react";
-import { saveAndCreatePDF } from "~/component/statics";
+import { challans, quotations, saveAndCreatePDF } from "~/component/statics";
 
 export type QuoteItems = {
     id: number;
@@ -48,15 +48,15 @@ export type QuotationData = {
     avgaddon: number
 };
 
-export async function createPdf(data: QuotationData | ChallanData, fetcher: any, showCustomerList?: boolean, save: boolean = true, type: string = "quotation") {
+export async function createPdf(data: QuotationData | ChallanData, fetcher: any, showCustomerList?: boolean, save: boolean = true, type: string = quotations) {
     let filteredItems;
-    if (type === "quotation") {
+    if (type === quotations) {
         filteredItems = data.items.filter((item: any) => {
             if (!isFinite(item.price) || !isFinite(item.quantity)) return false;
             else return true;
         })
     }
-    else if (type === "challan") {
+    else if (type === challans) {
         filteredItems = data.items.filter((item: any) => {
             if (!isFinite(item.quantity)) return false;
             else return true;
@@ -112,6 +112,7 @@ export default function QuotationsCreate() {
 
     useEffect(() => {
         // copying existing quotation
+        console.log("passedData", passedData);
         if (passedData && passedData?.editing === false) {
             const d = new Date();
             const no = d.getTime().toString();

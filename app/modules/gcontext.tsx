@@ -117,9 +117,10 @@ export const initialComplaintsData = () => {
         address: "",
         attendingEngineer: "Not Assigned",
         remarks: "",
-        status: "pending"
+        status: "Pending"
     }
 }
+
 
 export const AppProvider = ({ children }: { children: React.ReactNode }) => {
     // app related variaibles
@@ -183,6 +184,7 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
         </appContext.Provider>
     );
 };
+
 
 // custom global context hook
 export const useGlobalContext = () => {

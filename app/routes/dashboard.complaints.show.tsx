@@ -3,7 +3,7 @@ import { useComplaintsColumn } from "~/component/complaints/complaintColumns";
 import { createComplaint, initialComplaintsData, useGlobalContext } from "~/modules/gcontext";
 import { useCentralFetcher } from "~/component/centralFetcher";
 import { useNotification } from "~/modules/notificationContext";
-import { complaintReadAPIURL } from "~/component/statics";
+import { compalints, complaintReadAPIURL } from "~/component/statics";
 import ComplaintTableUI from "~/component/complaints/complaintTableUI";
 
 const ComplaintShow = () => {
@@ -64,7 +64,7 @@ const ComplaintShow = () => {
     }
 
     async function handleDeleteComplaint(no: string) {
-        const result = await fetcher("/api/delete", { method: "POST", body: JSON.stringify({ "no": no, "username": profile.username, type: "complaints" }) });
+        const result = await fetcher("/api/delete", { method: "POST", body: JSON.stringify({ "no": no, "username": profile.username, type: compalints }) });
         if (result.status !== 200) {
             addNotifications({
                 title: "Error while deletion...",

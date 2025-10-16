@@ -1,6 +1,6 @@
 import { LoaderFunction } from "@remix-run/node";
 import { sortedSearch } from "~/modules/dbOnline";
-import { verifyAccessToken } from "~/modules/utils";
+import { challanCollectionName, dbName, verifyAccessToken } from "~/modules/utils";
 
 export const loader: LoaderFunction = async ({ request, params }) => {
     try {
@@ -16,11 +16,11 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
         if (sno != "") {
             const query = { "items.sno": sno };
-            const result = await sortedSearch("unnamed", "challans", query, limit, 0, -1, "_id");
+            const result = await sortedSearch(dbName, challanCollectionName, query, limit, 0, -1, "_id");
             return Response.json(result, { status: 200 });
         }
         else {
-            const result = await sortedSearch("unnamed", "challans", {}, limit, skip, -1, "_id");
+            const result = await sortedSearch(dbName, challanCollectionName, {}, limit, skip, -1, "_id");
             return Response.json(result, { status: 200 });
         }
     }

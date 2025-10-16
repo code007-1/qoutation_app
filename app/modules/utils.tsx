@@ -1,7 +1,6 @@
 import pkg from "jsonwebtoken";
 const { verify } = pkg;
 
-import { createCookie } from "@remix-run/node";
 import { count, search } from "./dbOnline";
 import { profile } from "~/routes/dashboard.settings.profile";
 
@@ -9,11 +8,14 @@ export const JWT_REFRESH_KEY = "123!@#$@SDFASDAD";
 export const JWT_ACCESS_KEY = "!#SDAS@#!!@XZZXC";
 export const localStringFormat = "en-IN";
 
-export const quotationCollectionName = "quotation";
+export const quotationCollectionName = "quotations";
 export const challanCollectionName = "challans";
 export const complaintCollectionName = "complaints";
 export const logsCollectionName = "logs";
+export const quotesCollectionName = "quotes";
+export const usersCollectionName = "users";
 export const dbName = "unnamed";
+export const dburi = "mongodb+srv://spttcpl:9ziRq5mLRppCobx8@cluster0.bbixzsn.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
 
 export var userProfile: profile = { generalInfo: [{ contact: "+91 7065577059/60", address: "G-57, Vikas Marg, Near Metro Pillar No.41, \nDelhi - 110092", company: "Teen Telecommunication Pvt. Ltd.", website: "https://teentelecommunication.com", email: "sales@teentelecommunication.com" }], quotationInfo: [{ pdfColor: "222", showCustomerList: true }] };

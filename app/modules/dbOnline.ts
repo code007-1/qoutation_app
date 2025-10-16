@@ -1,7 +1,8 @@
 // how category and type is saving to db and convert sno to array
 import { MongoClient, ServerApiVersion } from "mongodb";
+import { dbName, dburi, quotationCollectionName, usersCollectionName } from "./utils";
 
-const uri = "mongodb+srv://spttcpl:9ziRq5mLRppCobx8@cluster0.bbixzsn.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+const uri = dburi;//"mongodb+srv://spttcpl:9ziRq5mLRppCobx8@cluster0.bbixzsn.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
@@ -14,7 +15,7 @@ const client = new MongoClient(uri, {
 
 async function isMongoConnected() {
     try {
-        await client.db("unnamed").command({ ping: 1 });
+        await client.db(dbName).command({ ping: 1 });
         return true;
     } catch (err) {
         return false;
@@ -29,7 +30,7 @@ async function run() {
             // Connect the client to the server	(optional starting in v4.7)
             await client.connect();
             // Send a ping to confirm a successful connection
-            await client.db("unnamed").command({ ping: 1 });
+            await client.db(dbName).command({ ping: 1 });
             console.log("Pinged your deployment. You successfully connected to MongoDB!");
         }
     }
@@ -39,7 +40,7 @@ async function run() {
 }
 //run();
 
-export async function search(db: string = "unnamed", collection: string = "qoutations", query: {} = {}, limit: number = 10, skip: number = 0) {
+export async function search(db: string = dbName, collection: string = quotationCollectionName, query: {} = {}, limit: number = 10, skip: number = 0) {
     try {
         await run();
         return await client.db(db).collection(collection).find(query).skip(skip).limit(limit).toArray();//{ name: { $regex: query, $options: "i" } }
@@ -48,7 +49,7 @@ export async function search(db: string = "unnamed", collection: string = "qouta
     //finally { await client.close(); }
 }
 
-export async function sortedSearch(db: string = "unnamed", collection: string = "qoutations", query: {} = {}, limit: number = 10, skip: number = 0, sortOrder: number = -1, sortKey: string = "_id") {
+export async function sortedSearch(db: string = dbName, collection: string = quotationCollectionName, query: {} = {}, limit: number = 10, skip: number = 0, sortOrder: number = -1, sortKey: string = "_id") {
     try {
         await run();
         return await client.db(db).collection(collection).find(query).sort({ _id: -1 }).skip(skip).limit(limit).toArray();//{ name: { $regex: query, $options: "i" } }
@@ -58,7 +59,7 @@ export async function sortedSearch(db: string = "unnamed", collection: string = 
 }
 
 
-export async function count(db: string = "unnamed", collection: string = "qoutations", query: {} = {}) {
+export async function count(db: string = dbName, collection: string = quotationCollectionName, query: {} = {}) {
     try {
         await run();
         return await client.db(db).collection(collection).countDocuments(query);//{ name: { $regex: query, $options: "i" } }
@@ -67,7 +68,7 @@ export async function count(db: string = "unnamed", collection: string = "qoutat
     //finally { await client.close(); }
 }
 
-export async function update(db: string = "unnamed", collection: string = "users", query: {} = {}, updateDoc: {}) {
+export async function update(db: string = dbName, collection: string = usersCollectionName, query: {} = {}, updateDoc: {}) {
     try {
         await run();
         return await client.db(db).collection(collection).updateOne(query, updateDoc);//{ name: { $regex: query, $options: "i" } }
@@ -76,7 +77,7 @@ export async function update(db: string = "unnamed", collection: string = "users
     //finally { await client.close(); }
 }
 
-export async function deleteOneFromDB(no: string, db: string = "unnamed", collection: string = "quotations",): Promise<number | undefined> {
+export async function deleteOneFromDB(no: string, db: string = dbName, collection: string = quotationCollectionName,): Promise<number | undefined> {
     try {
         await run();
         const result = await client.db(db).collection(collection).deleteOne({ "no": no });
@@ -86,7 +87,7 @@ export async function deleteOneFromDB(no: string, db: string = "unnamed", collec
     catch (error) { console.log("error while deleting from database : ", error); }
     //finally { await client.close(); }
 }
-export async function insertOrUpdateOnetoDb(data: any, db: string = "unnamed", collection: string = "quotations") {
+export async function insertOrUpdateOnetoDb(data: any, db: string = dbName, collection: string = quotationCollectionName) {
     try {
         await run();
         const { _id, ...restData } = data;
@@ -98,7 +99,7 @@ export async function insertOrUpdateOnetoDb(data: any, db: string = "unnamed", c
     //finally { await client.close(); }
 }
 
-export async function insertOnetoDb(data: any, db: string = "unnamed", collection: string = "logs") {
+export async function insertOnetoDb(data: any, db: string = dbName, collection: string = "logs") {
     try {
         await run();
         const result = await client.db(db).collection(collection).insertOne(data);
@@ -108,29 +109,3 @@ export async function insertOnetoDb(data: any, db: string = "unnamed", collectio
     catch (error) { console.log("error while inserting document to database : ", error); }
     //finally { await client.close(); }
 }
-
-
-/*export const QuoteItemsSchema = new Schema({
-    id: { type: Number, required: true },
-    name: { type: String, required: true },
-    price: { type: Number, required: true },
-    quantity: { type: Number, required: true },
-    description: { type: String },
-    link: { type: String }
-}, { _id: false });
-
-export const QuotationDataSchema = new Schema({
-    no: { type: String, required: true },
-    date: { type: String, required: true },
-    items: { type: Map, of: QuoteItemsSchema, required: true },
-    intro: { type: String, required: true },
-    terms: { type: String, required: true },
-    additionalInfo: { type: String, required: true },
-    from: { type: String, required: true },
-    fromAddress: { type: String, required: true },
-    to: { type: String, required: true },
-    toAddress: { type: String, required: true },
-    tax: { type: Number, required: true },
-    discount: { type: Number, required: true }
-});
-*/

@@ -27,10 +27,11 @@ export default function ChangeLog() {
                         </ul>
                     </div>
                     <div>
-                        <h3 className="text-lg font-semibold text-textPrimary">Version 1.3.0 - 12-10-2025</h3>
+                        <h3 className="text-lg font-semibold text-textPrimary">Version 1.3.0 - 16-10-2025</h3>
                         <ul className="list-disc list-inside text-textSecondary mt-2 font-medium">
                             <li>Export to CSV option added for challans</li>
                             <li>Added Bank Details option for Quotations</li>
+                            <li>Bugs related to quotation editing fixed</li>
                         </ul>
                     </div>
                     <div>

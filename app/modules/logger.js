@@ -62,7 +62,7 @@ console.log('Encrypted:', encrypted);
 const decrypted = decrypt(encrypted);
 console.log('Decrypted:', decrypted);
 
-*/
+
 
 import { MongoClient, ServerApiVersion } from "mongodb";
 import { writeFileSync } from "fs";
@@ -97,7 +97,7 @@ async function FixSomething() {
     writeFileSync("quotations.json", JSON.stringify(data, null, 2));
 
     // Prepare bulk operations for all documents
-    /*const bulkOps = data.map(d => {
+    //const bulkOps = data.map(d => {
         const { _id, ...restData } = d;
         return {
             updateOne: {
@@ -111,9 +111,9 @@ async function FixSomething() {
     if (bulkOps.length > 0) {
         const result = await client.db("unnamed").collection("quotations").bulkWrite(bulkOps);
         console.log("Bulk operation result:", result);
-    }*/
+    }
 
     client.close();
 }
 
-FixSomething();
+FixSomething();*/

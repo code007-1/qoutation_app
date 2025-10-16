@@ -6,7 +6,7 @@ export default function Welcome() {
     const navigate = useNavigate();
     const { gQuote } = useGlobalContext();
     const date = new Date().getDate();
-    const message = "Happy Birthday to my beloved Princess......."
+    const message = "Happy Birthday to my beloved Princess.......";
 
     return (
         <>

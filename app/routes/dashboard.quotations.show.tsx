@@ -4,7 +4,7 @@ import QuotationsTableUI from "~/component/quotation/quotationsTableUI";
 import { createQuotation, initialQuotationData, useGlobalContext } from "~/modules/gcontext";
 import { useCentralFetcher } from "~/component/centralFetcher";
 import { useNotification } from "~/modules/notificationContext";
-import { quotationDeleteAPIURL, quotationReadAPIURL } from "~/component/statics";
+import { quotationDeleteAPIURL, quotationReadAPIURL, quotations } from "~/component/statics";
 
 const QuotationsShow = () => {
     // Initiate your states
@@ -33,7 +33,7 @@ const QuotationsShow = () => {
         if (query) {
             response = await fetcher(`${quotationReadAPIURL}?start=${query.start}&end=${query.end}&to=${query.to}`);
             if (response.status === 200) {
-                const data = await response.json(); 
+                const data = await response.json();
                 setOldQuotationData(data);
 
             }
@@ -65,7 +65,7 @@ const QuotationsShow = () => {
     }
 
     async function handleDeletequotation(no: string) {
-        const result = await fetcher(quotationDeleteAPIURL, { method: "POST", body: JSON.stringify({ "no": no, "username": profile.username, type: "quotations" }) });
+        const result = await fetcher(quotationDeleteAPIURL, { method: "POST", body: JSON.stringify({ "no": no, "username": profile.username, type: quotations }) });
         if (result.status !== 200) {
             addNotifications({
                 title: "Error while deletion...",

@@ -84,7 +84,7 @@ export function useChallanColumns() {
             accessorKey: "sno",
             header: "S. No.",
             cell: (user: any) => {
-                return <span>{user.row.original.items.map((item: ChallanItems) => { return item.sno?.join(", ") }).join(", ")}</span>
+                return <span>{user.row.original?.items?.map((item: ChallanItems) => { return item.sno?.join(", ") }).join(", ")}</span>
             },
             filterFn: (row, columnId, filterValue) => {
                 return row.original["items"].filter((item: ChallanItems) => item.sno?.some(i => i.toLowerCase().includes(filterValue.toLowerCase()))).length > 0;
