@@ -13,7 +13,7 @@ const ComplaintShow = () => {
     const fetcher = useCentralFetcher();
 
     const { oldComplaintsData, setHeaderText, complaintsDataCount, setComplaintsDataCount, setOldComplaintsData, setComplaintsData, profile } = useGlobalContext();
-    async function getQoutes() {
+    async function getComplaints() {
         setLoading(true);
         const response = await fetcher(`${complaintReadAPIURL}`);
         if (response.status === 200) {
@@ -80,7 +80,7 @@ const ComplaintShow = () => {
         setComplaintsData(initialComplaintsData());
         setHeaderText(createComplaint);
         if (complaintsDataCount === 0)
-            getQoutes();
+            getComplaints();
     }, []);
 
     return (
@@ -94,7 +94,7 @@ const ComplaintShow = () => {
                         EmptyText="No Complaints Data Found!"
                         isFetching={loading}
                         search={handleAdvanceSearch}
-                        refresh={getQoutes}
+                        refresh={getComplaints}
                         deleteComplaints={handleDeleteComplaint}
                     />
                 </div>

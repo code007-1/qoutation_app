@@ -3,7 +3,7 @@ import pkg from "jsonwebtoken";
 import { search } from "~/modules/dbOnline";
 const { sign, verify } = pkg;
 import { commitSession, getSession } from "~/modules/sessions";
-import { JWT_ACCESS_KEY, JWT_REFRESH_KEY, userProfile, updateProfile, dbName, usersCollectionName } from "~/modules/utils";
+import { JWT_ACCESS_KEY, JWT_REFRESH_KEY, getUserProfile, dbName, usersCollectionName } from "~/modules/utils";
 
 async function verifyRefreshToken(cookies: string, hostip: string, userAgent: string): Promise<boolean | { username: string, permissions: string }> {
     const session = await getSession(cookies);
@@ -34,7 +34,6 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
     const userAgent = request.headers.get("user-agent");
 
     try {
-
         if (cookies) {
             const verified = await verifyRefreshToken(cookies, url.host, userAgent ? userAgent : "");
 
@@ -47,13 +46,9 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
                     username: (verified as any)["username"],
                     permissions: (verified as any)["permissions"],
                 }
-                const result = await search(dbName, usersCollectionName, { username: verified }, 1, 0);
-
-                if (result && result.length > 0)
-                    updateProfile(result[0]);
-
+                const result = await search(dbName, usersCollectionName, { username: (verified as any)["username"] }, {}, 1, 0);
                 const access = sign(data, JWT_ACCESS_KEY, { expiresIn: "10m" });
-                return Response.json({ token: access, profile: userProfile, permissions: (verified as any)["permissions"] });
+                return Response.json({ token: access, profile: getUserProfile(result[0]), permissions: (verified as any)["permissions"] });
             }
 
             const session = await getSession();

@@ -14,16 +14,21 @@ export const complaintCollectionName = "complaints";
 export const logsCollectionName = "logs";
 export const quotesCollectionName = "quotes";
 export const usersCollectionName = "users";
+export const productCollectionName = "products";
+export const groupsCollectionName = "groups";
+export const incomingProductsInvoiceCollectionName = "incominginvoices";
+export const metaCollectionName = "meta";
 export const dbName = "unnamed";
 export const dburi = "mongodb+srv://spttcpl:9ziRq5mLRppCobx8@cluster0.bbixzsn.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
-
-export var userProfile: profile = { generalInfo: [{ contact: "+91 7065577059/60", address: "G-57, Vikas Marg, Near Metro Pillar No.41, \nDelhi - 110092", company: "Teen Telecommunication Pvt. Ltd.", website: "https://teentelecommunication.com", email: "sales@teentelecommunication.com" }], quotationInfo: [{ pdfColor: "222", showCustomerList: true }] };
-
-export function updateProfile(result: any) {
-    userProfile.username = result.username;
-    userProfile.generalInfo = result.generalInfo;
-    userProfile.quotationInfo = result.quotationInfo;
+export function getUserProfile(result: any) {
+    try {
+        return { username: result.username, generalInfo: result.generalInfo, quotationInfo: result.quotationInfo };
+    }
+    catch (error) {
+        // fake user profile
+        return { generalInfo: [{ contact: "+91 7065577059/60", address: "G-57, Vikas Marg, Near Metro Pillar No.41, \nDelhi - 110092", company: "Teen Telecommunication Pvt. Ltd.", website: "https://teentelecommunication.com", email: "sales@teentelecommunication.com" }], quotationInfo: [{ pdfColor: "222", showCustomerList: true }] };
+    }
 }
 
 export type loginData = {

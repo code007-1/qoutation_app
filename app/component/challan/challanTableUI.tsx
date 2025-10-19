@@ -107,6 +107,7 @@ const ChallanTableUI: FC<TableProps> = ({
                     "," + item.original.to + "," + item.original.date + "," + item.original.category + "," + item.original.type + "," + item.original.madeby + "," +
                     "\"" + item.original.items.map((singleItem: any) => { return singleItem.name + " - " + singleItem.sno?.join(" & ") }).join("\n") + "\"\n";
             })
+            csvData.trimEnd();
 
             const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
             const link = document.createElement('a');
@@ -117,7 +118,6 @@ const ChallanTableUI: FC<TableProps> = ({
             document.body.removeChild(link);
         }
     }
-
 
     function handleEdit(row: ChallanData) {
         setChallanData(row);

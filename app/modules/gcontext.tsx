@@ -5,6 +5,7 @@ import { QuotationData, QuoteItems } from "~/routes/dashboard.quotations.create"
 import packageJson from "../../package.json";
 import { ChallanData, ChallanItems } from "~/routes/dashboard.challan.create";
 import { ComplaintsData } from "~/routes/dashboard.complaints.create";
+import { GroupsData, ProductsData } from "~/routes/dashboard.inventory.create";
 
 interface AppContextType {
     // app related variables
@@ -57,12 +58,21 @@ interface AppContextType {
     setComplaintsDataCount: React.Dispatch<React.SetStateAction<number>>;
     oldComplaintsData: ComplaintsData[];
     setOldComplaintsData: React.Dispatch<React.SetStateAction<ComplaintsData[]>>;
+
+    //group related variables
+    oldGroupsData: GroupsData[];
+    setOldGroupsData: React.Dispatch<React.SetStateAction<GroupsData[]>>;
+    groupsDataCount: number;
+    setGroupsDataCount: React.Dispatch<React.SetStateAction<number>>;
+    groupsData: GroupsData;
+    setGroupsData: React.Dispatch<React.SetStateAction<GroupsData>>;
 }
 
 const appContext = createContext<AppContextType | null>(null);
 export const createQuotation = <>< Link to={"/dashboard/quotations/create"} className="cursor-pointer hover:bg-buttonHover w-min text-nowrap p-1" >Create Quotation</Link ></>;
 export const createChallan = <>< Link to={"/dashboard/challan/create"} className="cursor-pointer hover:bg-buttonHover w-min text-nowrap p-1" >Create Challan</Link ></>;
 export const createComplaint = <>< Link to={"/dashboard/complaints/create"} className="cursor-pointer hover:bg-buttonHover w-min text-nowrap p-1" >Create Complaint</Link ></>;
+export const createInvetory = <>< Link to={"/dashboard/inventory/create"} className="cursor-pointer hover:bg-buttonHover w-min text-nowrap p-1" >Create Inventory</Link ></>;
 
 export const initialQuotationData = () => {
     return {
@@ -121,6 +131,16 @@ export const initialComplaintsData = () => {
     }
 }
 
+export const initialProductData = () => {
+    return {
+        id: "",
+        name: "",
+        description: "",
+        hsn: "",
+        price: 0,
+        group: ""
+    };
+}
 
 export const AppProvider = ({ children }: { children: React.ReactNode }) => {
     // app related variaibles
@@ -153,6 +173,16 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
     const [complaintsDataCount, setComplaintsDataCount] = useState<number>(0);
     const [complaintsData, setComplaintsData] = useState<ComplaintsData>(initialComplaintsData());
 
+    // product related variables
+    const [oldProductsData, setOldProductsData] = useState<ProductsData[]>([]);
+    const [productsDataCount, setProductsDataCount] = useState<number>(0);
+    const [productsData, setProductsData] = useState<ProductsData>(initialProductData());
+
+    // product related variables
+    const [oldGroupsData, setOldGroupsData] = useState<GroupsData[]>([]);
+    const [groupsDataCount, setGroupsDataCount] = useState<number>(0);
+    const [groupsData, setGroupsData] = useState<GroupsData>(initialProductData());
+
     const toggleTheme = () => {
         const currentTheme = () => {
             switch (theme) {
@@ -179,7 +209,7 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
     };
 
     return (
-        <appContext.Provider value={{ theme, setTheme, toggleTheme, accessToken, setAccessToken, quotationItems, setQuotationItems, quotationData, setQuotationData, headerText, setHeaderText, gQuote, setGQuote, profile, setProfile, selectedProfile, setSelectedProfile, quotationDataCount, setQuotationDataCount, oldQuotationData, setOldQuotationData, homeLink, setHomeLink, setAppName, appName, oldChallanData, setOldChallanData, challanDataCount, setChallanDataCount, challanItems, setChallanItems, challanData, setChallanData, complaintsData, setComplaintsData, permissions, setPermissions, oldComplaintsData, setOldComplaintsData, complaintsDataCount, setComplaintsDataCount }}>
+        <appContext.Provider value={{ theme, setTheme, toggleTheme, accessToken, setAccessToken, quotationItems, setQuotationItems, quotationData, setQuotationData, headerText, setHeaderText, gQuote, setGQuote, profile, setProfile, selectedProfile, setSelectedProfile, quotationDataCount, setQuotationDataCount, oldQuotationData, setOldQuotationData, homeLink, setHomeLink, setAppName, appName, oldChallanData, setOldChallanData, challanDataCount, setChallanDataCount, challanItems, setChallanItems, challanData, setChallanData, complaintsData, setComplaintsData, permissions, setPermissions, oldComplaintsData, setOldComplaintsData, complaintsDataCount, setComplaintsDataCount, oldGroupsData, setOldGroupsData, groupsDataCount, setGroupsDataCount, groupsData, setGroupsData }}>
             {children}
         </appContext.Provider>
     );

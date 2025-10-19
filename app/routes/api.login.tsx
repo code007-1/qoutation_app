@@ -5,7 +5,7 @@ import { commitSession, getSession } from "~/modules/sessions";
 import pkg from "jsonwebtoken";
 const { sign } = pkg;
 import bcrypt from "bcrypt";
-import { getQoute, JWT_ACCESS_KEY, JWT_REFRESH_KEY, userProfile, updateProfile, dbName, logsCollectionName, usersCollectionName } from "~/modules/utils";
+import { getQoute, JWT_ACCESS_KEY, JWT_REFRESH_KEY, getUserProfile, dbName, logsCollectionName, usersCollectionName } from "~/modules/utils";
 
 export const action: ActionFunction = async ({ request }) => {
     try {
@@ -13,7 +13,7 @@ export const action: ActionFunction = async ({ request }) => {
         const username = (formData.get("username") as string).trim().toLowerCase();
         const password = formData.get("password") as string;
 
-        const result = await search(dbName, usersCollectionName, { username: username }, 1, 0);
+        const result = await search(dbName, usersCollectionName, { username: username }, {}, 1, 0);
 
         if (result && result.length > 0) {
             const verified = await bcrypt.compare(password, result[0].password);
@@ -36,13 +36,13 @@ export const action: ActionFunction = async ({ request }) => {
                 let session = await getSession();
                 session.set("rToken", refresh);
 
-                updateProfile(result[0]);
+
                 var response = {};
                 if (username === "gunjan") {
                     const quote = await getQoute();
-                    response = { token: access, profile: userProfile, quote: quote };
+                    response = { token: access, profile: getUserProfile(result[0]), quote: quote };
                 }
-                else { response = { token: access, profile: userProfile, permissions: result[0]?.permissions }; }
+                else { response = { token: access, profile: getUserProfile(result[0]), permissions: result[0]?.permissions }; }
                 await insertOnetoDb({ "by": username, "action": "logging in", "result": "succeded", "when": new Date().toISOString() }, dbName, logsCollectionName);
                 return Response.json(response, { headers: { "Set-Cookie": await commitSession(session) } });
             }

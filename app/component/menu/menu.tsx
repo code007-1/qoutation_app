@@ -1,6 +1,6 @@
 import { Button, Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { Link } from "@remix-run/react";
-import { AlignRight, Info, LogOut, NotebookText, NotepadText, Power, RotateCcwKey, ScrollText, UserPen, X } from "lucide-react";
+import { AlignRight, BadgeAlert, FilePenLine, Info, Layers, LogOut, NotebookText, NotepadText, Power, RotateCcwKey, ScrollText, UserPen, X } from "lucide-react";
 import { useGlobalContext } from "~/modules/gcontext";
 import { useCentralFetcher } from "../centralFetcher";
 import { Dialog } from "./about";
@@ -104,7 +104,7 @@ export default function MainMenu() {
                                 to="/dashboard/challan/show"
                                 className="flex px-4 py-2 data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
                             >
-                                <NotepadText size={20} className="mr-2" />
+                                <FilePenLine size={20} className="mr-2" />
                                 Challan Home
                             </Link>
                         </MenuItem>
@@ -113,8 +113,17 @@ export default function MainMenu() {
                                 to="/dashboard/complaints/show"
                                 className="flex px-4 py-2 data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
                             >
-                                <NotebookText size={20} className="mr-2" />
+                                <BadgeAlert size={20} className="mr-2" />
                                 Complaint Home
+                            </Link>
+                        </MenuItem>
+                        <MenuItem>
+                            <Link
+                                to="/dashboard/inventory/show"
+                                className="flex px-4 py-2 data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
+                            >
+                                <Layers size={20} className="mr-2" />
+                                Inventory Home
                             </Link>
                         </MenuItem>
                     </div>

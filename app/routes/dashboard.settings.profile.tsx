@@ -161,7 +161,7 @@ export default function SettingsProfile() {
                                         }} />
                                     </div>
                                     <div className="col-span-2">
-                                        Bank Details <textarea rows={5} placeholder="Enter Bank Details, seperate by ';'" className="border border-border p-2 w-full bg-background" value={profile?.generalInfo[selectedProfile]?.bankInfo?.join(";") || ""} onChange={(e) => {
+                                        Bank Details <textarea rows={5} title="Enter Bank Details, seperate by ';'" placeholder="Enter Bank Details, seperate by ';'" className="border border-border p-2 w-full bg-background" value={profile?.generalInfo[selectedProfile]?.bankInfo?.join(";") || ""} onChange={(e) => {
                                             setProfile((pre) => {
                                                 const updatedGeneralInfo = [...pre.generalInfo];
                                                 updatedGeneralInfo[selectedProfile] = { ...updatedGeneralInfo[selectedProfile], bankInfo: e.target.value.split(";") };

@@ -16,11 +16,11 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
         if (sno != "") {
             const query = { "items.sno": sno };
-            const result = await sortedSearch(dbName, challanCollectionName, query, limit, 0, -1, "_id");
+            const result = await sortedSearch(dbName, challanCollectionName, query, {}, limit, 0, -1, "_id");
             return Response.json(result, { status: 200 });
         }
         else {
-            const result = await sortedSearch(dbName, challanCollectionName, {}, limit, skip, -1, "_id");
+            const result = await sortedSearch(dbName, challanCollectionName, {}, {}, limit, skip, -1, "_id");
             return Response.json(result, { status: 200 });
         }
     }

@@ -64,20 +64,6 @@ console.log('Decrypted:', decrypted);
 
 
 
-import { MongoClient, ServerApiVersion } from "mongodb";
-import { writeFileSync } from "fs";
-
-const uri = "mongodb+srv://spttcpl:9ziRq5mLRppCobx8@cluster0.bbixzsn.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
-
-// Create a MongoClient with a MongoClientOptions object to set the Stable API version
-const client = new MongoClient(uri, {
-    serverApi: {
-        version: ServerApiVersion.v1,
-        strict: true,
-        deprecationErrors: true,
-    }
-});
-
 
 async function FixSomething() {
     await client.connect();
@@ -117,3 +103,64 @@ async function FixSomething() {
 }
 
 FixSomething();*/
+
+import { MongoClient, ServerApiVersion } from "mongodb";
+import fs from "fs";
+import csv from "csv-parser";
+
+const uri = "mongodb+srv://spttcpl:9ziRq5mLRppCobx8@cluster0.bbixzsn.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+
+// Create a MongoClient with a MongoClientOptions object to set the Stable API version
+const client = new MongoClient(uri, {
+    serverApi: {
+        version: ServerApiVersion.v1,
+        strict: true,
+        deprecationErrors: true,
+    }
+});
+
+async function UploadProducts() {
+    await client.connect();
+    // Send a ping to confirm a successful connection
+    await client.db("unnamed").command({ ping: 1 });
+
+    const rows = [];
+
+    const loadDataPromise = new Promise((resolve, reject) => {
+        if (rows.length > 0) {
+            console.log("CSV file already processed. Rows:", rows.length);
+            resolve(rows);
+            return;
+        }
+
+        fs.createReadStream("./assets/data.csv")
+            .pipe(csv({ skipLines: 0, mapHeaders: ({ header }) => header.trim() }))
+            .on("data", (row) => {
+                row["productid"] = rows.length;
+                rows.push(row);
+            })
+            .on("end", () => {
+                console.log("CSV file successfully processed.");
+                resolve(rows);
+            })
+            .on("error", (err) => {
+                console.error("Error reading CSV file:", err);
+                reject(err);
+            });
+    });
+
+    loadDataPromise.then(async () => {
+        if (rows.length > 0) {
+            const result = await client.db("unnamed").collection("products").insertMany(rows);
+            console.log("Bulk operation result:", result);
+        }
+    }).finally(() => {
+        client.close();
+    })
+}
+
+UploadProducts();
+
+// needs to do performance optimization of loading data from db
+// load data only when required, for example challan, quotation, complaint, or product
+// initally load only data that shows in table, on click load full data for that particular

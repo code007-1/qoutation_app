@@ -4,16 +4,6 @@ import { useGlobalContext } from "~/modules/gcontext";
 import { ChallanItems } from "~/routes/dashboard.challan.create";
 import { quotationAndChallanDataSearch } from "../statics";
 
-//- done - advance show hide for better ui - optimized little bit, ok for now
-//- done - welcome animation - partially done, would improve animation
-//- as of now only online- offline online sync both mongob
-//- done - user profile edit
-// save type check while uploading to mongodb i.e., form data validation
-//- done - notification system 
-//- done - access token verify
-// pwa or exe application form
-// - done - partially done - login log system
-
 export default function ChallanAutocompleteSearch({ index }: { index: number }) {
     const [showSuggestions, setShowSuggestions] = useState(false);
     const [filtered, setFiltered] = useState<ChallanItems[]>([]);
