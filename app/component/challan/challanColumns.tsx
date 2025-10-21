@@ -1,11 +1,15 @@
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown, Copy, Ellipsis, Pencil, Trash2 } from "lucide-react";
+import { ArrowBigDownDash, ArrowDownToLine, ArrowUpDown, Copy, Ellipsis, Pencil, Trash2 } from "lucide-react";
 import { useGlobalContext } from "~/modules/gcontext";
 import { ChallanItems } from "~/routes/dashboard.challan.create";
+import { createPdf } from "~/routes/dashboard.quotations.create";
+import { useCentralFetcher } from "../centralFetcher";
+import { challans } from "../statics";
 
 export function useChallanColumns() {
     const { permissions } = useGlobalContext();
+    const fetcher = useCentralFetcher();
 
     const columns: ColumnDef<any, any>[] = [
         {
@@ -83,7 +87,7 @@ export function useChallanColumns() {
             header: () => <div className="text-center">Actions</div>,
             cell: (user: any) => {
                 return <>
-                    < Menu as="div" className="relative inline-block text-left text-sm text-textSecondary w-full" >
+                    < Menu as="div" className="relative inline-block text-left text-sm text-textSecondary w-full cursor-pointer" >
                         <div>
                             <MenuButton className="w-full flex items-center justify-center hover:bg-buttonHover px-2">
                                 <Ellipsis className="text-textPrimary" />
@@ -91,33 +95,42 @@ export function useChallanColumns() {
                         </div>
                         <MenuItems
                             transition
-                            className="absolute right-8 z-10 mt-2 w-36 origin-top-right divide-y divide-border rounded-sm bg-background shadow-lg ring-1 ring-black/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
+                            className="absolute right-8 z-10 mt-2 w-48 origin-top-right divide-y divide-border rounded-sm bg-background shadow-lg ring-1 ring-black/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
                         >
-                            <div className="flex flex-col gap-y-1 p-1">
+                            <div className="flex flex-col gap-y-1 p-1 text-base">
                                 <MenuItem>
                                     <div
                                         className="flex px-6 py-1 data-[focus]:bg-buttonHover"
                                         onClick={() => user.table.options.meta?.handleEdit?.(user.row.original)}
                                     >
-                                        <div className="text-textSecondary mr-4"><Pencil /></div>
-                                        <div className="text-textPrimary text-lg">Edit</div>
+                                        <div className="text-textSecondary mr-4"><Pencil size={20} /></div>
+                                        <div className="text-textPrimary">Edit</div>
                                     </div>
                                 </MenuItem>
                                 <MenuItem>
                                     <div className="flex px-6 py-1 data-[focus]:bg-buttonHover"
                                         onClick={() => user.table.options.meta?.handleCopy?.(user.row.original)}>
-                                        <div className="text-textSecondary mr-4"><Copy /></div>
-                                        <div className="text-textPrimary text-lg">Copy</div>
+                                        <div className="text-textSecondary mr-4"><Copy size={20} /></div>
+                                        <div className="text-textPrimary">Copy</div>
                                     </div>
                                 </MenuItem>
                                 {permissions.includes("delete") &&
                                     <MenuItem>
                                         <div className="flex px-6 py-1 data-[focus]:bg-buttonHover"
                                             onClick={() => user.table.options.meta?.deleteChallan?.(user.row.original.no)}>
-                                            <div className="text-textSecondary mr-4"><Trash2 /></div>
-                                            <div className="text-textPrimary text-lg">Delete</div>
+                                            <div className="text-textSecondary mr-4"><Trash2 size={20} /></div>
+                                            <div className="text-textPrimary">Delete</div>
                                         </div>
                                     </MenuItem>}
+                                <MenuItem>
+                                    <div
+                                        className="flex px-6 py-1 data-[focus]:bg-buttonHover"
+                                        onClick={(e) => createPdf(user.row.original, fetcher, false, false, challans)}
+                                    >
+                                        <div className="text-textSecondary mr-4"><ArrowDownToLine size={20} /></div>
+                                        <div className="text-textPrimary">Download</div>
+                                    </div>
+                                </MenuItem>
                             </div>
                         </MenuItems >
                     </Menu >

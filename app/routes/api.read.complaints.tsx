@@ -4,7 +4,7 @@ import { complaintCollectionName, dbName, verifyAccessToken } from "~/modules/ut
 
 export const loader: LoaderFunction = async ({ request, params }) => {
     try {
-        const permissions = await verifyAccessToken(request);
+        const { permissions } = await verifyAccessToken(request);
         if (!permissions?.includes("read"))
             return new Response("user not authorized to read", { status: 405 });
 

@@ -16,10 +16,14 @@ export const quotesCollectionName = "quotes";
 export const usersCollectionName = "users";
 export const productCollectionName = "products";
 export const groupsCollectionName = "groups";
-export const incomingProductsInvoiceCollectionName = "incominginvoices";
+export const purchaseInvoiceCollectionName = "purchaseinvoices"
+export const serialsCollectionName = "serials";
+export const pruchaseInvoicePrefix = "pi";
 export const metaCollectionName = "meta";
 export const dbName = "unnamed";
-export const dburi = "mongodb+srv://spttcpl:9ziRq5mLRppCobx8@cluster0.bbixzsn.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+export const mongoDBUrl = "mongodb+srv://spttcpl:9ziRq5mLRppCobx8@cluster0.bbixzsn.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+export const reddisUrl = "https://daring-seasnail-19305.upstash.io";
+export const reddisToken = "AUtpAAIncDI1MTcwODVkNTM3NTU0NzM4ODYxMTJlZGEwMjAwZDFkMnAyMTkzMDU";
 
 export function getUserProfile(result: any) {
     try {
@@ -29,6 +33,15 @@ export function getUserProfile(result: any) {
         // fake user profile
         return { generalInfo: [{ contact: "+91 7065577059/60", address: "G-57, Vikas Marg, Near Metro Pillar No.41, \nDelhi - 110092", company: "Teen Telecommunication Pvt. Ltd.", website: "https://teentelecommunication.com", email: "sales@teentelecommunication.com" }], quotationInfo: [{ pdfColor: "222", showCustomerList: true }] };
     }
+}
+
+export type serials = {
+    sno: string,
+    productid: string,
+    purchaseInvoice?: string,
+    purchaseDate?: string,
+    saleInvoice?: string,
+    saleDate?: string,
 }
 
 export type loginData = {
@@ -41,6 +54,29 @@ export type loginData = {
 export type logoutData = {
     success: boolean | undefined,
 };
+
+export function prefixSerial(productId: string, serial: string) {
+    return `${productId}-${serial}`;
+}
+
+export function deprefixSerial(prefixedSerial: string) {
+    const index = prefixedSerial.indexOf("-");
+    if (index === -1) return { productId: "", serial: prefixedSerial };
+    const productId = prefixedSerial.substring(0, index);
+    const serial = prefixedSerial.substring(index + 1);
+    return { productId, serial };
+}
+
+export function prefixPurchaseInvoice(vendorName: string, invoiceno: string) {
+    return `${vendorName.split(" ")[0]}-${invoiceno}`;
+}
+
+export function deprefixPurchaseInvoice(prefixedInvoiceno: string) {
+    const index = prefixedInvoiceno.indexOf("-");
+    if (index === -1) return prefixedInvoiceno;
+    const invoiceno = prefixedInvoiceno.substring(index + 1);
+    return invoiceno;
+}
 
 export async function getQoute() {
     const len = await count("unnamed", "quotes") as number;
@@ -65,7 +101,7 @@ export async function verifyAccessToken(request: any) {
     try {
         const verfied = verify(accessToken, JWT_ACCESS_KEY);
         if (verfied) {
-            return (verfied as { permissions: string })?.permissions;
+            return { permissions: (verfied as { permissions: string })?.permissions, username: (verfied as { username: string })?.username };
         }
         throw new Response("user not authorized", { status: 401 });
     }

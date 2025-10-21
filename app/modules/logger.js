@@ -159,8 +159,13 @@ async function UploadProducts() {
     })
 }
 
-UploadProducts();
+//UploadProducts();
 
 // needs to do performance optimization of loading data from db
 // load data only when required, for example challan, quotation, complaint, or product
 // initally load only data that shows in table, on click load full data for that particular
+
+
+const a = [{ items: { sno: ["1", "2"] } }, { items: { sno: ["3", "4"] } }]
+const result = a.map(d => d.items.sno).flat();
+console.log(result);

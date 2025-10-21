@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import { useComplaintsColumn } from "~/component/complaints/complaintColumns";
-import { createInvetory, initialComplaintsData, useGlobalContext } from "~/modules/gcontext";
+import { createInvetory, initialComplaintsData, initialProductData, useGlobalContext } from "~/modules/gcontext";
 import { useCentralFetcher } from "~/component/centralFetcher";
 import { useNotification } from "~/modules/notificationContext";
 import { compalints, complaintReadAPIURL, productReadAPIURL } from "~/component/statics";
 import ComplaintTableUI from "~/component/complaints/complaintTableUI";
 import { useProductsolumn as useProductsColumn } from "~/component/product/productColumns";
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
+import ProductTableUI from "~/component/inventory/purchaseInvoices/product/productTableUI";
+import ChallanTableUI from "~/component/challan/challanTableUI";
 
 export default function Inventory() {
     // Initiate your states
@@ -14,15 +16,15 @@ export default function Inventory() {
     const { addNotifications } = useNotification();
     const fetcher = useCentralFetcher();
 
-    const { oldComplaintsData, setHeaderText, complaintsDataCount, setComplaintsDataCount, setOldComplaintsData, setComplaintsData, profile } = useGlobalContext();
+    const { oldProductsData, setHeaderText, productsDataCount, setProductsDataCount, setOldProductsData, setProductsData, profile } = useGlobalContext();
     async function getInventory() {
         setLoading(true);
         const response = await fetcher(`${productReadAPIURL}`);
         if (response.status === 200) {
             const data = await response.json()
             console.log("products : ", data);
-            setOldComplaintsData(data);
-            setComplaintsDataCount(data.length);
+            setOldProductsData(data);
+            setProductsDataCount(data.length);
         }
         else {
             addNotifications({ title: "Failure...", message: "Fail to load data." });
@@ -37,26 +39,26 @@ export default function Inventory() {
             response = await fetcher(`${complaintReadAPIURL}?start=${query.start}&end=${query.end}&to=${query.to}`);
             if (response.status === 200) {
                 const data = await response.json();
-                setOldComplaintsData(data);
+                setOldProductsData(data);
             }
             else if (response.status != 200) {
                 addNotifications({ title: "Failure...", message: "Fail to load data." });
             }
-            setComplaintsDataCount(0);
+            setProductsDataCount(0);
             setLoading(false);
         }
         else {
             setLoading(true);
-            response = await fetcher(`${complaintReadAPIURL}?skip=${complaintsDataCount}`);
+            response = await fetcher(`${complaintReadAPIURL}?skip=${productsDataCount}`);
             if (response.status === 200) {
                 const data = await response.json();
-                if (complaintsDataCount == 0) {
-                    setOldComplaintsData(data);
-                    setComplaintsDataCount(data.length);
+                if (productsDataCount == 0) {
+                    setOldProductsData(data);
+                    setProductsDataCount(data.length);
                 }
                 else {
-                    setOldComplaintsData(pre => { return [...pre, ...data] });
-                    setComplaintsDataCount(oldComplaintsData.length + data.length);
+                    setOldProductsData(pre => { return [...pre, ...data] });
+                    setProductsDataCount(oldProductsData.length + data.length);
                 }
             }
             else if (response.status != 200) {
@@ -75,14 +77,14 @@ export default function Inventory() {
             });
         }
         else {
-            setOldComplaintsData((pre: any) => { return pre.filter((item: any) => item.no === no ? false : true) });
+            setOldProductsData((pre: any) => { return pre.filter((item: any) => item.no === no ? false : true) });
         }
     }
 
     useEffect(() => {
-        setComplaintsData(initialComplaintsData());
+        setProductsData(initialProductData());
         setHeaderText(createInvetory);
-        if (complaintsDataCount === 0)
+        if (productsDataCount === 0)
             getInventory();
     }, []);
 
@@ -106,8 +108,8 @@ export default function Inventory() {
                     <TabPanels className="mt-3">
                         <TabPanel key={"Products"} className="">
                             <div>
-                                <ComplaintTableUI
-                                    data={oldComplaintsData}
+                                <ProductTableUI
+                                    data={oldProductsData}
                                     columns={useProductsColumn()}
                                     searchLabel="Search by Name or job title"
                                     EmptyText="No Complaints Data Found!"

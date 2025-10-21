@@ -27,6 +27,8 @@ interface TableProps {
     handleRow?: () => void,
     refresh: () => void,
     deleteChallan: (no: string) => void
+    filterTypes: {}
+    exportCSV: (rows: Row<any>[]) => void
 }
 
 
@@ -41,29 +43,24 @@ const ChallanTableUI: FC<TableProps> = ({
     search,
     EmptyText,
     refresh,
-    deleteChallan
+    deleteChallan,
+    filterTypes,
+    exportCSV
 }) => {
 
     const memoizedData = useMemo(() => data, [data]);
     const memoizedColumns = useMemo(() => columns, [columns]);
     const memoisedHeaderComponent = useMemo(() => headerComponent, [headerComponent]);
+
+    // for sorting and column filtering - not bieng used currently
     const [sorting, setSorting] = useState<SortingState>([]);
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-    const [filterType, setFilterType] = useState<string>("Challan #");
 
-    const filterTypes = ["Challan #", "Made By", "Date", "To", "S.No."];
+    // for filtering and serching
+    type FilterKey = keyof typeof filterTypes;
+    const [filterType, setFilterType] = useState<FilterKey>(Object.keys(filterTypes)[0] as FilterKey);
 
-    const getType = (type: string) => {
-        switch (type) {
-            case "Challan #": return "no";
-            case "Made By": return "madeby";
-            case "Date": return "date";
-            case "To": return "to";
-            case "S.No.": return "sno";
-            default: return "no";
-        }
-    };
-
+    // for pagination
     const [pagination, setPagination] = useState<PaginationState>({ pageIndex: 0, pageSize: 10 })
 
     const { getHeaderGroups, getRowModel, getAllColumns, getColumn, getCanNextPage, getCanPreviousPage, getState, getPageCount, setPageSize, } = useReactTable({
@@ -79,7 +76,6 @@ const ChallanTableUI: FC<TableProps> = ({
         autoResetPageIndex: false,
         state: { sorting, columnFilters, pagination },
         meta: { handleEdit: handleEdit, handleCopy: handleCopy, deleteChallan: deleteChallan },
-        //pageCount,
     });
 
     const skeletons = Array.from({ length: skeletonCount }, (x, i) => i);
@@ -91,33 +87,8 @@ const ChallanTableUI: FC<TableProps> = ({
 
     const navigate = useNavigate();
     const { setChallanData, setChallanItems, profile } = useGlobalContext();
-    const fetcher = useCentralFetcher();
     const [open, setOpen] = useState(false);
     const [query, setQuery] = useState({ sno: "" });
-
-    // Function to initiate CSV download
-    function downloadCSV(rows: Row<any>[]) {
-        if (rows.length === 0) {
-            alert('No data to export');
-        } else {
-            let csvData = "Challan No, Bill No, Order No, From, To, Date, Category, Type, Made By, Items and Serial Numbers\n";
-
-            rows.map((item: any) => {
-                csvData += item.original.no.toString() + "," + item.original.billno + ", " + item.original.orderno + "," + item.original.from +
-                    "," + item.original.to + "," + item.original.date + "," + item.original.category + "," + item.original.type + "," + item.original.madeby + "," +
-                    "\"" + item.original.items.map((singleItem: any) => { return singleItem.name + " - " + singleItem.sno?.join(" & ") }).join("\n") + "\"\n";
-            })
-            csvData.trimEnd();
-
-            const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.setAttribute('download', `challan-${new Date().toISOString().split("T")[0]}.csv`);
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
-    }
 
     function handleEdit(row: ChallanData) {
         setChallanData(row);
@@ -190,7 +161,7 @@ const ChallanTableUI: FC<TableProps> = ({
                                 className="absolute -right-34 z-10 mt-2 w-[136px] origin-top-right rounded-sm bg-background shadow-lg ring-1 ring-black/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
                             >
                                 <div className="p-1">
-                                    {filterTypes.map((filterType) => {
+                                    {Object.keys(filterTypes).map((filterType) => {
                                         return (
                                             <ListboxOption
                                                 key={filterType}
@@ -207,9 +178,9 @@ const ChallanTableUI: FC<TableProps> = ({
                     </Listbox>
                     <input
                         placeholder="Filter....."
-                        value={(getColumn(getType(filterType))?.getFilterValue() as string) ?? ""}
+                        value={(getColumn(filterTypes[filterType])?.getFilterValue() as string) ?? ""}
                         onChange={(event) =>
-                            getColumn(getType(filterType))?.setFilterValue(event.target.value)
+                            getColumn(filterTypes[filterType])?.setFilterValue(event.target.value)
                         }
                         className="border p-2 w-[20%] border-border bg-background text-textPrimary focus:outline-textPrimary"
                     />
@@ -232,7 +203,7 @@ const ChallanTableUI: FC<TableProps> = ({
                         Refresh Data
                     </button>
                     <button
-                        onClick={() => { downloadCSV(getRowModel().rows) }}
+                        onClick={() => { exportCSV(getRowModel().rows) }}
                         className="button p-2"
                     >
                         Export
@@ -276,15 +247,9 @@ const ChallanTableUI: FC<TableProps> = ({
                         <tbody className="p-2">
                             {!isFetching ? (
                                 getRowModel()?.rows.map((row) => (
-                                    <tr key={row.id} className="bg-header cursor-pointer hover:bg-buttonHover" tabIndex={0}>
+                                    <tr key={row.id} className="bg-header hover:bg-buttonHover" tabIndex={0}>
                                         {row.getVisibleCells().map((cell) => (
                                             <td
-                                                onClick={(e) => {
-                                                    //if (cell.column.id === "edit") handleEdit(row.original)
-                                                    //else if (cell.column.id === "copy") handleCopy(row.original)
-                                                    //else if (cell.column.id === "delete") deleteChallan(row.original.no)
-                                                    if (cell.column.id !== "actions") createPdf(row.original, fetcher, false, false, "challan");
-                                                }}
                                                 key={cell.id}
                                                 className="text-textSecondary text-base text-left p-2"
                                             >

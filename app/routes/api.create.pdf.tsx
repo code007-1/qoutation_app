@@ -8,7 +8,7 @@ import { challanCollectionName, dbName, logsCollectionName, quotationCollectionN
 
 export const action: ActionFunction = async ({ request, params }) => {
     try {
-        const permissions = await verifyAccessToken(request);
+        const { permissions } = await verifyAccessToken(request);
         if (!permissions?.includes("write"))
             return new Response("user not authorized to create", { status: 405 });
 
@@ -21,9 +21,9 @@ export const action: ActionFunction = async ({ request, params }) => {
 
         if (save === "true") {
             if (type === quotationCollectionName)
-                await insertOrUpdateOnetoDb(data);
+                await insertOrUpdateOnetoDb(data, dbName, quotationCollectionName, { "no": data.no }, true);
             else if (type === challanCollectionName)
-                await insertOrUpdateOnetoDb(data, dbName, challanCollectionName);
+                await insertOrUpdateOnetoDb(data, dbName, challanCollectionName, { "no": data.no }, true);
             else {
                 console.error("unknown data type while saving to db");
                 throw new Response("Internal server error", { status: 500 });

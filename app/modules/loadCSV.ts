@@ -20,7 +20,7 @@ export const loadDataPromise: Promise<Record<string, {}>> = new Promise(async (r
                 loadedProducts.map((product: any) => {
                     const escape = (text: string) => `"${String(text).replace(/"/g, '\'')}"`; // Escape double quotes too
                     csvData += escape(product.productid) + "," + escape(product.name) + "," + escape(product.description) + "," + escape(product.hsn) + "," + escape(product.price) + "," + escape(product.link) + "\n";
-                    products[product.productid] = { product };
+                    products[product.productid] = { ...product };
                     productsCount += 1;
                 })
                 csvData.trimEnd();
@@ -29,7 +29,7 @@ export const loadDataPromise: Promise<Record<string, {}>> = new Promise(async (r
         }
 
         if (productsCount > 0) {
-            console.log("CSV file already processed. Rows:", products.length);
+            console.log("CSV file already processed. Rows:", productsCount);
             resolve(products);
             return;
         }
@@ -37,10 +37,11 @@ export const loadDataPromise: Promise<Record<string, {}>> = new Promise(async (r
         fs.createReadStream("./assets/data.csv")
             .pipe(csv({ skipLines: 0, mapHeaders: ({ header }) => header.trim() }))
             .on("data", (row) => {
-                products[row.productid] = row;
+                products[row.productid] = { ...row };
+                productsCount += 1;
             })
             .on("end", () => {
-                console.log("CSV file successfully processed.");
+                console.log("CSV file already processed. Rows:", productsCount);
                 resolve(products);
             })
             .on("error", (err) => {

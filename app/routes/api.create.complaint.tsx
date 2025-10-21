@@ -5,10 +5,13 @@ import { complaintCollectionName, dbName, logsCollectionName, verifyAccessToken 
 //export let loader: LoaderFunction = async ({ request, params }) => {
 export const action: ActionFunction = async ({ request, params }) => {
     try {
-        await verifyAccessToken(request);
+        const { permissions } = await verifyAccessToken(request);
+        if (!permissions?.includes("write"))
+            return new Response("user not authorized to create", { status: 405 });
+
         const data = await request.json();
 
-        await insertOrUpdateOnetoDb(data, dbName, complaintCollectionName);
+        await insertOrUpdateOnetoDb(data, dbName, complaintCollectionName, { "no": data.no }, true);
 
         await insertOnetoDb({ "by": data.recordedby, "action": `saving complaint`, "result": "succeded", "when": new Date().toISOString() }, dbName, logsCollectionName);
         // finally create the Response with the correct Content-Type header for a PDF

@@ -5,9 +5,11 @@ export const productReadAPIURL = "/api/read/products";
 export const quotationDeleteAPIURL = "/api/delete";
 export const quotationAndChallanDataSearch = "/api/search";
 export const saveAndCreatePDF = "/api/create/pdf";
+export const purchaseInvoiceURL = "/api/create/purchaseinvoice"
 
 export const quotations = "quotations";
 export const challans = "challans";
 export const compalints = "complaints";
 export const logsCollectionName = "logs";
 export const quotesCollectionName = "quotes";
+

@@ -1,8 +1,8 @@
 // how category and type is saving to db and convert sno to array
 import { ChangeStream, MongoClient, ServerApiVersion } from "mongodb";
-import { dbName, dburi, productCollectionName, quotationCollectionName, usersCollectionName } from "./utils";
+import { dbName, mongoDBUrl, productCollectionName, purchaseInvoiceCollectionName, quotationCollectionName, usersCollectionName } from "./utils";
 
-const uri = dburi;//"mongodb+srv://spttcpl:9ziRq5mLRppCobx8@cluster0.bbixzsn.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+const uri = mongoDBUrl;//"mongodb+srv://spttcpl:9ziRq5mLRppCobx8@cluster0.bbixzsn.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 //let changeStream: ChangeStream | null;
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
@@ -96,7 +96,7 @@ export async function count(db: string = dbName, collection: string = quotationC
     //finally { await client.close(); }
 }
 
-// update one document in collection
+// update one document in collection if condition satisfies
 export async function update(db: string = dbName, collection: string = usersCollectionName, query: {} = {}, updateDoc: {}) {
     try {
         await run();
@@ -119,11 +119,11 @@ export async function deleteOneFromDB(no: string, db: string = dbName, collectio
 }
 
 // updates or inserts one document according to "no"
-export async function insertOrUpdateOnetoDb(data: any, db: string = dbName, collection: string = quotationCollectionName) {
+export async function insertOrUpdateOnetoDb(data: any, db: string = dbName, collection: string = quotationCollectionName, updateFilter: {} = {}, upsert: true) {
     try {
         await run();
         const { _id, ...restData } = data;
-        const result = await client.db(db).collection(collection).updateOne({ "no": data.no }, { $set: { ...restData } }, { upsert: true });
+        const result = await client.db(db).collection(collection).updateOne(updateFilter, { $set: { ...restData } }, { upsert: upsert });
         console.log(`New item created with the following id: ${result.upsertedId} : ${result}`);
         return result.upsertedCount;
     }
@@ -141,4 +141,14 @@ export async function insertOnetoDb(data: any, db: string = dbName, collection: 
     }
     catch (error) { console.log("error while inserting document to database : ", error); }
     //finally { await client.close(); }
+}
+
+export async function bulkWriteToDb(data: any[], db: string = dbName, collection: string = purchaseInvoiceCollectionName) {
+    try {
+        await run();
+        const result = await client.db(dbName).collection(collection).bulkWrite(data);
+        console.log(`New log created with the following id: ${result.upsertedIds}`);
+        return result.upsertedIds;
+    }
+    catch (error) { console.log("error while bulk writing documents to database : ", error); }
 }

@@ -20,10 +20,10 @@ export function useProductsolumn() {
 
     const column: ColumnDef<any, any>[] = [
         {
-            accessorKey: "productID",
+            accessorKey: "productid",
             header: "ID",
             cell: (user: any) => {
-                return <span>{user.row.original.productID}</span>
+                return <span>{user.row.original.productid}</span>
             },
             filterFn: (row, columnId, filterValue) => {
                 return row.original[columnId].toLowerCase().includes(filterValue);

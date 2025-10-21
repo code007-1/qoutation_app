@@ -2,10 +2,9 @@ import { ActionFunction } from "@remix-run/node";
 import { products, productsCount } from "~/modules/loadCSV";
 
 export const action: ActionFunction = async ({ request }) => {
-    const query = await request.json();
-    console.log("asd", productsCount, Object.values(products)[1]);
-    if (productsCount === 0) {
 
+    const query = await request.json();
+    if (productsCount === 0) {
         return new Response(JSON.stringify({ error: "No data available" }), { status: 200 });
     }
     else {

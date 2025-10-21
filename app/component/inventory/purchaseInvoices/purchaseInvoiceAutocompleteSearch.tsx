@@ -1,15 +1,17 @@
 import { Minus } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { useGlobalContext } from "~/modules/gcontext";
-import { quotationAndChallanDataSearch } from "../statics";
-import { InvoiceItem } from "~/routes/dashboard.inventory.create";
+import { quotationAndChallanDataSearch } from "../../statics";
+import { InvoiceItem } from "./purchaseInvoices";
 
-export default function ProductAutocompleteSearch({ index, invoiceItems, setInvoiceItems }: { index: number, invoiceItems: InvoiceItem[], setInvoiceItems: React.Dispatch<React.SetStateAction<InvoiceItem[]>> }) {
+export default function PurchaseInvoiceAutocompleteSearch({ index }: { index: number }) {
     const [showSuggestions, setShowSuggestions] = useState(false);
     const [filtered, setFiltered] = useState<InvoiceItem[]>([]);
     const [highlighted, setHighlighted] = useState<number>(-1);
     const inputRef = useRef<HTMLInputElement>(null);
     const [hasFocus, setFocus] = useState(false);
+
+    const { invoiceItems, setInvoiceItems } = useGlobalContext();
 
     useEffect(() => {
         if (hasFocus) {
@@ -48,7 +50,7 @@ export default function ProductAutocompleteSearch({ index, invoiceItems, setInvo
         //setInput(suggestion.label);
         setInvoiceItems(pre => {
             return pre.map((item, i) => i == index
-                ? { id: suggestion.id, name: suggestion.name, quantity: 1, price: 0, discount: 0, sno: [] }
+                ? { productid: suggestion.productid, name: suggestion.name, quantity: 1, price: 0, discount: 0, sno: [] }
                 : item)
         });
         setShowSuggestions(false);
@@ -81,7 +83,7 @@ export default function ProductAutocompleteSearch({ index, invoiceItems, setInvo
             setShowSuggestions(false);
             setInvoiceItems(pre => {
                 return pre.map((item, i) => i === index
-                    ? { id: filtered[highlighted].id, name: filtered[highlighted].name, quantity: 1, price: 0, discount: 0, sno: [] }
+                    ? { productid: filtered[highlighted].productid, name: filtered[highlighted].name, quantity: 1, price: 0, discount: 0, sno: [] }
                     : item)
             });
         } else if (e.key === "Escape") {
@@ -90,37 +92,41 @@ export default function ProductAutocompleteSearch({ index, invoiceItems, setInvo
     };
 
     return (
-        <div className="grid grid-cols-10 relative w-auto gap-x-2">
-            <div className="p-2 bg-headerBackground w-full border-0 ">
-                1
-            </div>
-            <input
-                ref={inputRef}
-                type="text"
-                value={invoiceItems[index].name}
-                onChange={handleInputChange}
-                onBlur={handleBlur}
-                onFocus={handleFocus}
-                onKeyDown={handleKeyDown}
-                className="col-span-3 p-2 border border-border bg-background text-textPrimary focus:outline-textPrimary"
-                placeholder="Search Product..."
-                autoComplete="off"
-            />
+        <div className="grid grid-cols-12 relative w-full gap-x-2">
+            <div className="col-span-4 flex gap-x-2">
+                <div className="p-2 bg-headerBackground w-[100px] border-0 ">
+                    {invoiceItems[index].productid}
+                </div>
+                <div className="w-full relative">
+                    <input
+                        ref={inputRef}
+                        type="text"
+                        value={invoiceItems[index].name}
+                        onChange={handleInputChange}
+                        onBlur={handleBlur}
+                        onFocus={handleFocus}
+                        onKeyDown={handleKeyDown}
+                        className="w-full p-2 border border-border bg-background text-textPrimary focus:outline-textPrimary"
+                        placeholder="Search Product..."
+                        autoComplete="off"
+                    />
 
-            {showSuggestions && (
-                <ul className="w-[29%] z-10 absolute top-full -left-0 right-0 bg-buttonHover border border-border overflow-y-auto max-h-96">
-                    {filtered.map((s, idx) => (
-                        <li
-                            key={s.id}
-                            onMouseDown={() => handleSuggestionClick(s)}
-                            className={`${idx === highlighted ? "bg-buttonHover" : "bg-background"} p-2 cursor-pointer text-textSecondary`}
-                            onMouseEnter={() => setHighlighted(idx)}
-                        >
-                            {s.name}
-                        </li>
-                    ))}
-                </ul>
-            )}
+                    {showSuggestions && (
+                        <ul className="w-full z-10 absolute top-full -left-0 right-0 bg-buttonHover border border-border overflow-y-auto max-h-96">
+                            {filtered.map((s, idx) => (
+                                <li
+                                    key={s.productid}
+                                    onMouseDown={() => handleSuggestionClick(s)}
+                                    className={`${idx === highlighted ? "bg-buttonHover" : "bg-background"} p-2 cursor-pointer text-textSecondary`}
+                                    onMouseEnter={() => setHighlighted(idx)}
+                                >
+                                    {s.name}
+                                </li>
+                            ))}
+                        </ul>
+                    )}
+                </div>
+            </div>
             <textarea
                 placeholder="Serial Numbers separated by commas..."
                 className="col-span-4 p-2 border border-border bg-background text-textPrimary focus:outline-textPrimary"
@@ -149,8 +155,37 @@ export default function ProductAutocompleteSearch({ index, invoiceItems, setInvo
                 }}
             />
 
+            <input
+                type="number"
+                placeholder="Price"
+                className="border p-2 border-border bg-background text-textPrimary focus:outline-textPrimary"
+                value={invoiceItems[index]?.price}
+                onChange={(e) => {
+                    setInvoiceItems(pre => {
+                        return pre.map((item, i) => i === index
+                            ? { ...invoiceItems[index], price: Number(e.target.value || undefined) }
+                            : item);
+                    })
+                }}
+            />
+            <input
+                type="number"
+                placeholder="Discount"
+                className="border p-2 border-border bg-background text-textPrimary focus:outline-textPrimary"
+                value={invoiceItems[index]?.discount}
+                onChange={(e) => {
+                    setInvoiceItems(pre => {
+                        return pre.map((item, i) => i === index
+                            ? { ...invoiceItems[index], discount: Number(e.target.value || undefined) }
+                            : item);
+                    })
+                }}
+            />
 
-            <button className="w-[35%] hover:bg-headerBackground bg-buttonHover p-2" onClick={(e) => {
+
+            <button type="button" className="w-[35%] hover:bg-headerBackground bg-buttonHover p-2" onClick={(e) => {
+                console.log("decreasing");
+                e.preventDefault();
                 setInvoiceItems(pre =>
                     pre.filter((_, i) => i != index)
                 );

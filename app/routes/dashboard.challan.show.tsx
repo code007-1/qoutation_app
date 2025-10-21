@@ -5,6 +5,7 @@ import { useCentralFetcher } from "~/component/centralFetcher";
 import { useNotification } from "~/modules/notificationContext";
 import ChallanTableUI from "~/component/challan/challanTableUI";
 import { challanReadAPIURL, challans } from "~/component/statics";
+import { Row } from "@tanstack/react-table";
 
 const ChallanShow = () => {
     // Initiate your states
@@ -25,6 +26,31 @@ const ChallanShow = () => {
             addNotifications({ title: "Failure...", message: "Fail to load data." });
         }
         setLoading(false);
+    }
+
+
+    // Function to initiate CSV download
+    function downloadCSV(rows: Row<any>[]) {
+        if (rows.length === 0) {
+            alert('No data to export');
+        } else {
+            let csvData = "Challan No, Bill No, Order No, From, To, Date, Category, Type, Made By, Items and Serial Numbers\n";
+
+            rows.map((item: any) => {
+                csvData += item.original.no.toString() + "," + item.original.billno + ", " + item.original.orderno + "," + item.original.from +
+                    "," + item.original.to + "," + item.original.date + "," + item.original.category + "," + item.original.type + "," + item.original.madeby + "," +
+                    "\"" + item.original.items.map((singleItem: any) => { return singleItem.name + " - " + singleItem.sno?.join(" & ") }).join("\n") + "\"\n";
+            })
+            csvData.trimEnd();
+
+            const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.setAttribute('download', `challan-${new Date().toISOString().split("T")[0]}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
     }
 
     async function handleAdvanceSearch(query?: { sno: string }) {
@@ -98,6 +124,8 @@ const ChallanShow = () => {
                         search={handleAdvanceSearch}
                         refresh={getChallans}
                         deleteChallan={handleDeleteChallan}
+                        filterTypes={{ "Challan #": "no", "Made By": "madeby", "Date": "date", "To": "to", "S.No.": "sno" }}
+                        exportCSV={downloadCSV}
                     />
                 </div>
             </section>

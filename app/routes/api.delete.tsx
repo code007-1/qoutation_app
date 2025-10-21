@@ -4,7 +4,7 @@ import { challanCollectionName, complaintCollectionName, dbName, logsCollectionN
 
 export const action: ActionFunction = async ({ request, params }) => {
     try {
-        const permissions = await verifyAccessToken(request);
+        const { permissions } = await verifyAccessToken(request);
         if (!permissions.includes("delete"))
             return new Response("user not authorized to delete", { status: 405 });
 
