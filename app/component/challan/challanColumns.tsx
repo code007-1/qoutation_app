@@ -2,14 +2,44 @@ import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowBigDownDash, ArrowDownToLine, ArrowUpDown, Copy, Ellipsis, Pencil, Trash2 } from "lucide-react";
 import { useGlobalContext } from "~/modules/gcontext";
-import { ChallanItems } from "~/routes/dashboard.challan.create";
+import { ChallanData, ChallanItems } from "~/routes/dashboard.challan.create";
 import { createPdf } from "~/routes/dashboard.quotations.create";
 import { useCentralFetcher } from "../centralFetcher";
 import { challans } from "../statics";
+import { useNavigate } from "@remix-run/react";
+import { useNotification } from "~/modules/notificationContext";
 
 export function useChallanColumns() {
     const { permissions } = useGlobalContext();
     const fetcher = useCentralFetcher();
+    const navigate = useNavigate();
+    const { setChallanData, setChallanItems, profile, setOldChallanData } = useGlobalContext();
+    const { addNotifications } = useNotification();
+
+    async function handleDelete(no: string) {
+        const result = await fetcher("/api/delete", { method: "POST", body: JSON.stringify({ "no": no, "username": profile.username, type: challans }) });
+        if (result.status !== 200) {
+            addNotifications({
+                title: "Error while deletion...",
+                message: result.statusText || "",
+            });
+        }
+        else {
+            setOldChallanData((pre: any) => { return pre.filter((item: any) => item.no === no ? false : true) });
+        }
+    }
+
+    function handleEdit(row: ChallanData) {
+        setChallanData(row);
+        setChallanItems(row.items);
+        navigate("/dashboard/challan/create", { state: { editing: true } });
+    }
+
+    function handleCopy(row: ChallanData) {
+        setChallanData(row);
+        setChallanItems(row.items);
+        navigate("/dashboard/challan/create", { state: { editing: false } });
+    }
 
     const columns: ColumnDef<any, any>[] = [
         {
@@ -101,7 +131,7 @@ export function useChallanColumns() {
                                 <MenuItem>
                                     <div
                                         className="flex px-6 py-1 data-[focus]:bg-buttonHover"
-                                        onClick={() => user.table.options.meta?.handleEdit?.(user.row.original)}
+                                        onClick={() => handleEdit(user.row.original)}
                                     >
                                         <div className="text-textSecondary mr-4"><Pencil size={20} /></div>
                                         <div className="text-textPrimary">Edit</div>
@@ -109,7 +139,7 @@ export function useChallanColumns() {
                                 </MenuItem>
                                 <MenuItem>
                                     <div className="flex px-6 py-1 data-[focus]:bg-buttonHover"
-                                        onClick={() => user.table.options.meta?.handleCopy?.(user.row.original)}>
+                                        onClick={() => handleCopy(user.row.original)}>
                                         <div className="text-textSecondary mr-4"><Copy size={20} /></div>
                                         <div className="text-textPrimary">Copy</div>
                                     </div>
@@ -117,7 +147,7 @@ export function useChallanColumns() {
                                 {permissions.includes("delete") &&
                                     <MenuItem>
                                         <div className="flex px-6 py-1 data-[focus]:bg-buttonHover"
-                                            onClick={() => user.table.options.meta?.deleteChallan?.(user.row.original.no)}>
+                                            onClick={() => handleDelete(user.row.original.no)}>
                                             <div className="text-textSecondary mr-4"><Trash2 size={20} /></div>
                                             <div className="text-textPrimary">Delete</div>
                                         </div>

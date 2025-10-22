@@ -1,0 +1,101 @@
+import { ObjectId } from "mongodb";
+import { useEffect } from "react";
+import { useCentralFetcher } from "~/component/centralFetcher";
+import { documentsCountURLAPI, productCreateAPIURL, productReadAPIURL, products } from "~/component/statics";
+import { useGlobalContext } from "~/modules/gcontext";
+import { productsCount } from "~/modules/loadCSV";
+import { useNotification } from "~/modules/notificationContext";
+
+export interface ProductsData {
+    _id?: ObjectId,
+    name: string,
+    description?: string,
+    hsn?: string,
+    link?: string,
+    productid: number,
+    group?: string
+    quantity: number,
+    price: number,
+}
+
+export default function CreateProduct() {
+    const { productsData, setProductsData } = useGlobalContext();
+    const fetcher = useCentralFetcher();
+    const { addNotifications } = useNotification();
+
+    useEffect(() => {
+        async function getProductsCount() {
+            const response = await fetcher(`${documentsCountURLAPI}?type=${products}`);
+            if (response.status === 200) {
+                const id = await response.json();
+                setProductsData(pre => { return { ...pre, productid: id } });
+            }
+            else {
+                addNotifications({ title: "Failure...", message: "Fail to load data." });
+            }
+        }
+
+        getProductsCount();
+    }, []);
+
+    async function save() {
+        const payload = { ...productsData, group: productsData.group || "Default" };
+        const response = await fetcher(`${productCreateAPIURL}`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+        });
+        setProductsData(pre => { return { ...pre, group: pre.group || "Default" } });
+
+        if (response.status === 200) addNotifications({ title: "Success...", message: "Product updated successfully" });
+        else addNotifications({ title: "Failure....", message: "Fail to update profile...try gain later..." });
+    }
+
+    return (
+        <>
+            <div className="w-full py-2 px-4 font-semibold text-textSecondary bg-buttonHover text-center">
+                Add Product
+            </div>
+
+            <div className="grid grid-cols-6 gap-4 text-textPrimary mt-4">
+                <div>
+                    Product ID <div className="p-2 bg-headerBackground w-full border-0 ">{productsData.productid}</div>
+                </div>
+                <div>
+                    Product HSN Code <input type="text" name="hsncode" placeholder="Enter HSN Code" className="border border-border p-2 bg-background w-full" onChange={(e) => {
+                        setProductsData(pre => { return { ...pre, hsn: e.target.value } });
+                    }} />
+                </div>
+
+                <div className="col-span-4">
+                    Product Name <input type="text" name="productname" placeholder="Enter Product Name" className="border border-border p-2 bg-background w-full" onChange={(e) => {
+                        setProductsData(pre => { return { ...pre, name: e.target.value } });
+                    }} />
+                </div>
+                <div>
+                    Product Quantity <div className="p-2 bg-headerBackground w-full border-0 ">0</div>
+                </div>
+                <div>
+                    Product Price <input type="text" name="productid" placeholder="Enter Product Price" className="border border-border p-2 bg-background w-full" onChange={(e) => {
+                        setProductsData(pre => { return { ...pre, price: Number(e.target.value) || 0 } });
+                    }} />
+                </div>
+                <div>
+                    Product Group <textarea rows={3} name="productgroup" placeholder="Product Group" className="border border-border p-2 bg-background w-full" onChange={(e) => {
+                        setProductsData(pre => { return { ...pre, group: e.target.value } });
+                    }} />
+                </div>
+                <div className="col-span-3">
+                    Product Description <textarea rows={3} name="productdescrition" placeholder="Enter Product Description" className="border border-border p-2 bg-background w-full" onChange={(e) => {
+                        setProductsData(pre => { return { ...pre, description: e.target.value } });
+                    }} />
+                </div>
+            </div>
+            <div className="flex justify-center ">
+                <button className="button px-4 py-1 mt-4 text-lg" onClick={save}>
+                    Save
+                </button>
+            </div>
+        </>
+    );
+}

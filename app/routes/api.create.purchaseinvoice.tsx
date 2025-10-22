@@ -34,6 +34,8 @@ export const action: ActionFunction = async ({ request, params }) => {
                 )
             });
 
+            console.log("bullkla", bulkOps);
+
             // for updating duplicates serial numbers
             if (pruchaseInvoicePrefix + data.invoiceno != result[0].invoiceno || data.date != result[0].date || data.vendor != result[0].vendor) {
                 const duplicates = [...old].filter(x => current.has(x)) as string[];
@@ -72,9 +74,14 @@ export const action: ActionFunction = async ({ request, params }) => {
                 }).flat()
             );
         }
+
         console.log("bulk ops : ", JSON.stringify(bulkOps));
+        const updateFilter: Record<string, any> = {};
+        if (result.length > 0)
+            updateFilter["_id"] = new ObjectId(objectid);
+
+        await insertOrUpdateOnetoDb(data, dbName, purchaseInvoiceCollectionName, updateFilter, true);
         await bulkWriteToDb(bulkOps, dbName, serialsCollectionName);
-        //await insertOrUpdateOnetoDb(data, dbName, purchaseInvoiceCollectionName, { "_id": new ObjectId(objectid) }, true);
 
         //await insertOnetoDb({ "by": username, "action": `purchase invoice entry`, "result": "succeded", "when": new Date().toISOString() }, dbName, logsCollectionName);
         return new Response("purchase invoice saved succefully", { status: 200 });

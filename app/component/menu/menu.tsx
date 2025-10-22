@@ -23,7 +23,8 @@ export default function MainMenu() {
         const result = await fetcher(`/api/logout`);
         if (result.status === 200) {
             setAccessToken(undefined);
-            localStorage.removeItem("login");
+            localStorage.clear();
+            sessionStorage.clear();
         }
         else
             console.log("error while logging out : ", result);

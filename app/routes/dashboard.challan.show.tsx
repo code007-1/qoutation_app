@@ -1,11 +1,13 @@
-import { useEffect, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { useChallanColumns } from "~/component/challan/challanColumns";
 import { createChallan, initialChallanData, useGlobalContext } from "~/modules/gcontext";
 import { useCentralFetcher } from "~/component/centralFetcher";
 import { useNotification } from "~/modules/notificationContext";
-import ChallanTableUI from "~/component/challan/challanTableUI";
+import TableUI from "~/component/tableUI";
 import { challanReadAPIURL, challans } from "~/component/statics";
 import { Row } from "@tanstack/react-table";
+import { Dialog } from "~/component/menu/about";
+import { X } from "lucide-react";
 
 const ChallanShow = () => {
     // Initiate your states
@@ -14,6 +16,7 @@ const ChallanShow = () => {
     const fetcher = useCentralFetcher();
 
     const { setHeaderText, challanDataCount, setChallanDataCount, setOldChallanData, setChallanData, setChallanItems, profile, oldChallanData } = useGlobalContext();
+
     async function getChallans() {
         setLoading(true);
         const response = await fetcher(`${challanReadAPIURL}`);
@@ -27,7 +30,6 @@ const ChallanShow = () => {
         }
         setLoading(false);
     }
-
 
     // Function to initiate CSV download
     function downloadCSV(rows: Row<any>[]) {
@@ -53,17 +55,23 @@ const ChallanShow = () => {
         }
     }
 
-    async function handleAdvanceSearch(query?: { sno: string }) {
+    async function handleAdvanceSearch(query?: Record<string, any>) {
         setLoading(true);
         let response;
         if (query) {
-            response = await fetcher(`${challanReadAPIURL}?sno=${query.sno}`);
+            // Build query string dynamically based on provided keys
+            const params = new URLSearchParams();
+            Object.entries(query).forEach(([key, value]) => {
+                if (value !== undefined && value !== "") {
+                    params.append(key, value);
+                }
+            });
+            response = await fetcher(`${challanReadAPIURL}?${params.toString()}`);
             if (response.status === 200) {
                 const data = await response.json();
                 setOldChallanData(data);
-
             }
-            else if (response.status != 200) {
+            else {
                 addNotifications({ title: "Failure...", message: "Fail to load data." });
             }
             setChallanDataCount(0);
@@ -83,23 +91,10 @@ const ChallanShow = () => {
                     setChallanDataCount(oldChallanData.length + data.length);
                 }
             }
-            else if (response.status != 200) {
+            else {
                 addNotifications({ title: "Failure...", message: "Fail to load data." });
             }
             setLoading(false);
-        }
-    }
-
-    async function handleDeleteChallan(no: string) {
-        const result = await fetcher("/api/delete", { method: "POST", body: JSON.stringify({ "no": no, "username": profile.username, type: challans }) });
-        if (result.status !== 200) {
-            addNotifications({
-                title: "Error while deletion...",
-                message: result.statusText || "",
-            });
-        }
-        else {
-            setOldChallanData((pre: any) => { return pre.filter((item: any) => item.no === no ? false : true) });
         }
     }
 
@@ -111,21 +106,66 @@ const ChallanShow = () => {
             getChallans();
     }, []);
 
+    const [open, setOpen] = useState(false);
+    const [query, setQuery] = useState({ sno: "" });
+    const _titleId = useId();
+    const closeBtnRef = useRef<HTMLButtonElement | null>(null);
+
+    // Focus management: move focus to close button when opened
+    useEffect(() => {
+        if (open) {
+            closeBtnRef.current?.focus();
+        }
+    }, [open]);
+
     return (
         <>
             <section className="mt-5">
                 <div>
-                    <ChallanTableUI
+                    <Dialog open={open} onClose={() => setOpen(false)} title="About imaGine">
+                        <div className="flex items-center justify-between p-4 bg-headerBackground">
+                            <h2 id={_titleId} className="text-lg font-semibold text-textPrimary">
+                                Advance Filter
+                            </h2>
+                            <button
+                                ref={closeBtnRef}
+                                onClick={() => { setOpen(false) }}
+                                className="inline-flex h-9 w-9 items-center justify-center bg-button hover:bg-button/75"
+                                aria-label="Close dialog"
+                            >
+                                <X className="h-6 w-6 text-buttonTextPrimary" />
+                            </button>
+                        </div>
+                        <div className="mt-2 p-4 flex items-center text-textPrimary">
+                            <div className="w-[15%] font-semibold">S. No.</div>
+                            <input type="text" className="border border-border w-[85%] p-2 text-textPrimary" value={query.sno} onChange={(e) => { setQuery(pre => { return { ...pre, sno: e.target.value } }) }} />
+                        </div>
+                        <div className="flex justify-between gap-2 p-4">
+                            <button
+                                type="button"
+                                onClick={() => { handleAdvanceSearch(query); setOpen(false); }}
+                                className="button px-4 py-1 mt-4 font-semibold"
+                            >
+                                Search
+                            </button>
+                            <button
+                                onClick={() => { setOpen(false) }}
+                                className="inline-flex font-semibold items-center gap-2 px-4 py-1 mt-4 text-buttonTextPrimary bg-button hover:bg-button/75"
+                            >
+                                {profile.username === "gunjan" ? "Okie" : "Close"}
+                            </button>
+                        </div>
+                    </Dialog >
+                    <TableUI
                         data={oldChallanData}
                         columns={useChallanColumns()}
-                        searchLabel="Search by Name or job title"
                         EmptyText="No Challans Found!"
                         isFetching={loading}
-                        search={handleAdvanceSearch}
+                        advanceSearch={handleAdvanceSearch}
                         refresh={getChallans}
-                        deleteChallan={handleDeleteChallan}
                         filterTypes={{ "Challan #": "no", "Made By": "madeby", "Date": "date", "To": "to", "S.No.": "sno" }}
                         exportCSV={downloadCSV}
+                        advanceSearchOpen={setOpen}
                     />
                 </div>
             </section>

@@ -1,78 +1,73 @@
-import { useNavigate } from "@remix-run/react";
 import { ChevronDown, ChevronLeft, ChevronRight, X } from "lucide-react";
-import { FC, memo, useEffect, useId, useMemo, useRef, useState } from "react";
-import { useGlobalContext } from "~/modules/gcontext";
-import { createPdf } from "~/routes/dashboard.quotations.create";
-import { useCentralFetcher } from "../centralFetcher";
-import { Listbox, ListboxButton, ListboxOption, ListboxOptions } from "@headlessui/react";
-import { Dialog } from "../menu/about";
-
+import { FC, memo, useMemo, useState } from "react";
 import { Cell, ColumnDef, ColumnFiltersState, flexRender, getCoreRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, PaginationState, Row, SortingState, useReactTable } from "@tanstack/react-table";
-import { ComplaintsData } from "~/routes/dashboard.complaints.create";
+import { Listbox, ListboxButton, ListboxOption, ListboxOptions } from "@headlessui/react";
 
+// Typescript interface
 interface TableProps {
+    // table data and columns
     data: any[];
     columns: ColumnDef<any>[];
+
+    // states
     isFetching?: boolean;
     skeletonCount?: number;
     skeletonHeight?: number;
     headerComponent?: JSX.Element;
+
+    // pagination
     pageCount?: number;
     page?: (page: number) => void;
-    search: (query?: { start: string, end: string, to: string }) => Promise<void>;
-    onClickRow?: (cell: Cell<any, unknown>, row: Row<any>) => void;
-    searchLabel?: string;
-    EmptyText?: string;
-    children?: React.ReactNode | React.ReactElement
-    handleRow?: () => void,
+
+    // filters and search
+    filterTypes: {}
+    advanceSearch?: (query?: {}) => Promise<void>;
+    advanceSearchOpen?: React.Dispatch<React.SetStateAction<boolean>>;
     refresh: () => void,
-    deleteComplaints: (no: string) => void
+
+    EmptyText?: string;
+
+    // custom actions
+    handleRow?: () => void,
+    exportCSV?: (rows: Row<any>[]) => void
+    onClickRow?: (cell: Cell<any, unknown>, row: Row<any>) => void;
+    deleteRowData?: (no: string) => void
 }
 
+
 // The main table 
-const CompalintsTableUI: FC<TableProps> = ({
+const TableUI: FC<TableProps> = ({
     data,
     columns,
     isFetching,
     skeletonCount = 10,
     skeletonHeight = 28,
     headerComponent,
-    pageCount,
-    search,
-    onClickRow,
-    page,
-    searchLabel = "Search",
+    advanceSearch,
     EmptyText,
-    children,
-    handleRow,
     refresh,
-    deleteComplaints
+    deleteRowData,
+    filterTypes,
+    exportCSV,
+    advanceSearchOpen
 }) => {
 
     const memoizedData = useMemo(() => data, [data]);
     const memoizedColumns = useMemo(() => columns, [columns]);
     const memoisedHeaderComponent = useMemo(() => headerComponent, [headerComponent]);
+
+    // for sorting and column filtering - not bieng used currently
     const [sorting, setSorting] = useState<SortingState>([]);
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-    const [filtersType, setFilterType] = useState<string>("Complaint #");
 
-    const filterTypes = ["Complaint #", "Recorded By", "Date", "Status", "Type"];
+    // for filtering and serching
+    type FilterKey = keyof typeof filterTypes;
+    const [filterType, setFilterType] = useState<FilterKey>(Object.keys(filterTypes)[0] as FilterKey);
 
-    function getType(type: string) {
-        switch (type) {
-            case "Complaint #": return "no";
-            case "Recorded By": return "recordedby";
-            case "Date": return "date";
-            case "Status": return "status";
-            case "Type": return "type";
-            default:
-                return type;
-        }
-    }
-
+    // for pagination
     const [pagination, setPagination] = useState<PaginationState>({ pageIndex: 0, pageSize: 10 })
 
-    const { getHeaderGroups, getRowModel, getAllColumns, getColumn, getCanNextPage, getCanPreviousPage, getState, getPageCount, setPageSize } = useReactTable({
+    const { getHeaderGroups, getRowModel, getAllColumns, getColumn, getCanNextPage, getCanPreviousPage, getState, getPageCount, setPageSize, } = useReactTable({
         data: memoizedData,
         columns: memoizedColumns,
         getCoreRowModel: getCoreRowModel(),
@@ -84,8 +79,7 @@ const CompalintsTableUI: FC<TableProps> = ({
         getPaginationRowModel: getPaginationRowModel(),
         autoResetPageIndex: false,
         state: { sorting, columnFilters, pagination },
-        meta: { handleEdit: handleEdit, handleCopy: handleCopy, deleteComplaints: deleteComplaints },
-        //pageCount,
+        //meta: { handleEdit: handleEdit, handleCopy: handleCopy, deleteChallan: deleteRowData },
     });
 
     const skeletons = Array.from({ length: skeletonCount }, (x, i) => i);
@@ -95,137 +89,87 @@ const CompalintsTableUI: FC<TableProps> = ({
     const noDataFound =
         !isFetching && (!memoizedData || memoizedData.length === 0);
 
-    const navigate = useNavigate();
-    const { setComplaintsData, profile, selectedProfile } = useGlobalContext();
-    const fetcher = useCentralFetcher();
-    const [open, setOpen] = useState(false);
-    const [query, setQuery] = useState({ start: "", end: "", to: "" });
-
-    function handleEdit(row: ComplaintsData) {
-        setComplaintsData(row);
-        navigate("/dashboard/complaints/create", { state: { editing: true } });
-    }
-
-    function handleCopy(row: ComplaintsData) {
-        setComplaintsData(row);
-        navigate("/dashboard/complaints/create", { state: { editing: false } });
-    }
-
-    const _titleId = useId();
-    const closeBtnRef = useRef<HTMLButtonElement | null>(null);
-
-    // Focus management: move focus to close button when opened
-    useEffect(() => {
-        if (open) {
-            closeBtnRef.current?.focus();
-        }
-    }, [open]);
-
     return (
         <>
-            <Dialog open={open} onClose={() => setOpen(false)} title="About imaGine">
-                <div className="flex items-center justify-between p-4 bg-headerBackground">
-                    <h2 id={_titleId} className="text-lg font-semibold text-textPrimary">
-                        Advance Filter
-                    </h2>
-                    <button
-                        ref={closeBtnRef}
-                        onClick={() => { setOpen(false) }}
-                        className="inline-flex h-9 w-9 items-center justify-center bg-button hover:bg-button/75"
-                        aria-label="Close dialog"
-                    >
-                        <X className="h-6 w-6 text-buttonTextPrimary" />
-                    </button>
-                </div>
-                <div className="flex items-center space-x-2 p-4 w-full">
-                    <div className="text-textPrimary font-semibold">Start Date</div>
-                    <input type="date" className="p-2" onChange={(e) => { setQuery(pre => { return { ...pre, start: e.target.value } }) }} />
-                    <div className="text-textPrimary font-semibold">End Date</div>
-                    <input type="date" className="p-2" onChange={(e) => { setQuery(pre => { return { ...pre, end: e.target.value } }) }} />
-                </div>
-
-                <div className="flex justify-between gap-2 p-4">
-                    <button
-                        type="button"
-                        onClick={() => { search(query); setOpen(false); }}
-                        className="bg-button font-semibold text-buttonTextPrimary px-4 py-1 mt-4"
-                    >
-                        Search
-                    </button>
-                    <button
-                        onClick={() => { setOpen(false) }}
-                        className="inline-flex font-semibold items-center gap-2 px-4 py-1 mt-4 text-buttonTextPrimary bg-button hover:bg-button/75"
-                    >
-                        {profile.username === "gunjan" ? "Okie" : "Close"}
-                    </button>
-                </div>
-            </Dialog >
-
             <div className="">
                 <div className="flex space-x-4 items-center align-middle">
-                    <Listbox value={filtersType} onChange={setFilterType}>
+                    <Listbox value={filterType} onChange={setFilterType}>
                         <div className="relative">
                             <ListboxButton className="flex items-center hover:bg-buttonHover px-2 border border-border py-2">
-                                <div className="text-textSecondary mr-2">{filtersType}</div>
+                                <div className="text-textSecondary mr-2">{filterType}</div>
                                 <ChevronDown className="text-textPrimary" />
                             </ListboxButton>
-
                             <ListboxOptions
                                 transition
                                 className="absolute -right-34 z-10 mt-2 w-[136px] origin-top-right rounded-sm bg-background shadow-lg ring-1 ring-black/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
                             >
                                 <div className="p-1">
-                                    {filterTypes.map((item) => <ListboxOption
-                                        key={item}
-                                        value={item}
-                                        className="block px-4 py-2 text-sm text-textSecondary data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
-                                    >
-                                        {item}
-                                    </ListboxOption>)}
+                                    {Object.keys(filterTypes).map((filterType) => {
+                                        return (
+                                            <ListboxOption
+                                                key={filterType}
+                                                value={filterType}
+                                                className="block px-4 py-2 text-sm text-textSecondary data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
+                                            >
+                                                {filterType}
+                                            </ListboxOption>
+                                        );
+                                    })}
                                 </div>
                             </ListboxOptions>
                         </div>
                     </Listbox>
                     <input
                         placeholder="Filter....."
-                        value={(getColumn(getType(filtersType))?.getFilterValue() as string) ?? ""}
+                        value={(getColumn(filterTypes[filterType])?.getFilterValue() as string) ?? ""}
                         onChange={(event) =>
-                            getColumn(getType(filtersType))?.setFilterValue(event.target.value)
+                            getColumn(filterTypes[filterType])?.setFilterValue(event.target.value)
                         }
                         className="border p-2 w-[20%] border-border bg-background text-textPrimary focus:outline-textPrimary"
                     />
-                    <button
-                        onClick={() => setOpen(true)}
-                        className="button p-2"
-                    >
-                        Advance Filter
-                    </button>
-                    <button
-                        onClick={() => { search() }}
-                        className="button p-2"
-                    >
-                        Reset Advance Filter
-                    </button>
+                    {(advanceSearchOpen && advanceSearch) && <>
+                        <button
+                            onClick={() => advanceSearchOpen(true)}
+                            className="button p-2"
+                        >
+                            Advance Filter
+                        </button>
+                        <button
+                            onClick={() => { advanceSearch() }}
+                            className="button p-2"
+                        >
+                            Reset Advance Filter
+                        </button>
+                    </>
+                    }
                     <button
                         onClick={() => { refresh() }}
                         className="button p-2"
                     >
                         Refresh Data
                     </button>
-                    <div className="flex-1">
+                    {exportCSV && <button
+                        onClick={() => { exportCSV(getRowModel().rows) }}
+                        className="button p-2"
+                    >
+                        Export
+                    </button>}
+                    {advanceSearch && <div className="flex-1">
                         <div className="w-full flex justify-end">
                             <button
-                                onClick={() => { search() }}
-                                className="button p-2"
+                                onClick={() => { advanceSearch() }}
+                                className="button text-buttonTextPrimary p-2"
                             >
                                 Load More
                             </button>
                         </div>
-                    </div>
+                    </div>}
                 </div>
+
                 <div className="p-4">
                     {memoisedHeaderComponent && <div>{memoisedHeaderComponent}</div>}
                 </div>
+
                 <div className="">
                     <table className="w-full">
                         <thead>
@@ -247,14 +191,9 @@ const CompalintsTableUI: FC<TableProps> = ({
                         <tbody className="p-2">
                             {!isFetching ? (
                                 getRowModel()?.rows.map((row) => (
-                                    <tr key={row.id} className="bg-header cursor-pointer hover:bg-buttonHover" tabIndex={0}>
+                                    <tr key={row.id} className="bg-header hover:bg-buttonHover" tabIndex={0}>
                                         {row.getVisibleCells().map((cell) => (
                                             <td
-                                                onClick={(e) => {
-                                                    //if (cell.column.id === "edit") handleEdit(row.original)
-                                                    //else if (cell.column.id === "copy") handleCopy(row.original)
-                                                    //else if (cell.column.id === "delete") deleteComplaints(row.original.no)
-                                                }}
                                                 key={cell.id}
                                                 className="text-textSecondary text-base text-left p-2"
                                             >
@@ -312,7 +251,7 @@ const CompalintsTableUI: FC<TableProps> = ({
                         | Go to page:
                         <input
                             type="number"
-                            min="1"
+                            min={1}
                             max={getPageCount()}
                             defaultValue={getState().pagination.pageIndex + 1}
                             onChange={e => {
@@ -354,4 +293,4 @@ const CompalintsTableUI: FC<TableProps> = ({
 };
 
 
-export default memo(CompalintsTableUI);
+export default memo(TableUI);

@@ -2,7 +2,7 @@ import { Minus } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { useGlobalContext } from "~/modules/gcontext";
 import { quotationAndChallanDataSearch } from "../../statics";
-import { InvoiceItem } from "./purchaseInvoices";
+import { InvoiceItem } from "./purchaseInvoicesCreate";
 
 export default function PurchaseInvoiceAutocompleteSearch({ index }: { index: number }) {
     const [showSuggestions, setShowSuggestions] = useState(false);

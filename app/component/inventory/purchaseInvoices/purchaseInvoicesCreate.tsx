@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useGlobalContext } from "~/modules/gcontext";
 import PurchaseInvoiceAutocompleteSearch from "./purchaseInvoiceAutocompleteSearch";
 import { useCentralFetcher } from "../../centralFetcher";
-import { purchaseInvoiceURL } from "../../statics";
+import { purchaseInvoiceCreateURL } from "../../statics";
 
 /*
         {
@@ -63,7 +63,7 @@ export interface InvoiceData {
     tax: number
 }
 
-export default function IncomingInvoices() {
+export default function CreatePurchaseInvoice() {
     const { invoiceData, setInvoiceData, invoiceItems, setInvoiceItems } = useGlobalContext();
     const fetcher = useCentralFetcher();
 
@@ -78,7 +78,7 @@ export default function IncomingInvoices() {
 
     async function save() {
         const payload = { ...invoiceData, items: invoiceItems }
-        const response = await fetcher(`${purchaseInvoiceURL}`, {
+        const response = await fetcher(`${purchaseInvoiceCreateURL}`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ data: payload, objectid: "" })

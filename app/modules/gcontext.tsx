@@ -5,8 +5,9 @@ import { QuotationData, QuoteItems } from "~/routes/dashboard.quotations.create"
 import packageJson from "../../package.json";
 import { ChallanData, ChallanItems } from "~/routes/dashboard.challan.create";
 import { ComplaintsData } from "~/routes/dashboard.complaints.create";
-import { GroupsData, ProductsData } from "~/routes/dashboard.inventory.create";
-import { InvoiceItem, InvoiceData } from "~/component/inventory/purchaseInvoices/purchaseInvoices";
+import { GroupsData } from "~/routes/dashboard.inventory.create";
+import { ProductsData } from "~/component/inventory/product/productCreate";
+import { InvoiceItem, InvoiceData } from "~/component/inventory/purchaseInvoices/purchaseInvoicesCreate";
 
 interface AppContextType {
     // app related variables
@@ -73,6 +74,8 @@ interface AppContextType {
     setInvoiceItems: React.Dispatch<React.SetStateAction<InvoiceItem[]>>;
     invoiceData: InvoiceData;
     setInvoiceData: React.Dispatch<React.SetStateAction<InvoiceData>>;
+    oldInvoiceData: InvoiceData[];
+    setOldInvoiceData: React.Dispatch<React.SetStateAction<InvoiceData[]>>;
 
     // product related variables
     oldProductsData: ProductsData[];
@@ -81,6 +84,7 @@ interface AppContextType {
     setProductsDataCount: React.Dispatch<React.SetStateAction<number>>;
     productsData: ProductsData;
     setProductsData: React.Dispatch<React.SetStateAction<ProductsData>>;
+
 }
 
 const appContext = createContext<AppContextType | null>(null);
@@ -148,7 +152,7 @@ export const initialComplaintsData = () => {
 
 export const initialProductData = () => {
     return {
-        productid: "",
+        productid: -1,
         name: "",
         description: "",
         hsn: "",
@@ -197,11 +201,12 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
     // product related variables
     const [oldGroupsData, setOldGroupsData] = useState<GroupsData[]>([]);
     const [groupsDataCount, setGroupsDataCount] = useState<number>(0);
-    const [groupsData, setGroupsData] = useState<GroupsData>(initialProductData());
+    const [groupsData, setGroupsData] = useState<GroupsData>({ "name": "Default" });
 
     // incoming invoice realated valriables
     const [invoiceItems, setInvoiceItems] = useState<InvoiceItem[]>([]);
     const [invoiceData, setInvoiceData] = useState<InvoiceData>({ invoiceno: "", vendor: "", date: new Date().toISOString().split("T")[0], items: [], amount: 0, tax: 18 });
+    const [oldInvoiceData, setOldInvoiceData] = useState<InvoiceData[]>([]);
 
     const toggleTheme = () => {
         const currentTheme = () => {
@@ -229,7 +234,7 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
     };
 
     return (
-        <appContext.Provider value={{ theme, setTheme, toggleTheme, accessToken, setAccessToken, quotationItems, setQuotationItems, quotationData, setQuotationData, headerText, setHeaderText, gQuote, setGQuote, profile, setProfile, selectedProfile, setSelectedProfile, quotationDataCount, setQuotationDataCount, oldQuotationData, setOldQuotationData, homeLink, setHomeLink, setAppName, appName, oldChallanData, setOldChallanData, challanDataCount, setChallanDataCount, challanItems, setChallanItems, challanData, setChallanData, complaintsData, setComplaintsData, permissions, setPermissions, oldComplaintsData, setOldComplaintsData, complaintsDataCount, setComplaintsDataCount, oldGroupsData, setOldGroupsData, groupsDataCount, setGroupsDataCount, groupsData, setGroupsData, invoiceItems, setInvoiceItems, invoiceData, setInvoiceData, productsData, setProductsData, oldProductsData, setOldProductsData, productsDataCount, setProductsDataCount }}>
+        <appContext.Provider value={{ theme, setTheme, toggleTheme, accessToken, setAccessToken, quotationItems, setQuotationItems, quotationData, setQuotationData, headerText, setHeaderText, gQuote, setGQuote, profile, setProfile, selectedProfile, setSelectedProfile, quotationDataCount, setQuotationDataCount, oldQuotationData, setOldQuotationData, homeLink, setHomeLink, setAppName, appName, oldChallanData, setOldChallanData, challanDataCount, setChallanDataCount, challanItems, setChallanItems, challanData, setChallanData, complaintsData, setComplaintsData, permissions, setPermissions, oldComplaintsData, setOldComplaintsData, complaintsDataCount, setComplaintsDataCount, oldGroupsData, setOldGroupsData, groupsDataCount, setGroupsDataCount, groupsData, setGroupsData, invoiceItems, setInvoiceItems, invoiceData, setInvoiceData, oldInvoiceData, setOldInvoiceData, productsData, setProductsData, oldProductsData, setOldProductsData, productsDataCount, setProductsDataCount }}>
             {children}
         </appContext.Provider>
     );

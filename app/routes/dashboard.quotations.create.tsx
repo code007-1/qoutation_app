@@ -7,7 +7,7 @@ import { useCentralFetcher } from "~/component/centralFetcher";
 import { Listbox, ListboxButton, ListboxOption, ListboxOptions, Switch } from "@headlessui/react";
 import { ChallanData } from "./dashboard.challan.create";
 import { ChevronDown, Minus } from "lucide-react";
-import { challans, quotations, saveAndCreatePDF } from "~/component/statics";
+import { challans, quotations, saveAndCreatequotationAndChallanPDF } from "~/component/statics";
 
 export type QuoteItems = {
     id: number;
@@ -63,7 +63,7 @@ export async function createPdf(data: QuotationData | ChallanData, fetcher: any,
         })
     }
 
-    const response = await fetcher(`${saveAndCreatePDF}?save=${save}&showCustomerList=${showCustomerList}&type=${type}`, {
+    const response = await fetcher(`${saveAndCreatequotationAndChallanPDF}?save=${save}&showCustomerList=${showCustomerList}&type=${type}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...data, items: filteredItems })

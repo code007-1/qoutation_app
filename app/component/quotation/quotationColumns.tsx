@@ -1,7 +1,12 @@
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
+import { useNavigate } from "@remix-run/react";
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown, Copy, Ellipsis, Pencil, Tornado, Trash2 } from "lucide-react";
+import { ArrowDownToLine, ArrowUpDown, Copy, Ellipsis, Pencil, Trash2 } from "lucide-react";
 import { useGlobalContext } from "~/modules/gcontext";
+import { createPdf, QuotationData } from "~/routes/dashboard.quotations.create";
+import { useCentralFetcher } from "../centralFetcher";
+import { quotationDeleteAPIURL, quotations } from "../statics";
+import { useNotification } from "~/modules/notificationContext";
 
 export const sortButton = (column: any, name: string) => {
     return (
@@ -20,7 +25,36 @@ export function FormatAmountToINR(amount: number) {
 }
 
 export function useQuotationsColumns() {
-    const { permissions } = useGlobalContext();
+    const { permissions, setQuotationData, setQuotationItems, profile, selectedProfile, setOldQuotationData } = useGlobalContext();
+    const navigate = useNavigate();
+    const fetcher = useCentralFetcher();
+    const { addNotifications } = useNotification();
+
+    function handleEdit(row: QuotationData) {
+        setQuotationData(row);
+        setQuotationItems(row.items);
+        navigate("/dashboard/quotations/create", { state: { editing: true } });
+    }
+
+    function handleCopy(row: QuotationData) {
+        setQuotationData(row);
+        setQuotationItems(row.items);
+        navigate("/dashboard/quotations/create", { state: { editing: false } });
+    }
+
+    async function handleDelete(no: string) {
+        const result = await fetcher(quotationDeleteAPIURL, { method: "POST", body: JSON.stringify({ "no": no, "username": profile.username, type: quotations }) });
+        if (result.status !== 200) {
+            addNotifications({
+                title: "Error while deletion...",
+                message: result.statusText || "",
+            });
+        }
+        else {
+            setOldQuotationData((pre: any) => { return pre.filter((item: any) => item.no === no ? false : true) });
+        }
+    }
+
 
     const columns: ColumnDef<any, any>[] = [
         {
@@ -108,33 +142,42 @@ export function useQuotationsColumns() {
                         </div>
                         <MenuItems
                             transition
-                            className="absolute right-8 z-10 mt-2 w-36 origin-top-right divide-y divide-border rounded-sm bg-background shadow-lg ring-1 ring-black/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
+                            className="absolute right-8 z-10 mt-2 w-48 origin-top-right divide-y divide-border rounded-sm bg-background shadow-lg ring-1 ring-black/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
                         >
-                            <div className="flex flex-col gap-y-1 p-1">
+                            <div className="flex flex-col gap-y-1 p-1 text-base cursor-pointer">
                                 <MenuItem>
                                     <div
                                         className="flex px-6 py-1 data-[focus]:bg-buttonHover"
-                                        onClick={() => user.table.options.meta?.handleEdit?.(user.row.original)}
+                                        onClick={() => handleEdit(user.row.original)}
                                     >
-                                        <div className="text-textSecondary mr-4"><Pencil /></div>
-                                        <div className="text-textPrimary text-lg">Edit</div>
+                                        <div className="text-textSecondary mr-4"><Pencil size={20} /></div>
+                                        <div className="text-textPrimary">Edit</div>
                                     </div>
                                 </MenuItem>
                                 <MenuItem>
                                     <div className="flex px-6 py-1 data-[focus]:bg-buttonHover"
-                                        onClick={() => user.table.options.meta?.handleCopy?.(user.row.original)}>
-                                        <div className="text-textSecondary mr-4"><Copy /></div>
-                                        <div className="text-textPrimary text-lg">Copy</div>
+                                        onClick={() => handleCopy(user.row.original)}>
+                                        <div className="text-textSecondary mr-4"><Copy size={20} /></div>
+                                        <div className="text-textPrimary">Copy</div>
                                     </div>
                                 </MenuItem>
                                 {permissions.includes("delete") &&
                                     <MenuItem>
                                         <div className="flex px-6 py-1 data-[focus]:bg-buttonHover"
-                                            onClick={() => user.table.options.meta?.deleteQuotation?.(user.row.original.no)}>
-                                            <div className="text-textSecondary mr-4"><Trash2 /></div>
-                                            <div className="text-textPrimary text-lg">Delete</div>
+                                            onClick={() => handleDelete(user.row.original.no)}>
+                                            <div className="text-textSecondary mr-4"><Trash2 size={20} /></div>
+                                            <div className="text-textPrimary">Delete</div>
                                         </div>
                                     </MenuItem>}
+                                <MenuItem>
+                                    <div
+                                        className="flex px-6 py-1 data-[focus]:bg-buttonHover"
+                                        onClick={(e) => createPdf(user.row.original, fetcher, profile.quotationInfo[selectedProfile].showCustomerList, false)}
+                                    >
+                                        <div className="text-textSecondary mr-4"><ArrowDownToLine size={20} /></div>
+                                        <div className="text-textPrimary">Download</div>
+                                    </div>
+                                </MenuItem>
                             </div>
                         </MenuItems >
                     </Menu >
