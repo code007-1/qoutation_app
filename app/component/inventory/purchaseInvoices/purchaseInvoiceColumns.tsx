@@ -3,10 +3,10 @@ import { useNavigate } from "@remix-run/react";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, Copy, Ellipsis, Pencil, Trash2 } from "lucide-react";
 import { useCentralFetcher } from "~/component/centralFetcher";
-import { products, purchaseInvoice } from "~/component/statics";
+import { purchaseInvoice } from "~/component/statics";
 import { useGlobalContext } from "~/modules/gcontext";
 import { useNotification } from "~/modules/notificationContext";
-import { ProductsData } from "../product/productCreate";
+import { InvoiceData } from "~/routes/dashboard.inventory.purchaseinvoices.create";
 
 export const sortButton = (column: any, name: string) => {
     return (
@@ -21,19 +21,21 @@ export const sortButton = (column: any, name: string) => {
 }
 
 export function usePurchaseInvoiceColumn() {
-    const { permissions, setProductsData, setOldProductsData } = useGlobalContext();
+    const { permissions, setInvoiceData, setOldProductsData, setInvoiceItems } = useGlobalContext();
     const navigate = useNavigate();
     const fetcher = useCentralFetcher();
     const { addNotifications } = useNotification();
 
-    function handleEdit(row: ProductsData) {
-        setProductsData(row);
-        navigate("/dashboard/purchaseinvoice/create", { state: { editing: true } });
+    function handleEdit(row: InvoiceData) {
+        setInvoiceData(row);
+        setInvoiceItems(row.items);
+        navigate("/dashboard/inventory/purchaseinvoices/create", { state: { editing: true } });
     }
 
-    function handleCopy(row: ProductsData) {
-        setProductsData(row);
-        navigate("/dashboard/purchaseinvoice/create", { state: { editing: false } });
+    function handleCopy(row: InvoiceData) {
+        setInvoiceData(row);
+        setInvoiceItems(row.items);
+        navigate("/dashboard/inventory/purchaseinvoices/create", { state: { editing: false } });
     }
 
 

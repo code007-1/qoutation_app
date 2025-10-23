@@ -2,7 +2,7 @@ import { Minus } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { useGlobalContext } from "~/modules/gcontext";
 import { quotationAndChallanDataSearch } from "../../statics";
-import { InvoiceItem } from "./purchaseInvoicesCreate";
+import { InvoiceItem } from "~/routes/dashboard.inventory.purchaseinvoices.create";
 
 export default function PurchaseInvoiceAutocompleteSearch({ index }: { index: number }) {
     const [showSuggestions, setShowSuggestions] = useState(false);
@@ -50,7 +50,7 @@ export default function PurchaseInvoiceAutocompleteSearch({ index }: { index: nu
         //setInput(suggestion.label);
         setInvoiceItems(pre => {
             return pre.map((item, i) => i == index
-                ? { productid: suggestion.productid, name: suggestion.name, quantity: 1, price: 0, discount: 0, sno: [] }
+                ? { no: suggestion.no, name: suggestion.name, quantity: 1, price: 0, discount: 0, sno: [] }
                 : item)
         });
         setShowSuggestions(false);
@@ -83,7 +83,7 @@ export default function PurchaseInvoiceAutocompleteSearch({ index }: { index: nu
             setShowSuggestions(false);
             setInvoiceItems(pre => {
                 return pre.map((item, i) => i === index
-                    ? { productid: filtered[highlighted].productid, name: filtered[highlighted].name, quantity: 1, price: 0, discount: 0, sno: [] }
+                    ? { no: filtered[highlighted].no, name: filtered[highlighted].name, quantity: 1, price: 0, discount: 0, sno: [] }
                     : item)
             });
         } else if (e.key === "Escape") {
@@ -95,7 +95,7 @@ export default function PurchaseInvoiceAutocompleteSearch({ index }: { index: nu
         <div className="grid grid-cols-12 relative w-full gap-x-2">
             <div className="col-span-4 flex gap-x-2">
                 <div className="p-2 bg-headerBackground w-[100px] border-0 ">
-                    {invoiceItems[index].productid}
+                    {invoiceItems[index].no}
                 </div>
                 <div className="w-full relative">
                     <input
@@ -115,7 +115,7 @@ export default function PurchaseInvoiceAutocompleteSearch({ index }: { index: nu
                         <ul className="w-full z-10 absolute top-full -left-0 right-0 bg-buttonHover border border-border overflow-y-auto max-h-96">
                             {filtered.map((s, idx) => (
                                 <li
-                                    key={s.productid}
+                                    key={s.no}
                                     onMouseDown={() => handleSuggestionClick(s)}
                                     className={`${idx === highlighted ? "bg-buttonHover" : "bg-background"} p-2 cursor-pointer text-textSecondary`}
                                     onMouseEnter={() => setHighlighted(idx)}

@@ -107,10 +107,13 @@ export async function update(db: string = dbName, collection: string = usersColl
 }
 
 // delete one document in collection according to "no"
-export async function deleteOneFromDB(no: string, db: string = dbName, collection: string = quotationCollectionName,): Promise<number | undefined> {
+export async function deleteOneFromDB(query: {}, db: string = dbName, collection: string = quotationCollectionName): Promise<number | undefined> {
     try {
+        if (Object.keys(query).length == 0)
+            return undefined;
+
         await run();
-        const result = await client.db(db).collection(collection).deleteOne({ "no": no });
+        const result = await client.db(db).collection(collection).deleteOne(query);
         console.log(`New item created with the following id: ${result.deletedCount}`);
         return result.deletedCount;
     }

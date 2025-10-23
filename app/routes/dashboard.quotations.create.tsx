@@ -112,7 +112,6 @@ export default function QuotationsCreate() {
 
     useEffect(() => {
         // copying existing quotation
-        console.log("passedData", passedData);
         if (passedData && passedData?.editing === false) {
             const d = new Date();
             const no = d.getTime().toString();

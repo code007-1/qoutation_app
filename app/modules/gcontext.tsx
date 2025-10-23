@@ -6,8 +6,8 @@ import packageJson from "../../package.json";
 import { ChallanData, ChallanItems } from "~/routes/dashboard.challan.create";
 import { ComplaintsData } from "~/routes/dashboard.complaints.create";
 import { GroupsData } from "~/routes/dashboard.inventory.create";
-import { ProductsData } from "~/component/inventory/product/productCreate";
-import { InvoiceItem, InvoiceData } from "~/component/inventory/purchaseInvoices/purchaseInvoicesCreate";
+import { ProductsData } from "~/routes/dashboard.inventory.products.create";
+import { InvoiceItem, InvoiceData } from "~/routes/dashboard.inventory.purchaseinvoices.create";
 
 interface AppContextType {
     // app related variables
@@ -91,161 +91,212 @@ const appContext = createContext<AppContextType | null>(null);
 export const createQuotation = <>< Link to={"/dashboard/quotations/create"} className="cursor-pointer hover:bg-buttonHover w-min text-nowrap p-1" >Create Quotation</Link ></>;
 export const createChallan = <>< Link to={"/dashboard/challan/create"} className="cursor-pointer hover:bg-buttonHover w-min text-nowrap p-1" >Create Challan</Link ></>;
 export const createComplaint = <>< Link to={"/dashboard/complaints/create"} className="cursor-pointer hover:bg-buttonHover w-min text-nowrap p-1" >Create Complaint</Link ></>;
-export const createInvetory = <>< Link to={"/dashboard/inventory/create"} className="cursor-pointer hover:bg-buttonHover w-min text-nowrap p-1" >Create Inventory</Link ></>;
+export const createInvetory =
+<>
+        < Menu as="div" className="relative inline-block text-left text-sm text-textSecondary" >
+            <div>
+                <MenuButton className="flex mr-10 items-center hover:bg-buttonHover px-2">
+                    <div className="text-textPrimary text-xl mr-2">{text}</div>
+                    <AlignRight className="text-textPrimary" />
+                </MenuButton>
+            </div>
+            <MenuItems
+                transition
+                className="absolute right-10 z-10 mt-2 w-52 origin-top-right divide-y divide-border rounded-sm bg-background shadow-lg ring-1 ring-black/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
+            >
+                <div className="p-1">
+                    <MenuItem>
+                        <Link
+                            to="/dashboard/quotations/show"
+                            className="flex px-4 py-2 data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
+                        >
+                            <ScrollText size={20} className="mr-2 " />
+                            Quotation Home
+                        </Link>
+                    </MenuItem>
+                    <MenuItem>
+                        <Link
+                            to="/dashboard/challan/show"
+                            className="flex px-4 py-2 data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
+                        >
+                            <FilePenLine size={20} className="mr-2" />
+                            Challan Home
+                        </Link>
+                    </MenuItem>
+                    <MenuItem>
+                        <Link
+                            to="/dashboard/complaints/show"
+                            className="flex px-4 py-2 data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
+                        >
+                            <BadgeAlert size={20} className="mr-2" />
+                            Complaint Home
+                        </Link>
+                    </MenuItem>
+                    <MenuItem>
+                        <Link
+                            to="/dashboard/inventory/show"
+                            className="flex px-4 py-2 data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
+                        >
+                            <Layers size={20} className="mr-2" />
+                            Inventory Home
+                        </Link>
+                    </MenuItem>
+                </>
+//<>< Link to={"/dashboard/inventory/create"} className="cursor-pointer hover:bg-buttonHover w-min text-nowrap p-1" >Create Inventory</Link ></>;
 
 export const initialQuotationData = () => {
     return {
-        no: new Date().getTime().toString(),
-        date: new Date().toISOString().split("T")[0], // Default to today"s date
-        items: [],
-        intro: "This is about our earlier discussions with you regarding your requirement for the Matrix Digital IP-PBXS System. Please find below our best offer for the same.",
-        terms: "1. Payment Terms: 100% advance.\n2. Delivery Schedule: Within 1-2 days after receiving the PO along with the Advance.\n3. 12 Months off-site warranty from the OEM, as per their terms.\n4. Validity: This offer is valid for 30 days.",
-        additionalInfo: "Online UPS supply and Network Rack with accessories, such as fans, AC Sockets, and networking requirements, will be fulfilled by the customer.",
-        from: "Teen Telecommunication Pvt. Ltd.",
-        fromAddress: "G-57, Vikas Marg, Near Metro Pillar No.41, \nDelhi - 110092",
-        to: "",
-        toAddress: "",
-        tax: 18,
-        discount: 0,
-        amount: 0,
-        madeby: "",
-        avgdiscount: 0,
-        avgaddon: 0,
-        bankInfo: ""
+                    no: new Date().getTime().toString(),
+                date: new Date().toISOString().split("T")[0], // Default to today"s date
+                items: [],
+                intro: "This is about our earlier discussions with you regarding your requirement for the Matrix Digital IP-PBXS System. Please find below our best offer for the same.",
+                terms: "1. Payment Terms: 100% advance.\n2. Delivery Schedule: Within 1-2 days after receiving the PO along with the Advance.\n3. 12 Months off-site warranty from the OEM, as per their terms.\n4. Validity: This offer is valid for 30 days.",
+                additionalInfo: "Online UPS supply and Network Rack with accessories, such as fans, AC Sockets, and networking requirements, will be fulfilled by the customer.",
+                from: "Teen Telecommunication Pvt. Ltd.",
+                fromAddress: "G-57, Vikas Marg, Near Metro Pillar No.41, \nDelhi - 110092",
+                to: "",
+                toAddress: "",
+                tax: 18,
+                discount: 0,
+                amount: 0,
+                madeby: "",
+                avgdiscount: 0,
+                avgaddon: 0,
+                bankInfo: ""
     }
 }
 
 export const initialChallanData = () => {
     return {
-        no: new Date().getTime().toString(),
-        date: new Date().toISOString().split("T")[0], // Default to today"s date
-        items: [],
-        type: "Delivery Challan",
-        category: "Dealer Sale",
-        from: "Teen Telecommunication Pvt. Ltd.",
-        fromAddress: "G-57, Vikas Marg, Near Metro Pillar No.41, \nDelhi - 110092",
-        to: "",
-        toAddress: "",
-        madeby: "",
-        modeofdispatch: "by hand"
+                    no: new Date().getTime().toString(),
+                date: new Date().toISOString().split("T")[0], // Default to today"s date
+                items: [],
+                type: "Delivery Challan",
+                category: "Dealer Sale",
+                from: "Teen Telecommunication Pvt. Ltd.",
+                fromAddress: "G-57, Vikas Marg, Near Metro Pillar No.41, \nDelhi - 110092",
+                to: "",
+                toAddress: "",
+                madeby: "",
+                modeofdispatch: "by hand"
     }
 }
 
 export const initialComplaintsData = () => {
     const dateTime = new Date().toISOString().split("T");
-    return {
-        no: `Govt-${1}`,
-        date: dateTime[0], // Default to today"s date
-        time: dateTime[1].split(".")[0],
-        type: "Government",
-        contactPerson: "",
-        contactNumber: "",
-        nameOrAddress: "",
-        recordedby: "",
-        complaint: "",
-        address: "",
-        attendingEngineer: "Not Assigned",
-        remarks: "",
-        status: "Pending"
+                return {
+                    no: `Govt-${1}`,
+                date: dateTime[0], // Default to today"s date
+                time: dateTime[1].split(".")[0],
+                type: "Government",
+                contactPerson: "",
+                contactNumber: "",
+                nameOrAddress: "",
+                recordedby: "",
+                complaint: "",
+                address: "",
+                attendingEngineer: "Not Assigned",
+                remarks: "",
+                status: "Pending"
     }
 }
 
 export const initialProductData = () => {
     return {
-        productid: -1,
-        name: "",
-        description: "",
-        hsn: "",
-        price: 0,
-        group: "",
-        quantity: 0
+                    no: -1,
+                name: "",
+                description: "",
+                hsn: "",
+                price: 0,
+                group: "",
+                quantity: 0
     };
 }
 
-export const AppProvider = ({ children }: { children: React.ReactNode }) => {
+                export const AppProvider = ({children}: {children: React.ReactNode }) => {
     // app related variaibles
     const [theme, setTheme] = useState("light"); // Default theme
-    const [accessToken, setAccessToken] = useState<string | undefined>();
-    const [homeLink, setHomeLink] = useState<string>("/home");
-    const [appName, setAppName] = useState<string>(packageJson.name.slice(0, 3) + packageJson.name[3].toUpperCase() + packageJson.name.slice(4));
-    const [headerText, setHeaderText] = useState<string | ReactNode>(createQuotation);
+                const [accessToken, setAccessToken] = useState<string | undefined>();
+                const [homeLink, setHomeLink] = useState<string>("/home");
+                    const [appName, setAppName] = useState<string>(packageJson.name.slice(0, 3) + packageJson.name[3].toUpperCase() + packageJson.name.slice(4));
+                        const [headerText, setHeaderText] = useState<string | ReactNode>(createQuotation);
 
-    // user related variables
-    const [gQuote, setGQuote] = useState<string | undefined>();
-    const [profile, setProfile] = useState<profile>({ generalInfo: [{ contact: "+91 7065577059/60", address: "G-57, Vikas Marg, Near Metro Pillar No.41, \nDelhi - 110092", company: "Teen Telecommunication Pvt. Ltd.", website: "https://teentelecommunication.com", email: "sales@teentelecommunication.com" }], quotationInfo: [{ pdfColor: "222", showCustomerList: true }] });
-    const [selectedProfile, setSelectedProfile] = useState(0);
-    const [permissions, setPermissions] = useState<string>("");
+                        // user related variables
+                        const [gQuote, setGQuote] = useState<string | undefined>();
+                        const [profile, setProfile] = useState<profile>({generalInfo: [{contact: "+91 7065577059/60", address: "G-57, Vikas Marg, Near Metro Pillar No.41, \nDelhi - 110092", company: "Teen Telecommunication Pvt. Ltd.", website: "https://teentelecommunication.com", email: "sales@teentelecommunication.com" }], quotationInfo: [{pdfColor: "222", showCustomerList: true }] });
+                            const [selectedProfile, setSelectedProfile] = useState(0);
+                            const [permissions, setPermissions] = useState<string>("");
 
-    // quotation related variables
-    const [oldQuotationData, setOldQuotationData] = useState<QuotationData[]>([]); // data loaded from db of old quotations
-    const [quotationDataCount, setQuotationDataCount] = useState<number>(0); // count of data loaded from db
-    const [quotationItems, setQuotationItems] = useState<QuoteItems[]>([]); // items added to the current quotation being created
-    const [quotationData, setQuotationData] = useState<QuotationData>(initialQuotationData()); // data of the whole current quotation being created
+                                // quotation related variables
+                                const [oldQuotationData, setOldQuotationData] = useState<QuotationData[]>([]); // data loaded from db of old quotations
+                                const [quotationDataCount, setQuotationDataCount] = useState<number>(0); // count of data loaded from db
+                                    const [quotationItems, setQuotationItems] = useState<QuoteItems[]>([]); // items added to the current quotation being created
+                                    const [quotationData, setQuotationData] = useState<QuotationData>(initialQuotationData()); // data of the whole current quotation being created
 
-    // challan related variables
-    const [oldChallanData, setOldChallanData] = useState<ChallanData[]>([]); // data loaded from db of old quotations
-    const [challanDataCount, setChallanDataCount] = useState<number>(0); // count of data loaded from db
-    const [challanItems, setChallanItems] = useState<ChallanItems[]>([]); // items added to the current quotation being created
-    const [challanData, setChallanData] = useState<ChallanData>(initialChallanData()); // data of the whole current quotation being created
+                                        // challan related variables
+                                        const [oldChallanData, setOldChallanData] = useState<ChallanData[]>([]); // data loaded from db of old quotations
+                                        const [challanDataCount, setChallanDataCount] = useState<number>(0); // count of data loaded from db
+                                            const [challanItems, setChallanItems] = useState<ChallanItems[]>([]); // items added to the current quotation being created
+                                            const [challanData, setChallanData] = useState<ChallanData>(initialChallanData()); // data of the whole current quotation being created
 
-    // complaint related variables
-    const [oldComplaintsData, setOldComplaintsData] = useState<ComplaintsData[]>([]);
-    const [complaintsDataCount, setComplaintsDataCount] = useState<number>(0);
-    const [complaintsData, setComplaintsData] = useState<ComplaintsData>(initialComplaintsData());
+                                                // complaint related variables
+                                                const [oldComplaintsData, setOldComplaintsData] = useState<ComplaintsData[]>([]);
+                                                const [complaintsDataCount, setComplaintsDataCount] = useState<number>(0);
+                                                    const [complaintsData, setComplaintsData] = useState<ComplaintsData>(initialComplaintsData());
 
-    // product related variables
-    const [oldProductsData, setOldProductsData] = useState<ProductsData[]>([]);
-    const [productsDataCount, setProductsDataCount] = useState<number>(0);
-    const [productsData, setProductsData] = useState<ProductsData>(initialProductData());
+                                                        // product related variables
+                                                        const [oldProductsData, setOldProductsData] = useState<ProductsData[]>([]);
+                                                        const [productsDataCount, setProductsDataCount] = useState<number>(0);
+                                                            const [productsData, setProductsData] = useState<ProductsData>(initialProductData());
 
-    // product related variables
-    const [oldGroupsData, setOldGroupsData] = useState<GroupsData[]>([]);
-    const [groupsDataCount, setGroupsDataCount] = useState<number>(0);
-    const [groupsData, setGroupsData] = useState<GroupsData>({ "name": "Default" });
+                                                                // product related variables
+                                                                const [oldGroupsData, setOldGroupsData] = useState<GroupsData[]>([]);
+                                                                const [groupsDataCount, setGroupsDataCount] = useState<number>(0);
+                                                                    const [groupsData, setGroupsData] = useState<GroupsData>({"name": "Default" });
 
-    // incoming invoice realated valriables
-    const [invoiceItems, setInvoiceItems] = useState<InvoiceItem[]>([]);
-    const [invoiceData, setInvoiceData] = useState<InvoiceData>({ invoiceno: "", vendor: "", date: new Date().toISOString().split("T")[0], items: [], amount: 0, tax: 18 });
-    const [oldInvoiceData, setOldInvoiceData] = useState<InvoiceData[]>([]);
+                                                                        // incoming invoice realated valriables
+                                                                        const [invoiceItems, setInvoiceItems] = useState<InvoiceItem[]>([]);
+                                                                        const [invoiceData, setInvoiceData] = useState<InvoiceData>({invoiceno: "", vendor: "", date: new Date().toISOString().split("T")[0], items: [], amount: 0, tax: 18 });
+                                                                            const [oldInvoiceData, setOldInvoiceData] = useState<InvoiceData[]>([]);
 
     const toggleTheme = () => {
         const currentTheme = () => {
             switch (theme) {
                 case "light":
-                    return "dark";
-                case "dark":
-                    return "dark2";
-                case "dark2":
-                    return "solarwind";
-                case "solarwind":
-                    return "seagreen";
-                case "seagreen":
-                    return "sunsetBloom";
-                case "sunsetBloom":
-                    return "cyberpunkPulse";
-                //case "cyberpunkPulse":
-                //return "glass";
-                default:
-                    return "light"; // Fallback to light theme
+                                                                            return "dark";
+                                                                            case "dark":
+                                                                            return "dark2";
+                                                                            case "dark2":
+                                                                            return "solarwind";
+                                                                            case "solarwind":
+                                                                            return "seagreen";
+                                                                            case "seagreen":
+                                                                            return "sunsetBloom";
+                                                                            case "sunsetBloom":
+                                                                            return "cyberpunkPulse";
+                                                                            //case "cyberpunkPulse":
+                                                                            //return "glass";
+                                                                            default:
+                                                                            return "light"; // Fallback to light theme
             }
         };
-        setTheme(currentTheme);
-        localStorage.setItem("theme", currentTheme());
+                                                                            setTheme(currentTheme);
+                                                                            localStorage.setItem("theme", currentTheme());
     };
 
-    return (
-        <appContext.Provider value={{ theme, setTheme, toggleTheme, accessToken, setAccessToken, quotationItems, setQuotationItems, quotationData, setQuotationData, headerText, setHeaderText, gQuote, setGQuote, profile, setProfile, selectedProfile, setSelectedProfile, quotationDataCount, setQuotationDataCount, oldQuotationData, setOldQuotationData, homeLink, setHomeLink, setAppName, appName, oldChallanData, setOldChallanData, challanDataCount, setChallanDataCount, challanItems, setChallanItems, challanData, setChallanData, complaintsData, setComplaintsData, permissions, setPermissions, oldComplaintsData, setOldComplaintsData, complaintsDataCount, setComplaintsDataCount, oldGroupsData, setOldGroupsData, groupsDataCount, setGroupsDataCount, groupsData, setGroupsData, invoiceItems, setInvoiceItems, invoiceData, setInvoiceData, oldInvoiceData, setOldInvoiceData, productsData, setProductsData, oldProductsData, setOldProductsData, productsDataCount, setProductsDataCount }}>
-            {children}
-        </appContext.Provider>
-    );
+                                                                            return (
+                                                                            <appContext.Provider value={{ theme, setTheme, toggleTheme, accessToken, setAccessToken, quotationItems, setQuotationItems, quotationData, setQuotationData, headerText, setHeaderText, gQuote, setGQuote, profile, setProfile, selectedProfile, setSelectedProfile, quotationDataCount, setQuotationDataCount, oldQuotationData, setOldQuotationData, homeLink, setHomeLink, setAppName, appName, oldChallanData, setOldChallanData, challanDataCount, setChallanDataCount, challanItems, setChallanItems, challanData, setChallanData, complaintsData, setComplaintsData, permissions, setPermissions, oldComplaintsData, setOldComplaintsData, complaintsDataCount, setComplaintsDataCount, oldGroupsData, setOldGroupsData, groupsDataCount, setGroupsDataCount, groupsData, setGroupsData, invoiceItems, setInvoiceItems, invoiceData, setInvoiceData, oldInvoiceData, setOldInvoiceData, productsData, setProductsData, oldProductsData, setOldProductsData, productsDataCount, setProductsDataCount }}>
+                                                                                {children}
+                                                                            </appContext.Provider>
+                                                                            );
 };
 
 
 // custom global context hook
 export const useGlobalContext = () => {
     const context = useContext(appContext);
-    if (!context) {
+                                                                            if (!context) {
         throw new Error("useAppContext must be used within AppProvider");
     }
-    return context;
+                                                                            return context;
 }

@@ -13,11 +13,11 @@ export function useChallanColumns() {
     const { permissions } = useGlobalContext();
     const fetcher = useCentralFetcher();
     const navigate = useNavigate();
-    const { setChallanData, setChallanItems, profile, setOldChallanData } = useGlobalContext();
+    const { setChallanData, setChallanItems, setOldChallanData } = useGlobalContext();
     const { addNotifications } = useNotification();
 
     async function handleDelete(no: string) {
-        const result = await fetcher("/api/delete", { method: "POST", body: JSON.stringify({ "no": no, "username": profile.username, type: challans }) });
+        const result = await fetcher("/api/delete", { method: "POST", body: JSON.stringify({ filter: { "no": no }, type: challans }) });
         if (result.status !== 200) {
             addNotifications({
                 title: "Error while deletion...",

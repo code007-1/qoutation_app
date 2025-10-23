@@ -7,6 +7,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
         const { permissions } = await verifyAccessToken(request);
         if (!permissions?.includes("read"))
             return new Response("user not authorized to read", { status: 405 });
+
         await loadProductsDataPromise();
         return Response.json(Object.values(products), { status: 200 });
     }

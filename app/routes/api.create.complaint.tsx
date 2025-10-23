@@ -14,7 +14,7 @@ export const action: ActionFunction = async ({ request, params }) => {
         await insertOrUpdateOnetoDb(data, dbName, complaintCollectionName, { "no": data.no }, true);
 
         await insertOnetoDb({ "by": data.recordedby, "action": `saving complaint`, "result": "succeded", "when": new Date().toISOString() }, dbName, logsCollectionName);
-        // finally create the Response with the correct Content-Type header for a PDF
+
         return new Response("complaint saved succefully", { status: 200 });
     }
     catch (error) {

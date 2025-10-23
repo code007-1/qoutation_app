@@ -4,7 +4,7 @@ import { createChallan, initialChallanData, useGlobalContext } from "~/modules/g
 import { useCentralFetcher } from "~/component/centralFetcher";
 import { useNotification } from "~/modules/notificationContext";
 import TableUI from "~/component/tableUI";
-import { challanReadAPIURL, challans } from "~/component/statics";
+import { challanAdvnanceReadAPIURL, challanReadAPIURL, challans } from "~/component/statics";
 import { Row } from "@tanstack/react-table";
 import { Dialog } from "~/component/menu/about";
 import { X } from "lucide-react";
@@ -66,7 +66,7 @@ const ChallanShow = () => {
                     params.append(key, value);
                 }
             });
-            response = await fetcher(`${challanReadAPIURL}?${params.toString()}`);
+            response = await fetcher(`${challanAdvnanceReadAPIURL}&${params.toString()}`);
             if (response.status === 200) {
                 const data = await response.json();
                 setOldChallanData(data);
@@ -79,7 +79,7 @@ const ChallanShow = () => {
         }
         else {
             setLoading(true);
-            response = await fetcher(`${challanReadAPIURL}?skip=${challanDataCount}`);
+            response = await fetcher(`${challanReadAPIURL}&skip=${challanDataCount}`);
             if (response.status === 200) {
                 const data = await response.json();
                 if (challanDataCount == 0) {
@@ -138,7 +138,7 @@ const ChallanShow = () => {
                         </div>
                         <div className="mt-2 p-4 flex items-center text-textPrimary">
                             <div className="w-[15%] font-semibold">S. No.</div>
-                            <input type="text" className="border border-border w-[85%] p-2 text-textPrimary" value={query.sno} onChange={(e) => { setQuery(pre => { return { ...pre, sno: e.target.value } }) }} />
+                            <input type="text" className="border border-border w-[85%] p-2 text-textPrimary bg-background" value={query.sno} onChange={(e) => { setQuery(pre => { return { ...pre, sno: e.target.value } }) }} />
                         </div>
                         <div className="flex justify-between gap-2 p-4">
                             <button

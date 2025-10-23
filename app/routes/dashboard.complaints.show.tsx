@@ -3,7 +3,7 @@ import { useComplaintsColumn } from "~/component/complaints/complaintColumns";
 import { createComplaint, initialComplaintsData, useGlobalContext } from "~/modules/gcontext";
 import { useCentralFetcher } from "~/component/centralFetcher";
 import { useNotification } from "~/modules/notificationContext";
-import { complaintReadAPIURL } from "~/component/statics";
+import { complaintAdvnanceReadAPIURL, complaintReadAPIURL } from "~/component/statics";
 import TableUI from "~/component/tableUI";
 import { Dialog } from "~/component/menu/about";
 import { X } from "lucide-react";
@@ -41,7 +41,7 @@ const ComplaintShow = () => {
                     params.append(key, value);
                 }
             });
-            response = await fetcher(`${complaintReadAPIURL}?${params.toString()}`);
+            response = await fetcher(`${complaintAdvnanceReadAPIURL}&${params.toString()}`);
             if (response.status === 200) {
                 const data = await response.json();
                 setOldComplaintsData(data);
@@ -54,7 +54,7 @@ const ComplaintShow = () => {
         }
         else {
             setLoading(true);
-            response = await fetcher(`${complaintReadAPIURL}?skip=${complaintsDataCount}`);
+            response = await fetcher(`${complaintReadAPIURL}&skip=${complaintsDataCount}`);
             if (response.status === 200) {
                 const data = await response.json();
                 if (complaintsDataCount == 0) {

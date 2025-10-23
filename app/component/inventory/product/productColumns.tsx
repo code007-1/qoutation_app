@@ -6,7 +6,7 @@ import { useCentralFetcher } from "~/component/centralFetcher";
 import { products } from "~/component/statics";
 import { useGlobalContext } from "~/modules/gcontext";
 import { useNotification } from "~/modules/notificationContext";
-import { ProductsData } from "~/routes/dashboard.inventory.create";
+import { ProductsData } from "../../../routes/dashboard.inventory.products.create";
 
 export const sortButton = (column: any, name: string) => {
     return (
@@ -28,17 +28,17 @@ export function useProductsColumn() {
 
     function handleEdit(row: ProductsData) {
         setProductsData(row);
-        navigate("/dashboard/products/create", { state: { editing: true } });
+        navigate("/dashboard/inventory/products/create", { state: { editing: true } });
     }
 
     function handleCopy(row: ProductsData) {
         setProductsData(row);
-        navigate("/dashboard/products/create", { state: { editing: false } });
+        navigate("/dashboard/inventory/products/create", { state: { editing: false } });
     }
 
 
-    async function handleDelete(productid: string) {
-        const result = await fetcher("/api/delete", { method: "POST", body: JSON.stringify({ "productid": productid, type: products }) });
+    async function handleDelete(productno: number) {
+        const result = await fetcher("/api/delete", { method: "POST", body: JSON.stringify({ filter: { "no": productno }, type: products }) });
         if (result.status !== 200) {
             addNotifications({
                 title: "Error while deletion...",
@@ -46,27 +46,21 @@ export function useProductsColumn() {
             });
         }
         else {
-            setOldProductsData((pre: any) => { return pre.filter((id: string) => id === productid ? false : true) });
+            setOldProductsData((pre: any) => { return pre.filter(({ no }: { no: number }) => no != productno) });
         }
     }
 
     const column: ColumnDef<any, any>[] = [
         {
-            accessorKey: "productid",
+            accessorKey: "no",
             header: "ID",
-            cell: (user: any) => {
-                return <span>{user.row.original.productid}</span>
-            },
             filterFn: (row, columnId, filterValue) => {
-                return row.original[columnId].toLowerCase().includes(filterValue);
+                return row.original[columnId].toString().toLowerCase().includes(filterValue);
             },
         },
         {
             accessorKey: "name",
             header: "Name",
-            cell: (user: any) => {
-                return <span>{user.row.original.name}</span>
-            },
             filterFn: (row, columnId, filterValue) => {
                 return row.original[columnId].toLowerCase().includes(filterValue);
             },
@@ -74,9 +68,6 @@ export function useProductsColumn() {
         {
             accessorKey: "hsn",
             header: "HSN Code",
-            cell: (user: any) => {
-                return <span>{user.row.original.hsn}</span>
-            },
             filterFn: (row, columnId, filterValue) => {
                 return row.original[columnId].toLowerCase().includes(filterValue);
             },
@@ -84,9 +75,6 @@ export function useProductsColumn() {
         {
             accessorKey: "description",
             header: "Description",
-            cell: (user: any) => {
-                return <span>{user.row.original.description}</span>
-            },
             filterFn: (row, columnId, filterValue) => {
                 return row.original[columnId].toLowerCase().includes(filterValue);
             }
@@ -94,19 +82,13 @@ export function useProductsColumn() {
         {
             accessorKey: "group",
             header: "Group",
-            cell: (user: any) => {
-                return <span>{user.row.original.complaint}</span>
-            },
             filterFn: (row, columnId, filterValue) => {
                 return row.original[columnId].toLowerCase().includes(filterValue);
             },
         },
         {
-            accessorKey: "stock",
+            accessorKey: "quantity",
             header: "Current Stock",
-            cell: (user: any) => {
-                return <span>{user.row.original.stock}</span>
-            },
             filterFn: (row, columnId, filterValue) => {
                 return row.original[columnId].toLowerCase().includes(filterValue);
             },
@@ -146,7 +128,7 @@ export function useProductsColumn() {
                                 {permissions.includes("delete") &&
                                     <MenuItem>
                                         <div className="flex px-6 py-1 data-[focus]:bg-buttonHover"
-                                            onClick={() => handleDelete(user.row.original.productid)}>
+                                            onClick={() => handleDelete(user.row.original.no)}>
                                             <div className="text-textSecondary mr-4"><Trash2 size={20} /></div>
                                             <div className="text-textPrimary">Delete</div>
                                         </div>

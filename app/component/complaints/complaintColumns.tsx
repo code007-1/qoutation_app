@@ -10,7 +10,7 @@ import { compalints } from "../statics";
 
 
 export function useComplaintsColumn() {
-    const { permissions, setComplaintsData, setOldComplaintsData, profile } = useGlobalContext();
+    const { permissions, setComplaintsData, setOldComplaintsData } = useGlobalContext();
     const navigate = useNavigate();
     const fetcher = useCentralFetcher();
     const { addNotifications } = useNotification();
@@ -26,7 +26,7 @@ export function useComplaintsColumn() {
     }
 
     async function handleDelete(no: string) {
-        const result = await fetcher("/api/delete", { method: "POST", body: JSON.stringify({ "no": no, "username": profile.username, type: compalints }) });
+        const result = await fetcher("/api/delete", { method: "POST", body: JSON.stringify({ filter: { "no": no }, type: compalints }) });
         if (result.status !== 200) {
             addNotifications({
                 title: "Error while deletion...",

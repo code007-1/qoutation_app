@@ -43,7 +43,7 @@ export function useQuotationsColumns() {
     }
 
     async function handleDelete(no: string) {
-        const result = await fetcher(quotationDeleteAPIURL, { method: "POST", body: JSON.stringify({ "no": no, "username": profile.username, type: quotations }) });
+        const result = await fetcher(quotationDeleteAPIURL, { method: "POST", body: JSON.stringify({ filter: { "no": no }, type: quotations }) });
         if (result.status !== 200) {
             addNotifications({
                 title: "Error while deletion...",

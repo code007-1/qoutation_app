@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { useGlobalContext } from "~/modules/gcontext";
-import PurchaseInvoiceAutocompleteSearch from "./purchaseInvoiceAutocompleteSearch";
-import { useCentralFetcher } from "../../centralFetcher";
-import { purchaseInvoiceCreateURL } from "../../statics";
+import PurchaseInvoiceAutocompleteSearch from "../component/inventory/purchaseInvoices/purchaseInvoiceAutocompleteSearch";
+import { useCentralFetcher } from "../component/centralFetcher";
+import { purchaseInvoiceCreateURL } from "../component/statics";
 
 /*
         {
@@ -47,7 +47,7 @@ bug - form causing first item to disapper
          */
 
 export interface InvoiceItem {
-    productid: string, // product id
+    no: number, // product id
     name: string, // product name
     quantity: number, // product name
     price: number, // purchase price
@@ -71,7 +71,7 @@ export default function CreatePurchaseInvoice() {
         setInvoiceItems(pre => {
             return [
                 ...pre,
-                { productid: "0", name: "", price: 0, quantity: 0, discount: 0, sno: [] }
+                { no: 0, name: "", price: 0, quantity: 0, discount: 0, sno: [] }
             ]
         });
     }
@@ -103,10 +103,10 @@ export default function CreatePurchaseInvoice() {
         </div>
         <div className="grid grid-cols-6 gap-4 text-textPrimary mt-4">
             <div className="col-span-1">
-                Invoice No. <input required type="text" name="invoiceno" placeholder="Enter Invoice No." className="border border-border p-2 bg-background w-full" onChange={e => setInvoiceData(pre => { return { ...pre, invoiceno: e.target.value } })} />
+                Invoice No. <input required type="text" name="invoiceno" placeholder="Enter Invoice No." className="border border-border p-2 bg-background w-full" value={invoiceData.invoiceno} onChange={e => setInvoiceData(pre => { return { ...pre, invoiceno: e.target.value } })} />
             </div>
             <div className="col-span-4">
-                Vendor Name <input type="text" name="vendorname" placeholder="Enter Vendor Name" className="border border-border p-2 bg-background w-full" onChange={e => setInvoiceData(pre => { return { ...pre, vendor: e.target.value || "" } })} />
+                Vendor Name <input type="text" name="vendorname" placeholder="Enter Vendor Name" className="border border-border p-2 bg-background w-full" value={invoiceData.vendor} onChange={e => setInvoiceData(pre => { return { ...pre, vendor: e.target.value || "" } })} />
             </div>
             <div className="col-span-1">
                 Date
@@ -133,7 +133,7 @@ export default function CreatePurchaseInvoice() {
                 </div>
             </div>
         </div>
-        <div className="flex justify-between w-full">
+        <div className="flex justify-between w-full text-textSecondary">
             <div className="flex items-center">
                 <div className="text-sm font-semibold mr-4">Taxable Value:</div>
                 <div className="">Rs.{invoiceData.amount.toLocaleString("en-IN")}</div>

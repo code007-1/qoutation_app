@@ -9,7 +9,8 @@ export const action: ActionFunction = async ({ request, params }) => {
             return new Response("user not authorized to create", { status: 405 });
 
         const data = await request.json();
-        await insertOrUpdateOnetoDb(data, dbName, productCollectionName, { "productid": data.productid }, true);
+
+        await insertOrUpdateOnetoDb(data, dbName, productCollectionName, { "no": data.no }, true);
         await update(dbName, metaCollectionName, { "type": "products_tracker" }, { $inc: { "product_catelog_version": 1 } });
 
         await insertOnetoDb({ "by": username, "action": `saving product`, "result": "succeded", "when": new Date().toISOString() }, dbName, logsCollectionName);

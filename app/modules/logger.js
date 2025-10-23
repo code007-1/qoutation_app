@@ -136,7 +136,8 @@ async function UploadProducts() {
         fs.createReadStream("./assets/data.csv")
             .pipe(csv({ skipLines: 0, mapHeaders: ({ header }) => header.trim() }))
             .on("data", (row) => {
-                row["productid"] = rows.length;
+                row["no"] = rows.length;
+                row["version"] = 0;
                 rows.push(row);
             })
             .on("end", () => {
@@ -159,13 +160,9 @@ async function UploadProducts() {
     })
 }
 
-//UploadProducts();
+UploadProducts();
 
-// needs to do performance optimization of loading data from db
-// load data only when required, for example challan, quotation, complaint, or product
-// initally load only data that shows in table, on click load full data for that particular
+// needs to do performance optimization of loading data from db like for quotation or challan or complaint initially load only that fields
+// which are being showed in table, when editing copying or downliding, load full version of that document.
+// implement each product versioning instead of whole collection versioning
 
-
-const a = [{ items: { sno: ["1", "2"] } }, { items: { sno: ["3", "4"] } }]
-const result = a.map(d => d.items.sno).flat();
-console.log(result);
