@@ -1,6 +1,6 @@
 import { ActionFunction } from "@remix-run/node";
 import { ObjectId } from "mongodb"
-import { bulkWriteToDb, insertOnetoDb, insertOrUpdateOnetoDb, search } from "~/modules/dbOnline";
+import { bulkWriteToDb, insertOnetoDb, insertOrUpdateOnetoDb, search, update } from "~/modules/dbOnline";
 import { dbName, logsCollectionName, prefixPurchaseInvoice, pruchaseInvoicePrefix, purchaseInvoiceCollectionName, serials, serialsCollectionName, verifyAccessToken } from "~/modules/utils";
 
 export const action: ActionFunction = async ({ request, params }) => {
@@ -10,11 +10,11 @@ export const action: ActionFunction = async ({ request, params }) => {
             return new Response("user not authorized to create", { status: 405 });
 
         const { data, objectid } = await request.json();
-        console.log("data s ", data);
 
         let result: any[] = [];
         if (objectid != "")
-            result = await search(dbName, purchaseInvoiceCollectionName, { "_id": new ObjectId(objectid) }, { items: 1 }, 1, 0);
+            result = await search(dbName, purchaseInvoiceCollectionName, { "_id": new ObjectId(data._id) }, { items: 1 }, 1, 0);
+        console.log("jashdjkas result is ", result, new ObjectId(data._id));
 
         const bulkOps: any[] = [];
 
@@ -75,13 +75,19 @@ export const action: ActionFunction = async ({ request, params }) => {
             );
         }
 
-        console.log("bulk ops : ", JSON.stringify(bulkOps));
+        //console.log("bulk ops : ", JSON.stringify(bulkOps));
+        console.log("bulk ops : ", data, JSON.stringify(bulkOps));
         const updateFilter: Record<string, any> = {};
-        if (result.length > 0)
-            updateFilter["_id"] = new ObjectId(objectid);
+        if (result.length > 0) {
+            updateFilter["_id"] = new ObjectId(result[0]._id);
+            await insertOrUpdateOnetoDb(data, dbName, purchaseInvoiceCollectionName, updateFilter, false);
+            console.log("bulk ops : ", updateFilter, JSON.stringify(bulkOps));
+        }
+        else {
+            //insertOnetoDb(data, dbName, purchaseInvoiceCollectionName);
+        }
 
-        await insertOrUpdateOnetoDb(data, dbName, purchaseInvoiceCollectionName, updateFilter, true);
-        await bulkWriteToDb(bulkOps, dbName, serialsCollectionName);
+        //await bulkWriteToDb(bulkOps, dbName, serialsCollectionName);
 
         //await insertOnetoDb({ "by": username, "action": `purchase invoice entry`, "result": "succeded", "when": new Date().toISOString() }, dbName, logsCollectionName);
         return new Response("purchase invoice saved succefully", { status: 200 });

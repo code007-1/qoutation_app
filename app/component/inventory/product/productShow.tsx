@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { createInvetory, initialProductData, useGlobalContext } from "~/modules/gcontext";
+import { initialProductData, useGlobalContext } from "~/modules/gcontext";
 import { useCentralFetcher } from "~/component/centralFetcher";
 import { useNotification } from "~/modules/notificationContext";
 import { productReadAPIURL } from "~/component/statics";
@@ -12,7 +12,7 @@ export default function ProductShow() {
     const { addNotifications } = useNotification();
     const fetcher = useCentralFetcher();
 
-    const { oldProductsData, setHeaderText, productsDataCount, setProductsDataCount, setOldProductsData, setProductsData } = useGlobalContext();
+    const { oldProductsData, productsDataCount, setProductsDataCount, setOldProductsData, setProductsData } = useGlobalContext();
 
     async function getProducts() {
         setLoading(true);
@@ -30,7 +30,6 @@ export default function ProductShow() {
 
     useEffect(() => {
         setProductsData(initialProductData());
-        setHeaderText(createInvetory);
         if (productsDataCount === 0)
             getProducts();
     }, []);

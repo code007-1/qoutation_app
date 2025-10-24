@@ -21,20 +21,20 @@ export const sortButton = (column: any, name: string) => {
 }
 
 export function usePurchaseInvoiceColumn() {
-    const { permissions, setInvoiceData, setOldProductsData, setInvoiceItems } = useGlobalContext();
+    const { permissions, setPurchaseInvoiceData, setOldProductsData, setPurchaseInvoiceItems } = useGlobalContext();
     const navigate = useNavigate();
     const fetcher = useCentralFetcher();
     const { addNotifications } = useNotification();
 
     function handleEdit(row: InvoiceData) {
-        setInvoiceData(row);
-        setInvoiceItems(row.items);
+        setPurchaseInvoiceData(row);
+        setPurchaseInvoiceItems(row.items);
         navigate("/dashboard/inventory/purchaseinvoices/create", { state: { editing: true } });
     }
 
     function handleCopy(row: InvoiceData) {
-        setInvoiceData(row);
-        setInvoiceItems(row.items);
+        setPurchaseInvoiceData(row);
+        setPurchaseInvoiceItems(row.items);
         navigate("/dashboard/inventory/purchaseinvoices/create", { state: { editing: false } });
     }
 
@@ -54,10 +54,10 @@ export function usePurchaseInvoiceColumn() {
 
     const column: ColumnDef<any, any>[] = [
         {
-            accessorKey: "invoiceno",
+            accessorKey: "no",
             header: "Invoice #",
             cell: (user: any) => {
-                return <span>{user.row.original.invoiceno}</span>
+                return <span>{user.row.original.no}</span>
             },
             filterFn: (row, columnId, filterValue) => {
                 return row.original[columnId].toLowerCase().includes(filterValue);
