@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { createInvetory, initialProductData, useGlobalContext } from "~/modules/gcontext";
+import { useGlobalContext } from "~/modules/gcontext";
 import { useCentralFetcher } from "~/component/centralFetcher";
 import { useNotification } from "~/modules/notificationContext";
 import { complaintReadAPIURL, purchaseInvoiceReadAPIURL } from "~/component/statics";
@@ -12,7 +12,7 @@ export default function PurchaseInvoiceShow() {
     const { addNotifications } = useNotification();
     const fetcher = useCentralFetcher();
 
-    const { oldProductsData, setHeaderText, productsDataCount, setProductsDataCount, setOldProductsData, oldInvoiceData, setOldInvoiceData } = useGlobalContext();
+    const { oldProductsData, productsDataCount, setProductsDataCount, setOldProductsData, oldPurchaseInvoiceData, setOldPurchaseInvoiceData } = useGlobalContext();
 
     async function handleAdvanceSearch(query?: { start: string, end: string, to: string }) {
         setLoading(true);
@@ -52,8 +52,8 @@ export default function PurchaseInvoiceShow() {
 
 
     useEffect(() => {
-        setHeaderText(createInvetory);
-        if (oldInvoiceData.length === 0)
+        //setHeaderText("Purchase Invoice");
+        if (oldPurchaseInvoiceData.length === 0)
             getPurchaseInvoices();
     }, []);
 
@@ -63,7 +63,8 @@ export default function PurchaseInvoiceShow() {
         const response = await fetcher(`${purchaseInvoiceReadAPIURL}`);
         if (response.status === 200) {
             const data = await response.json()
-            setOldInvoiceData(data);
+            console.log("jashdjkashd", data);
+            setOldPurchaseInvoiceData(data);
         }
         else {
             addNotifications({ title: "Failure...", message: "Fail to load data." });
@@ -77,7 +78,7 @@ export default function PurchaseInvoiceShow() {
             <div>
                 <div>
                     <TableUI
-                        data={oldInvoiceData}
+                        data={oldPurchaseInvoiceData}
                         columns={usePurchaseInvoiceColumn()}
                         EmptyText="No Complaints Data Found!"
                         isFetching={loading}

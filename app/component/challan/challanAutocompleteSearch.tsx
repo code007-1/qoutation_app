@@ -123,7 +123,7 @@ export default function ChallanAutocompleteSearch({ index }: { index: number }) 
             <textarea
                 placeholder="Serial Numbers separated by commas..."
                 className="col-span-4 p-2 border border-border bg-background text-textPrimary focus:outline-textPrimary"
-                value={challanItems[index].sno}
+                value={challanItems[index].sno?.join(",")}
                 rows={1}
                 onChange={(e) => {
                     setChallanItems(pre => {

@@ -10,10 +10,9 @@ import { useNavigate } from "@remix-run/react";
 import { useNotification } from "~/modules/notificationContext";
 
 export function useChallanColumns() {
-    const { permissions } = useGlobalContext();
     const fetcher = useCentralFetcher();
     const navigate = useNavigate();
-    const { setChallanData, setChallanItems, setOldChallanData } = useGlobalContext();
+    const { setChallanData, setChallanItems, setOldChallanData, permissions } = useGlobalContext();
     const { addNotifications } = useNotification();
 
     async function handleDelete(no: string) {

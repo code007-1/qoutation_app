@@ -122,7 +122,7 @@ export async function deleteOneFromDB(query: {}, db: string = dbName, collection
 }
 
 // updates or inserts one document according to "no"
-export async function insertOrUpdateOnetoDb(data: any, db: string = dbName, collection: string = quotationCollectionName, updateFilter: {} = {}, upsert: boolean) {
+export async function insertOrUpdateOnetoDb(data: any, db: string = dbName, collection: string = quotationCollectionName, updateFilter: {} = {}, upsert: boolean = true) {
     try {
         await run();
         const { _id, ...restData } = data;

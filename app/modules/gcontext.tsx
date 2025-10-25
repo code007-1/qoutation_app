@@ -70,12 +70,12 @@ interface AppContextType {
     setGroupsData: React.Dispatch<React.SetStateAction<GroupsData>>;
 
     // purchase invoice related variables
-    invoiceItems: InvoiceItem[];
-    setInvoiceItems: React.Dispatch<React.SetStateAction<InvoiceItem[]>>;
-    invoiceData: InvoiceData;
-    setInvoiceData: React.Dispatch<React.SetStateAction<InvoiceData>>;
-    oldInvoiceData: InvoiceData[];
-    setOldInvoiceData: React.Dispatch<React.SetStateAction<InvoiceData[]>>;
+    purchaseInvoiceItems: InvoiceItem[];
+    setPurchaseInvoiceItems: React.Dispatch<React.SetStateAction<InvoiceItem[]>>;
+    purcahseInvoiceData: InvoiceData;
+    setPurchaseInvoiceData: React.Dispatch<React.SetStateAction<InvoiceData>>;
+    oldPurchaseInvoiceData: InvoiceData[];
+    setOldPurchaseInvoiceData: React.Dispatch<React.SetStateAction<InvoiceData[]>>;
 
     // product related variables
     oldProductsData: ProductsData[];
@@ -162,6 +162,8 @@ export const initialProductData = () => {
     };
 }
 
+export const initialPurchaseInvoiceData = () => { return { no: "", vendor: "", date: new Date().toISOString().split("T")[0], items: [], amount: 0, tax: 18 } }
+
 export const AppProvider = ({ children }: { children: React.ReactNode }) => {
     // app related variaibles
     const [theme, setTheme] = useState("light"); // Default theme
@@ -204,9 +206,9 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
     const [groupsData, setGroupsData] = useState<GroupsData>({ "name": "Default" });
 
     // incoming invoice realated valriables
-    const [invoiceItems, setInvoiceItems] = useState<InvoiceItem[]>([]);
-    const [invoiceData, setInvoiceData] = useState<InvoiceData>({ no: "", vendor: "", date: new Date().toISOString().split("T")[0], items: [], amount: 0, tax: 18 });
-    const [oldInvoiceData, setOldInvoiceData] = useState<InvoiceData[]>([]);
+    const [purchaseInvoiceItems, setPurchaseInvoiceItems] = useState<InvoiceItem[]>([]);
+    const [purcahseInvoiceData, setPurchaseInvoiceData] = useState<InvoiceData>(initialPurchaseInvoiceData());
+    const [oldPurchaseInvoiceData, setOldPurchaseInvoiceData] = useState<InvoiceData[]>([]);
 
     const toggleTheme = () => {
         const currentTheme = () => {
@@ -234,7 +236,7 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
     };
 
     return (
-        <appContext.Provider value={{ theme, setTheme, toggleTheme, accessToken, setAccessToken, quotationItems, setQuotationItems, quotationData, setQuotationData, headerText, setHeaderText, gQuote, setGQuote, profile, setProfile, selectedProfile, setSelectedProfile, quotationDataCount, setQuotationDataCount, oldQuotationData, setOldQuotationData, homeLink, setHomeLink, setAppName, appName, oldChallanData, setOldChallanData, challanDataCount, setChallanDataCount, challanItems, setChallanItems, challanData, setChallanData, complaintsData, setComplaintsData, permissions, setPermissions, oldComplaintsData, setOldComplaintsData, complaintsDataCount, setComplaintsDataCount, oldGroupsData, setOldGroupsData, groupsDataCount, setGroupsDataCount, groupsData, setGroupsData, invoiceItems, setInvoiceItems, invoiceData, setInvoiceData, oldInvoiceData, setOldInvoiceData, productsData, setProductsData, oldProductsData, setOldProductsData, productsDataCount, setProductsDataCount }}>
+        <appContext.Provider value={{ theme, setTheme, toggleTheme, accessToken, setAccessToken, quotationItems, setQuotationItems, quotationData, setQuotationData, headerText, setHeaderText, gQuote, setGQuote, profile, setProfile, selectedProfile, setSelectedProfile, quotationDataCount, setQuotationDataCount, oldQuotationData, setOldQuotationData, homeLink, setHomeLink, setAppName, appName, oldChallanData, setOldChallanData, challanDataCount, setChallanDataCount, challanItems, setChallanItems, challanData, setChallanData, complaintsData, setComplaintsData, permissions, setPermissions, oldComplaintsData, setOldComplaintsData, complaintsDataCount, setComplaintsDataCount, oldGroupsData, setOldGroupsData, groupsDataCount, setGroupsDataCount, groupsData, setGroupsData, purchaseInvoiceItems, setPurchaseInvoiceItems, purcahseInvoiceData, setPurchaseInvoiceData, oldPurchaseInvoiceData, setOldPurchaseInvoiceData, productsData, setProductsData, oldProductsData, setOldProductsData, productsDataCount, setProductsDataCount }}>
             {children}
         </appContext.Provider>
     );

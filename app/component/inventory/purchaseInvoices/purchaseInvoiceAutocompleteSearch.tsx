@@ -11,18 +11,18 @@ export default function PurchaseInvoiceAutocompleteSearch({ index }: { index: nu
     const inputRef = useRef<HTMLInputElement>(null);
     const [hasFocus, setFocus] = useState(false);
 
-    const { invoiceItems, setInvoiceItems } = useGlobalContext();
+    const { purchaseInvoiceItems, setPurchaseInvoiceItems } = useGlobalContext();
 
     useEffect(() => {
         if (hasFocus) {
-            if (invoiceItems[index].name.trim() === "") {
+            if (purchaseInvoiceItems[index].name.trim() === "") {
                 setFiltered([]);
                 setShowSuggestions(false);
-            } else if (showSuggestions || filtered.length != 1 || filtered[0].name.toLowerCase() != invoiceItems[index].name.toLowerCase()) {
+            } else if (showSuggestions || filtered.length != 1 || filtered[0].name.toLowerCase() != purchaseInvoiceItems[index].name.toLowerCase()) {
                 fetch(quotationAndChallanDataSearch, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(invoiceItems[index].name),
+                    body: JSON.stringify(purchaseInvoiceItems[index].name),
                 })
                     .then(async (res) => {
                         const filteredList: InvoiceItem[] = await res.json();
@@ -35,20 +35,20 @@ export default function PurchaseInvoiceAutocompleteSearch({ index }: { index: nu
                     });
             }
         }
-    }, [invoiceItems[index].name]);
+    }, [purchaseInvoiceItems[index].name]);
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         //setInput(e.target.value);
-        setInvoiceItems((pre) => {
+        setPurchaseInvoiceItems((pre) => {
             return pre.map((item, i) => i === index
-                ? { ...invoiceItems[index], name: e.target.value }
+                ? { ...purchaseInvoiceItems[index], name: e.target.value }
                 : item)
         });
     };
 
     const handleSuggestionClick = (suggestion: InvoiceItem) => {
         //setInput(suggestion.label);
-        setInvoiceItems(pre => {
+        setPurchaseInvoiceItems(pre => {
             return pre.map((item, i) => i == index
                 ? { no: suggestion.no, name: suggestion.name, quantity: 1, price: 0, discount: 0, sno: [] }
                 : item)
@@ -81,7 +81,7 @@ export default function PurchaseInvoiceAutocompleteSearch({ index }: { index: nu
             //setInput(filtered[highlighted].label);
             setFiltered([filtered[highlighted]]);
             setShowSuggestions(false);
-            setInvoiceItems(pre => {
+            setPurchaseInvoiceItems(pre => {
                 return pre.map((item, i) => i === index
                     ? { no: filtered[highlighted].no, name: filtered[highlighted].name, quantity: 1, price: 0, discount: 0, sno: [] }
                     : item)
@@ -95,13 +95,13 @@ export default function PurchaseInvoiceAutocompleteSearch({ index }: { index: nu
         <div className="grid grid-cols-12 relative w-full gap-x-2">
             <div className="col-span-4 flex gap-x-2">
                 <div className="p-2 bg-headerBackground w-[100px] border-0 ">
-                    {invoiceItems[index].no}
+                    {purchaseInvoiceItems[index].no}
                 </div>
                 <div className="w-full relative">
                     <input
                         ref={inputRef}
                         type="text"
-                        value={invoiceItems[index].name}
+                        value={purchaseInvoiceItems[index].name}
                         onChange={handleInputChange}
                         onBlur={handleBlur}
                         onFocus={handleFocus}
@@ -130,13 +130,13 @@ export default function PurchaseInvoiceAutocompleteSearch({ index }: { index: nu
             <textarea
                 placeholder="Serial Numbers separated by commas..."
                 className="col-span-4 p-2 border border-border bg-background text-textPrimary focus:outline-textPrimary"
-
                 rows={1}
+                value={purchaseInvoiceItems[index].sno.join(",")}
                 onChange={(e) => {
-                    setInvoiceItems(pre => {
+                    setPurchaseInvoiceItems(pre => {
                         const snos = e.target.value.replace(/[\s,]+/g, ",").trim().split(",");
                         return pre.map((item, i) => i === index
-                            ? { ...invoiceItems[index], sno: snos, quantity: snos.length }
+                            ? { ...purchaseInvoiceItems[index], sno: snos, quantity: snos.length }
                             : item);
                     })
                 }}
@@ -145,11 +145,11 @@ export default function PurchaseInvoiceAutocompleteSearch({ index }: { index: nu
                 type="number"
                 placeholder="Quantity"
                 className="border p-2 border-border bg-background text-textPrimary focus:outline-textPrimary"
-                value={invoiceItems[index]?.quantity}
+                value={purchaseInvoiceItems[index]?.quantity}
                 onChange={(e) => {
-                    setInvoiceItems(pre => {
+                    setPurchaseInvoiceItems(pre => {
                         return pre.map((item, i) => i === index
-                            ? { ...invoiceItems[index], quantity: Number(e.target.value || undefined) }
+                            ? { ...purchaseInvoiceItems[index], quantity: Number(e.target.value || undefined) }
                             : item);
                     })
                 }}
@@ -159,11 +159,11 @@ export default function PurchaseInvoiceAutocompleteSearch({ index }: { index: nu
                 type="number"
                 placeholder="Price"
                 className="border p-2 border-border bg-background text-textPrimary focus:outline-textPrimary"
-                value={invoiceItems[index]?.price}
+                value={purchaseInvoiceItems[index]?.price}
                 onChange={(e) => {
-                    setInvoiceItems(pre => {
+                    setPurchaseInvoiceItems(pre => {
                         return pre.map((item, i) => i === index
-                            ? { ...invoiceItems[index], price: Number(e.target.value || undefined) }
+                            ? { ...purchaseInvoiceItems[index], price: Number(e.target.value || undefined) }
                             : item);
                     })
                 }}
@@ -172,21 +172,21 @@ export default function PurchaseInvoiceAutocompleteSearch({ index }: { index: nu
                 type="number"
                 placeholder="Discount"
                 className="border p-2 border-border bg-background text-textPrimary focus:outline-textPrimary"
-                value={invoiceItems[index]?.discount}
+                value={purchaseInvoiceItems[index]?.discount}
                 onChange={(e) => {
-                    setInvoiceItems(pre => {
+                    setPurchaseInvoiceItems(pre => {
                         return pre.map((item, i) => i === index
-                            ? { ...invoiceItems[index], discount: Number(e.target.value || undefined) }
+                            ? { ...purchaseInvoiceItems[index], discount: Number(e.target.value || undefined) }
                             : item);
                     })
                 }}
             />
 
 
-            <button type="button" className="w-[35%] hover:bg-headerBackground bg-buttonHover p-2" onClick={(e) => {
+            <button type="button" className="w-[40%] hover:bg-headerBackground bg-buttonHover p-2" onClick={(e) => {
                 console.log("decreasing");
                 e.preventDefault();
-                setInvoiceItems(pre =>
+                setPurchaseInvoiceItems(pre =>
                     pre.filter((_, i) => i != index)
                 );
             }}>

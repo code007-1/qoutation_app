@@ -1,6 +1,6 @@
 import { ActionFunction } from "@remix-run/node";
 import { ObjectId } from "mongodb"
-import { bulkWriteToDb, insertOnetoDb, insertOrUpdateOnetoDb, search } from "~/modules/dbOnline";
+import { bulkWriteToDb, insertOnetoDb, insertOrUpdateOnetoDb, search, update } from "~/modules/dbOnline";
 import { dbName, logsCollectionName, prefixPurchaseInvoice, pruchaseInvoicePrefix, purchaseInvoiceCollectionName, serials, serialsCollectionName, verifyAccessToken } from "~/modules/utils";
 import { InvoiceData } from "./dashboard.inventory.purchaseinvoices.create";
 
@@ -73,7 +73,8 @@ export const action: ActionFunction = async ({ request, params }) => {
             );
         }
 
-        console.log("bulk ops : ", JSON.stringify(bulkOps));
+        //console.log("bulk ops : ", JSON.stringify(bulkOps));
+        console.log("bulk ops : ", data, JSON.stringify(bulkOps));
         const updateFilter: Record<string, any> = {};
         if (result.length > 0) await insertOrUpdateOnetoDb(data, dbName, purchaseInvoiceCollectionName, { _id: new ObjectId(_id) }, false);
         else await insertOnetoDb(data, dbName, purchaseInvoiceCollectionName);

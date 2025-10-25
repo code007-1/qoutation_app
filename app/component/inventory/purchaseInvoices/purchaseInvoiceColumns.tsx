@@ -21,7 +21,7 @@ export const sortButton = (column: any, name: string) => {
 }
 
 export function usePurchaseInvoiceColumn() {
-    const { permissions, setInvoiceData, setOldProductsData, setInvoiceItems } = useGlobalContext();
+    const { permissions, setPurchaseInvoiceData, setOldProductsData, setPurchaseInvoiceItems } = useGlobalContext();
     const navigate = useNavigate();
     const fetcher = useCentralFetcher();
     const { addNotifications } = useNotification();
@@ -42,8 +42,8 @@ export function usePurchaseInvoiceColumn() {
     async function handleEdit(row: InvoiceData) {
         const fullRow = await getPurchaseInvoices(row.no);
         if (fullRow && fullRow.length > 0) {
-            setInvoiceData(row);
-            setInvoiceItems(row.items);
+            setPurchaseInvoiceData(fullRow[0]);
+            setPurchaseInvoiceItems(fullRow[0].items);
             navigate("/dashboard/inventory/purchaseinvoices/create", { state: { editing: true } });
         }
     }
@@ -51,8 +51,8 @@ export function usePurchaseInvoiceColumn() {
     async function handleCopy(row: InvoiceData) {
         const fullRow = await getPurchaseInvoices(row.no);
         if (fullRow && fullRow.length > 0) {
-            setInvoiceData(row);
-            setInvoiceItems(row.items);
+            setPurchaseInvoiceData(fullRow[0]);
+            setPurchaseInvoiceItems(fullRow[0].items);
             navigate("/dashboard/inventory/purchaseinvoices/create", { state: { editing: false } });
         }
     }
@@ -76,7 +76,7 @@ export function usePurchaseInvoiceColumn() {
             accessorKey: "no",
             header: "Invoice #",
             cell: (user: any) => {
-                return <span>{user.row.original.invoiceno}</span>
+                return <span>{user.row.original.no}</span>
             },
             filterFn: (row, columnId, filterValue) => {
                 return row.original[columnId].toLowerCase().includes(filterValue);

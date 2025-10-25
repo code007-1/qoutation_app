@@ -20,7 +20,7 @@ export interface ProductsData {
 }
 
 export default function CreateProduct() {
-    const { productsData, setProductsData } = useGlobalContext();
+    const { productsData, setProductsData, setHeaderText } = useGlobalContext();
     const fetcher = useCentralFetcher();
     const { addNotifications } = useNotification();
 
@@ -39,7 +39,7 @@ export default function CreateProduct() {
     const passedData = location.state;
 
     useEffect(() => {
-        console.log(productsData);
+        setHeaderText("Products");
         // copying existing product
         if (passedData && passedData?.editing === false) {
             getProductsID();
