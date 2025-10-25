@@ -3,6 +3,7 @@ import { useGlobalContext } from "~/modules/gcontext";
 import PurchaseInvoiceAutocompleteSearch from "../component/inventory/purchaseInvoices/purchaseInvoiceAutocompleteSearch";
 import { useCentralFetcher } from "../component/centralFetcher";
 import { purchaseInvoiceCreateURL } from "../component/statics";
+import { ObjectId } from "mongodb";
 
 /*
         {
@@ -55,7 +56,8 @@ export interface InvoiceItem {
     sno: string[]
 }
 export interface InvoiceData {
-    invoiceno: string,
+    _id?: ObjectId,
+    no: string,
     vendor: string,
     date: string,
     items: InvoiceItem[]
@@ -81,7 +83,7 @@ export default function CreatePurchaseInvoice() {
         const response = await fetcher(`${purchaseInvoiceCreateURL}`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ data: payload, objectid: "" })
+            body: JSON.stringify(payload)
         });
         setInvoiceData(pre => { return { ...pre, items: invoiceItems } });
     }
@@ -103,7 +105,7 @@ export default function CreatePurchaseInvoice() {
         </div>
         <div className="grid grid-cols-6 gap-4 text-textPrimary mt-4">
             <div className="col-span-1">
-                Invoice No. <input required type="text" name="invoiceno" placeholder="Enter Invoice No." className="border border-border p-2 bg-background w-full" value={invoiceData.invoiceno} onChange={e => setInvoiceData(pre => { return { ...pre, invoiceno: e.target.value } })} />
+                Invoice No. <input required type="text" name="invoiceno" placeholder="Enter Invoice No." className="border border-border p-2 bg-background w-full" value={invoiceData.no} onChange={e => setInvoiceData(pre => { return { ...pre, invoiceno: e.target.value } })} />
             </div>
             <div className="col-span-4">
                 Vendor Name <input type="text" name="vendorname" placeholder="Enter Vendor Name" className="border border-border p-2 bg-background w-full" value={invoiceData.vendor} onChange={e => setInvoiceData(pre => { return { ...pre, vendor: e.target.value || "" } })} />

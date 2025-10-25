@@ -2,6 +2,7 @@ import { ActionFunction } from "@remix-run/node";
 import { ObjectId } from "mongodb"
 import { bulkWriteToDb, insertOnetoDb, insertOrUpdateOnetoDb, search } from "~/modules/dbOnline";
 import { dbName, logsCollectionName, prefixPurchaseInvoice, pruchaseInvoicePrefix, purchaseInvoiceCollectionName, serials, serialsCollectionName, verifyAccessToken } from "~/modules/utils";
+import { InvoiceData } from "./dashboard.inventory.purchaseinvoices.create";
 
 export const action: ActionFunction = async ({ request, params }) => {
     try {
@@ -9,12 +10,11 @@ export const action: ActionFunction = async ({ request, params }) => {
         if (!permissions?.includes("write"))
             return new Response("user not authorized to create", { status: 405 });
 
-        const { data, objectid } = await request.json();
-        console.log("data s ", data);
+        const { _id, data }: { _id: string, data: InvoiceData } = await request.json();
 
         let result: any[] = [];
-        if (objectid != "")
-            result = await search(dbName, purchaseInvoiceCollectionName, { "_id": new ObjectId(objectid) }, { items: 1 }, 1, 0);
+        if (_id != "")
+            result = await search(dbName, purchaseInvoiceCollectionName, { "_id": new ObjectId(_id) }, { items: 1 }, 1, 0);
 
         const bulkOps: any[] = [];
 
@@ -30,17 +30,15 @@ export const action: ActionFunction = async ({ request, params }) => {
 
             // for new added serial numbers
             bulkOps.push({
-                "insertMany": added.map((element: any) => { return { sno: element, productid: currentData[element], purchaseInvoice: prefixPurchaseInvoice(data["vendor"], data.invoiceno), purchaseDate: data.date }; }
+                "insertMany": added.map((element: any) => { return { sno: element, productid: currentData[element], purchaseInvoice: prefixPurchaseInvoice(data["vendor"], data.no), purchaseDate: data.date }; }
                 )
             });
 
-            console.log("bullkla", bulkOps);
-
             // for updating duplicates serial numbers
-            if (pruchaseInvoicePrefix + data.invoiceno != result[0].invoiceno || data.date != result[0].date || data.vendor != result[0].vendor) {
+            if (pruchaseInvoicePrefix + data.no != result[0].invoiceno || data.date != result[0].date || data.vendor != result[0].vendor) {
                 const duplicates = [...old].filter(x => current.has(x)) as string[];
                 duplicates.forEach((element) => {
-                    bulkOps.push({ "updateOne": { "filter": { "sno": element }, "update": { "$set": { "productid": currentData[element], "purchaseInvoice": data.invoiceno, "purchaseDate": data.date } } } });
+                    bulkOps.push({ "updateOne": { "filter": { "sno": element }, "update": { "$set": { "productid": currentData[element], "purchaseInvoice": data.no, "purchaseDate": data.date } } } });
                 });
             }
 
@@ -69,7 +67,7 @@ export const action: ActionFunction = async ({ request, params }) => {
             bulkOps.push(
                 ...data.items.map((element: any) => {
                     return element.sno.map((e: any) => {
-                        return { "insertOne": { sno: e, productid: element["productid"], purchaseInvoice: prefixPurchaseInvoice(data["vendor"], data["invoiceno"]), purchaseDate: data["date"] } };
+                        return { "insertOne": { sno: e, productid: element["no"], purchaseInvoice: prefixPurchaseInvoice(data["vendor"], data["no"]), purchaseDate: data["date"] } };
                     })
                 }).flat()
             );
@@ -77,11 +75,10 @@ export const action: ActionFunction = async ({ request, params }) => {
 
         console.log("bulk ops : ", JSON.stringify(bulkOps));
         const updateFilter: Record<string, any> = {};
-        if (result.length > 0)
-            updateFilter["_id"] = new ObjectId(objectid);
+        if (result.length > 0) await insertOrUpdateOnetoDb(data, dbName, purchaseInvoiceCollectionName, { _id: new ObjectId(_id) }, false);
+        else await insertOnetoDb(data, dbName, purchaseInvoiceCollectionName);
 
-        await insertOrUpdateOnetoDb(data, dbName, purchaseInvoiceCollectionName, updateFilter, true);
-        await bulkWriteToDb(bulkOps, dbName, serialsCollectionName);
+        //await bulkWriteToDb(bulkOps, dbName, serialsCollectionName);
 
         //await insertOnetoDb({ "by": username, "action": `purchase invoice entry`, "result": "succeded", "when": new Date().toISOString() }, dbName, logsCollectionName);
         return new Response("purchase invoice saved succefully", { status: 200 });

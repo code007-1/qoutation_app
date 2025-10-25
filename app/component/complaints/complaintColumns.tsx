@@ -6,7 +6,7 @@ import { useGlobalContext } from "~/modules/gcontext";
 import { ComplaintsData } from "~/routes/dashboard.complaints.create";
 import { useCentralFetcher } from "../centralFetcher";
 import { useNotification } from "~/modules/notificationContext";
-import { compalints } from "../statics";
+import { compalints, complaintReadAPIURL } from "../statics";
 
 
 export function useComplaintsColumn() {
@@ -15,14 +15,31 @@ export function useComplaintsColumn() {
     const fetcher = useCentralFetcher();
     const { addNotifications } = useNotification();
 
-    function handleEdit(row: ComplaintsData) {
-        setComplaintsData(row);
-        navigate("/dashboard/complaints/create", { state: { editing: true } });
+    async function getComplaints(no: string) {
+        const response = await fetcher(`${complaintReadAPIURL}&no=${no}`);
+        if (response.status === 200) {
+            const data = await response.json()
+            return data;
+        }
+        else {
+            addNotifications({ title: "Failure...", message: "Fail to load data." });
+        }
     }
 
-    function handleCopy(row: ComplaintsData) {
-        setComplaintsData(row);
-        navigate("/dashboard/complaints/create", { state: { editing: false } });
+    async function handleEdit(row: ComplaintsData) {
+        const fullRow = await getComplaints(row.no);
+        if (fullRow && fullRow.length > 0) {
+            setComplaintsData(fullRow[0]);
+            navigate("/dashboard/complaints/create", { state: { editing: true } });
+        }
+    }
+
+    async function handleCopy(row: ComplaintsData) {
+        const fullRow = await getComplaints(row.no);
+        if (fullRow && fullRow.length > 0) {
+            setComplaintsData(fullRow[0]);
+            navigate("/dashboard/complaints/create", { state: { editing: false } });
+        }
     }
 
     async function handleDelete(no: string) {

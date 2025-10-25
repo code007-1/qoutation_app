@@ -160,9 +160,17 @@ async function UploadProducts() {
     })
 }
 
-UploadProducts();
-
+async function find(params) {
+    await client.connect();
+    // Send a ping to confirm a successful connection
+    await client.db("unnamed").command({ ping: 1 });
+    const result = await client.db("unnamed").collection("challans").find({}, { "projection": { "no": 1 } }).toArray();
+    console.log(result);
+}
+find();
 // needs to do performance optimization of loading data from db like for quotation or challan or complaint initially load only that fields
 // which are being showed in table, when editing copying or downliding, load full version of that document.
 // implement each product versioning instead of whole collection versioning
+// make quotation number count last documents number
+// product count won't work, when we delete a document so use last documents porduct no and increment it by 1
 

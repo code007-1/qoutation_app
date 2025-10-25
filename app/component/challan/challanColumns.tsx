@@ -5,7 +5,7 @@ import { useGlobalContext } from "~/modules/gcontext";
 import { ChallanData, ChallanItems } from "~/routes/dashboard.challan.create";
 import { createPdf } from "~/routes/dashboard.quotations.create";
 import { useCentralFetcher } from "../centralFetcher";
-import { challans } from "../statics";
+import { challanReadAPIURL, challans } from "../statics";
 import { useNavigate } from "@remix-run/react";
 import { useNotification } from "~/modules/notificationContext";
 
@@ -29,16 +29,34 @@ export function useChallanColumns() {
         }
     }
 
-    function handleEdit(row: ChallanData) {
-        setChallanData(row);
-        setChallanItems(row.items);
-        navigate("/dashboard/challan/create", { state: { editing: true } });
+
+    async function getChallans(no: string) {
+        const response = await fetcher(`${challanReadAPIURL}&no=${no}`);
+        if (response.status === 200) {
+            const data = await response.json()
+            return data;
+        }
+        else {
+            addNotifications({ title: "Failure...", message: "Fail to load data." });
+        }
     }
 
-    function handleCopy(row: ChallanData) {
-        setChallanData(row);
-        setChallanItems(row.items);
-        navigate("/dashboard/challan/create", { state: { editing: false } });
+    async function handleEdit(row: ChallanData) {
+        const fullRow = await getChallans(row.no);
+        if (fullRow && fullRow.length > 0) {
+            setChallanData(fullRow[0]);
+            setChallanItems(fullRow[0].items);
+            navigate("/dashboard/challan/create", { state: { editing: true } });
+        }
+    }
+
+    async function handleCopy(row: ChallanData) {
+        const fullRow = await getChallans(row.no);
+        if (fullRow && fullRow.length > 0) {
+            setChallanData(fullRow[0]);
+            setChallanItems(fullRow[0].items);
+            navigate("/dashboard/challan/create", { state: { editing: false } });
+        }
     }
 
     const columns: ColumnDef<any, any>[] = [

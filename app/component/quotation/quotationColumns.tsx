@@ -5,7 +5,7 @@ import { ArrowDownToLine, ArrowUpDown, Copy, Ellipsis, Pencil, Trash2 } from "lu
 import { useGlobalContext } from "~/modules/gcontext";
 import { createPdf, QuotationData } from "~/routes/dashboard.quotations.create";
 import { useCentralFetcher } from "../centralFetcher";
-import { quotationDeleteAPIURL, quotations } from "../statics";
+import { quotationDeleteAPIURL, quotationReadAPIURL, quotations } from "../statics";
 import { useNotification } from "~/modules/notificationContext";
 
 export const sortButton = (column: any, name: string) => {
@@ -30,16 +30,34 @@ export function useQuotationsColumns() {
     const fetcher = useCentralFetcher();
     const { addNotifications } = useNotification();
 
-    function handleEdit(row: QuotationData) {
-        setQuotationData(row);
-        setQuotationItems(row.items);
-        navigate("/dashboard/quotations/create", { state: { editing: true } });
+
+    async function getQoutations(no: string) {
+        const response = await fetcher(`${quotationReadAPIURL}&no=${no}`);
+        if (response.status === 200) {
+            const data = await response.json()
+            return data;
+        }
+        else {
+            addNotifications({ title: "Failure...", message: "Fail to load data." });
+        }
     }
 
-    function handleCopy(row: QuotationData) {
-        setQuotationData(row);
-        setQuotationItems(row.items);
-        navigate("/dashboard/quotations/create", { state: { editing: false } });
+    async function handleEdit(row: QuotationData) {
+        const fullRow = await getQoutations(row.no);
+        if (fullRow && fullRow.length > 0) {
+            setQuotationData(fullRow[0]);
+            setQuotationItems(fullRow[0].items);
+            navigate("/dashboard/quotations/create", { state: { editing: true } });
+        }
+    }
+
+    async function handleCopy(row: QuotationData) {
+        const fullRow = await getQoutations(row.no);
+        if (fullRow && fullRow.length > 0) {
+            setQuotationData(fullRow[0]);
+            setQuotationItems(fullRow[0].items);
+            navigate("/dashboard/quotations/create", { state: { editing: false } });
+        }
     }
 
     async function handleDelete(no: string) {

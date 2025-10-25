@@ -82,7 +82,7 @@ export default function PurchaseInvoiceShow() {
                         EmptyText="No Complaints Data Found!"
                         isFetching={loading}
                         refresh={getPurchaseInvoices}
-                        filterTypes={{ "ID": "productid", "Name": "name", "HSN Code": "hsn", "Description": "description", "Quantity": "quantity" }}
+                        filterTypes={{ "Invoice #": "no", "Vendor": "vendor", "Date": "date", "Quantity": "quantity" }}
                     />
                 </div>
             </div>

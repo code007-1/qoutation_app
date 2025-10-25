@@ -3,7 +3,7 @@ import { useNavigate } from "@remix-run/react";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, Copy, Ellipsis, Pencil, Trash2 } from "lucide-react";
 import { useCentralFetcher } from "~/component/centralFetcher";
-import { purchaseInvoice } from "~/component/statics";
+import { purchaseInvoice, purchaseInvoiceReadAPIURL } from "~/component/statics";
 import { useGlobalContext } from "~/modules/gcontext";
 import { useNotification } from "~/modules/notificationContext";
 import { InvoiceData } from "~/routes/dashboard.inventory.purchaseinvoices.create";
@@ -26,16 +26,35 @@ export function usePurchaseInvoiceColumn() {
     const fetcher = useCentralFetcher();
     const { addNotifications } = useNotification();
 
-    function handleEdit(row: InvoiceData) {
-        setInvoiceData(row);
-        setInvoiceItems(row.items);
-        navigate("/dashboard/inventory/purchaseinvoices/create", { state: { editing: true } });
+
+    async function getPurchaseInvoices(no: string) {
+        const response = await fetcher(`${purchaseInvoiceReadAPIURL}&no=${no}`);
+        if (response.status === 200) {
+            const data = await response.json()
+            return data;
+        }
+        else {
+            addNotifications({ title: "Failure...", message: "Fail to load data." });
+        }
     }
 
-    function handleCopy(row: InvoiceData) {
-        setInvoiceData(row);
-        setInvoiceItems(row.items);
-        navigate("/dashboard/inventory/purchaseinvoices/create", { state: { editing: false } });
+
+    async function handleEdit(row: InvoiceData) {
+        const fullRow = await getPurchaseInvoices(row.no);
+        if (fullRow && fullRow.length > 0) {
+            setInvoiceData(row);
+            setInvoiceItems(row.items);
+            navigate("/dashboard/inventory/purchaseinvoices/create", { state: { editing: true } });
+        }
+    }
+
+    async function handleCopy(row: InvoiceData) {
+        const fullRow = await getPurchaseInvoices(row.no);
+        if (fullRow && fullRow.length > 0) {
+            setInvoiceData(row);
+            setInvoiceItems(row.items);
+            navigate("/dashboard/inventory/purchaseinvoices/create", { state: { editing: false } });
+        }
     }
 
 
@@ -54,7 +73,7 @@ export function usePurchaseInvoiceColumn() {
 
     const column: ColumnDef<any, any>[] = [
         {
-            accessorKey: "invoiceno",
+            accessorKey: "no",
             header: "Invoice #",
             cell: (user: any) => {
                 return <span>{user.row.original.invoiceno}</span>
@@ -94,8 +113,8 @@ export function usePurchaseInvoiceColumn() {
             }
         },
         {
-            accessorKey: "stock",
-            header: "Current Stock",
+            accessorKey: "quantity",
+            header: "Quantity",
             cell: (user: any) => {
                 return <span>{user.row.original.stock}</span>
             },

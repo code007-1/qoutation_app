@@ -1,5 +1,5 @@
 // how category and type is saving to db and convert sno to array
-import { ChangeStream, MongoClient, ServerApiVersion } from "mongodb";
+import { ChangeStream, MongoClient, ServerApiVersion, Sort, SortDirection } from "mongodb";
 import { dbName, mongoDBUrl, productCollectionName, purchaseInvoiceCollectionName, quotationCollectionName, usersCollectionName } from "./utils";
 
 const uri = mongoDBUrl;//"mongodb+srv://spttcpl:9ziRq5mLRppCobx8@cluster0.bbixzsn.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
@@ -77,10 +77,10 @@ export async function search(db: string = dbName, collection: string = quotation
 }
 
 // do sorted search for query in db
-export async function sortedSearch(db: string = dbName, collection: string = quotationCollectionName, query: {} = {}, filterOptions: {} = {}, limit: number = 10, skip: number = 0, sortOrder: number = -1, sortKey: string = "_id") {
+export async function sortedSearch(db: string = dbName, collection: string = quotationCollectionName, query: {} = {}, findOptions: {} = {}, limit: number = 10, skip: number = 0, sortOrder: SortDirection = -1, sortKey: Sort = "_id") {
     try {
         await run();
-        return await client.db(db).collection(collection).find(query, filterOptions).sort({ _id: -1 }).skip(skip).limit(limit).toArray();//{ name: { $regex: query, $options: "i" } }
+        return await client.db(db).collection(collection).find(query, findOptions).sort({ sortKey: sortOrder }).skip(skip).limit(limit).toArray();//{ name: { $regex: query, $options: "i" } }
     }
     catch (error) { console.log("error while searching in db : ", error); }
     //finally { await client.close(); }
@@ -122,7 +122,7 @@ export async function deleteOneFromDB(query: {}, db: string = dbName, collection
 }
 
 // updates or inserts one document according to "no"
-export async function insertOrUpdateOnetoDb(data: any, db: string = dbName, collection: string = quotationCollectionName, updateFilter: {} = {}, upsert: true) {
+export async function insertOrUpdateOnetoDb(data: any, db: string = dbName, collection: string = quotationCollectionName, updateFilter: {} = {}, upsert: boolean) {
     try {
         await run();
         const { _id, ...restData } = data;

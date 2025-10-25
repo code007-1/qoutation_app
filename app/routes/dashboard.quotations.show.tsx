@@ -21,7 +21,7 @@ const QuotationsShow = () => {
         setLoading(true);
         const response = await fetcher(`${quotationReadAPIURL}`);
         if (response.status === 200) {
-            const data = await response.json()
+            const data = await response.json();
             setOldQuotationData(data);
             setQuotationDataCount(data.length);
         }
