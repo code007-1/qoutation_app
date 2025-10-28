@@ -104,7 +104,7 @@ async function FixSomething() {
 
 FixSomething();*/
 
-import { MongoClient, ServerApiVersion } from "mongodb";
+import { MongoClient, ObjectId, ServerApiVersion } from "mongodb";
 import fs from "fs";
 import csv from "csv-parser";
 
@@ -160,9 +160,19 @@ async function UploadProducts() {
     })
 }
 
-UploadProducts();
+//UploadProducts();
+
+async function search() {
+    await client.connect();
+    // Send a ping to confirm a successful connection
+    await client.db("unnamed").command({ ping: 1 });
+
+    const result = await client.db("unnamed").collection("challans").find({ "_id": new ObjectId("68ba785ffb137aa7126c4393") }).toArray();
+    console.log(result)
+}
+
+search();
 
 // needs to do performance optimization of loading data from db like for quotation or challan or complaint initially load only that fields
 // which are being showed in table, when editing copying or downliding, load full version of that document.
 // implement each product versioning instead of whole collection versioning
-

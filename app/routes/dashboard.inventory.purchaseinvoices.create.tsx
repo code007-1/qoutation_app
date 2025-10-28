@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { initialPurchaseInvoiceData, useGlobalContext } from "~/modules/gcontext";
 import PurchaseInvoiceAutocompleteSearch from "../component/inventory/purchaseInvoices/purchaseInvoiceAutocompleteSearch";
 import { useCentralFetcher } from "../component/centralFetcher";
-import { purchaseInvoiceCreateURL } from "../component/statics";
 import { useLocation } from "@remix-run/react";
 
 /*
@@ -82,12 +81,13 @@ export default function CreatePurchaseInvoice() {
 
     async function save() {
         const payload = { ...purcahseInvoiceData, items: purchaseInvoiceItems }
-        const response = await fetcher(`${purchaseInvoiceCreateURL}`, {
+        /*const response = await fetcher(`${purchaseInvoiceCreateURL}`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ data: payload, objectid: "" })
-        });
-        setPurchaseInvoiceData(pre => { return { ...pre, items: purchaseInvoiceItems } });
+            body: JSON.stringify(payload)
+        });*/
+        console.log("payload", payload);
+        setPurchaseInvoiceData(payload);
     }
 
     useEffect(() => {
@@ -103,7 +103,7 @@ export default function CreatePurchaseInvoice() {
         }
         // editing existing product
         else if (passedData && passedData?.editing === true) {
-            return;
+            console.log("printing : ", purcahseInvoiceData);
         }
         // new product
         else {

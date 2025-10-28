@@ -5,23 +5,22 @@ import { dbName, logsCollectionName, prefixPurchaseInvoice, pruchaseInvoicePrefi
 
 export const action: ActionFunction = async ({ request, params }) => {
     try {
-        const { permissions, username } = await verifyAccessToken(request);
+        const { permissions } = await verifyAccessToken(request);
         if (!permissions?.includes("write"))
             return new Response("user not authorized to create", { status: 405 });
 
-        const { data, objectid } = await request.json();
+        const { _id, ...data } = await request.json();
 
         let result: any[] = [];
-        if (objectid != "")
-            result = await search(dbName, purchaseInvoiceCollectionName, { "_id": new ObjectId(data._id) }, { items: 1 }, 1, 0);
-        console.log("jashdjkas result is ", result, new ObjectId(data._id));
+        if (_id && _id != "")
+            result = await search(dbName, purchaseInvoiceCollectionName, { "_id": new ObjectId(_id) }, { items: 1 }, 10, 0);
 
         const bulkOps: any[] = [];
 
         // if invoice number is already present
         if (result.length > 0 && result[0].items) {
-            const currentData = Object.fromEntries(data.items.map((e: any) => [e.sno.flat(), e.productid]));
-            const oldData = Object.fromEntries(result[0].items.map((e: any) => [e.sno.flat(), e.productid]));
+            const currentData = Object.fromEntries(data.items.map((e: any) => [e.sno.flat(), e.no]));
+            const oldData = Object.fromEntries(result[0].items.map((e: any) => [e.sno.flat(), e.no]));
             const current = new Set(Object.keys(currentData));
             const old = new Set(Object.keys(oldData));//result.map((e: any) => e.items.sno).flat()
 
@@ -30,11 +29,9 @@ export const action: ActionFunction = async ({ request, params }) => {
 
             // for new added serial numbers
             bulkOps.push({
-                "insertMany": added.map((element: any) => { return { sno: element, productid: currentData[element], purchaseInvoice: prefixPurchaseInvoice(data["vendor"], data.invoiceno), purchaseDate: data.date }; }
+                "insertMany": added.map((element: any) => { return { sno: element, productid: currentData[element], purchaseInvoice: prefixPurchaseInvoice(data["vendor"], data.no), purchaseDate: data.date }; }
                 )
             });
-
-            console.log("bullkla", bulkOps);
 
             // for updating duplicates serial numbers
             if (pruchaseInvoicePrefix + data.invoiceno != result[0].invoiceno || data.date != result[0].date || data.vendor != result[0].vendor) {
@@ -58,9 +55,10 @@ export const action: ActionFunction = async ({ request, params }) => {
             });
 
             // for quantity changes tracking
-            const quantityChange: Record<string, number> = {};
-            added.forEach(element => { quantityChange[element] = (quantityChange[element] || 0) + 1; });
-            removed.forEach(element => { quantityChange[element] = (quantityChange[element] || 0) - 1; });
+            //const quantityChange: Record<string, number> = {};
+            //added.forEach(element => { quantityChange[element] = (quantityChange[element] || 0) + 1; });
+            //removed.forEach(element => { quantityChange[element] = (quantityChange[element] || 0) - 1; });
+            console.log("bulk operations", bulkOps, "current : ", current, "old : ", old, "currentData : ", currentData, "oldData : ", oldData, "added : ", added, "removed : ", removed);
         }
 
         // if invoice number is new
@@ -76,16 +74,15 @@ export const action: ActionFunction = async ({ request, params }) => {
         }
 
         //console.log("bulk ops : ", JSON.stringify(bulkOps));
-        console.log("bulk ops : ", data, JSON.stringify(bulkOps));
-        const updateFilter: Record<string, any> = {};
+        //console.log("bulk ops : ", data, JSON.stringify(bulkOps));
+        /*const updateFilter: Record<string, any> = {};
         if (result.length > 0) {
             updateFilter["_id"] = new ObjectId(result[0]._id);
             await insertOrUpdateOnetoDb(data, dbName, purchaseInvoiceCollectionName, updateFilter, false);
-            console.log("bulk ops : ", updateFilter, JSON.stringify(bulkOps));
         }
         else {
-            //insertOnetoDb(data, dbName, purchaseInvoiceCollectionName);
-        }
+            insertOnetoDb(data, dbName, purchaseInvoiceCollectionName);
+        }*/
 
         //await bulkWriteToDb(bulkOps, dbName, serialsCollectionName);
 
