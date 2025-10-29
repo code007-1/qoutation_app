@@ -3,7 +3,7 @@ import { useNavigate } from "@remix-run/react";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, Copy, Ellipsis, Pencil, Trash2 } from "lucide-react";
 import { useCentralFetcher } from "~/component/centralFetcher";
-import { purchaseInvoice } from "~/component/statics";
+import { documentDeleteAPIURL, purchaseInvoice, purchaseInvoiceReadAPIURL } from "~/component/statics";
 import { useGlobalContext } from "~/modules/gcontext";
 import { useNotification } from "~/modules/notificationContext";
 import { InvoiceData } from "~/routes/dashboard.inventory.purchaseinvoices.create";
@@ -21,26 +21,44 @@ export const sortButton = (column: any, name: string) => {
 }
 
 export function usePurchaseInvoiceColumn() {
-    const { permissions, setPurchaseInvoiceData, setOldProductsData, setPurchaseInvoiceItems } = useGlobalContext();
+    const { permissions, setPurchaseInvoiceData, setOldPurchaseInvoiceData, setPurchaseInvoiceItems } = useGlobalContext();
     const navigate = useNavigate();
     const fetcher = useCentralFetcher();
     const { addNotifications } = useNotification();
 
-    function handleEdit(row: InvoiceData) {
-        setPurchaseInvoiceData(row);
-        setPurchaseInvoiceItems(row.items);
-        navigate("/dashboard/inventory/purchaseinvoices/create", { state: { editing: true } });
+    async function getPurchaseInvoices(no: string) {
+        const response = await fetcher(`${purchaseInvoiceReadAPIURL}&no=${no}`);
+        if (response.status === 200) {
+            const data = await response.json()
+            return data;
+        }
+        else {
+            addNotifications({ title: "Failure...", message: "Fail to load data." });
+        }
     }
 
-    function handleCopy(row: InvoiceData) {
-        setPurchaseInvoiceData(row);
-        setPurchaseInvoiceItems(row.items);
-        navigate("/dashboard/inventory/purchaseinvoices/create", { state: { editing: false } });
+    async function handleEdit(row: InvoiceData) {
+        const fullRow = await getPurchaseInvoices(row.no);
+        console.log("eidint full row", row);
+        if (fullRow && fullRow.length > 0) {
+            setPurchaseInvoiceData(fullRow[0]);
+            setPurchaseInvoiceItems(fullRow[0].items);
+            navigate("/dashboard/inventory/purchaseinvoices/create", { state: { editing: true } });
+        }
+    }
+
+    async function handleCopy(row: InvoiceData) {
+        const fullRow = await getPurchaseInvoices(row.no);
+        if (fullRow && fullRow.length > 0) {
+            setPurchaseInvoiceData(fullRow[0]);
+            setPurchaseInvoiceItems(fullRow[0].items);
+            navigate("/dashboard/inventory/purchaseinvoices/create", { state: { editing: false } });
+        }
     }
 
 
-    async function handleDelete(productid: string) {
-        const result = await fetcher("/api/delete", { method: "POST", body: JSON.stringify({ "productid": productid, type: purchaseInvoice }) });
+    async function handleDelete(id: string) {
+        const result = await fetcher(documentDeleteAPIURL, { method: "POST", body: JSON.stringify({ filter: id, type: purchaseInvoice }) });
         if (result.status !== 200) {
             addNotifications({
                 title: "Error while deletion...",
@@ -48,7 +66,7 @@ export function usePurchaseInvoiceColumn() {
             });
         }
         else {
-            setOldProductsData((pre: any) => { return pre.filter((id: string) => id === productid ? false : true) });
+            setOldPurchaseInvoiceData((pre: any) => { return pre.filter((id: string) => id === id ? false : true) });
         }
     }
 
@@ -94,8 +112,8 @@ export function usePurchaseInvoiceColumn() {
             }
         },
         {
-            accessorKey: "stock",
-            header: "Current Stock",
+            accessorKey: "quantity",
+            header: "Quantity",
             cell: (user: any) => {
                 return <span>{user.row.original.stock}</span>
             },
@@ -138,7 +156,7 @@ export function usePurchaseInvoiceColumn() {
                                 {permissions.includes("delete") &&
                                     <MenuItem>
                                         <div className="flex px-6 py-1 data-[focus]:bg-buttonHover"
-                                            onClick={() => handleDelete(user.row.original.productid)}>
+                                            onClick={(e) => handleDelete(user.row.original._id)}>
                                             <div className="text-textSecondary mr-4"><Trash2 size={20} /></div>
                                             <div className="text-textPrimary">Delete</div>
                                         </div>

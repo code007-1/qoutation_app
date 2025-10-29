@@ -9,7 +9,6 @@ export const quotes = "quotes";
 
 export const quotationReadAPIURL = `/api/read/search?type=${quotations}`;
 export const quotationAdvnanceReadAPIURL = `/api/read/searchadvance?type=${quotations}`;
-export const quotationDeleteAPIURL = "/api/delete";
 
 export const challanReadAPIURL = `/api/read/search?type=${challans}`;
 export const challanAdvnanceReadAPIURL = `/api/read/searchadvance?type=${challans}`;
@@ -23,8 +22,9 @@ export const productCreateAPIURL = "/api/create/product";
 
 export const purchaseInvoiceReadAPIURL = `/api/read/search?type=${purchaseInvoice}`;
 export const purchaseInvoiceAdvanceReadAPIURL = `/api/read/searchadvance?type=${purchaseInvoice}`;
-export const purchaseInvoiceCreateURL = "/api/create/purchaseinvoice"
+export const purchaseInvoiceCreateAPIURL = "/api/create/purchaseinvoice"
 
 export const quotationAndChallanDataSearch = "/api/search";
 export const saveAndCreatequotationAndChallanPDF = "/api/create/pdf";
-export const documentsCountURLAPI = "/api/read/count";
+export const documentsCountAPIURL = "/api/read/count";
+export const documentDeleteAPIURL = `/api/delete`;

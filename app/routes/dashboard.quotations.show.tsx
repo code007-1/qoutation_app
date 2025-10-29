@@ -3,7 +3,7 @@ import { useQuotationsColumns } from "~/component/quotation/quotationColumns";
 import { createQuotation, initialQuotationData, useGlobalContext } from "~/modules/gcontext";
 import { useCentralFetcher } from "~/component/centralFetcher";
 import { useNotification } from "~/modules/notificationContext";
-import { quotationAdvnanceReadAPIURL, quotationDeleteAPIURL, quotationReadAPIURL, quotations } from "~/component/statics";
+import { quotationAdvnanceReadAPIURL, documentDeleteAPIURL, quotationReadAPIURL, quotations } from "~/component/statics";
 import TableUI from "~/component/tableUI";
 import { Dialog } from "~/component/menu/about";
 import { X } from "lucide-react";
@@ -21,7 +21,7 @@ const QuotationsShow = () => {
         setLoading(true);
         const response = await fetcher(`${quotationReadAPIURL}`);
         if (response.status === 200) {
-            const data = await response.json()
+            const data = await response.json();
             setOldQuotationData(data);
             setQuotationDataCount(data.length);
         }

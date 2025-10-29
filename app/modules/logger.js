@@ -160,19 +160,15 @@ async function UploadProducts() {
     })
 }
 
-//UploadProducts();
-
-async function search() {
+async function find(params) {
     await client.connect();
     // Send a ping to confirm a successful connection
     await client.db("unnamed").command({ ping: 1 });
-
-    const result = await client.db("unnamed").collection("challans").find({ "_id": new ObjectId("68ba785ffb137aa7126c4393") }).toArray();
-    console.log(result)
+    const result = await client.db("unnamed").collection("challans").find({}, { "projection": { "no": 1 } }).toArray();
+    console.log(result);
 }
-
-search();
-
+find();
 // needs to do performance optimization of loading data from db like for quotation or challan or complaint initially load only that fields
 // which are being showed in table, when editing copying or downliding, load full version of that document.
 // implement each product versioning instead of whole collection versioning
+

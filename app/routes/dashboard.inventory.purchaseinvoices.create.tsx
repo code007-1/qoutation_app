@@ -2,6 +2,8 @@ import { useEffect } from "react";
 import { initialPurchaseInvoiceData, useGlobalContext } from "~/modules/gcontext";
 import PurchaseInvoiceAutocompleteSearch from "../component/inventory/purchaseInvoices/purchaseInvoiceAutocompleteSearch";
 import { useCentralFetcher } from "../component/centralFetcher";
+import { purchaseInvoiceCreateAPIURL } from "../component/statics";
+import { ObjectId } from "mongodb";
 import { useLocation } from "@remix-run/react";
 
 /*
@@ -55,7 +57,7 @@ export interface InvoiceItem {
     sno: string[]
 }
 export interface InvoiceData {
-    _id?: string,
+    _id?: ObjectId,
     no: string,
     vendor: string,
     date: string,
@@ -81,12 +83,12 @@ export default function CreatePurchaseInvoice() {
 
     async function save() {
         const payload = { ...purcahseInvoiceData, items: purchaseInvoiceItems }
-        /*const response = await fetcher(`${purchaseInvoiceCreateURL}`, {
+        const response = await fetcher(`${purchaseInvoiceCreateAPIURL}`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(payload)
-        });*/
-        console.log("payload", payload);
+        });
+        //console.log("payload", payload);
         setPurchaseInvoiceData(payload);
     }
 
@@ -96,7 +98,7 @@ export default function CreatePurchaseInvoice() {
     }, [purchaseInvoiceItems]);
 
     useEffect(() => {
-        setHeaderText("Purchase Invoice");
+        //setHeaderText("Purchase Invoice");
         // copying existing product
         if (passedData && passedData?.editing === false) {
             setPurchaseInvoiceData(pre => { return { ...pre, date: new Date().toISOString().split("T")[0] } });

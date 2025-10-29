@@ -63,7 +63,6 @@ export default function PurchaseInvoiceShow() {
         const response = await fetcher(`${purchaseInvoiceReadAPIURL}`);
         if (response.status === 200) {
             const data = await response.json()
-            console.log("jashdjkashd", data);
             setOldPurchaseInvoiceData(data);
         }
         else {
@@ -83,7 +82,7 @@ export default function PurchaseInvoiceShow() {
                         EmptyText="No Complaints Data Found!"
                         isFetching={loading}
                         refresh={getPurchaseInvoices}
-                        filterTypes={{ "ID": "productid", "Name": "name", "HSN Code": "hsn", "Description": "description", "Quantity": "quantity" }}
+                        filterTypes={{ "Invoice #": "no", "Vendor": "vendor", "Date": "date", "Quantity": "quantity" }}
                     />
                 </div>
             </div>

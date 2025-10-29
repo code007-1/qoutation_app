@@ -3,9 +3,9 @@ import { useNavigate } from "@remix-run/react";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowDownToLine, ArrowUpDown, Copy, Ellipsis, Pencil, Trash2 } from "lucide-react";
 import { useGlobalContext } from "~/modules/gcontext";
-import { createPdf, QuotationData } from "~/routes/dashboard.quotations.create";
+import { createPdf } from "~/routes/dashboard.quotations.create";
 import { useCentralFetcher } from "../centralFetcher";
-import { quotationDeleteAPIURL, quotations } from "../statics";
+import { documentDeleteAPIURL, quotationReadAPIURL, quotations } from "../statics";
 import { useNotification } from "~/modules/notificationContext";
 
 export const sortButton = (column: any, name: string) => {
@@ -30,20 +30,38 @@ export function useQuotationsColumns() {
     const fetcher = useCentralFetcher();
     const { addNotifications } = useNotification();
 
-    function handleEdit(row: QuotationData) {
-        setQuotationData(row);
-        setQuotationItems(row.items);
-        navigate("/dashboard/quotations/create", { state: { editing: true } });
+
+    async function getQoutations(no: string) {
+        const response = await fetcher(`${quotationReadAPIURL}&no=${no}`);
+        if (response.status === 200) {
+            const data = await response.json()
+            return data;
+        }
+        else {
+            addNotifications({ title: "Failure...", message: "Fail to load data." });
+        }
     }
 
-    function handleCopy(row: QuotationData) {
-        setQuotationData(row);
-        setQuotationItems(row.items);
-        navigate("/dashboard/quotations/create", { state: { editing: false } });
+    async function handleEdit(no: string) {
+        const fullRow = await getQoutations(no);
+        if (fullRow && fullRow.length > 0) {
+            setQuotationData(fullRow[0]);
+            setQuotationItems(fullRow[0].items);
+            navigate("/dashboard/quotations/create", { state: { editing: true } });
+        }
+    }
+
+    async function handleCopy(no: string) {
+        const fullRow = await getQoutations(no);
+        if (fullRow && fullRow.length > 0) {
+            setQuotationData(fullRow[0]);
+            setQuotationItems(fullRow[0].items);
+            navigate("/dashboard/quotations/create", { state: { editing: false } });
+        }
     }
 
     async function handleDelete(no: string) {
-        const result = await fetcher(quotationDeleteAPIURL, { method: "POST", body: JSON.stringify({ filter: { "no": no }, type: quotations }) });
+        const result = await fetcher(documentDeleteAPIURL, { method: "POST", body: JSON.stringify({ filter: { "no": no }, type: quotations }) });
         if (result.status !== 200) {
             addNotifications({
                 title: "Error while deletion...",
@@ -55,6 +73,12 @@ export function useQuotationsColumns() {
         }
     }
 
+    async function handleDownload(no: string) {
+        const fullRow = await getQoutations(no);
+        if (fullRow && fullRow.length > 0) {
+            createPdf(fullRow[0], fetcher, profile.quotationInfo[selectedProfile].showCustomerList, false);
+        }
+    }
 
     const columns: ColumnDef<any, any>[] = [
         {
@@ -148,7 +172,7 @@ export function useQuotationsColumns() {
                                 <MenuItem>
                                     <div
                                         className="flex px-6 py-1 data-[focus]:bg-buttonHover"
-                                        onClick={() => handleEdit(user.row.original)}
+                                        onClick={() => handleEdit(user.row.original.no)}
                                     >
                                         <div className="text-textSecondary mr-4"><Pencil size={20} /></div>
                                         <div className="text-textPrimary">Edit</div>
@@ -156,7 +180,7 @@ export function useQuotationsColumns() {
                                 </MenuItem>
                                 <MenuItem>
                                     <div className="flex px-6 py-1 data-[focus]:bg-buttonHover"
-                                        onClick={() => handleCopy(user.row.original)}>
+                                        onClick={() => handleCopy(user.row.original.no)}>
                                         <div className="text-textSecondary mr-4"><Copy size={20} /></div>
                                         <div className="text-textPrimary">Copy</div>
                                     </div>
@@ -172,18 +196,17 @@ export function useQuotationsColumns() {
                                 <MenuItem>
                                     <div
                                         className="flex px-6 py-1 data-[focus]:bg-buttonHover"
-                                        onClick={(e) => createPdf(user.row.original, fetcher, profile.quotationInfo[selectedProfile].showCustomerList, false)}
+                                        onClick={(e) => handleDownload(user.row.original.no)}
                                     >
                                         <div className="text-textSecondary mr-4"><ArrowDownToLine size={20} /></div>
                                         <div className="text-textPrimary">Download</div>
                                     </div>
                                 </MenuItem>
                             </div>
-                        </MenuItems >
+                        </MenuItems>
                     </Menu >
                 </>
             }
         }];
-
     return columns;
 }

@@ -1,4 +1,5 @@
 import { ActionFunction } from "@remix-run/node";
+import { ObjectId } from "mongodb";
 import { deleteOneFromDB, insertOnetoDb, update } from "~/modules/dbOnline";
 import { challanCollectionName, complaintCollectionName, dbName, logsCollectionName, metaCollectionName, productCollectionName, purchaseInvoiceCollectionName, quotationCollectionName, verifyAccessToken } from "~/modules/utils";
 
@@ -25,7 +26,7 @@ export const action: ActionFunction = async ({ request, params }) => {
             await update(dbName, metaCollectionName, { "type": "products_tracker" }, { $inc: { "product_catelog_version": 1 } });
         }
         else if (type === purchaseInvoiceCollectionName)
-            result = await deleteOneFromDB(filter, dbName, purchaseInvoiceCollectionName);
+            result = await deleteOneFromDB({ "_id": new ObjectId(filter) }, dbName, purchaseInvoiceCollectionName);
         else
             return new Response(`nothing to deleted`, { status: 405 });
 

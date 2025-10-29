@@ -15,7 +15,7 @@ export default function Inventory() {
             <div>
                 <MenuButton className="flex mr-10 items-center hover:bg-buttonHover px-2 text-textPrimary">
                     <AlignLeft className="text-textPrimary mr-2" />
-                    <div className="text-xl mr-2">Crea1te Inventory</div>
+                    <div className="text-xl mr-2">Create Inventory</div>
                 </MenuButton>
             </div>
             <MenuItems

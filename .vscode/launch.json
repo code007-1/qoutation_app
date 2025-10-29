@@ -1,0 +1,21 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Launch Remix Dev Server",
+            "type": "node-terminal",
+            "request": "launch",
+            "command": "npm run dev", // or "pnpm dev", "yarn dev"
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "name": "Attach to Node Process",
+            "type": "node",
+            "request": "attach",
+            "processId": "${command:PickProcess}",
+            "skipFiles": [
+                "<node_internals>/**"
+            ]
+        }
+    ]
+}

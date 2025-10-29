@@ -39,7 +39,7 @@ export default function CreateProduct() {
     const passedData = location.state;
 
     useEffect(() => {
-        setHeaderText("Products");
+        setHeaderText("Add Products");
         // copying existing product
         if (passedData && passedData?.editing === false) {
             getProductsID();
@@ -69,10 +69,6 @@ export default function CreateProduct() {
 
     return (
         <>
-            <div className="w-full py-2 px-4 font-semibold text-textSecondary bg-buttonHover text-center">
-                Add Product
-            </div>
-
             <div className="grid grid-cols-6 gap-4 text-textPrimary mt-4">
                 <div>
                     Product ID <div className="p-2 bg-headerBackground w-full border-0 ">{productsData.no}</div>
