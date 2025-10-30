@@ -2,24 +2,28 @@ import { Minus } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { useGlobalContext } from "~/modules/gcontext";
 import { ChallanItems } from "~/routes/dashboard.challan.create";
-import { quotationAndChallanDataSearch } from "../statics";
+import { productsSearchAPIURL, serialSearchAPIURL } from "../statics";
 
 export default function ChallanAutocompleteSearch({ index }: { index: number }) {
-    const [showSuggestions, setShowSuggestions] = useState(false);
+    const [showProductSuggestions, setShowSuggestions] = useState(false);
+    const [showSerialSuggestions, setSerialSuggestions] = useState(false);
     const [filtered, setFiltered] = useState<ChallanItems[]>([]);
     const [highlighted, setHighlighted] = useState<number>(-1);
-    const inputRef = useRef<HTMLInputElement>(null);
-    const [hasFocus, setFocus] = useState(false);
+    const productInputRef = useRef<HTMLInputElement>(null);
+    const serialInputRef = useRef<HTMLInputElement>(null);
+    const [hasProductFocus, setProductFocus] = useState(false);
+    const [hasSerialFocus, setSerialFocus] = useState(false);
 
     const { setChallanItems, challanItems } = useGlobalContext();
+    const [serialInput, setSerialInput] = useState("");
 
     useEffect(() => {
-        if (hasFocus) {
+        if (hasProductFocus) {
             if (challanItems[index].name.trim() === "") {
                 setFiltered([]);
                 setShowSuggestions(false);
-            } else if (showSuggestions || filtered.length != 1 || filtered[0].name.toLowerCase() != challanItems[index].name.toLowerCase()) {
-                fetch(quotationAndChallanDataSearch, {
+            } else if (showProductSuggestions || filtered.length != 1 || filtered[0].name.toLowerCase() != challanItems[index].name.toLowerCase()) {
+                fetch(productsSearchAPIURL, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(challanItems[index].name),
@@ -36,6 +40,33 @@ export default function ChallanAutocompleteSearch({ index }: { index: number }) 
             }
         }
     }, [challanItems[index].name]);
+
+
+    /*useEffect(() => {
+        if (hasSerialFocus) {
+            if (serialInput === "") {
+                setFiltered([]);
+                setShowSuggestions(false);
+            }
+
+            else if (showProductSuggestions || filtered.length != 1 || filtered[0].name.toLowerCase() != serialInput.toLowerCase()) {
+                fetch(serialSearchAPIURL, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({"query": serialInput, no:})
+                })
+                    .then(async (res) => {
+                        const filteredList: ChallanItems[] = await res.json();
+                        setFiltered(filteredList);
+                        setShowSuggestions(filteredList.length > 0);
+                        setHighlighted(-1);
+                    })
+                    .catch((err) => {
+                        console.error("Error fetching suggestions:", err);
+                    });
+            }
+        }
+    }, []);*/
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         //setInput(e.target.value);
@@ -59,16 +90,21 @@ export default function ChallanAutocompleteSearch({ index }: { index: number }) 
     const handleBlur = () => {
         // Delay to allow click event to register
         setTimeout(() => setShowSuggestions(false), 100);
-        setFocus(false);
+        setProductFocus(false);
     };
 
     const handleFocus = () => {
         if (filtered.length > 0) setShowSuggestions(true);
-        setFocus(true);
+        setProductFocus(true);
+    };
+
+    const serialHandleFocus = () => {
+        if (filtered.length > 0) setShowSuggestions(true);
+        setProductFocus(true);
     };
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        if (!showSuggestions) return;
+        if (!showProductSuggestions) return;
         if (e.key === "ArrowDown") {
             setHighlighted(prev =>
                 prev < filtered.length - 1 ? prev + 1 : 0
@@ -94,7 +130,7 @@ export default function ChallanAutocompleteSearch({ index }: { index: number }) 
     return (
         <div className="grid grid-cols-10 relative w-auto gap-x-2">
             <input
-                ref={inputRef}
+                ref={productInputRef}
                 type="text"
                 value={challanItems[index].name}
                 onChange={handleInputChange}
@@ -106,7 +142,7 @@ export default function ChallanAutocompleteSearch({ index }: { index: number }) 
                 autoComplete="off"
             />
 
-            {showSuggestions && (
+            {showProductSuggestions && (
                 <ul className="w-[29%] z-10 absolute top-full -left-0 right-0 bg-buttonHover border border-border overflow-y-auto max-h-96">
                     {filtered.map((s, idx) => (
                         <li
@@ -120,20 +156,22 @@ export default function ChallanAutocompleteSearch({ index }: { index: number }) 
                     ))}
                 </ul>
             )}
+
             <textarea
                 placeholder="Serial Numbers separated by commas..."
                 className="col-span-4 p-2 border border-border bg-background text-textPrimary focus:outline-textPrimary"
                 value={challanItems[index].sno?.join(",")}
                 rows={1}
                 onChange={(e) => {
-                    setChallanItems(pre => {
+                    /*setChallanItems(pre => {
                         const snos = e.target.value.replace(/[\s,]+/g, ",").trim().split(",");
                         return pre.map((item, i) => i === index
                             ? { ...challanItems[index], sno: snos, quantity: snos.length }
                             : item);
-                    })
+                    })*/
                 }}
             />
+
             <input
                 type="number"
                 placeholder="Quantity"

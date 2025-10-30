@@ -1,6 +1,6 @@
 import { ActionFunction } from "@remix-run/node";
 import { ObjectId } from "mongodb"
-import { bulkWriteToDb, insertOnetoDb, insertOrUpdateOnetoDb, search, } from "~/modules/dbOnline";
+import { bulkWriteToDb, insertOnetoDb, insertOrUpdateOnetoDb, redis, search, } from "~/modules/dbOnline";
 import { dbName, prefixPurchaseInvoice, productCollectionName, pruchaseInvoicePrefix as purchaseInvoicePrefix, purchaseInvoiceCollectionName, serialsCollectionName, verifyAccessToken } from "~/modules/utils";
 
 export const action: ActionFunction = async ({ request, params }) => {
@@ -93,24 +93,32 @@ export const action: ActionFunction = async ({ request, params }) => {
         if (editedProducts.size > 0) {
             const products = await search(dbName, serialsCollectionName, { "productid": { "$in": [...editedProducts] } }, { "projection": { "purchaseInvoice": 1, "salesInvoice": 1, "productid": 1, "sno": 1 } }, 1e7, 0);
             const currentStocks: Record<string, number> = {};
-            const currentSerials: Record<string, string> = {};
+            const currentSerials: Record<string, [string]> = {};
             const productsBulkOps: { updateOne: { filter: { no: string; }; }; update: { $set: { quantity: number; }; }; }[] = [];
 
             products.forEach(element => {
                 currentStocks[element["productid"]] = (currentStocks[element["productid"]] || 0) + (element["purchaseInvoice"] ? 1 : 0);
                 currentStocks[element["productid"]] = (currentStocks[element["productid"]] || 0) + (element["salesInvoice"] ? -1 : 0);
 
-
                 if (!("salesInvoice" in element) || element["salesInvoice"] === "")
-                    currentSerials[element["productid"]] = ((currentSerials[element["productid"]] || "") + "," + String(element["sno"]));
+                    if (element["productid"] in currentSerials)
+                        currentSerials[element["productid"]].push(String(element["sno"]));
+                    else
+                        currentSerials[element["productid"]] = [String(element["sno"])];
             });
 
             Object.entries(currentStocks).forEach(element => {
                 productsBulkOps.push({ "updateOne": { "filter": { "no": element[0] } }, "update": { "$set": { "quantity": element[1] } } });
             });
 
-            console.log("product update is : ", productsBulkOps);
+            // writes quantity to products collection
             await bulkWriteToDb(productsBulkOps, dbName, productCollectionName);
+
+            // writes serials to redis set for fast cache
+            Object.entries(currentSerials).forEach(element => {
+                redis.del(`product:${element[0]}:serial`);
+                redis.sadd(`product:${element[0]}:serial`, element[1]);
+            });
         }
 
         // writes to logs collection

@@ -1,7 +1,7 @@
 import { Minus } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { useGlobalContext } from "~/modules/gcontext";
-import { quotationAndChallanDataSearch } from "../../statics";
+import { productsSearchAPIURL } from "../../statics";
 import { InvoiceItem } from "~/routes/dashboard.inventory.purchaseinvoices.create";
 
 export default function PurchaseInvoiceAutocompleteSearch({ index }: { index: number }) {
@@ -19,7 +19,7 @@ export default function PurchaseInvoiceAutocompleteSearch({ index }: { index: nu
                 setFiltered([]);
                 setShowSuggestions(false);
             } else if (showSuggestions || filtered.length != 1 || filtered[0].name.toLowerCase() != purchaseInvoiceItems[index].name.toLowerCase()) {
-                fetch(quotationAndChallanDataSearch, {
+                fetch(productsSearchAPIURL, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(purchaseInvoiceItems[index].name),

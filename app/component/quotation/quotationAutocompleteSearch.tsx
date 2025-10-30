@@ -2,7 +2,7 @@ import { Minus } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { useGlobalContext } from "~/modules/gcontext";
 import { QuoteItems } from "~/routes/dashboard.quotations.create";
-import { quotationAndChallanDataSearch } from "../statics";
+import { productsSearchAPIURL } from "../statics";
 
 //- done - advance show hide for better ui - optimized little bit, ok for now
 //- done - welcome animation - partially done, would improve animation
@@ -39,7 +39,7 @@ export default function QuotationAutocompleteSearch({ index }: { index: number }
                 setFiltered([]);
                 setShowSuggestions(false);
             } else if (showSuggestions || filtered.length != 1 || filtered[0].name.toLowerCase() != quotationItems[index].name.toLowerCase()) {
-                fetch(`${quotationAndChallanDataSearch}`, {
+                fetch(`${productsSearchAPIURL}`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(quotationItems[index].name),

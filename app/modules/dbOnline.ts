@@ -1,6 +1,13 @@
 // how category and type is saving to db and convert sno to array
 import { ChangeStream, MongoClient, ServerApiVersion, Sort, SortDirection } from "mongodb";
-import { dbName, mongoDBUrl, productCollectionName, purchaseInvoiceCollectionName, quotationCollectionName, usersCollectionName } from "./utils";
+import { dbName, mongoDBUrl, productCollectionName, purchaseInvoiceCollectionName, quotationCollectionName, reddisToken, reddisUrl, usersCollectionName } from "./utils";
+import { Redis } from '@upstash/redis';
+
+export const redis = new Redis({
+    url: reddisUrl,
+    token: reddisToken,
+});
+
 
 const uri = mongoDBUrl;//"mongodb+srv://spttcpl:9ziRq5mLRppCobx8@cluster0.bbixzsn.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 //let changeStream: ChangeStream | null;

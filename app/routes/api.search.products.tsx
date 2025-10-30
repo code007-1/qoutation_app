@@ -3,7 +3,7 @@ import { products, productsCount } from "~/modules/loadCSV";
 
 export const action: ActionFunction = async ({ request }) => {
     const query = await request.json();
-    console.log("jhjaksdhjksa", products, productsCount, query);
+
     if (productsCount === 0) {
         return new Response(JSON.stringify({ error: "No data available" }), { status: 200 });
     }
@@ -15,9 +15,9 @@ export const action: ActionFunction = async ({ request }) => {
                 console.log("error while searching in csv file", row.name);
             }
         });
-        //console.log("Filtered rows:", filteredRows);
+
         // finally create the Response with the correct Content-Type header for a PDF
         const headers = new Headers({ "Content-Type": "application/json" });
-        return new Response(JSON.stringify([...filteredRows]), { status: 200, headers });
+        return new Response(JSON.stringify(filteredRows), { status: 200, headers });
     }
 };

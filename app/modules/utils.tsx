@@ -1,7 +1,7 @@
 import pkg from "jsonwebtoken";
 const { verify } = pkg;
 
-import { count, search } from "./dbOnline";
+import { count, redis, search } from "./dbOnline";
 import { profile } from "~/routes/dashboard.settings.profile";
 
 export const JWT_REFRESH_KEY = "123!@#$@SDFASDAD";
@@ -24,6 +24,26 @@ export const dbName = "unnamed";
 export const mongoDBUrl = "mongodb+srv://spttcpl:9ziRq5mLRppCobx8@cluster0.bbixzsn.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 export const reddisUrl = "https://daring-seasnail-19305.upstash.io";
 export const reddisToken = "AUtpAAIncDI1MTcwODVkNTM3NTU0NzM4ODYxMTJlZGEwMjAwZDFkMnAyMTkzMDU";
+
+const serialsCache = new Map<string, { data: string[]; expiresAt: number }>();
+
+export async function getCachedSerials(productId: string) {
+    const entry = serialsCache.get(productId);
+
+    if (!entry || Date.now() > entry.expiresAt) {
+        const serials = await redis.smembers(`product:${productId}:serial`);
+        setCachedSerials(productId, serials);
+        return serials;
+    }
+    return entry.data;
+}
+
+export function setCachedSerials(productId: string, serials: string[], ttlMs = 60000) {
+    serialsCache.set(productId, {
+        data: serials,
+        expiresAt: Date.now() + ttlMs
+    });
+}
 
 export function getUserProfile(result: any) {
     try {
