@@ -3,7 +3,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { ArrowBigDownDash, ArrowDownToLine, ArrowUpDown, Copy, Ellipsis, Pencil, Trash2 } from "lucide-react";
 import { useGlobalContext } from "~/modules/gcontext";
 import { ChallanData, ChallanItems } from "~/routes/dashboard.challan.create";
-import { createPdf } from "~/routes/dashboard.quotations.create";
+import { createPdf } from "~/routes/dashboard.quotations.create.full";
 import { useCentralFetcher } from "../centralFetcher";
 import { challanReadAPIURL, challans, documentDeleteAPIURL } from "../statics";
 import { useNavigate } from "@remix-run/react";

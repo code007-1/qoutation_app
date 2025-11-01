@@ -8,7 +8,8 @@ export const JWT_REFRESH_KEY = "123!@#$@SDFASDAD";
 export const JWT_ACCESS_KEY = "!#SDAS@#!!@XZZXC";
 export const localStringFormat = "en-IN";
 
-export const quotationCollectionName = "quotations";
+export const fullQuotationCollectionName = "quotations";
+export const shortQuotationCollectionName = "shortquotations";
 export const challanCollectionName = "challans";
 export const complaintCollectionName = "complaints";
 export const logsCollectionName = "logs";

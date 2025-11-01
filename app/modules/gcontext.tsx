@@ -1,7 +1,7 @@
 import { Link } from "@remix-run/react";
 import React, { createContext, useState, useContext, ReactNode } from "react";
 import { profile } from "~/routes/dashboard.settings.profile";
-import { QuotationData, QuoteItems } from "~/routes/dashboard.quotations.create";
+import { QuotationData, QuotationItems } from "~/routes/dashboard.quotations.create.full";
 import packageJson from "../../package.json";
 import { ChallanData, ChallanItems } from "~/routes/dashboard.challan.create";
 import { ComplaintsData } from "~/routes/dashboard.complaints.create";
@@ -38,8 +38,8 @@ interface AppContextType {
     setOldQuotationData: React.Dispatch<React.SetStateAction<QuotationData[]>>;
     quotationDataCount: number;
     setQuotationDataCount: React.Dispatch<React.SetStateAction<number>>;
-    quotationItems: QuoteItems[];
-    setQuotationItems: React.Dispatch<React.SetStateAction<QuoteItems[]>>;
+    quotationItems: QuotationItems[];
+    setQuotationItems: React.Dispatch<React.SetStateAction<QuotationItems[]>>;
     quotationData: QuotationData;
     setQuotationData: React.Dispatch<React.SetStateAction<QuotationData>>;
 
@@ -88,7 +88,7 @@ interface AppContextType {
 }
 
 const appContext = createContext<AppContextType | null>(null);
-export const createQuotation = <>< Link to={"/dashboard/quotations/create"} className="cursor-pointer hover:bg-buttonHover w-min text-nowrap p-1" >Create Quotation</Link ></>;
+export const createQuotation = <>< Link to={"/dashboard/quotations/create/full"} className="cursor-pointer hover:bg-buttonHover w-min text-nowrap p-1" >Create Quotation</Link ></>;
 export const createChallan = <>< Link to={"/dashboard/challan/create"} className="cursor-pointer hover:bg-buttonHover w-min text-nowrap p-1" >Create Challan</Link ></>;
 export const createComplaint = <>< Link to={"/dashboard/complaints/create"} className="cursor-pointer hover:bg-buttonHover w-min text-nowrap p-1" >Create Complaint</Link ></>;
 export const createInvetory = <>< Link to={"/dashboard/inventory/create"} className="cursor-pointer hover:bg-buttonHover w-min text-nowrap p-1" >Create Inventory</Link ></>;
@@ -181,7 +181,7 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
     // quotation related variables
     const [oldQuotationData, setOldQuotationData] = useState<QuotationData[]>([]); // data loaded from db of old quotations
     const [quotationDataCount, setQuotationDataCount] = useState<number>(0); // count of data loaded from db
-    const [quotationItems, setQuotationItems] = useState<QuoteItems[]>([]); // items added to the current quotation being created
+    const [quotationItems, setQuotationItems] = useState<QuotationItems[]>([]); // items added to the current quotation being created
     const [quotationData, setQuotationData] = useState<QuotationData>(initialQuotationData()); // data of the whole current quotation being created
 
     // challan related variables

@@ -3,17 +3,21 @@ import { useQuotationsColumns } from "~/component/quotation/quotationColumns";
 import { createQuotation, initialQuotationData, useGlobalContext } from "~/modules/gcontext";
 import { useCentralFetcher } from "~/component/centralFetcher";
 import { useNotification } from "~/modules/notificationContext";
-import { quotationAdvnanceReadAPIURL, documentDeleteAPIURL, quotationReadAPIURL, quotations } from "~/component/statics";
+import { quotationAdvnanceReadAPIURL, quotationReadAPIURL } from "~/component/statics";
 import TableUI from "~/component/tableUI";
 import { Dialog } from "~/component/menu/about";
-import { X } from "lucide-react";
+import { AlignLeft, BadgeAlert, FilePenLine, ScrollText, X } from "lucide-react";
 import { Row } from "@tanstack/react-table";
+import { MenuButton, MenuItem, MenuItems, Menu, TabGroup, TabList, Tab, TabPanels, TabPanel } from "@headlessui/react";
+import { Link } from "@remix-run/react";
+import ProductShow from "~/component/inventory/product/productShow";
 
 const QuotationsShow = () => {
     // Initiate your states
     const [loading, setLoading] = useState(false);
     const { addNotifications } = useNotification();
     const fetcher = useCentralFetcher();
+    const [selectedTabIndex, setSelectedTabIndex] = useState(-1);
 
     const { oldQuotationData, setHeaderText, quotationDataCount, setQuotationDataCount, setOldQuotationData, setQuotationData, setQuotationItems, profile } = useGlobalContext();
 
@@ -101,10 +105,45 @@ const QuotationsShow = () => {
         }
     }
 
+    const quotationsHeader = <>
+        < Menu as="div" className="relative inline-block text-left text-sm text-textSecondary" >
+            <div>
+                <MenuButton className="flex mr-10 items-center hover:bg-buttonHover px-2 text-textPrimary">
+                    <AlignLeft className="text-textPrimary mr-2" />
+                    <div className="text-xl mr-2">Create Quotation</div>
+                </MenuButton>
+            </div>
+            <MenuItems
+                transition
+                className="absolute right-10 z-10 mt-2 w-52 origin-top-right divide-y divide-border rounded-sm bg-background shadow-lg ring-1 ring-black/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
+            >
+                <div className="p-1">
+                    <MenuItem>
+                        <Link
+                            to="/dashboard/quotations/create/full"
+                            className="flex px-4 py-2 data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
+                        >
+                            Full Quotation
+                        </Link>
+                    </MenuItem>
+                    <MenuItem>
+                        <Link
+                            to="/dashboard/quotations/create/short"
+                            className="flex px-4 py-2    data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
+                        >
+                            Short Quotation
+                        </Link>
+                    </MenuItem>
+                </div>
+            </MenuItems >
+        </Menu >
+    </>;
+
     useEffect(() => {
+
         setQuotationData(initialQuotationData());
         setQuotationItems([]);
-        setHeaderText(createQuotation);
+        setHeaderText(quotationsHeader);
         if (quotationDataCount === 0)
             getQoutes();
     }, []);
@@ -122,10 +161,33 @@ const QuotationsShow = () => {
         }
     }, [open]);
 
-
     return (
         <>
             <section className="mt-5">
+                <TabGroup className="" selectedIndex={selectedTabIndex} onChange={e => setSelectedTabIndex(e)}>
+                    <TabList className="flex justify-center w-full">
+                        <div className="flex bg-headerBackground w-[25%] justify-evenly" tabIndex={0}>
+                            {["Full Quotations", "Short Quotations"].map((name: string) => (
+                                <Tab
+                                    key={name}
+                                    className="w-full py-2 px-4 font-semibold text-textSecondary focus:outline-none hover:bg-buttonHover"
+                                >
+                                    {name}
+                                </Tab>
+                            ))}
+                        </div>
+                    </TabList>
+
+                    <TabPanels className="mt-3">
+                        <TabPanel key={"Groups"} className="">
+                            Something 1
+                        </TabPanel>
+                        <TabPanel key={"Invoices"} className="">
+                            Something 2
+                        </TabPanel>
+                    </TabPanels>
+                </TabGroup>
+
                 <div>
                     <Dialog open={open} onClose={() => setOpen(false)} title="About imaGine">
                         <div className="flex items-center justify-between p-4 bg-headerBackground">

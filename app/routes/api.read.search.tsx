@@ -1,6 +1,6 @@
 import { LoaderFunction } from "@remix-run/node";
 import { sortedSearch } from "~/modules/dbOnline";
-import { challanCollectionName, complaintCollectionName, dbName, productCollectionName, purchaseInvoiceCollectionName, quotationCollectionName, verifyAccessToken } from "~/modules/utils";
+import { challanCollectionName, complaintCollectionName, dbName, productCollectionName, purchaseInvoiceCollectionName, fullQuotationCollectionName, verifyAccessToken, shortQuotationCollectionName } from "~/modules/utils";
 
 export const loader: LoaderFunction = async ({ request, params }) => {
     try {
@@ -22,10 +22,14 @@ export const loader: LoaderFunction = async ({ request, params }) => {
             if (Object.keys(query).length == 0)
                 findOptions = { "projection": { "no": 1, "billno": 1, "madeby": 1, "date": 1, "to": 1, "category": 1, "items.sno": 1 } };
         }
-        else if (type === quotationCollectionName) {
-            collectionName = quotationCollectionName;
+        else if (type === fullQuotationCollectionName) {
+            collectionName = fullQuotationCollectionName;
             if (Object.keys(query).length == 0)
                 findOptions = { "projection": { "no": 1, "madeby": 1, "date": 1, "to": 1, "discount": 1, "addon": 1, "amount": 1 } };
+        }
+        else if (type === shortQuotationCollectionName) {
+            collectionName = shortQuotationCollectionName;
+            findOptions = { "projection": { "no": 1, "madeby": 1, "date": 1, "to": 1, "discount": 1, "addon": 1, "amount": 1 } };
         }
         else if (type === complaintCollectionName) {
             collectionName = complaintCollectionName;

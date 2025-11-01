@@ -1,6 +1,6 @@
 import { LoaderFunction } from "@remix-run/node";
 import { sortedSearch } from "~/modules/dbOnline";
-import { challanCollectionName, complaintCollectionName, dbName, productCollectionName, purchaseInvoiceCollectionName, quotationCollectionName, verifyAccessToken } from "~/modules/utils";
+import { challanCollectionName, complaintCollectionName, dbName, productCollectionName, purchaseInvoiceCollectionName, fullQuotationCollectionName, verifyAccessToken } from "~/modules/utils";
 
 export const loader: LoaderFunction = async ({ request, params }) => {
     try {
@@ -20,14 +20,14 @@ export const loader: LoaderFunction = async ({ request, params }) => {
             const query = { "items.sno": sno };
             result = await sortedSearch(dbName, challanCollectionName, query, {}, limit, skip, -1, "_id");
         }
-        else if (type === quotationCollectionName) {
+        else if (type === fullQuotationCollectionName) {
             const start = url.searchParams.get("start") || "";
             const end = url.searchParams.get("end") || "";
             const to = url.searchParams.get("to") || "";
             let query = {};
             if (start != "" || end != "" || to != "")
                 query = { "date": { $gte: start, $lte: end } };
-            result = await sortedSearch(dbName, quotationCollectionName, query, {}, limit, skip, -1, "_id");
+            result = await sortedSearch(dbName, fullQuotationCollectionName, query, {}, limit, skip, -1, "_id");
         }
         else if (type === complaintCollectionName) {
             const start = url.searchParams.get("start") || "";

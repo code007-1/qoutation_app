@@ -3,7 +3,7 @@ import PurchaseInvoiceShow from "../component/inventory/purchaseInvoices/purchas
 import ProductShow from "../component/inventory/product/productShow";
 import { useEffect, useState } from "react";
 import { useGlobalContext } from "~/modules/gcontext";
-import { AlignLeft, AlignRight, BadgeAlert, FilePenLine, Layers, ScrollText } from "lucide-react";
+import { AlignLeft, BadgeAlert, FilePenLine, ScrollText } from "lucide-react";
 import { Link } from "@remix-run/react";
 
 export default function Inventory() {

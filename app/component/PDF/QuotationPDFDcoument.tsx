@@ -1,6 +1,6 @@
 import { Document, Page, Text, View, StyleSheet, Image, Link, Font } from "@react-pdf/renderer";
 import { Watermark } from "../watermark";
-import { QuotationData } from "~/routes/dashboard.quotations.create";
+import { QuotationData } from "~/routes/dashboard.quotations.create.full";
 
 export default function QuotationPDFDocument(data: QuotationData, showCustomerList: boolean = true) {
     const hue = data.pdfColor ? data.pdfColor : "222";

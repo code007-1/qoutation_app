@@ -5,7 +5,7 @@ import ChallanAutocompleteSearch from "~/component/challan/challanAutocompleteSe
 import { AnimatePresence, motion } from "framer-motion";
 import { Listbox, ListboxButton, ListboxOption, ListboxOptions } from "@headlessui/react";
 import { ChevronDown, Minus } from "lucide-react";
-import { createPdf } from "./dashboard.quotations.create";
+import { createPdf } from "./dashboard.quotations.create.full";
 import { useCentralFetcher } from "~/component/centralFetcher";
 import constData from "../../assets/data.json";
 import { challans } from "~/component/statics";

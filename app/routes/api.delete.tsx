@@ -1,7 +1,7 @@
 import { ActionFunction } from "@remix-run/node";
 import { ObjectId } from "mongodb";
 import { deleteOneFromDB, insertOnetoDb, update } from "~/modules/dbOnline";
-import { challanCollectionName, complaintCollectionName, dbName, logsCollectionName, metaCollectionName, productCollectionName, purchaseInvoiceCollectionName, quotationCollectionName, verifyAccessToken } from "~/modules/utils";
+import { challanCollectionName, complaintCollectionName, dbName, logsCollectionName, metaCollectionName, productCollectionName, purchaseInvoiceCollectionName, fullQuotationCollectionName, verifyAccessToken, shortQuotationCollectionName } from "~/modules/utils";
 
 export const action: ActionFunction = async ({ request, params }) => {
     try {
@@ -17,8 +17,10 @@ export const action: ActionFunction = async ({ request, params }) => {
         var result;
         if (type === challanCollectionName)
             result = await deleteOneFromDB(filter, dbName, challanCollectionName);
-        else if (type === quotationCollectionName)
-            result = await deleteOneFromDB(filter, dbName, quotationCollectionName);
+        else if (type === fullQuotationCollectionName)
+            result = await deleteOneFromDB(filter, dbName, fullQuotationCollectionName);
+        else if (type === shortQuotationCollectionName)
+            result = await deleteOneFromDB(filter, dbName, shortQuotationCollectionName);
         else if (type === complaintCollectionName)
             result = await deleteOneFromDB(filter, dbName, complaintCollectionName);
         else if (type === productCollectionName) {

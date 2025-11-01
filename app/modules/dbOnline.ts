@@ -1,6 +1,6 @@
 // how category and type is saving to db and convert sno to array
 import { ChangeStream, MongoClient, ServerApiVersion, Sort, SortDirection } from "mongodb";
-import { dbName, mongoDBUrl, productCollectionName, purchaseInvoiceCollectionName, quotationCollectionName, reddisToken, reddisUrl, usersCollectionName } from "./utils";
+import { dbName, mongoDBUrl, productCollectionName, purchaseInvoiceCollectionName, fullQuotationCollectionName, reddisToken, reddisUrl, usersCollectionName } from "./utils";
 import { Redis } from '@upstash/redis';
 
 export const redis = new Redis({
@@ -74,7 +74,7 @@ async function run() {
 startChangeStream();*/
 
 // searches for query in db
-export async function search(db: string = dbName, collection: string = quotationCollectionName, query: {} = {}, filterOptions: {} = {}, limit: number = 10, skip: number = 0) {
+export async function search(db: string = dbName, collection: string = fullQuotationCollectionName, query: {} = {}, filterOptions: {} = {}, limit: number = 10, skip: number = 0) {
     try {
         await run();
         return await client.db(db).collection(collection).find(query, filterOptions).skip(skip).limit(limit).toArray();//{ name: { $regex: query, $options: "i" } }
@@ -84,7 +84,7 @@ export async function search(db: string = dbName, collection: string = quotation
 }
 
 // do sorted search for query in db
-export async function sortedSearch(db: string = dbName, collection: string = quotationCollectionName, query: {} = {}, findOptions: {} = {}, limit: number = 10, skip: number = 0, sortOrder: SortDirection = -1, sortKey: Sort = "_id") {
+export async function sortedSearch(db: string = dbName, collection: string = fullQuotationCollectionName, query: {} = {}, findOptions: {} = {}, limit: number = 10, skip: number = 0, sortOrder: SortDirection = -1, sortKey: Sort = "_id") {
     try {
         await run();
         return await client.db(db).collection(collection).find(query, findOptions).sort(sortKey, sortOrder).skip(skip).limit(limit).toArray();//{ name: { $regex: query, $options: "i" } }
@@ -94,7 +94,7 @@ export async function sortedSearch(db: string = dbName, collection: string = quo
 }
 
 // count documents
-export async function count(db: string = dbName, collection: string = quotationCollectionName, query: {} = {}) {
+export async function count(db: string = dbName, collection: string = fullQuotationCollectionName, query: {} = {}) {
     try {
         await run();
         return await client.db(db).collection(collection).countDocuments(query);//{ name: { $regex: query, $options: "i" } }
@@ -114,7 +114,7 @@ export async function update(db: string = dbName, collection: string = usersColl
 }
 
 // delete one document in collection according to "no"
-export async function deleteOneFromDB(query: {}, db: string = dbName, collection: string = quotationCollectionName): Promise<number | undefined> {
+export async function deleteOneFromDB(query: {}, db: string = dbName, collection: string = fullQuotationCollectionName): Promise<number | undefined> {
     try {
         if (Object.keys(query).length == 0)
             return undefined;
@@ -129,7 +129,7 @@ export async function deleteOneFromDB(query: {}, db: string = dbName, collection
 }
 
 // updates or inserts one document according to "no"
-export async function insertOrUpdateOnetoDb(data: any, db: string = dbName, collection: string = quotationCollectionName, updateFilter: {} = {}, upsert: boolean = true) {
+export async function insertOrUpdateOnetoDb(data: any, db: string = dbName, collection: string = fullQuotationCollectionName, updateFilter: {} = {}, upsert: boolean = true) {
     try {
         await run();
         const { _id, ...restData } = data;

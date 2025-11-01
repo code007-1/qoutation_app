@@ -3,7 +3,7 @@ import { useNavigate } from "@remix-run/react";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowDownToLine, ArrowUpDown, Copy, Ellipsis, Pencil, Trash2 } from "lucide-react";
 import { useGlobalContext } from "~/modules/gcontext";
-import { createPdf } from "~/routes/dashboard.quotations.create";
+import { createPdf } from "~/routes/dashboard.quotations.create.full";
 import { useCentralFetcher } from "../centralFetcher";
 import { documentDeleteAPIURL, quotationReadAPIURL, quotations } from "../statics";
 import { useNotification } from "~/modules/notificationContext";
@@ -30,7 +30,6 @@ export function useQuotationsColumns() {
     const fetcher = useCentralFetcher();
     const { addNotifications } = useNotification();
 
-
     async function getQoutations(no: string) {
         const response = await fetcher(`${quotationReadAPIURL}&no=${no}`);
         if (response.status === 200) {
@@ -47,7 +46,7 @@ export function useQuotationsColumns() {
         if (fullRow && fullRow.length > 0) {
             setQuotationData(fullRow[0]);
             setQuotationItems(fullRow[0].items);
-            navigate("/dashboard/quotations/create", { state: { editing: true } });
+            navigate("/dashboard/quotations/create/full", { state: { editing: true } });
         }
     }
 
@@ -56,7 +55,7 @@ export function useQuotationsColumns() {
         if (fullRow && fullRow.length > 0) {
             setQuotationData(fullRow[0]);
             setQuotationItems(fullRow[0].items);
-            navigate("/dashboard/quotations/create", { state: { editing: false } });
+            navigate("/dashboard/quotations/create/full", { state: { editing: false } });
         }
     }
 

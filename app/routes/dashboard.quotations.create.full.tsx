@@ -9,7 +9,7 @@ import { ChallanData } from "./dashboard.challan.create";
 import { ChevronDown, Minus } from "lucide-react";
 import { challans, quotations, saveAndCreatequotationAndChallanPDF } from "~/component/statics";
 
-export type QuoteItems = {
+export type QuotationItems = {
     id: number;
     hsn: string;
     name: string;
@@ -25,7 +25,7 @@ export type QuoteItems = {
 export type QuotationData = {
     no: string;
     date: string;
-    items: QuoteItems[];
+    items: QuotationItems[];
     intro: string;
     terms: string;
     additionalInfo: string;

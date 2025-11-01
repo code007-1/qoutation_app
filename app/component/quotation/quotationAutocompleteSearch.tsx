@@ -1,7 +1,7 @@
 import { Minus } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { useGlobalContext } from "~/modules/gcontext";
-import { QuoteItems } from "~/routes/dashboard.quotations.create";
+import { QuotationItems } from "~/routes/dashboard.quotations.create.full";
 import { productsSearchAPIURL } from "../statics";
 
 //- done - advance show hide for better ui - optimized little bit, ok for now
@@ -26,7 +26,7 @@ import { productsSearchAPIURL } from "../statics";
 
 export default function QuotationAutocompleteSearch({ index }: { index: number }) {
     const [showSuggestions, setShowSuggestions] = useState(false);
-    const [filtered, setFiltered] = useState<QuoteItems[]>([]);
+    const [filtered, setFiltered] = useState<QuotationItems[]>([]);
     const [highlighted, setHighlighted] = useState<number>(-1);
     const inputRef = useRef<HTMLInputElement>(null);
     const [hasFocus, setFocus] = useState(false);
@@ -45,7 +45,7 @@ export default function QuotationAutocompleteSearch({ index }: { index: number }
                     body: JSON.stringify(quotationItems[index].name),
                 })
                     .then(async (res) => {
-                        const filteredList: QuoteItems[] = await res.json();
+                        const filteredList: QuotationItems[] = await res.json();
                         setFiltered(filteredList);
                         setShowSuggestions(filteredList.length > 0);
                         setHighlighted(-1);
@@ -65,7 +65,7 @@ export default function QuotationAutocompleteSearch({ index }: { index: number }
         });
     };
 
-    const handleSuggestionClick = (suggestion: QuoteItems) => {
+    const handleSuggestionClick = (suggestion: QuotationItems) => {
         setQuotationItems(pre => {
             return pre.map((item, i) => i == index
                 ? { id: suggestion.id, hsn: suggestion.hsn, name: suggestion.name, price: suggestion.price, quantity: 1, description: suggestion.description || "", link: suggestion.link, addon: 0, discount: 0 }

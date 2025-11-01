@@ -1,0 +1,190 @@
+import { useLocation, useNavigate } from "@remix-run/react";
+import { useEffect } from "react";
+import { useGlobalContext } from "~/modules/gcontext";
+import QuotationAutocompleteSearch from "~/component/quotation/quotationAutocompleteSearch";
+import { useCentralFetcher } from "~/component/centralFetcher";
+import { Minus } from "lucide-react";
+import { useNotification } from "~/modules/notificationContext";
+import { QuotationData, QuotationItems } from "./dashboard.quotations.create.full";
+import { shortQuotationCreateAPIURL } from "~/component/statics";
+
+async function SaveQuotation(quotationData: QuotationData, quotationItems: QuotationItems[], addNotifications: any, fetcher: any, navigate: any) {
+    let filteredItems;
+    filteredItems = quotationItems.filter((item: any) => {
+        if (!isFinite(item.price) || !isFinite(item.quantity)) return false;
+        else return true;
+    })
+
+    let quotationText = "";
+    quotationText += `From : ${quotationData.from}\n`;
+    quotationText += `To : ${quotationData.to}\n`;
+    quotationText += `Date : ${quotationData.date}\n\n`;
+    quotationText += "Particulars\n";
+
+    let totalAmount = 0;
+    filteredItems.forEach((element, index) => {
+        const amount = Math.round(((element.addon * 0.01) + 1) * (1 - (element.discount * 0.01)) * element.price * element.quantity);
+        totalAmount += amount;
+
+        quotationText += `${index + 1}. ${element.name} => Rs.${element.price * (element.addon * 0.01)} * ${element.quantity} unit = Rs.${amount} ${element.discount > 0 ? "(After " + element.discount + " % Discount)" : ""}\n`
+        if (element?.hsn != "")
+            quotationText += "HSN Code: " + element.hsn + "\n";
+        if (element?.description != "")
+            quotationText += element.description + "\n";
+    }, []);
+
+    quotationText += `\nAmount => Rs.${totalAmount}\n`
+    quotationText += `Tax @ ${quotationData.tax} % => ${Math.round(quotationData.tax * 0.01 * totalAmount)}\n`
+    quotationText += `Total Amount => Rs.${Math.round(((quotationData.tax * 0.01) + 1) * totalAmount)}`
+
+    navigator.clipboard.writeText(quotationText).then(() => {
+        addNotifications({
+            title: "Quotation Copied...",
+            message: `Quotation Copied to Clipboard`,
+        })
+    }).catch(err => {
+        console.error("Failed to copy: ", err);
+    });
+
+    const response = await fetcher(`${shortQuotationCreateAPIURL}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...quotationData, items: filteredItems })
+    });
+
+    if (response.status !== 200) {
+        addNotifications({ title: "Error", message: "Some error occured while saving quotation" });
+    }
+    else {
+        navigate("/dashboard/quotations/create/short");
+    }
+}
+
+export default function ShortQuotationsCreate() {
+    const location = useLocation();
+    const passedData = location.state;
+
+    const { quotationItems, setQuotationItems, quotationData, setQuotationData, setHeaderText, profile, selectedProfile, setSelectedProfile } = useGlobalContext();
+    const fetcher = useCentralFetcher();
+
+    const navigate = useNavigate();
+    const { addNotifications } = useNotification();
+
+    function addItem() {
+        //const newKey = new Date().getTime() + 1;
+        setQuotationItems(pre => {
+            return [
+                ...pre,
+                { id: 0, hsn: "", name: "", description: "", price: 0, quantity: 0, link: "#", addon: 0, discount: 0 }
+            ]
+        });
+    }
+
+    useEffect(() => {
+        const amount = Object.entries(quotationItems).reduce((acc, [_, item]) => acc + (item.price * item.quantity * (1 + 0.01 * item.addon) * (1 - item.discount * 0.01)), 0);
+        const avgdiscount = Object.entries(quotationItems).reduce((acc, [_, item]) => acc + (item.discount ?? 0), 0) / (quotationItems.length || 1);
+        const avgaddon = Object.entries(quotationItems).reduce((acc, [_, item]) => acc + (item.addon ?? 0), 0) / (quotationItems.length || 1);
+        setQuotationData(pre => { return { ...pre, amount: amount, avgdiscount: Number(avgdiscount.toFixed(2)), avgaddon: Number(avgaddon.toFixed(2)) } });
+    }, [quotationItems]);
+
+    useEffect(() => {
+        // copying existing quotation
+        if (passedData && passedData?.editing === false) {
+            const d = new Date();
+            const no = d.getTime().toString();
+            const date = d.toISOString().split("T")[0];
+
+            setQuotationData((pre) => { return { ...pre, no: no, date: date } });
+        }
+
+        // editing existing quotation
+        else if (passedData && passedData?.editing === true) {
+            return;
+        }
+
+        // new quotation
+        else {
+            const d = new Date();
+            let no = d.getTime().toString();
+
+            setQuotationData((pre) => {
+                return {
+                    ...pre, no: no,
+                    madeby: profile.username ?? "",
+                    date: d.toISOString().split("T")[0],
+                    avgdiscount: 0,
+                    avgaddon: 0,
+                }
+            });
+        }
+    }, [])
+
+    return (<>
+        <div className="text-textSecondary">
+            <div className="mt-4 flex space-x-4 items-center align-middle">
+                <div className="flex items-center w-3/4 space-x-8">
+                    <div>
+                        <div className="text-sm font-semibold ml-2">Quotation No.</div>
+                        <div className="p-2 bg-headerBackground">{quotationData.no}</div>
+                    </div>
+                    <div>
+                        <div className="text-sm font-semibold ml-2">Date</div>
+                        <input type="date" color="white" name="date" id="date" pattern="\d{4}-\d{2}-\d{2}" placeholder="Date" className="w-32 h-10 bg-headerBackground p-2" value={quotationData.date} onChange={e => setQuotationData(pre => { return { ...pre, date: e.target.value } })} />
+                    </div>
+                    <div className="w-[50%]">
+                        <label htmlFor="partyName" className="text-sm font-semibold ml-2">Party Name</label>
+                        <input id="partyName" key={"second"} type="text" placeholder="Enter Party Name" className="border border-border p-2 w-full bg-background" value={quotationData.to} onChange={e => setQuotationData(pre => { return { ...pre, to: e.target.value } })} />
+                    </div>
+                </div>
+
+                <div className="w-1/4 flex justify-end">
+                    <button onClick={addItem} className="button px-4 py-1 text-lg">
+                        Add Item
+                    </button>
+                </div>
+            </div>
+
+            <div className="flex flex-col items-center">
+                <div className="mt-4 space-y-2 overflow-y-auto h-[calc(100vh-220px)] w-full">
+                    <div className="flex relative w-auto gap-x-2">
+                        <div className="grid grid-cols-12 gap-x-2 w-[98%]">
+                            <div className="col-span-3 p-2">Name</div>
+                            <div className="col-span-4 p-2">Description</div>
+                            <div className="col-span-1 p-2">HSN</div>
+                            <div className="col-span-1 p-2">Quantity</div>
+                            <div className="col-span-1 p-2">Price</div>
+                            <div className="col-span-1 p-2">Discount</div>
+                            <div className="col-span-1 p-2">Addon</div>
+                        </div>
+                        <button className="invisible p-2"><Minus className="text-textSecondary" /></button>
+                    </div>
+                    {
+                        quotationItems.map((_, index) => {
+                            return <>
+                                <QuotationAutocompleteSearch key={index} index={index} />
+                            </>;
+                        })}
+                </div>
+                <div className="flex justify-between w-full">
+                    <div className="flex items-center">
+                        <div className="text-sm font-semibold mr-4">Taxable Value:</div>
+                        <div className="">Rs.{quotationData.amount.toLocaleString("en-IN")}</div>
+                    </div>
+                    <div className="flex items-center">
+                        <label htmlFor="tax" className="text-sm font-semibold mr-4">Tax (%)</label>
+                        <input id="tax" type="number" placeholder="Enter Tax Percentage" className="border border-border p-2 w-25 bg-background" value={quotationData.tax} onChange={e => setQuotationData(pre => { return { ...pre, tax: parseFloat(e.target.value) } })} />
+                    </div>
+                    <div className="flex items-center">
+                        <div className="text-sm font-semibold mr-4">Total:</div>
+                        <div className="">Rs.{Number((quotationData.amount * (1 + quotationData.tax * 0.01)).toFixed(2)).toLocaleString("en-IN")}</div>
+                    </div>
+                </div>
+                <div className="flex justify-center space-x-4">
+                    <form onSubmit={(e) => { e.preventDefault(); SaveQuotation(quotationData, quotationItems, addNotifications, fetcher, navigate); }}>
+                        <button className="button px-4 py-1 mt-4 text-lg" type="submit">Save Quotation</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </>);
+}

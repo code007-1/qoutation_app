@@ -4,7 +4,7 @@ import ChallanPDFDocument from "~/component/PDF/ChallanPDFDcoument";
 import QuotationPDFDocument from "~/component/PDF/QuotationPDFDcoument";
 //import { SaveOrUpdate } from "~/modules/dbOffline";
 import { insertOnetoDb, insertOrUpdateOnetoDb } from "~/modules/dbOnline";
-import { challanCollectionName, dbName, logsCollectionName, quotationCollectionName, verifyAccessToken } from "~/modules/utils";
+import { challanCollectionName, dbName, logsCollectionName, fullQuotationCollectionName, verifyAccessToken } from "~/modules/utils";
 
 export const action: ActionFunction = async ({ request, params }) => {
     try {
@@ -17,11 +17,11 @@ export const action: ActionFunction = async ({ request, params }) => {
         const url = new URL(request.url);
         const save = url.searchParams.get("save") || "true";
         const showCustomerList = url.searchParams.get("showCustomerList");
-        const type = url.searchParams.get("type") || quotationCollectionName;
+        const type = url.searchParams.get("type") || fullQuotationCollectionName;
 
         if (save === "true") {
-            if (type === quotationCollectionName)
-                await insertOrUpdateOnetoDb(data, dbName, quotationCollectionName, { "no": data.no }, true);
+            if (type === fullQuotationCollectionName)
+                await insertOrUpdateOnetoDb(data, dbName, fullQuotationCollectionName, { "no": data.no }, true);
             else if (type === challanCollectionName)
                 await insertOrUpdateOnetoDb(data, dbName, challanCollectionName, { "no": data.no }, true);
             else {
@@ -32,7 +32,7 @@ export const action: ActionFunction = async ({ request, params }) => {
         }
 
         let stream;
-        if (type === quotationCollectionName)
+        if (type === fullQuotationCollectionName)
             stream = await renderToStream(QuotationPDFDocument({ ...data }, showCustomerList === "false" ? false : true));
         else
             stream = await renderToStream(ChallanPDFDocument({ ...data }));
