@@ -8,7 +8,7 @@ export const action: ActionFunction = async ({ request, params }) => {
         if (!permissions?.includes("write"))
             return new Response("user not authorized to create", { status: 405 });
 
-        const { additionalInfo, bankInfo, from, fromAddress, intro, terms, toAddress, ...data } = await request.json();
+        const { additionalInfo, bankInfo, fromAddress, intro, terms, toAddress, ...data } = await request.json();
 
         await insertOrUpdateOnetoDb(data, dbName, shortQuotationCollectionName, { "no": data.no }, true);
         await insertOnetoDb({ "by": data.madeby, "action": `Short quotation creation`, "result": "succeded", "when": new Date().toISOString() }, dbName, logsCollectionName);

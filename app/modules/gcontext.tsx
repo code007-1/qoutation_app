@@ -43,6 +43,13 @@ interface AppContextType {
     quotationData: QuotationData;
     setQuotationData: React.Dispatch<React.SetStateAction<QuotationData>>;
 
+    // short quotation related variables
+    shortOldQuotationData: QuotationData[];
+    setShortOldQuotationData: React.Dispatch<React.SetStateAction<QuotationData[]>>;
+    shortQuotationDataCount: number;
+    setShortQuotationDataCount: React.Dispatch<React.SetStateAction<number>>;
+
+
     // challan related variables
     oldChallanData: ChallanData[];
     setOldChallanData: React.Dispatch<React.SetStateAction<ChallanData[]>>;
@@ -184,6 +191,10 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
     const [quotationItems, setQuotationItems] = useState<QuotationItems[]>([]); // items added to the current quotation being created
     const [quotationData, setQuotationData] = useState<QuotationData>(initialQuotationData()); // data of the whole current quotation being created
 
+    // short quotation related variables
+    const [shortOldQuotationData, setShortOldQuotationData] = useState<QuotationData[]>([]); // data loaded from db of old quotations
+    const [shortQuotationDataCount, setShortQuotationDataCount] = useState<number>(0); // count of data loaded from db
+
     // challan related variables
     const [oldChallanData, setOldChallanData] = useState<ChallanData[]>([]); // data loaded from db of old quotations
     const [challanDataCount, setChallanDataCount] = useState<number>(0); // count of data loaded from db
@@ -236,7 +247,7 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
     };
 
     return (
-        <appContext.Provider value={{ theme, setTheme, toggleTheme, accessToken, setAccessToken, quotationItems, setQuotationItems, quotationData, setQuotationData, headerText, setHeaderText, gQuote, setGQuote, profile, setProfile, selectedProfile, setSelectedProfile, quotationDataCount, setQuotationDataCount, oldQuotationData, setOldQuotationData, homeLink, setHomeLink, setAppName, appName, oldChallanData, setOldChallanData, challanDataCount, setChallanDataCount, challanItems, setChallanItems, challanData, setChallanData, complaintsData, setComplaintsData, permissions, setPermissions, oldComplaintsData, setOldComplaintsData, complaintsDataCount, setComplaintsDataCount, oldGroupsData, setOldGroupsData, groupsDataCount, setGroupsDataCount, groupsData, setGroupsData, purchaseInvoiceItems, setPurchaseInvoiceItems, purcahseInvoiceData, setPurchaseInvoiceData, oldPurchaseInvoiceData, setOldPurchaseInvoiceData, productsData, setProductsData, oldProductsData, setOldProductsData, productsDataCount, setProductsDataCount }}>
+        <appContext.Provider value={{ theme, setTheme, toggleTheme, accessToken, setAccessToken, quotationItems, setQuotationItems, quotationData, setQuotationData, headerText, setHeaderText, gQuote, setGQuote, profile, setProfile, selectedProfile, setSelectedProfile, quotationDataCount, setQuotationDataCount, oldQuotationData, setOldQuotationData, homeLink, setHomeLink, setAppName, appName, oldChallanData, setOldChallanData, challanDataCount, setChallanDataCount, challanItems, setChallanItems, challanData, setChallanData, complaintsData, setComplaintsData, permissions, setPermissions, oldComplaintsData, setOldComplaintsData, complaintsDataCount, setComplaintsDataCount, oldGroupsData, setOldGroupsData, groupsDataCount, setGroupsDataCount, groupsData, setGroupsData, purchaseInvoiceItems, setPurchaseInvoiceItems, purcahseInvoiceData, setPurchaseInvoiceData, oldPurchaseInvoiceData, setOldPurchaseInvoiceData, productsData, setProductsData, oldProductsData, setOldProductsData, productsDataCount, setProductsDataCount, shortOldQuotationData, setShortOldQuotationData, setShortQuotationDataCount, shortQuotationDataCount }}>
             {children}
         </appContext.Provider>
     );

@@ -29,7 +29,8 @@ export const loader: LoaderFunction = async ({ request, params }) => {
         }
         else if (type === shortQuotationCollectionName) {
             collectionName = shortQuotationCollectionName;
-            findOptions = { "projection": { "no": 1, "madeby": 1, "date": 1, "to": 1, "discount": 1, "addon": 1, "amount": 1 } };
+            if (Object.keys(query).length == 0)
+                findOptions = { "projection": { "no": 1, "madeby": 1, "date": 1, "to": 1, "discount": 1, "addon": 1, "amount": 1 } };
         }
         else if (type === complaintCollectionName) {
             collectionName = complaintCollectionName;

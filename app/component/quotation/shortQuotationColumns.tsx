@@ -7,6 +7,7 @@ import { createPdf } from "~/routes/dashboard.quotations.create.full";
 import { useCentralFetcher } from "../centralFetcher";
 import { documentDeleteAPIURL, shortQuotationReadAPIURL, shortQuotations } from "../statics";
 import { useNotification } from "~/modules/notificationContext";
+import { SaveQuotation } from "~/routes/dashboard.quotations.create.short";
 
 export const sortButton = (column: any, name: string) => {
     return (
@@ -24,8 +25,8 @@ export function FormatAmountToINR(amount: number) {
     return Math.round(amount).toLocaleString("en-IN");
 }
 
-export function useQuotationsColumns() {
-    const { permissions, setQuotationData, setQuotationItems, profile, selectedProfile, setOldQuotationData } = useGlobalContext();
+export function useShortQuotationsColumns() {
+    const { permissions, setQuotationData, setQuotationItems, profile, selectedProfile, setShortOldQuotationData } = useGlobalContext();
     const navigate = useNavigate();
     const fetcher = useCentralFetcher();
     const { addNotifications } = useNotification();
@@ -68,14 +69,24 @@ export function useQuotationsColumns() {
             });
         }
         else {
-            setOldQuotationData((pre: any) => { return pre.filter((item: any) => item.no === no ? false : true) });
+            setShortOldQuotationData((pre: any) => { return pre.filter((item: any) => item.no === no ? false : true) });
         }
     }
 
     async function handleDownload(no: string) {
         const fullRow = await getQoutations(no);
         if (fullRow && fullRow.length > 0) {
-            createPdf(fullRow[0], fetcher, profile.quotationInfo[selectedProfile].showCustomerList, false);
+            SaveQuotation(fullRow[0], fullRow[0].items, addNotifications, fetcher, navigate);
+        }
+    }
+
+    async function handleConvert(no: string) {
+        // conversion from short quotation to full quotation
+        const fullRow = await getQoutations(no);
+        if (fullRow && fullRow.length > 0) {
+            setQuotationData(fullRow[0]);
+            setQuotationItems(fullRow[0].items);
+            navigate("/dashboard/quotations/create/full", { state: { editing: false } });
         }
     }
 
@@ -193,19 +204,20 @@ export function useQuotationsColumns() {
                                         </div>
                                     </MenuItem>}
                                 <MenuItem>
+                                    <div className="flex px-6 py-1 data-[focus]:bg-buttonHover"
+                                        onClick={() => handleConvert(user.row.original.no)}>
+                                        <div className="text-textSecondary mr-4"><Trash2 size={20} /></div>
+                                        <div className="text-textPrimary">Convert</div>
+                                    </div>
+                                </MenuItem>
+
+                                <MenuItem>
                                     <div
                                         className="flex px-6 py-1 data-[focus]:bg-buttonHover"
                                         onClick={(e) => handleDownload(user.row.original.no)}
                                     >
                                         <div className="text-textSecondary mr-4"><ArrowDownToLine size={20} /></div>
                                         <div className="text-textPrimary">Download</div>
-                                    </div>
-                                </MenuItem>
-                                <MenuItem>
-                                    <div className="flex px-6 py-1 data-[focus]:bg-buttonHover"
-                                        onClick={() => handleDelete(user.row.original.no)}>
-                                        <div className="text-textSecondary mr-4"><Trash2 size={20} /></div>
-                                        <div className="text-textPrimary">Convert</div>
                                     </div>
                                 </MenuItem>
                             </div>

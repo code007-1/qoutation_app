@@ -5,7 +5,7 @@ import { ArrowDownToLine, ArrowUpDown, Copy, Ellipsis, Pencil, Trash2 } from "lu
 import { useGlobalContext } from "~/modules/gcontext";
 import { createPdf } from "~/routes/dashboard.quotations.create.full";
 import { useCentralFetcher } from "../centralFetcher";
-import { documentDeleteAPIURL, quotationReadAPIURL, quotations } from "../statics";
+import { documentDeleteAPIURL, fullQuotationReadAPIURL, quotations } from "../statics";
 import { useNotification } from "~/modules/notificationContext";
 
 export const sortButton = (column: any, name: string) => {
@@ -24,14 +24,14 @@ export function FormatAmountToINR(amount: number) {
     return Math.round(amount).toLocaleString("en-IN");
 }
 
-export function useQuotationsColumns() {
+export function useFullQuotationsColumns() {
     const { permissions, setQuotationData, setQuotationItems, profile, selectedProfile, setOldQuotationData } = useGlobalContext();
     const navigate = useNavigate();
     const fetcher = useCentralFetcher();
     const { addNotifications } = useNotification();
 
     async function getQoutations(no: string) {
-        const response = await fetcher(`${quotationReadAPIURL}&no=${no}`);
+        const response = await fetcher(`${fullQuotationReadAPIURL}&no=${no}`);
         if (response.status === 200) {
             const data = await response.json()
             return data;

@@ -3,12 +3,13 @@ import { useEffect } from "react";
 import { useGlobalContext } from "~/modules/gcontext";
 import QuotationAutocompleteSearch from "~/component/quotation/quotationAutocompleteSearch";
 import { useCentralFetcher } from "~/component/centralFetcher";
-import { Minus } from "lucide-react";
+import { ChevronDown, Minus } from "lucide-react";
 import { useNotification } from "~/modules/notificationContext";
 import { QuotationData, QuotationItems } from "./dashboard.quotations.create.full";
 import { shortQuotationCreateAPIURL } from "~/component/statics";
+import { Listbox, ListboxButton, ListboxOption, ListboxOptions, Switch } from "@headlessui/react";
 
-async function SaveQuotation(quotationData: QuotationData, quotationItems: QuotationItems[], addNotifications: any, fetcher: any, navigate: any) {
+export async function SaveQuotation(quotationData: QuotationData, quotationItems: QuotationItems[], addNotifications: any, fetcher: any, navigate: any) {
     let filteredItems;
     filteredItems = quotationItems.filter((item: any) => {
         if (!isFinite(item.price) || !isFinite(item.quantity)) return false;
@@ -56,7 +57,7 @@ async function SaveQuotation(quotationData: QuotationData, quotationItems: Quota
         addNotifications({ title: "Error", message: "Some error occured while saving quotation" });
     }
     else {
-        navigate("/dashboard/quotations/create/short");
+        navigate("/dashboard/quotations/show");
     }
 }
 
@@ -64,11 +65,13 @@ export default function ShortQuotationsCreate() {
     const location = useLocation();
     const passedData = location.state;
 
-    const { quotationItems, setQuotationItems, quotationData, setQuotationData, setHeaderText, profile, selectedProfile, setSelectedProfile } = useGlobalContext();
+    const { quotationItems, setQuotationItems, quotationData, setQuotationData, profile, selectedProfile, setSelectedProfile } = useGlobalContext();
     const fetcher = useCentralFetcher();
 
     const navigate = useNavigate();
     const { addNotifications } = useNotification();
+    const names = profile?.generalInfo.map((p) => p.company) || [];
+
 
     function addItem() {
         //const newKey = new Date().getTime() + 1;
@@ -110,6 +113,7 @@ export default function ShortQuotationsCreate() {
             setQuotationData((pre) => {
                 return {
                     ...pre, no: no,
+                    from: profile.generalInfo[selectedProfile].company,
                     madeby: profile.username ?? "",
                     date: d.toISOString().split("T")[0],
                     avgdiscount: 0,
@@ -118,6 +122,13 @@ export default function ShortQuotationsCreate() {
             });
         }
     }, [])
+    function updateData(index: number) {
+        if (profile) {
+            let from = profile.generalInfo[index].company;
+            setQuotationData(pre => { return { ...pre, from: from } });
+        }
+    }
+
 
     return (<>
         <div className="text-textSecondary">
@@ -135,8 +146,55 @@ export default function ShortQuotationsCreate() {
                         <label htmlFor="partyName" className="text-sm font-semibold ml-2">Party Name</label>
                         <input id="partyName" key={"second"} type="text" placeholder="Enter Party Name" className="border border-border p-2 w-full bg-background" value={quotationData.to} onChange={e => setQuotationData(pre => { return { ...pre, to: e.target.value } })} />
                     </div>
-                </div>
+                    <div>
+                        <p className="text-sm font-semibold ml-2">Profile</p>
+                        <Listbox value={profile.generalInfo[selectedProfile].company} onChange={e => {
+                            const index = names.indexOf(e);
+                            setSelectedProfile(index);
+                            updateData(index);
+                        }}>
+                            <div className="relative flex justify-center">
+                                <ListboxButton className="w-full flex items-center justify-between hover:bg-buttonHover bg-headerBackground p-2">
+                                    <div className="text-left text-textSecondary truncate text-nowrap overflow-hidden w-48">{profile.generalInfo[selectedProfile].company}</div>
+                                    <ChevronDown className="text-textPrimary" />
+                                </ListboxButton>
 
+                                <ListboxOptions
+                                    transition
+                                    className="w-full absolute -right-34 top-10 z-10 mt-2 origin-top-right rounded-sm bg-background shadow-lg ring-1 ring-black/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
+                                >
+                                    <div className="p-1">
+                                        {names.map((category) => (
+                                            <ListboxOption
+                                                key={category}
+                                                value={category}
+                                                className="block px-4 py-2 text-sm text-textSecondary data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
+                                            >
+                                                {category}
+                                            </ListboxOption>
+                                        ))}
+                                    </div>
+                                </ListboxOptions>
+                            </div>
+                        </Listbox>
+                    </div>
+
+                    <div>
+                        <p className="text-sm font-semibold text-nowrap">To Dealer</p>
+                        <Switch
+                            checked={quotationData.todealer}
+                            onChange={(e) => { setQuotationData(pre => { return { ...pre, todealer: e } }) }}
+                            className={` ${quotationData.todealer ? "bg-button/75" : "bg-buttonHover"}
+                                                          relative inline-flex h-[24px] w-[40px] shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2`}
+                        >
+                            <span
+                                aria-hidden="true"
+                                className={`${quotationData.todealer ? "translate-x-4" : "translate-x-0"}
+                                                            pointer-events-none inline-block h-[20px] w-[20px] transform rounded-full bg-buttonTextPrimary shadow-lg ring-0 transition duration-200 ease-in-out`}
+                            />
+                        </Switch>
+                    </div>
+                </div>
                 <div className="w-1/4 flex justify-end">
                     <button onClick={addItem} className="button px-4 py-1 text-lg">
                         Add Item

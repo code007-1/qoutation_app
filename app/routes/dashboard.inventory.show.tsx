@@ -56,13 +56,13 @@ export default function Inventory() {
     </>;
 
     useEffect(() => {
-        const selectedTab = sessionStorage.getItem("inventoryCreationSelectedTab");
+        const selectedTab = sessionStorage.getItem("inventoryShowSelectedTab");
         if (selectedTab) setSelectedTabIndex(parseInt(selectedTab));
         setHeaderText(inventoryHeader);
     }, []);
 
     useEffect(() => {
-        if (selectedTabIndex !== -1) sessionStorage.setItem("inventoryCreationSelectedTab", selectedTabIndex.toString());
+        if (selectedTabIndex !== -1) sessionStorage.setItem("inventoryShowSelectedTab", selectedTabIndex.toString());
     }, [selectedTabIndex]);
 
     return (

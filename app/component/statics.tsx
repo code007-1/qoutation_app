@@ -8,7 +8,7 @@ export const compalints = "complaints";
 export const logs = "logs";
 export const quotes = "quotes";
 export const shortQuotationCreateAPIURL = "/api/create/shortquotation";
-export const quotationReadAPIURL = `/api/read/search?type=${quotations}`;
+export const fullQuotationReadAPIURL = `/api/read/search?type=${quotations}`;
 export const shortQuotationReadAPIURL = `/api/read/search?type=${shortQuotations}`;
 export const quotationAdvnanceReadAPIURL = `/api/read/searchadvance?type=${quotations}`;
 
