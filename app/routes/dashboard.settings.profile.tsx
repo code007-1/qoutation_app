@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useCentralFetcher } from "~/component/centralFetcher";
 import { useGlobalContext } from "~/modules/gcontext";
 import { useNotification } from "~/modules/notificationContext";
@@ -35,6 +35,7 @@ export default function SettingsProfile() {
     const { addNotifications } = useNotification();
     const fetcher = useCentralFetcher();
     const names = profile?.generalInfo.map((p) => p.company) || [];
+    const [selectedTabIndex, setSelectedTabIndex] = useState(0);
 
     useEffect(() => {
         setHeaderText("Profile Settings");
@@ -89,13 +90,14 @@ export default function SettingsProfile() {
                     </RadioGroup>
                 </div>
                 <div className="w-full">
-                    <TabGroup className="">
-                        <TabList className="flex justify-center w-full">
+                    <TabGroup className="" selectedIndex={selectedTabIndex} onChange={e => setSelectedTabIndex(e)}>
+                        <TabList className="flex justify-center w-full" >
                             <div className="flex bg-headerBackground" tabIndex={0}>
-                                {["General Profile Settings", "Quotation Related Settings"].map((name: string) => (
+                                {["General Profile Settings", "Quotation Related Settings"].map((name: string, index: number) => (
                                     <Tab
                                         key={name}
-                                        className="py-2 px-4 font-semibold text-textSecondary focus:outline-none hover:bg-buttonHover"
+                                        className={`py-2 px-4 font-semibold text-textSecondary focus:outline-none hover:bg-buttonHover
+                                            ${index === selectedTabIndex ? "bg-header" : "bg-headerBackground"}`}
                                     >
                                         {name}
                                     </Tab>

@@ -1,6 +1,7 @@
 import { insertOnetoDb, insertOrUpdateOnetoDb, update } from "~/modules/dbOnline";
 import { ActionFunction } from "@remix-run/node";
 import { dbName, logsCollectionName, metaCollectionName, productCollectionName, verifyAccessToken } from "~/modules/utils";
+import { products } from "~/modules/loadProducts";
 
 export const action: ActionFunction = async ({ request, params }) => {
     try {
@@ -8,7 +9,8 @@ export const action: ActionFunction = async ({ request, params }) => {
         if (!permissions?.includes("write"))
             return new Response("user not authorized to create", { status: 405 });
 
-        const data = await request.json();
+        let data = await request.json();
+        data = { ...data, version: (products[data.no].version || 0) + 1 }
 
         await insertOrUpdateOnetoDb(data, dbName, productCollectionName, { "no": data.no }, true);
         await update(dbName, metaCollectionName, { "type": "products_tracker" }, { $inc: { "product_catelog_version": 1 } });

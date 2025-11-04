@@ -136,8 +136,6 @@ async function UploadProducts() {
         fs.createReadStream("./assets/data.csv")
             .pipe(csv({ skipLines: 0, mapHeaders: ({ header }) => header.trim() }))
             .on("data", (row) => {
-                row["no"] = rows.length;
-                row["version"] = 0;
                 rows.push(row);
             })
             .on("end", () => {
@@ -160,6 +158,9 @@ async function UploadProducts() {
     })
 }
 
+UploadProducts();
+
+/*
 async function find(params) {
     await client.connect();
     // Send a ping to confirm a successful connection
@@ -189,3 +190,4 @@ console.log("result is : ", result);
 // which are being showed in table, when editing copying or downliding, load full version of that document.
 // implement each product versioning instead of whole collection versioning
 
+*/

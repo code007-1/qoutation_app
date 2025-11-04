@@ -1,5 +1,5 @@
 import { LoaderFunction } from "@remix-run/node";
-import { loadProductsDataPromise, products } from "~/modules/loadCSV";
+import { loadProductsDataPromise, products } from "~/modules/loadProducts";
 import { verifyAccessToken } from "~/modules/utils";
 
 export const loader: LoaderFunction = async ({ request, params }) => {

@@ -3,8 +3,8 @@ import { useGlobalContext } from "~/modules/gcontext";
 import { AlignLeft } from "lucide-react";
 import { MenuButton, MenuItem, MenuItems, Menu, TabGroup, TabList, Tab, TabPanels, TabPanel } from "@headlessui/react";
 import { Link } from "@remix-run/react";
-import QuotationsShowFull from "./dashboard.quotations.show.full";
-import QuotationsShowShort from "./dashboard.quotations.show.short";
+import QuotationsShowFull from "../component/quotation/fullQuotationShow";
+import QuotationsShowShort from "../component/quotation/shortQuotationShow";
 
 const QuotationsShow = () => {
     // Initiate your states
@@ -62,11 +62,12 @@ const QuotationsShow = () => {
             <section className="mt-5">
                 <TabGroup className="" selectedIndex={selectedTabIndex} onChange={e => setSelectedTabIndex(e)}>
                     <TabList className="flex justify-center w-full">
-                        <div className="flex bg-headerBackground w-[25%] justify-evenly" tabIndex={0}>
-                            {["Full Quotations", "Short Quotations"].map((name: string) => (
+                        <div className="flex w-[25%] justify-evenly" tabIndex={0}>
+                            {["Full Quotations", "Short Quotations"].map((name: string, index) => (
                                 <Tab
                                     key={name}
-                                    className="w-full py-2 px-4 font-semibold text-textSecondary focus:outline-none hover:bg-buttonHover"
+                                    className={`w-full py-2 px-4 font-semibold text-textSecondary focus:outline-none hover:bg-buttonHover
+                                    ${index === selectedTabIndex ? "bg-header" : "bg-headerBackground"}`}
                                 >
                                     {name}
                                 </Tab>

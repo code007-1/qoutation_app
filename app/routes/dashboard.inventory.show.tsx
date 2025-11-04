@@ -71,10 +71,11 @@ export default function Inventory() {
                 <TabGroup className="" selectedIndex={selectedTabIndex} onChange={e => setSelectedTabIndex(e)}>
                     <TabList className="flex justify-center w-full">
                         <div className="flex bg-headerBackground w-[25%] justify-evenly" tabIndex={0}>
-                            {["Products", "Groups", "Invoices"].map((name: string) => (
+                            {["Products", "Groups", "Invoices"].map((name: string, index: number) => (
                                 <Tab
                                     key={name}
-                                    className="w-full py-2 px-4 font-semibold text-textSecondary focus:outline-none hover:bg-buttonHover"
+                                    className={`w-full py-2 px-4 font-semibold text-textSecondary focus:outline-none hover:bg-buttonHover
+                                        ${index === selectedTabIndex ? "bg-header" : "bg-headerBackground"}`}
                                 >
                                     {name}
                                 </Tab>

@@ -1,5 +1,5 @@
 import { ActionFunction } from "@remix-run/node";
-import { products, productsCount } from "~/modules/loadCSV";
+import { products, productsCount } from "~/modules/loadProducts";
 
 export const action: ActionFunction = async ({ request }) => {
     const query = await request.json();

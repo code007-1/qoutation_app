@@ -77,7 +77,11 @@ export function useProductsColumn() {
             header: "Description",
             filterFn: (row, columnId, filterValue) => {
                 return row.original[columnId].toLowerCase().includes(filterValue);
-            }
+            },
+            cell: (user: any) => {
+                return <div className="text-nowrap overflow-hidden text-ellipsis max-w-[600px]">{user.row.original.description}</div>
+            },
+
         },
         {
             accessorKey: "group",

@@ -1,5 +1,5 @@
 import { useEffect, useId, useRef, useState } from "react";
-import { useFullQuotationsColumns } from "~/component/quotation/fullQquotationColumns";
+import { useFullQuotationsColumns } from "~/component/quotation/fullQuotationColumns";
 import { initialQuotationData, useGlobalContext } from "~/modules/gcontext";
 import { useCentralFetcher } from "~/component/centralFetcher";
 import { useNotification } from "~/modules/notificationContext";
