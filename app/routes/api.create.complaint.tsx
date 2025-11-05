@@ -1,6 +1,7 @@
 import { insertOnetoDb, insertOrUpdateOnetoDb } from "~/modules/dbOnline";
 import { ActionFunction } from "@remix-run/node";
 import { complaintCollectionName, dbName, logsCollectionName, verifyAccessToken } from "~/modules/utils";
+import { ComplaintsData } from "./dashboard.complaints.create";
 
 //export let loader: LoaderFunction = async ({ request, params }) => {
 export const action: ActionFunction = async ({ request, params }) => {
@@ -9,7 +10,7 @@ export const action: ActionFunction = async ({ request, params }) => {
         if (!permissions?.includes("write"))
             return new Response("user not authorized to create", { status: 405 });
 
-        const data = await request.json();
+        const data = await request.json() as ComplaintsData;
 
         await insertOrUpdateOnetoDb(data, dbName, complaintCollectionName, { "no": data.no }, true);
 

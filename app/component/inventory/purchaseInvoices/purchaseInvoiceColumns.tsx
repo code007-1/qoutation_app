@@ -6,7 +6,7 @@ import { useCentralFetcher } from "~/component/centralFetcher";
 import { documentDeleteAPIURL, purchaseInvoice, purchaseInvoiceReadAPIURL } from "~/component/statics";
 import { useGlobalContext } from "~/modules/gcontext";
 import { useNotification } from "~/modules/notificationContext";
-import { InvoiceData } from "~/routes/dashboard.inventory.purchaseinvoices.create";
+import { PurchaseInvoiceData, PurchaseInvoiceItem } from "~/routes/dashboard.inventory.purchaseinvoices.create";
 
 export const sortButton = (column: any, name: string) => {
     return (
@@ -37,7 +37,7 @@ export function usePurchaseInvoiceColumn() {
         }
     }
 
-    async function handleEdit(row: InvoiceData) {
+    async function handleEdit(row: PurchaseInvoiceData) {
         const fullRow = await getPurchaseInvoices(row.no);
         console.log("eidint full row", row);
         if (fullRow && fullRow.length > 0) {
@@ -47,7 +47,7 @@ export function usePurchaseInvoiceColumn() {
         }
     }
 
-    async function handleCopy(row: InvoiceData) {
+    async function handleCopy(row: PurchaseInvoiceData) {
         const fullRow = await getPurchaseInvoices(row.no);
         if (fullRow && fullRow.length > 0) {
             setPurchaseInvoiceData(fullRow[0]);
@@ -66,7 +66,7 @@ export function usePurchaseInvoiceColumn() {
             });
         }
         else {
-            setOldPurchaseInvoiceData((pre: any) => { return pre.filter((id: string) => id === id ? false : true) });
+            setOldPurchaseInvoiceData((pre: any) => { return pre.filter((i: any) => !(i._id == id)) });
         }
     }
 
@@ -110,16 +110,6 @@ export function usePurchaseInvoiceColumn() {
             filterFn: (row, columnId, filterValue) => {
                 return row.original[columnId].toLowerCase().includes(filterValue);
             }
-        },
-        {
-            accessorKey: "quantity",
-            header: "Quantity",
-            cell: (user: any) => {
-                return <span>{user.row.original.stock}</span>
-            },
-            filterFn: (row, columnId, filterValue) => {
-                return row.original[columnId].toLowerCase().includes(filterValue);
-            },
         },
         {
             accessorKey: "actions",

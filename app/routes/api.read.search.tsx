@@ -1,6 +1,7 @@
 import { LoaderFunction } from "@remix-run/node";
 import { sortedSearch } from "~/modules/dbOnline";
 import { challanCollectionName, complaintCollectionName, dbName, productCollectionName, purchaseInvoiceCollectionName, fullQuotationCollectionName, verifyAccessToken, shortQuotationCollectionName } from "~/modules/utils";
+import { SortDirection } from "mongodb";
 
 export const loader: LoaderFunction = async ({ request, params }) => {
     try {
@@ -9,11 +10,13 @@ export const loader: LoaderFunction = async ({ request, params }) => {
             return new Response("user not authorized to read", { status: 405 });
 
         const url = new URL(request.url);
-        const { type, skip, limit, ...query } = Object.fromEntries(url.searchParams.entries());
+        const { type, skip, limit, sortString, sortOrder, ...query } = Object.fromEntries(url.searchParams.entries());
 
         var result;
-        let limits = Number(limit || 1000);
-        let skips = Number(skip || 0);
+        const limits = Number(limit || 1000);
+        const skips = Number(skip || 0);
+        const sortKey = sortString || "_id";
+        const sortDir = (Number(sortOrder || -1)) as SortDirection;
 
         let collectionName = "";
         let findOptions = {};
@@ -45,9 +48,9 @@ export const loader: LoaderFunction = async ({ request, params }) => {
         }
         else
             return new Response(`invalid data type requested`, { status: 405 });
-
-        result = await sortedSearch(dbName, collectionName, query, findOptions, limits, skips, -1, "_id");
-        return Response.json(result, { status: 200 });
+        result = await sortedSearch(dbName, collectionName, query, findOptions, limits, skips, sortDir, sortKey);
+        let headers = new Headers({ "Content-Type": "application/json" });
+        return Response.json(result, { status: 200, headers: headers });
     }
     catch (error) {
         console.error("error while loading challans data : ", error);

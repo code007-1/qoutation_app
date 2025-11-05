@@ -77,7 +77,7 @@ const TableUI: FC<TableProps> = ({
         onColumnFiltersChange: setColumnFilters,
         getFilteredRowModel: getFilteredRowModel(),
         getPaginationRowModel: getPaginationRowModel(),
-        autoResetPageIndex: false,
+        autoResetPageIndex: true,
         state: { sorting, columnFilters, pagination },
         //meta: { handleEdit: handleEdit, handleCopy: handleCopy, deleteChallan: deleteRowData },
     });

@@ -50,7 +50,6 @@ export default function PurchaseInvoiceShow() {
         }
     }
 
-
     useEffect(() => {
         //setHeaderText("Purchase Invoice");
         if (oldPurchaseInvoiceData.length === 0)

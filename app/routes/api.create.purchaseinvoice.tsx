@@ -115,9 +115,9 @@ export const action: ActionFunction = async ({ request, params }) => {
             await bulkWriteToDb(productsBulkOps, dbName, productCollectionName);
 
             // writes serials to redis set for fast cache
-            Object.entries(currentSerials).forEach(element => {
-                redis.del(`product:${element[0]}:serial`);
-                redis.sadd(`product:${element[0]}:serial`, element[1]);
+            Object.entries(currentSerials).forEach(async (element) => {
+                await redis.del(`product:${element[0]}:serial`);
+                await redis.sadd(`product:${element[0]}:serial`, ...element[1]);
             });
         }
 

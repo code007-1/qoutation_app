@@ -18,7 +18,7 @@ export default function ProductShow() {
         setLoading(true);
         const response = await fetcher(`${productReadAPIURL}`);
         if (response.status === 200) {
-            const data = await response.json()
+            const data = await response.json();
             setOldProductsData(data);
             setProductsDataCount(data.length);
         }
@@ -44,7 +44,7 @@ export default function ProductShow() {
                     EmptyText="No Complaints Data Found!"
                     isFetching={loading}
                     refresh={getProducts}
-                    filterTypes={{ "ID": "no", "Name": "name", "HSN Code": "hsn", "Description": "description", "Quantity": "quantity" }}
+                    filterTypes={{ "ID": "no", "Name": "name", "HSN Code": "hsn", "Description": "description", "Quantity": "quantity", "Price": "price" }}
                 />
             </div>
         </>

@@ -1,7 +1,7 @@
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { useNavigate } from "@remix-run/react";
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown, Copy, Ellipsis, Pencil, Trash2 } from "lucide-react";
+import { ArrowUpDown, Copy, Ellipsis, MoveDown, MoveUp, Pencil, Trash2 } from "lucide-react";
 import { useCentralFetcher } from "~/component/centralFetcher";
 import { products } from "~/component/statics";
 import { useGlobalContext } from "~/modules/gcontext";
@@ -9,13 +9,14 @@ import { useNotification } from "~/modules/notificationContext";
 import { ProductsData } from "../../../routes/dashboard.inventory.products.create";
 
 export const sortButton = (column: any, name: string) => {
+
     return (
         <button
-            className="-ml-4"
+            className="flex"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
             {name}
-            <ArrowUpDown className="ml-2 h-4 w-4" />
+            {column.getIsSorted() === "asc" ? <MoveUp className="ml-2 h-4 w-4" /> : column.getIsSorted() === "desc" ? <MoveDown className="ml-2 h-4 w-4" /> : <ArrowUpDown className="ml-2 h-4 w-4" />}
         </button>
     )
 }
@@ -53,21 +54,26 @@ export function useProductsColumn() {
     const column: ColumnDef<any, any>[] = [
         {
             accessorKey: "no",
-            header: "ID",
+            header: ({ column }) => sortButton(column, "ID"),
             filterFn: (row, columnId, filterValue) => {
                 return row.original[columnId].toString().toLowerCase().includes(filterValue);
             },
+            sortingFn: (row1, row2) => row1.original.no - row2.original.no,
+            enableSorting: true
         },
         {
             accessorKey: "name",
             header: "Name",
+            cell: (user: any) => {
+                return <><p className="text-nowrap overflow-hidden text-ellipsis max-w-[300px]">{user.row.original.name}</p></>;
+            },
             filterFn: (row, columnId, filterValue) => {
                 return row.original[columnId].toLowerCase().includes(filterValue);
             },
         },
         {
             accessorKey: "hsn",
-            header: "HSN Code",
+            header: "HSN",
             filterFn: (row, columnId, filterValue) => {
                 return row.original[columnId].toLowerCase().includes(filterValue);
             },
@@ -79,7 +85,7 @@ export function useProductsColumn() {
                 return row.original[columnId].toLowerCase().includes(filterValue);
             },
             cell: (user: any) => {
-                return <div className="text-nowrap overflow-hidden text-ellipsis max-w-[600px]">{user.row.original.description}</div>
+                return <div className="text-nowrap overflow-hidden text-ellipsis max-w-[400px]">{user.row.original.description}</div>
             },
 
         },
@@ -92,9 +98,16 @@ export function useProductsColumn() {
         },
         {
             accessorKey: "quantity",
-            header: "Current Stock",
+            header: "Quantity",
             filterFn: (row, columnId, filterValue) => {
-                return row.original[columnId].toLowerCase().includes(filterValue);
+                return row.original[columnId].toString().toLowerCase().includes(filterValue);
+            },
+        },
+        {
+            accessorKey: "price",
+            header: "Price",
+            filterFn: (row, columnId, filterValue) => {
+                return row.original[columnId]?.toString().toLowerCase().includes(filterValue);
             },
         },
         {

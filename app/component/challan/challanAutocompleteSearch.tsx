@@ -5,12 +5,16 @@ import { ChallanItems } from "~/routes/dashboard.challan.create";
 import { productsSearchAPIURL, serialSearchAPIURL } from "../statics";
 
 export default function ChallanAutocompleteSearch({ index }: { index: number }) {
-    const [showProductSuggestions, setShowSuggestions] = useState(false);
-    const [showSerialSuggestions, setSerialSuggestions] = useState(false);
-    const [filtered, setFiltered] = useState<ChallanItems[]>([]);
+    const [showProductSuggestions, setShowProductSuggestions] = useState(false);
+    const [showSerialSuggestions, setShowSerialSuggestions] = useState(false);
+
+    const [prouctfilter, setProductFilter] = useState<ChallanItems[]>([]);
+    const [serialfilter, setSerialFilter] = useState<string[]>([]);
     const [highlighted, setHighlighted] = useState<number>(-1);
+
     const productInputRef = useRef<HTMLInputElement>(null);
-    const serialInputRef = useRef<HTMLInputElement>(null);
+    const serialInputRef = useRef<HTMLTextAreaElement>(null);
+
     const [hasProductFocus, setProductFocus] = useState(false);
     const [hasSerialFocus, setSerialFocus] = useState(false);
 
@@ -20,9 +24,9 @@ export default function ChallanAutocompleteSearch({ index }: { index: number }) 
     useEffect(() => {
         if (hasProductFocus) {
             if (challanItems[index].name.trim() === "") {
-                setFiltered([]);
-                setShowSuggestions(false);
-            } else if (showProductSuggestions || filtered.length != 1 || filtered[0].name.toLowerCase() != challanItems[index].name.toLowerCase()) {
+                setProductFilter([]);
+                setShowProductSuggestions(false);
+            } else if (showProductSuggestions || prouctfilter.length != 1 || prouctfilter[0].name.toLowerCase() != challanItems[index].name.toLowerCase()) {
                 fetch(productsSearchAPIURL, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
@@ -30,8 +34,8 @@ export default function ChallanAutocompleteSearch({ index }: { index: number }) 
                 })
                     .then(async (res) => {
                         const filteredList: ChallanItems[] = await res.json();
-                        setFiltered(filteredList);
-                        setShowSuggestions(filteredList.length > 0);
+                        setProductFilter(filteredList);
+                        setShowProductSuggestions(filteredList.length > 0);
                         setHighlighted(-1);
                     })
                     .catch((err) => {
@@ -42,31 +46,32 @@ export default function ChallanAutocompleteSearch({ index }: { index: number }) 
     }, [challanItems[index].name]);
 
 
-    /*useEffect(() => {
+    useEffect(() => {
         if (hasSerialFocus) {
             if (serialInput === "") {
-                setFiltered([]);
-                setShowSuggestions(false);
+                setProductFilter([]);
+                setShowSerialSuggestions(false);
             }
 
-            else if (showProductSuggestions || filtered.length != 1 || filtered[0].name.toLowerCase() != serialInput.toLowerCase()) {
+            else if (showSerialSuggestions || prouctfilter.length != 1 || serialfilter[0].toLowerCase() != serialInput.toLowerCase()) {
                 fetch(serialSearchAPIURL, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({"query": serialInput, no:})
+                    body: JSON.stringify({ "query": serialInput, no: challanItems[index].no })
                 })
                     .then(async (res) => {
-                        const filteredList: ChallanItems[] = await res.json();
-                        setFiltered(filteredList);
-                        setShowSuggestions(filteredList.length > 0);
+                        const filteredList: string[] = await res.json();
+                        console.log("asdj", filteredList);
+                        setSerialFilter(filteredList);
+                        setShowSerialSuggestions(filteredList.length > 0);
                         setHighlighted(-1);
                     })
                     .catch((err) => {
-                        console.error("Error fetching suggestions:", err);
+                        console.error("Error fetching serial suggestions:", err);
                     });
             }
         }
-    }, []);*/
+    }, [serialInput]);
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         //setInput(e.target.value);
@@ -77,101 +82,163 @@ export default function ChallanAutocompleteSearch({ index }: { index: number }) 
         });
     };
 
-    const handleSuggestionClick = (suggestion: ChallanItems) => {
+    const handleProductSuggestionClick = (suggestion: ChallanItems) => {
         //setInput(suggestion.label);
         setChallanItems(pre => {
             return pre.map((item, i) => i == index
-                ? { id: suggestion.id, name: suggestion.name, quantity: 1, sno: [], unit: suggestion.unit || "pcs" }
+                ? { no: suggestion.no, name: suggestion.name, quantity: 1, sno: [], unit: suggestion.unit || "pcs" }
                 : item)
         });
-        setShowSuggestions(false);
+        setShowProductSuggestions(false);
     };
 
-    const handleBlur = () => {
+    const handleSerialSuggestionClick = (suggestion: string) => {
+        //setInput(suggestion.label);
+        setChallanItems(pre => {
+            return pre.map((item, i) => i == index
+                ? { ...item, sno: [suggestion] }
+                : item)
+        });
+        setShowSerialSuggestions(false);
+    };
+
+
+    const handleProductBlur = () => {
         // Delay to allow click event to register
-        setTimeout(() => setShowSuggestions(false), 100);
+        setTimeout(() => setShowProductSuggestions(false), 100);
         setProductFocus(false);
     };
 
-    const handleFocus = () => {
-        if (filtered.length > 0) setShowSuggestions(true);
+    const handleSerialBlur = () => {
+        // Delay to allow click event to register
+        setTimeout(() => setShowSerialSuggestions(false), 100);
+        setSerialFocus(false);
+    };
+
+    const handleProductFocus = () => {
+        if (prouctfilter.length > 0) setShowProductSuggestions(true);
         setProductFocus(true);
     };
 
-    const serialHandleFocus = () => {
-        if (filtered.length > 0) setShowSuggestions(true);
-        setProductFocus(true);
+    const handleSerialFocus = () => {
+        if (prouctfilter.length > 0) setShowSerialSuggestions(true);
+        setSerialFocus(true);
     };
 
-    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    const handleProductKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (!showProductSuggestions) return;
         if (e.key === "ArrowDown") {
             setHighlighted(prev =>
-                prev < filtered.length - 1 ? prev + 1 : 0
+                prev < prouctfilter.length - 1 ? prev + 1 : 0
             );
         } else if (e.key === "ArrowUp") {
             setHighlighted(prev =>
-                prev > 0 ? prev - 1 : filtered.length - 1
+                prev > 0 ? prev - 1 : prouctfilter.length - 1
             );
         } else if (e.key === "Enter" && highlighted >= 0) {
             //setInput(filtered[highlighted].label);
-            setFiltered([filtered[highlighted]]);
-            setShowSuggestions(false);
+            setProductFilter([prouctfilter[highlighted]]);
+            setShowProductSuggestions(false);
             setChallanItems(pre => {
                 return pre.map((item, i) => i === index
-                    ? { id: filtered[highlighted].id, name: filtered[highlighted].name, quantity: 1, sno: [], unit: filtered[highlighted].unit || "pcs" }
+                    ? { no: prouctfilter[highlighted].no, name: prouctfilter[highlighted].name, quantity: 1, sno: [], unit: prouctfilter[highlighted].unit || "pcs" }
                     : item)
             });
         } else if (e.key === "Escape") {
-            setShowSuggestions(false);
+            setShowProductSuggestions(false);
         }
     };
 
+    const handleSerialKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+        if (!showSerialSuggestions) return;
+        if (e.key === "ArrowDown") {
+            setHighlighted(prev =>
+                prev < prouctfilter.length - 1 ? prev + 1 : 0
+            );
+        } else if (e.key === "ArrowUp") {
+            setHighlighted(prev =>
+                prev > 0 ? prev - 1 : prouctfilter.length - 1
+            );
+        } else if (e.key === "Enter" && highlighted >= 0) {
+            //setInput(filtered[highlighted].label);
+            setProductFilter([prouctfilter[highlighted]]);
+            setShowSerialSuggestions(false);
+            setChallanItems(pre => {
+                return pre.map((item, i) => i === index
+                    ? { ...item, sno: [serialfilter[highlighted]] }
+                    : item)
+            });
+        } else if (e.key === "Escape") {
+            setShowSerialSuggestions(false);
+        }
+    };
+
+
     return (
         <div className="grid grid-cols-10 relative w-auto gap-x-2">
-            <input
-                ref={productInputRef}
-                type="text"
-                value={challanItems[index].name}
-                onChange={handleInputChange}
-                onBlur={handleBlur}
-                onFocus={handleFocus}
-                onKeyDown={handleKeyDown}
-                className="col-span-3 p-2 border border-border bg-background text-textPrimary focus:outline-textPrimary"
-                placeholder="Search Product..."
-                autoComplete="off"
-            />
+            <div className="col-span-3 relative">
+                <input
+                    ref={productInputRef}
+                    type="text"
+                    value={challanItems[index].name}
+                    onChange={handleInputChange}
+                    onBlur={handleProductBlur}
+                    onFocus={handleProductFocus}
+                    onKeyDown={handleProductKeyDown}
+                    className="w-full h-full p-2 border border-border bg-background text-textPrimary focus:outline-textPrimary"
+                    placeholder="Search Product..."
+                    autoComplete="off"
+                />
 
-            {showProductSuggestions && (
-                <ul className="w-[29%] z-10 absolute top-full -left-0 right-0 bg-buttonHover border border-border overflow-y-auto max-h-96">
-                    {filtered.map((s, idx) => (
-                        <li
-                            key={s.id}
-                            onMouseDown={() => handleSuggestionClick(s)}
-                            className={`${idx === highlighted ? "bg-buttonHover" : "bg-background"} p-2 cursor-pointer text-textSecondary`}
-                            onMouseEnter={() => setHighlighted(idx)}
-                        >
-                            {s.name}
-                        </li>
-                    ))}
-                </ul>
-            )}
-
-            <textarea
-                placeholder="Serial Numbers separated by commas..."
-                className="col-span-4 p-2 border border-border bg-background text-textPrimary focus:outline-textPrimary"
-                value={challanItems[index].sno?.join(",")}
-                rows={1}
-                onChange={(e) => {
-                    /*setChallanItems(pre => {
-                        const snos = e.target.value.replace(/[\s,]+/g, ",").trim().split(",");
-                        return pre.map((item, i) => i === index
-                            ? { ...challanItems[index], sno: snos, quantity: snos.length }
-                            : item);
-                    })*/
-                }}
-            />
-
+                {showProductSuggestions && (
+                    <ul className="w-full z-10 absolute top-full -left-0 right-0 bg-buttonHover border border-border overflow-y-auto max-h-96">
+                        {prouctfilter.map((s, idx) => (
+                            <li
+                                key={s.no}
+                                onMouseDown={() => handleProductSuggestionClick(s)}
+                                className={`${idx === highlighted ? "bg-buttonHover" : "bg-background"} p-2 cursor-pointer text-textSecondary`}
+                                onMouseEnter={() => setHighlighted(idx)}
+                            >
+                                {s.name}
+                            </li>
+                        ))}
+                    </ul>
+                )}
+            </div>
+            <div className="col-span-4 relative">
+                <textarea
+                    ref={serialInputRef}
+                    placeholder="Serial Numbers separated by commas..."
+                    className="w-full p-2 border border-border bg-background text-textPrimary focus:outline-textPrimary"
+                    value={serialInput/*challanItems[index].sno?.join(",")*/}
+                    rows={1}
+                    onFocus={handleSerialFocus}
+                    onKeyDown={handleSerialKeyDown}
+                    onChange={(e) => {
+                        setSerialInput(e.target.value);
+                        /*setChallanItems(pre => {
+                            const snos = e.target.value.replace(/[\s,]+/g, ",").trim().split(",");
+                            return pre.map((item, i) => i === index
+                                ? { ...challanItems[index], sno: snos, quantity: snos.length }
+                                : item);
+                        })*/
+                    }}
+                />
+                {showSerialSuggestions && (
+                    <ul className="w-full z-10 absolute top-full -left-0 right-0 bg-buttonHover border border-border overflow-y-auto max-h-96">
+                        {serialfilter.map((s, idx) => (
+                            <li
+                                key={s}
+                                onMouseDown={() => handleSerialSuggestionClick(s)}
+                                className={`${idx === highlighted ? "bg-buttonHover" : "bg-background"} p-2 cursor-pointer text-textSecondary`}
+                                onMouseEnter={() => setHighlighted(idx)}
+                            >
+                                {s}
+                            </li>
+                        ))}
+                    </ul>
+                )}
+            </div>
             <input
                 type="number"
                 placeholder="Quantity"

@@ -11,7 +11,7 @@ import constData from "../../assets/data.json";
 import { challans } from "~/component/statics";
 
 export type ChallanItems = {
-    id: number;
+    no: number;
     name: string;
     quantity: number;
     sno?: string[];
@@ -50,7 +50,7 @@ export default function CreateChallan() {
     const navigate = useNavigate();
 
     function addItem() {
-        setChallanItems(pre => { return [...pre, { id: 0, name: "", quantity: 0, sno: [], unit: "pcs" }] });
+        setChallanItems(pre => { return [...pre, { no: -1, name: "", quantity: 0, sno: [], unit: "pcs" }] });
     }
 
     useEffect(() => {

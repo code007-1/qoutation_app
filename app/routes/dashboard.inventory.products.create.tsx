@@ -25,9 +25,10 @@ export default function CreateProduct() {
     const { addNotifications } = useNotification();
 
     async function getProductsID() {
-        const response = await fetcher(`${productReadSingleAPIURL}&limit=1`);
+        const response = await fetcher(`${productReadSingleAPIURL}&limit=1&sortString=no`);
         if (response.status === 200) {
             const product = await response.json();
+            console.log("jsahdjkas", product);
             //return Number(product[0]?.no || 0) + 1;
             setProductsData(pre => { return { ...pre, no: Number(product[0]?.no || 0) + 1 } });
         }
@@ -56,6 +57,7 @@ export default function CreateProduct() {
 
     async function save() {
         const payload = { ...productsData, group: productsData.group || "Default" };
+        console.log("kajsdklasjd", payload);
         const response = await fetcher(`${productCreateAPIURL}`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },

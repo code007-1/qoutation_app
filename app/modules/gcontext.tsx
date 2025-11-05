@@ -7,7 +7,7 @@ import { ChallanData, ChallanItems } from "~/routes/dashboard.challan.create";
 import { ComplaintsData } from "~/routes/dashboard.complaints.create";
 import { GroupsData } from "~/routes/dashboard.inventory.create";
 import { ProductsData } from "~/routes/dashboard.inventory.products.create";
-import { InvoiceItem, InvoiceData } from "~/routes/dashboard.inventory.purchaseinvoices.create";
+import { PurchaseInvoiceItem, PurchaseInvoiceData } from "~/routes/dashboard.inventory.purchaseinvoices.create";
 
 interface AppContextType {
     // app related variables
@@ -77,12 +77,12 @@ interface AppContextType {
     setGroupsData: React.Dispatch<React.SetStateAction<GroupsData>>;
 
     // purchase invoice related variables
-    purchaseInvoiceItems: InvoiceItem[];
-    setPurchaseInvoiceItems: React.Dispatch<React.SetStateAction<InvoiceItem[]>>;
-    purcahseInvoiceData: InvoiceData;
-    setPurchaseInvoiceData: React.Dispatch<React.SetStateAction<InvoiceData>>;
-    oldPurchaseInvoiceData: InvoiceData[];
-    setOldPurchaseInvoiceData: React.Dispatch<React.SetStateAction<InvoiceData[]>>;
+    purchaseInvoiceItems: PurchaseInvoiceItem[];
+    setPurchaseInvoiceItems: React.Dispatch<React.SetStateAction<PurchaseInvoiceItem[]>>;
+    purcahseInvoiceData: PurchaseInvoiceData;
+    setPurchaseInvoiceData: React.Dispatch<React.SetStateAction<PurchaseInvoiceData>>;
+    oldPurchaseInvoiceData: PurchaseInvoiceData[];
+    setOldPurchaseInvoiceData: React.Dispatch<React.SetStateAction<PurchaseInvoiceData[]>>;
 
     // product related variables
     oldProductsData: ProductsData[];
@@ -217,9 +217,9 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
     const [groupsData, setGroupsData] = useState<GroupsData>({ "name": "Default" });
 
     // incoming invoice realated valriables
-    const [purchaseInvoiceItems, setPurchaseInvoiceItems] = useState<InvoiceItem[]>([]);
-    const [purcahseInvoiceData, setPurchaseInvoiceData] = useState<InvoiceData>(initialPurchaseInvoiceData());
-    const [oldPurchaseInvoiceData, setOldPurchaseInvoiceData] = useState<InvoiceData[]>([]);
+    const [purchaseInvoiceItems, setPurchaseInvoiceItems] = useState<PurchaseInvoiceItem[]>([]);
+    const [purcahseInvoiceData, setPurchaseInvoiceData] = useState<PurchaseInvoiceData>(initialPurchaseInvoiceData());
+    const [oldPurchaseInvoiceData, setOldPurchaseInvoiceData] = useState<PurchaseInvoiceData[]>([]);
 
     const toggleTheme = () => {
         const currentTheme = () => {

@@ -1,6 +1,6 @@
 import { ActionFunction } from "@remix-run/node";
 import { ObjectId } from "mongodb";
-import { deleteOneFromDB, insertOnetoDb, update } from "~/modules/dbOnline";
+import { deleteOneFromDB, insertOnetoDb, redis, update } from "~/modules/dbOnline";
 import { challanCollectionName, complaintCollectionName, dbName, logsCollectionName, metaCollectionName, productCollectionName, purchaseInvoiceCollectionName, fullQuotationCollectionName, verifyAccessToken, shortQuotationCollectionName } from "~/modules/utils";
 
 export const action: ActionFunction = async ({ request, params }) => {
@@ -27,8 +27,11 @@ export const action: ActionFunction = async ({ request, params }) => {
             result = await deleteOneFromDB(filter, dbName, productCollectionName);
             await update(dbName, metaCollectionName, { "type": "products_tracker" }, { $inc: { "product_catelog_version": 1 } });
         }
-        else if (type === purchaseInvoiceCollectionName)
+        else if (type === purchaseInvoiceCollectionName) {
             result = await deleteOneFromDB({ "_id": new ObjectId(filter) }, dbName, purchaseInvoiceCollectionName);
+            //await redis.srem(`product:${element[0]}:serial`, );
+            //implement serials delte from redis on delete of purchase invoice 
+        }
         else
             return new Response(`nothing to deleted`, { status: 405 });
 

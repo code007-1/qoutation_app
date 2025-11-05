@@ -2,11 +2,11 @@ import { Minus } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { useGlobalContext } from "~/modules/gcontext";
 import { productsSearchAPIURL } from "../../statics";
-import { InvoiceItem } from "~/routes/dashboard.inventory.purchaseinvoices.create";
+import { PurchaseInvoiceItem } from "~/routes/dashboard.inventory.purchaseinvoices.create";
 
 export default function PurchaseInvoiceAutocompleteSearch({ index }: { index: number }) {
     const [showSuggestions, setShowSuggestions] = useState(false);
-    const [filtered, setFiltered] = useState<InvoiceItem[]>([]);
+    const [filtered, setFiltered] = useState<PurchaseInvoiceItem[]>([]);
     const [highlighted, setHighlighted] = useState<number>(-1);
     const inputRef = useRef<HTMLInputElement>(null);
     const [hasFocus, setFocus] = useState(false);
@@ -25,7 +25,7 @@ export default function PurchaseInvoiceAutocompleteSearch({ index }: { index: nu
                     body: JSON.stringify(purchaseInvoiceItems[index].name),
                 })
                     .then(async (res) => {
-                        const filteredList: InvoiceItem[] = await res.json();
+                        const filteredList: PurchaseInvoiceItem[] = await res.json();
                         setFiltered(filteredList);
                         setShowSuggestions(filteredList.length > 0);
                         setHighlighted(-1);
@@ -46,7 +46,7 @@ export default function PurchaseInvoiceAutocompleteSearch({ index }: { index: nu
         });
     };
 
-    const handleSuggestionClick = (suggestion: InvoiceItem) => {
+    const handleSuggestionClick = (suggestion: PurchaseInvoiceItem) => {
         //setInput(suggestion.label);
         setPurchaseInvoiceItems(pre => {
             return pre.map((item, i) => i == index

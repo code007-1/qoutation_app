@@ -48,7 +48,7 @@ and update quantity for all products of that invoice
 bug - form causing first item to disapper
          */
 
-export interface InvoiceItem {
+export interface PurchaseInvoiceItem {
     no: number, // product id
     name: string, // product name
     quantity: number, // product name
@@ -56,12 +56,12 @@ export interface InvoiceItem {
     discount: number, // is there any discount on purchase price
     sno: string[]
 }
-export interface InvoiceData {
+export interface PurchaseInvoiceData {
     _id?: ObjectId,
     no: string,
     vendor: string,
     date: string,
-    items: InvoiceItem[]
+    items: PurchaseInvoiceItem[]
     amount: number,
     tax: number
 }

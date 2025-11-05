@@ -136,6 +136,10 @@ async function UploadProducts() {
         fs.createReadStream("./assets/data.csv")
             .pipe(csv({ skipLines: 0, mapHeaders: ({ header }) => header.trim() }))
             .on("data", (row) => {
+                row["no"] = Number(row.no);
+                row["version"] = Number(row.version);
+                row["price"] = Number(row.price);
+                row["quantity"] = Number(row.quantity);
                 rows.push(row);
             })
             .on("end", () => {
@@ -158,17 +162,18 @@ async function UploadProducts() {
     })
 }
 
-UploadProducts();
+//UploadProducts();
 
-/*
+
 async function find(params) {
     await client.connect();
     // Send a ping to confirm a successful connection
     await client.db("unnamed").command({ ping: 1 });
-    const result = await client.db("unnamed").collection("challans").find({}, { "projection": { "no": 1 } }).toArray();
+    const result = await client.db("unnamed").collection("products").find({}, {}).sort("no", -1).skip(0).limit(10).toArray();
     console.log(result);
+    client.close();
 }
-
+//find();
 import { Redis } from '@upstash/redis';
 
 export const redis = new Redis({
@@ -177,10 +182,10 @@ export const redis = new Redis({
 });
 
 //await redis.hset('feature-flags', { ["key"]: "value" });
-await redis.sadd("no:123:serials", "456", "546");
-await redis.srem("no:123:serials", "456");
-await redis.srem("no:123:serials", "444");
-const result = await redis.smembers("no:123:serials");
+//await redis.sadd("no:123:serials", "456", "546");
+//await redis.srem("no:123:serials", "456");
+//await redis.srem("no:123:serials", "444");
+const result = await redis.smembers("product:125:serial");
 
 console.log("result is : ", result);
 
@@ -189,5 +194,4 @@ console.log("result is : ", result);
 // needs to do performance optimization of loading data from db like for quotation or challan or complaint initially load only that fields
 // which are being showed in table, when editing copying or downliding, load full version of that document.
 // implement each product versioning instead of whole collection versioning
-
-*/
+//fix data type in api.create
