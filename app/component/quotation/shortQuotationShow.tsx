@@ -140,9 +140,9 @@ const QuotationsShowShort = () => {
                     </div>
                     <div className="flex items-center space-x-2 p-4 w-full">
                         <div className="text-textPrimary font-semibold">Start Date</div>
-                        <input type="date" className="p-2" onChange={(e) => { setQuery(pre => { return { ...pre, start: e.target.value } }) }} />
+                        <input type="date" className="inputHollow" onChange={(e) => { setQuery(pre => { return { ...pre, start: e.target.value } }) }} />
                         <div className="text-textPrimary font-semibold">End Date</div>
-                        <input type="date" className="p-2" onChange={(e) => { setQuery(pre => { return { ...pre, end: e.target.value } }) }} />
+                        <input type="date" className="inputHollow" onChange={(e) => { setQuery(pre => { return { ...pre, end: e.target.value } }) }} />
                     </div>
 
                     <div className="flex justify-between gap-2 p-4">

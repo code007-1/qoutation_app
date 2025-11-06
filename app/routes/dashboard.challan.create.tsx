@@ -110,26 +110,31 @@ export default function CreateChallan() {
             >
                 <div className="text-textSecondary">
                     <div className="mt-4 flex space-x-4 items-center align-middle">
-                        <div className="w-[90%] grid grid-cols-4">
-                            <div className="flex items-center gap-x-2">
-                                <div className="text-sm font-semibold">Challan No.</div>
+                        <div className="w-[90%] grid grid-cols-4 gap-x-10">
+                            <div>
+                                <label className="text-sm font-semibold">Challan No.</label>
                                 {/*<input type="text" name="no" placeholder="Enter Qoutation No." className="border border-border p-2 mb-2 mr-5 w-25 bg-background" value={data.no} onChange={e => setData((pre) => { return { ...pre, no: e.target.value }; })} />*/}
-                                <div className="bg-headerBackground p-2">{challanData.no}</div>
+                                <div className="inputFilled">{challanData.no}</div>
                             </div>
-                            <div className="flex items-center gap-x-4">
-                                <div className="text-sm font-semibold">Date</div>
-                                <input type="date" color="white" name="date" id="date" pattern="\d{4}-\d{2}-\d{2}" placeholder="Date" className="p-2 bg-headerBackground w-36 h-10" value={challanData.date} onChange={e => setChallanData(pre => { return { ...pre, date: e.target.value } })} />
+
+                            <div >
+                                <label className="text-sm font-semibold">Date</label>
+                                <input type="date" color="red   " name="date" id="date" pattern="\d{4}-\d{2}-\d{2}" placeholder="Date" className="inputFilled w-full" value={challanData.date} onChange={e => setChallanData(pre => { return { ...pre, date: e.target.value } })} />
                             </div>
-                            <div className="w-auto mr-10">
+                            <div>
+                                <label className="text-sm font-semibold">Bill No.</label>
+                                <input type="text" name="billno" id="billno" placeholder="Bill No." className="inputHollow w-full   " value={challanData.billno} onChange={e => setChallanData(pre => { return { ...pre, billno: e.target.value } })} />
+                            </div>
+                            <div>
+                                <label className="text-sm font-semibold">Profile</label>
                                 <Listbox value={profile.generalInfo[selectedProfile].company} onChange={e => {
                                     const index = names.indexOf(e);
                                     setSelectedProfile(index);
                                     updateData(index);
                                 }}>
-                                    <div className="relative flex justify-center items-center gap-x-4">
-                                        <div className="text-sm font-semibold">Profile</div>
-                                        <ListboxButton className="w-full flex items-center justify-between hover:bg-buttonHover bg-headerBackground p-2">
-                                            <div className="text-textSecondary truncate text-nowrap overflow-hidden w-48 px-2">{profile.generalInfo[selectedProfile].company}</div>
+                                    <div className="relative flex justify-center items-center gap-x-2">
+                                        <ListboxButton className="w-full flex items-center justify-between hover:bg-buttonHover inputFilled">
+                                            <div className="text-textSecondary truncate text-nowrap overflow-hidden w-48">{profile.generalInfo[selectedProfile].company}</div>
                                             <ChevronDown className="text-textPrimary" />
                                         </ListboxButton>
 
@@ -142,7 +147,7 @@ export default function CreateChallan() {
                                                     <ListboxOption
                                                         key={category}
                                                         value={category}
-                                                        className="block px-4 py-2 text-sm text-textSecondary data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
+                                                        className="block p-2 text-sm text-textSecondary data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
                                                     >
                                                         {category}
                                                     </ListboxOption>
@@ -152,17 +157,17 @@ export default function CreateChallan() {
                                     </div>
                                 </Listbox>
                             </div>
-                            <div className="flex items-center gap-x-4">
-                                <div className="text-sm font-semibold">Bill No.</div>
-                                <input type="text" color="white" name="billno" id="billno" placeholder="Bill No." className="p-2 border border-border w- h-10 bg-background" value={challanData.billno} onChange={e => setChallanData(pre => { return { ...pre, billno: e.target.value } })} />
-                            </div>
                         </div>
                         {step === 1 &&
-                            <div className="w-[10%] flex justify-end">
-                                <button onClick={addItem} className="button px-4 py-1 text-lg">
-                                    Add Item
-                                </button>
-                            </div>}
+                            <div className="w-[10%]">
+                                <div>&nbsp;</div>
+                                <div className="w-full flex justify-end">
+                                    <button onClick={addItem} className="button px-4 py-1 text-lg">
+                                        Add Item
+                                    </button>
+                                </div>
+                            </div>
+                        }
                     </div>
 
 
@@ -177,34 +182,34 @@ export default function CreateChallan() {
                     {step === 0 && <>
                         <div className="flex w-full mt-4">
                             <div className="w-full space-y-4">
-                                <div className="w-[90%] grid grid-cols-4">
-                                    <div className="">
+                                <div className="w-[90%] grid grid-cols-4 gap-x-10">
+                                    <div>
                                         <div className="text-sm font-semibold text-left">Order No</div>
-                                        <input type="text" color="white" name="orderno" id="orderno" placeholder="Order No." className="p-2 border border-border w- h-10 bg-background" value={challanData.orderno} onChange={e => setChallanData(pre => { return { ...pre, date: e.target.value } })} />
+                                        <input type="text" color="white" name="orderno" id="orderno" placeholder="Order No." className="w-full inputHollow" value={challanData.orderno} onChange={e => setChallanData(pre => { return { ...pre, date: e.target.value } })} />
                                     </div>
                                     <div className="">
                                         <div className="text-sm font-semibold">Mode of Dispatch</div>
-                                        <input type="text" color="white" name="modeofdispatch" id="orderno" placeholder="Mode of Dispatch" className="p-2 border border-border w-25 h-10 bg-background" value={challanData.modeofdispatch} onChange={e => setChallanData(pre => { return { ...pre, date: e.target.value } })} />
+                                        <input type="text" color="white" name="modeofdispatch" id="orderno" placeholder="Mode of Dispatch" className="inputHollow w-full" value={challanData.modeofdispatch} onChange={e => setChallanData(pre => { return { ...pre, date: e.target.value } })} />
                                     </div>
                                     <div className="">
                                         <div className="text-sm font-semibold">Challan Type</div>
                                         <Listbox value={challanData.type} onChange={(e) => { setChallanData(pre => { return { ...pre, type: e } }) }}>
                                             <div className="relative">
-                                                <ListboxButton className="w-[75%] flex items-center justify-between hover:bg-buttonHover bg-headerBackground p-2">
-                                                    <div className="text-textSecondary mr-2">{challanData.type}</div>
+                                                <ListboxButton className="w-full flex items-center justify-between hover:bg-buttonHover inputFilled">
+                                                    <div className="text-textSecondary">{challanData.type}</div>
                                                     <ChevronDown className="text-textPrimary" />
                                                 </ListboxButton>
 
                                                 <ListboxOptions
                                                     transition
-                                                    className="absolute -right-34 z-10 mt-2 w-[75%] origin-top-right rounded-sm bg-background shadow-lg ring-1 ring-black/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
+                                                    className="absolute -right-34 z-10 mt-2 w-full origin-top-right rounded-sm bg-background shadow-lg ring-1 ring-black/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
                                                 >
                                                     <div className="p-1">
                                                         {constData.challanType.map((type) => (
                                                             <ListboxOption
                                                                 key={type}
                                                                 value={type}
-                                                                className="block px-4 py-2 text-sm text-textSecondary data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
+                                                                className="block p-2 text-sm text-textSecondary data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
                                                             >
                                                                 {type}
                                                             </ListboxOption>
@@ -218,21 +223,21 @@ export default function CreateChallan() {
                                         <div className="text-sm font-semibold">Challan Category</div>
                                         <Listbox value={challanData.category} onChange={e => { setChallanData(pre => { return { ...pre, category: e } }) }}>
                                             <div className="relative">
-                                                <ListboxButton className="w-[75%] flex items-center justify-between hover:bg-buttonHover p-2 bg-headerBackground">
-                                                    <div className="text-textSecondary mr-2">{challanData.category}</div>
+                                                <ListboxButton className="w-full flex items-center justify-between hover:bg-buttonHover inputFilled">
+                                                    <div className="text-textSecondary">{challanData.category}</div>
                                                     <ChevronDown className="text-textPrimary" />
                                                 </ListboxButton>
 
                                                 <ListboxOptions
                                                     transition
-                                                    className="absolute -right-34 z-10 mt-2 w-[75%] origin-top-right rounded-sm bg-background shadow-lg ring-1 ring-black/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
+                                                    className="absolute -right-34 z-10 mt-2 w-full origin-top-right rounded-sm bg-background shadow-lg ring-1 ring-black/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
                                                 >
                                                     <div className="p-1">
                                                         {constData.challanCatorgoies.map((category) => (
                                                             <ListboxOption
                                                                 key={category}
                                                                 value={category}
-                                                                className="block px-4 py-2 text-sm text-textSecondary data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
+                                                                className="block p-2 text-sm text-textSecondary data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
                                                             >
                                                                 {category}
                                                             </ListboxOption>
@@ -247,21 +252,21 @@ export default function CreateChallan() {
                                     <div className="w-full space-y-4">
                                         <div>
                                             <label htmlFor="firstPartyName" className="text-sm font-semibold">First Party Name</label>
-                                            <input id="firstPartyName" key={"frist"} type="text" placeholder="Enter First Party Name" className="border border-border p-2 w-full bg-background" value={challanData.from} onChange={e => setChallanData(pre => { return { ...pre, from: e.target.value } })} />
+                                            <input id="firstPartyName" key={"frist"} type="text" placeholder="Enter First Party Name" className="inputHollow w-full" value={challanData.from} onChange={e => setChallanData(pre => { return { ...pre, from: e.target.value } })} />
                                         </div>
                                         <div>
                                             <label htmlFor="firstPartyAddress" className="text-sm font-semibold">First Party Address</label>
-                                            <textarea id="firstPartyAddress" rows={5} placeholder="Enter First Party Address" className="p-2 border border-border w-full bg-background" value={challanData.fromAddress} onChange={e => setChallanData(pre => { return { ...pre, fromAddress: e.target.value } })} />
+                                            <textarea id="firstPartyAddress" rows={5} placeholder="Enter First Party Address" className="inputHollow w-full" value={challanData.fromAddress} onChange={e => setChallanData(pre => { return { ...pre, fromAddress: e.target.value } })} />
                                         </div>
                                     </div>
                                     <div className="w-full space-y-4">
                                         <div>
                                             <label htmlFor="secondPartyName" className="text-sm font-semibold">Second Party Name</label>
-                                            <input id="secondPartyName" key={"second"} type="text" placeholder="Enter Second Party Name" className="border border-border p-2 w-full bg-background" value={challanData.to} onChange={e => setChallanData(pre => { return { ...pre, to: e.target.value } })} />
+                                            <input id="secondPartyName" key={"second"} type="text" placeholder="Enter Second Party Name" className="inputHollow w-full" value={challanData.to} onChange={e => setChallanData(pre => { return { ...pre, to: e.target.value } })} />
                                         </div>
                                         <div>
                                             <label htmlFor="secondPartyAddress" className="text-sm font-semibold">Second Party Address</label>
-                                            <textarea id="secondPartyAddress" rows={5} placeholder="Enter Second Party Address" className="p-2 border border-border w-full bg-background" value={challanData.toAddress} onChange={e => setChallanData(pre => { return { ...pre, toAddress: e.target.value } })} />
+                                            <textarea id="secondPartyAddress" rows={5} placeholder="Enter Second Party Address" className="inputHollow w-full" value={challanData.toAddress} onChange={e => setChallanData(pre => { return { ...pre, toAddress: e.target.value } })} />
                                         </div>
                                     </div>
                                 </div>
@@ -274,7 +279,7 @@ export default function CreateChallan() {
                     }
                     {
                         step === 1 && <>
-                            <div className="mt-4 space-y-2 overflow-y-auto h-[calc(100vh-280px)] w-full">
+                            <div className="mt-2 gap-y-2 overflow-y-auto h-[calc(100vh-220px)] w-full">
                                 <div className="w-full grid grid-cols-10 gap-x-2">
                                     <div className="col-span-3 p-2">Name</div>
                                     <div className="col-span-4 p-2">Serial Numbers</div>

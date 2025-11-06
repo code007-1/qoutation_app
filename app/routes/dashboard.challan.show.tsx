@@ -138,7 +138,7 @@ const ChallanShow = () => {
                         </div>
                         <div className="mt-2 p-4 flex items-center text-textPrimary">
                             <div className="w-[15%] font-semibold">S. No.</div>
-                            <input type="text" className="border border-border w-[85%] p-2 text-textPrimary bg-background" value={query.sno} onChange={(e) => { setQuery(pre => { return { ...pre, sno: e.target.value } }) }} />
+                            <input type="text" className="inputHollow w-[85%]" value={query.sno} onChange={(e) => { setQuery(pre => { return { ...pre, sno: e.target.value } }) }} />
                         </div>
                         <div className="flex justify-between gap-2 p-4">
                             <button

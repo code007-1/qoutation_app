@@ -49,6 +49,7 @@ const QuotationsShow = () => {
     useEffect(() => {
         const selectedTab = sessionStorage.getItem("quotationShowSelectedTab");
         if (selectedTab) setSelectedTabIndex(parseInt(selectedTab));
+        else setSelectedTabIndex(0);
         setHeaderText(quotationsHeader);
     }, []);
 

@@ -8,6 +8,7 @@ import { useNotification } from "~/modules/notificationContext";
 import { QuotationData, QuotationItems } from "./dashboard.quotations.create.full";
 import { shortQuotationCreateAPIURL } from "~/component/statics";
 import { Listbox, ListboxButton, ListboxOption, ListboxOptions, Switch } from "@headlessui/react";
+import { FormatAmountToINR } from "~/component/quotation/fullQuotationColumns";
 
 export async function SaveQuotation(quotationData: QuotationData, quotationItems: QuotationItems[], addNotifications: any, fetcher: any, navigate: any) {
     let filteredItems;
@@ -24,19 +25,20 @@ export async function SaveQuotation(quotationData: QuotationData, quotationItems
 
     let totalAmount = 0;
     filteredItems.forEach((element, index) => {
-        const amount = Math.round(((element.addon * 0.01) + 1) * (1 - (element.discount * 0.01)) * element.price * element.quantity);
+        const amount = ((element.addon * 0.01) + 1) * (1 - (element.discount * 0.01)) * element.price * element.quantity;
         totalAmount += amount;
 
-        quotationText += `${index + 1}. ${element.name} => Rs.${element.price * (element.addon * 0.01)} * ${element.quantity} unit = Rs.${amount} ${element.discount > 0 ? "(After " + element.discount + " % Discount)" : ""}\n`
+        quotationText += `${index + 1}. ${element.name} => Rs.${FormatAmountToINR(element.price * (1 + (element.addon * 0.01)) * (1 - (element.discount * 0.01)))} ${element.discount > 0 ? "(" + element.discount + " % Discount on " + "Rs." + FormatAmountToINR(element.price) + ")" : ""} * ${element.quantity} unit = Rs.${FormatAmountToINR(amount)}\n`
         if (element?.hsn != "")
             quotationText += "HSN Code: " + element.hsn + "\n";
         if (element?.description != "")
             quotationText += element.description + "\n";
+        quotationText += "\n";
     }, []);
 
-    quotationText += `\nAmount => Rs.${totalAmount}\n`
-    quotationText += `Tax @ ${quotationData.tax} % => ${Math.round(quotationData.tax * 0.01 * totalAmount)}\n`
-    quotationText += `Total Amount => Rs.${Math.round(((quotationData.tax * 0.01) + 1) * totalAmount)}`
+    quotationText += `\nAmount => Rs.${FormatAmountToINR(totalAmount)}\n`
+    quotationText += `Tax @ ${quotationData.tax} % => Rs.${FormatAmountToINR((quotationData.tax * 0.01 * totalAmount))}\n`
+    quotationText += `Total Amount => Rs.${FormatAmountToINR(((quotationData.tax * 0.01) + 1) * totalAmount)}`
 
     navigator.clipboard.writeText(quotationText).then(() => {
         addNotifications({
@@ -135,26 +137,26 @@ export default function ShortQuotationsCreate() {
             <div className="mt-4 flex space-x-4 items-center align-middle">
                 <div className="flex items-center w-3/4 space-x-8">
                     <div>
-                        <div className="text-sm font-semibold ml-2">Quotation No.</div>
-                        <div className="p-2 bg-headerBackground">{quotationData.no}</div>
+                        <div className="text-sm font-semibold">Quotation No.</div>
+                        <div className="inputFilled">{quotationData.no}</div>
                     </div>
                     <div>
-                        <div className="text-sm font-semibold ml-2">Date</div>
-                        <input type="date" color="white" name="date" id="date" pattern="\d{4}-\d{2}-\d{2}" placeholder="Date" className="w-32 h-10 bg-headerBackground p-2" value={quotationData.date} onChange={e => setQuotationData(pre => { return { ...pre, date: e.target.value } })} />
+                        <div className="text-sm font-semibold">Date</div>
+                        <input type="date" color="white" name="date" id="date" pattern="\d{4}-\d{2}-\d{2}" placeholder="Date" className="w-32 inputFilled" value={quotationData.date} onChange={e => setQuotationData(pre => { return { ...pre, date: e.target.value } })} />
                     </div>
                     <div className="w-[50%]">
-                        <label htmlFor="partyName" className="text-sm font-semibold ml-2">Party Name</label>
-                        <input id="partyName" key={"second"} type="text" placeholder="Enter Party Name" className="border border-border p-2 w-full bg-background" value={quotationData.to} onChange={e => setQuotationData(pre => { return { ...pre, to: e.target.value } })} />
+                        <div className="text-sm font-semibold">Party Name</div>
+                        <input id="partyName" key={"second"} type="text" placeholder="Enter Party Name" className="inputHollow w-full" value={quotationData.to} onChange={e => setQuotationData(pre => { return { ...pre, to: e.target.value } })} />
                     </div>
                     <div>
-                        <p className="text-sm font-semibold ml-2">Profile</p>
+                        <p className="text-sm font-semibold">Profile</p>
                         <Listbox value={profile.generalInfo[selectedProfile].company} onChange={e => {
                             const index = names.indexOf(e);
                             setSelectedProfile(index);
                             updateData(index);
                         }}>
                             <div className="relative flex justify-center">
-                                <ListboxButton className="w-full flex items-center justify-between hover:bg-buttonHover bg-headerBackground p-2">
+                                <ListboxButton className="w-full flex items-center justify-between hover:bg-buttonHover inputFilled">
                                     <div className="text-left text-textSecondary truncate text-nowrap overflow-hidden w-48">{profile.generalInfo[selectedProfile].company}</div>
                                     <ChevronDown className="text-textPrimary" />
                                 </ListboxButton>
@@ -230,7 +232,7 @@ export default function ShortQuotationsCreate() {
                     </div>
                     <div className="flex items-center">
                         <label htmlFor="tax" className="text-sm font-semibold mr-4">Tax (%)</label>
-                        <input id="tax" type="number" placeholder="Enter Tax Percentage" className="border border-border p-2 w-25 bg-background" value={quotationData.tax} onChange={e => setQuotationData(pre => { return { ...pre, tax: parseFloat(e.target.value) } })} />
+                        <input id="tax" type="number" placeholder="Enter Tax Percentage" className="inputHollow w-25" value={quotationData.tax} onChange={e => setQuotationData(pre => { return { ...pre, tax: parseFloat(e.target.value) } })} />
                     </div>
                     <div className="flex items-center">
                         <div className="text-sm font-semibold mr-4">Total:</div>

@@ -106,7 +106,7 @@ export default function PurchaseInvoiceAutocompleteSearch({ index }: { index: nu
                         onBlur={handleBlur}
                         onFocus={handleFocus}
                         onKeyDown={handleKeyDown}
-                        className="w-full p-2 border border-border bg-background text-textPrimary focus:outline-textPrimary"
+                        className="w-full inputHollow"
                         placeholder="Search Product..."
                         autoComplete="off"
                     />
@@ -129,7 +129,7 @@ export default function PurchaseInvoiceAutocompleteSearch({ index }: { index: nu
             </div>
             <textarea
                 placeholder="Serial Numbers separated by commas..."
-                className="col-span-4 p-2 border border-border bg-background text-textPrimary focus:outline-textPrimary"
+                className="col-span-4 inputHollow"
                 rows={1}
                 value={purchaseInvoiceItems[index].sno.join(",")}
                 onChange={(e) => {
@@ -144,7 +144,7 @@ export default function PurchaseInvoiceAutocompleteSearch({ index }: { index: nu
             <input
                 type="number"
                 placeholder="Quantity"
-                className="border p-2 border-border bg-background text-textPrimary focus:outline-textPrimary"
+                className="inputHollow"
                 value={purchaseInvoiceItems[index]?.quantity}
                 onChange={(e) => {
                     setPurchaseInvoiceItems(pre => {
@@ -158,7 +158,7 @@ export default function PurchaseInvoiceAutocompleteSearch({ index }: { index: nu
             <input
                 type="number"
                 placeholder="Price"
-                className="border p-2 border-border bg-background text-textPrimary focus:outline-textPrimary"
+                className="inputHollow"
                 value={purchaseInvoiceItems[index]?.price}
                 onChange={(e) => {
                     setPurchaseInvoiceItems(pre => {
@@ -171,7 +171,7 @@ export default function PurchaseInvoiceAutocompleteSearch({ index }: { index: nu
             <input
                 type="number"
                 placeholder="Discount"
-                className="border p-2 border-border bg-background text-textPrimary focus:outline-textPrimary"
+                className="inputHollow"
                 value={purchaseInvoiceItems[index]?.discount}
                 onChange={(e) => {
                     setPurchaseInvoiceItems(pre => {

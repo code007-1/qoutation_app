@@ -58,6 +58,7 @@ export default function Inventory() {
     useEffect(() => {
         const selectedTab = sessionStorage.getItem("inventoryShowSelectedTab");
         if (selectedTab) setSelectedTabIndex(parseInt(selectedTab));
+        else setSelectedTabIndex(0);
         setHeaderText(inventoryHeader);
     }, []);
 

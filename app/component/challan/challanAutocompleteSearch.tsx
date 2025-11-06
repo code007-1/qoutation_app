@@ -175,7 +175,7 @@ export default function ChallanAutocompleteSearch({ index }: { index: number }) 
 
 
     return (
-        <div className="grid grid-cols-10 relative w-auto gap-x-2">
+        <div className="grid grid-cols-10 w-auto relative gap-x-2">
             <div className="col-span-3 relative">
                 <input
                     ref={productInputRef}
@@ -185,7 +185,7 @@ export default function ChallanAutocompleteSearch({ index }: { index: number }) 
                     onBlur={handleProductBlur}
                     onFocus={handleProductFocus}
                     onKeyDown={handleProductKeyDown}
-                    className="w-full h-full p-2 border border-border bg-background text-textPrimary focus:outline-textPrimary"
+                    className="w-full inputHollow"
                     placeholder="Search Product..."
                     autoComplete="off"
                 />
@@ -205,25 +205,29 @@ export default function ChallanAutocompleteSearch({ index }: { index: number }) 
                     </ul>
                 )}
             </div>
-            <div className="col-span-4 relative">
-                <textarea
-                    ref={serialInputRef}
-                    placeholder="Serial Numbers separated by commas..."
-                    className="w-full p-2 border border-border bg-background text-textPrimary focus:outline-textPrimary"
-                    value={serialInput/*challanItems[index].sno?.join(",")*/}
-                    rows={1}
-                    onFocus={handleSerialFocus}
-                    onKeyDown={handleSerialKeyDown}
-                    onChange={(e) => {
-                        setSerialInput(e.target.value);
-                        /*setChallanItems(pre => {
-                            const snos = e.target.value.replace(/[\s,]+/g, ",").trim().split(",");
-                            return pre.map((item, i) => i === index
-                                ? { ...challanItems[index], sno: snos, quantity: snos.length }
-                                : item);
-                        })*/
-                    }}
-                />
+            <div className="col-span-4 relative border border-border h-min">
+                <div className=" flex flex-wrap w-full h-full p-0 justify-between">
+                    <input
+                        placeholder="Serial Numbers separated by commas..."
+                        className="p-2 border-none bg-background focus:outline-none flex-grow"
+                        value={serialInput/*challanItems[index].sno?.join(",")*/}
+                        rows={1}
+                        onFocus={handleSerialFocus}
+                        onKeyDown={handleSerialKeyDown}
+                        onChange={(e) => {
+                            setSerialInput(e.target.value);
+                            /*setChallanItems(pre => {
+                                const snos = e.target.value.replace(/[\s,]+/g, ",").trim().split(",");
+                                return pre.map((item, i) => i === index
+                                    ? { ...challanItems[index], sno: snos, quantity: snos.length }
+                                    : item);
+                            })*/
+                        }}
+                    />
+                    <div className="flex-wrap flex items-center gap-2">
+                        {["123", "456", "789123"].map(e => { return <div className="p-1 bg-headerBackground">{e}<button className="ml-2 px-1 hover:bg-buttonHover">X</button></div> })}
+                    </div>
+                </div>
                 {showSerialSuggestions && (
                     <ul className="w-full z-10 absolute top-full -left-0 right-0 bg-buttonHover border border-border overflow-y-auto max-h-96">
                         {serialfilter.map((s, idx) => (
@@ -239,41 +243,45 @@ export default function ChallanAutocompleteSearch({ index }: { index: number }) 
                     </ul>
                 )}
             </div>
-            <input
-                type="number"
-                placeholder="Quantity"
-                className="border p-2 border-border bg-background text-textPrimary focus:outline-textPrimary"
-                value={challanItems[index]?.quantity}
-                onChange={(e) => {
-                    setChallanItems(pre => {
-                        return pre.map((item, i) => i === index
-                            ? { ...challanItems[index], quantity: Number(e.target.value || undefined) }
-                            : item);
-                    })
-                }}
-            />
-
-            <input
-                type="string"
-                placeholder="Unit"
-                className="border p-2 border-border bg-background text-textPrimary focus:outline-textPrimary"
-                value={challanItems[index]?.unit}
-                onChange={(e) => {
-                    setChallanItems(pre => {
-                        return pre.map((item, i) => i === index
-                            ? { ...challanItems[index], unit: e.target.value }
-                            : item);
-                    })
-                }}
-            />
-
-            <button className="w-[35%] hover:bg-headerBackground bg-buttonHover p-2" onClick={(e) => {
-                setChallanItems(pre =>
-                    pre.filter((_, i) => i != index)
-                );
-            }}>
-                <Minus className="w-full text-textSecondary" />
-            </button>
+            <div>
+                <input
+                    type="number"
+                    placeholder="Quantity"
+                    className="inputHollow w-full"
+                    value={challanItems[index]?.quantity}
+                    onChange={(e) => {
+                        setChallanItems(pre => {
+                            return pre.map((item, i) => i === index
+                                ? { ...challanItems[index], quantity: Number(e.target.value || undefined) }
+                                : item);
+                        })
+                    }}
+                />
+            </div>
+            <div>
+                <input
+                    type="string"
+                    placeholder="Unit"
+                    className="inputHollow w-full"
+                    value={challanItems[index]?.unit}
+                    onChange={(e) => {
+                        setChallanItems(pre => {
+                            return pre.map((item, i) => i === index
+                                ? { ...challanItems[index], unit: e.target.value }
+                                : item);
+                        })
+                    }}
+                />
+            </div>
+            <div>
+                <button className="hover:bg-headerBackground bg-buttonHover p-2" onClick={(e) => {
+                    setChallanItems(pre =>
+                        pre.filter((_, i) => i != index)
+                    );
+                }}>
+                    <Minus className="w-full text-textSecondary" />
+                </button>
+            </div>
         </div>
     );
 }

@@ -25,6 +25,14 @@ html {
   .button:hover {
     @apply bg-button/75;
   }
+
+  .inputHollow {
+    @apply p-2 border border-border bg-background text-textSecondary;
+  }
+
+  .inputFilled {
+    @apply bg-headerBackground p-2;
+  }
 }
 
 body {

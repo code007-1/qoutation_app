@@ -122,7 +122,7 @@ export default function QuotationAutocompleteSearch({ index }: { index: number }
                         onBlur={handleBlur}
                         onFocus={handleFocus}
                         onKeyDown={handleKeyDown}
-                        className="w-full p-2 border border-border bg-background text-textPrimary focus:outline-textPrimary h-full"
+                        className="w-full h-full inputHollow"
                         placeholder="Search Product..."
                         autoComplete="off"
                     />
@@ -143,7 +143,7 @@ export default function QuotationAutocompleteSearch({ index }: { index: number }
                 </div>
                 <textarea
                     placeholder="Any prodcut description..."
-                    className="p-2 border col-span-4 border-border bg-background text-textPrimary focus:outline-textPrimary"
+                    className="inputHollow col-span-4"
                     value={quotationItems[index].description}
                     rows={1}
                     onChange={(e) => {
@@ -157,7 +157,7 @@ export default function QuotationAutocompleteSearch({ index }: { index: number }
                 <input
                     type="string"
                     placeholder="HSN"
-                    className="border p-2 border-border bg-background text-textPrimary focus:outline-textPrimary"
+                    className="inputHollow"
                     value={quotationItems[index]?.hsn}
                     onChange={(e) => {
                         setQuotationItems(pre => {
@@ -170,7 +170,7 @@ export default function QuotationAutocompleteSearch({ index }: { index: number }
                 <input
                     type="number"
                     placeholder="Quantity"
-                    className="border p-2 border-border bg-background text-textPrimary focus:outline-textPrimary"
+                    className="inputHollow"
                     value={quotationItems[index]?.quantity}
                     min={0}
                     onChange={(e) => {
@@ -185,7 +185,7 @@ export default function QuotationAutocompleteSearch({ index }: { index: number }
                 <input
                     type="number"
                     placeholder="Price"
-                    className="border p-2 border-border bg-background text-textPrimary focus:outline-textPrimary"
+                    className="inputHollow"
                     value={quotationItems[index]?.price}
                     min={0}
                     onChange={(e) => {
@@ -199,7 +199,7 @@ export default function QuotationAutocompleteSearch({ index }: { index: number }
                 <input
                     type="number"
                     placeholder="Discount"
-                    className="border p-2 border-border bg-background text-textPrimary focus:outline-textPrimary"
+                    className="inputHollow"
                     value={quotationItems[index]?.discount}
                     min={0}
                     onChange={(e) => {
@@ -213,7 +213,7 @@ export default function QuotationAutocompleteSearch({ index }: { index: number }
                 <input
                     type="number"
                     placeholder="Addon %"
-                    className="border p-2 border-border bg-background text-textPrimary focus:outline-textPrimary"
+                    className="inputHollow"
                     value={quotationItems[index]?.addon}
                     min={0}
                     onChange={(e) => {
@@ -225,6 +225,7 @@ export default function QuotationAutocompleteSearch({ index }: { index: number }
                     }}
                 />
             </div>
+
             <button className="hover:bg-headerBackground bg-buttonHover p-2" onClick={(e) => {
                 setQuotationItems(pre =>
                     pre.filter((_, i) => i != index)

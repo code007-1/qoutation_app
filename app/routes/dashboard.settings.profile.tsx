@@ -109,7 +109,7 @@ export default function SettingsProfile() {
                             <TabPanel key={"General Profile Settings"} className="">
                                 <div className="grid grid-cols-2 gap-4 text-textPrimary mt-4">
                                     <div>
-                                        Contact Number <input type="text" name="contactNumber" placeholder="+91 ...." className="border border-border p-2 bg-background w-full" value={profile?.generalInfo[selectedProfile]?.contact || ""} onChange={(e) => {
+                                        Contact Number <input type="text" name="contactNumber" placeholder="+91 ...." className="inputHollow w-full" value={profile?.generalInfo[selectedProfile]?.contact || ""} onChange={(e) => {
                                             setProfile((pre) => {
                                                 const updatedGeneralInfo = [...pre.generalInfo];
                                                 updatedGeneralInfo[selectedProfile] = { ...updatedGeneralInfo[selectedProfile], contact: e.target.value };
@@ -118,7 +118,7 @@ export default function SettingsProfile() {
                                         }} />
                                     </div>
                                     <div>
-                                        Email ID <input type="email" name="email" placeholder="abc@email.com" className="border border-border p-2 w-full bg-background" value={profile?.generalInfo[selectedProfile]?.email || ""} onChange={(e) => {
+                                        Email ID <input type="email" name="email" placeholder="abc@email.com" className="inputHollow w-full" value={profile?.generalInfo[selectedProfile]?.email || ""} onChange={(e) => {
                                             setProfile((pre) => {
                                                 const updatedGeneralInfo = [...pre.generalInfo];
                                                 updatedGeneralInfo[selectedProfile] = { ...updatedGeneralInfo[selectedProfile], email: e.target.value };
@@ -127,7 +127,7 @@ export default function SettingsProfile() {
                                         }} />
                                     </div>
                                     <div>
-                                        Website <input type="text" name="website" placeholder="abc@email.com" className="border border-border p-2 w-full bg-background" value={profile?.generalInfo[selectedProfile]?.website || ""} onChange={(e) => {
+                                        Website <input type="text" name="website" placeholder="abc@email.com" className="inputHollow w-full" value={profile?.generalInfo[selectedProfile]?.website || ""} onChange={(e) => {
                                             setProfile((pre) => {
                                                 const updatedGeneralInfo = [...pre.generalInfo];
                                                 updatedGeneralInfo[selectedProfile] = { ...updatedGeneralInfo[selectedProfile], website: e.target.value };
@@ -136,7 +136,7 @@ export default function SettingsProfile() {
                                         }} />
                                     </div>
                                     <div>
-                                        Company <input type="text" name="company" placeholder="abc@email.com" className="border border-border p-2 w-full bg-background" value={profile?.generalInfo[selectedProfile]?.company || ""} onChange={(e) => {
+                                        Company <input type="text" name="company" placeholder="abc@email.com" className="inputHollow w-full" value={profile?.generalInfo[selectedProfile]?.company || ""} onChange={(e) => {
                                             setProfile((pre) => {
                                                 const updatedGeneralInfo = [...pre.generalInfo];
                                                 updatedGeneralInfo[selectedProfile] = { ...updatedGeneralInfo[selectedProfile], company: e.target.value };
@@ -145,7 +145,7 @@ export default function SettingsProfile() {
                                         }} />
                                     </div>
                                     <div>
-                                        Address <textarea rows={3} placeholder="Enter Address" className="border border-border p-2 w-full bg-background" value={profile?.generalInfo[selectedProfile]?.address || ""} onChange={(e) => {
+                                        Address <textarea rows={3} placeholder="Enter Address" className="inputHollow w-full" value={profile?.generalInfo[selectedProfile]?.address || ""} onChange={(e) => {
                                             setProfile((pre) => {
                                                 const updatedGeneralInfo = [...pre.generalInfo];
                                                 updatedGeneralInfo[selectedProfile] = { ...updatedGeneralInfo[selectedProfile], address: e.target.value };
@@ -154,7 +154,7 @@ export default function SettingsProfile() {
                                         }} />
                                     </div>
                                     <div>
-                                        User Signature <textarea rows={3} placeholder="Enter User Signature" className="border border-border p-2 w-full bg-background" value={profile?.generalInfo[selectedProfile]?.madeByInfo || ""} onChange={(e) => {
+                                        User Signature <textarea rows={3} placeholder="Enter User Signature" className="inputHollow w-full" value={profile?.generalInfo[selectedProfile]?.madeByInfo || ""} onChange={(e) => {
                                             setProfile((pre) => {
                                                 const updatedGeneralInfo = [...pre.generalInfo];
                                                 updatedGeneralInfo[selectedProfile] = { ...updatedGeneralInfo[selectedProfile], madeByInfo: e.target.value };
@@ -163,7 +163,7 @@ export default function SettingsProfile() {
                                         }} />
                                     </div>
                                     <div className="col-span-2">
-                                        Bank Details <textarea rows={5} title="Enter Bank Details, seperate by ';'" placeholder="Enter Bank Details, seperate by ';'" className="border border-border p-2 w-full bg-background" value={profile?.generalInfo[selectedProfile]?.bankInfo?.join(";") || ""} onChange={(e) => {
+                                        Bank Details <textarea rows={5} title="Enter Bank Details, seperate by ';'" placeholder="Enter Bank Details, seperate by ';'" className="inputHollow w-full" value={profile?.generalInfo[selectedProfile]?.bankInfo?.join(";") || ""} onChange={(e) => {
                                             setProfile((pre) => {
                                                 const updatedGeneralInfo = [...pre.generalInfo];
                                                 updatedGeneralInfo[selectedProfile] = { ...updatedGeneralInfo[selectedProfile], bankInfo: e.target.value.split(";") };
@@ -177,7 +177,7 @@ export default function SettingsProfile() {
                                 <div className="grid grid-cols-2 gap-4 text-textPrimary mt-4">
                                     <div>
                                         Terms and Conditions
-                                        <textarea rows={5} placeholder="Enter Terms and Coditions" className="border border-border p-2 w-full bg-background" value={profile?.quotationInfo[selectedProfile]?.terms || ""} onChange={(e) => {
+                                        <textarea rows={5} placeholder="Enter Terms and Coditions" className="inputHollow w-full" value={profile?.quotationInfo[selectedProfile]?.terms || ""} onChange={(e) => {
                                             setProfile((pre) => {
                                                 const updatedQuotationInfo = [...pre.quotationInfo];
                                                 updatedQuotationInfo[selectedProfile] = { ...updatedQuotationInfo[selectedProfile], terms: e.target.value };
@@ -186,7 +186,7 @@ export default function SettingsProfile() {
                                         }} />
                                     </div>
                                     <div>
-                                        Additional Information <textarea rows={5} placeholder="Enter Additional Info" className="border border-border p-2 w-full bg-background" value={profile?.quotationInfo[selectedProfile]?.additionalInfo ?? ""} onChange={(e) => {
+                                        Additional Information <textarea rows={5} placeholder="Enter Additional Info" className="inputHollow w-full" value={profile?.quotationInfo[selectedProfile]?.additionalInfo ?? ""} onChange={(e) => {
                                             setProfile((pre) => {
                                                 const updatedQuotationInfo = [...pre.quotationInfo];
                                                 updatedQuotationInfo[selectedProfile] = { ...updatedQuotationInfo[selectedProfile], additionalInfo: e.target.value };
@@ -195,7 +195,7 @@ export default function SettingsProfile() {
                                         }} />
                                     </div>
                                     <div>
-                                        Introuductory Text <textarea rows={3} placeholder="Enter Introductory Text" className="border border-border p-2 w-full bg-background" value={profile?.quotationInfo[selectedProfile]?.intro ?? ""} onChange={(e) => {
+                                        Introuductory Text <textarea rows={3} placeholder="Enter Introductory Text" className="inputHollow w-full" value={profile?.quotationInfo[selectedProfile]?.intro ?? ""} onChange={(e) => {
                                             setProfile((pre) => {
                                                 const updatedQuotationInfo = [...pre.quotationInfo];
                                                 updatedQuotationInfo[selectedProfile] = { ...updatedQuotationInfo[selectedProfile], intro: e.target.value };
@@ -204,7 +204,7 @@ export default function SettingsProfile() {
                                         }} />
                                     </div>
                                     <div>
-                                        PDF Accent Color <input max={360} min={0} title="Hue Value for Color (0, 360)" type="number" name="pdfColor" placeholder="Enter Color HUE Value" className="border border-border p-2 w-full bg-background" value={profile?.quotationInfo[selectedProfile]?.pdfColor ?? 222} onChange={(e) => {
+                                        PDF Accent Color <input max={360} min={0} title="Hue Value for Color (0, 360)" type="number" name="pdfColor" placeholder="Enter Color HUE Value" className="inputHollow w-full" value={profile?.quotationInfo[selectedProfile]?.pdfColor ?? 222} onChange={(e) => {
                                             setProfile((pre) => {
                                                 const updatedQuotationInfo = [...pre.quotationInfo];
                                                 updatedQuotationInfo[selectedProfile] = { ...updatedQuotationInfo[selectedProfile], pdfColor: e.target.value };

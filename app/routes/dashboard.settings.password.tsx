@@ -28,13 +28,13 @@ export default function SettingsPassword() {
             <form onSubmit={handleSubmit} className="text-textPrimary mt-4 space-y-4">
                 <input hidden name="username" value={profile.username} />
                 <div>
-                    Current Password <input required autoComplete="current-password" type="password" name="currentPassword" placeholder="Enter Current Password" className="border border-border p-2 bg-background w-full" />
+                    Current Password <input required autoComplete="current-password" type="password" name="currentPassword" placeholder="Enter Current Password" className="inputHollow w-full" />
                 </div>
                 <div>
-                    New Password (At least 6 character long) <input required minLength={6} autoComplete="new-password" type="password" name="newPassword" placeholder="Enter New Password" className="border border-border p-2 w-full bg-background" />
+                    New Password (At least 6 character long) <input required minLength={6} autoComplete="new-password" type="password" name="newPassword" placeholder="Enter New Password" className="inputHollow w-full" />
                 </div>
                 <div>
-                    Repeat Password (At least 6 character long) <input required minLength={6} autoComplete="new-password" type="password" name="repeatPassword" placeholder="Enter New Password" className="border border-border p-2 w-full bg-background" />
+                    Repeat Password (At least 6 character long) <input required minLength={6} autoComplete="new-password" type="password" name="repeatPassword" placeholder="Enter New Password" className="inputHollow w-full" />
                 </div>
 
                 <div className="flex justify-center">

@@ -121,14 +121,14 @@ export default function CreatePurchaseInvoice() {
         </div>
         <div className="grid grid-cols-6 gap-4 text-textPrimary mt-4">
             <div className="col-span-1">
-                {(passedData && passedData?.editing === true) ? <>Invoice No.<div className="border-0 p-2 bg-buttonHover w-full">{purcahseInvoiceData.no}</div></> : <>Invoice No.<input required type="text" name="invoiceno" placeholder="Enter Invoice No." className="border border-border p-2 bg-background w-full" value={purcahseInvoiceData.no} onChange={e => setPurchaseInvoiceData(pre => { return { ...pre, no: e.target.value } })} /></>}
+                {(passedData && passedData?.editing === true) ? <>Invoice No.<div className="border-0 p-2 bg-buttonHover w-full">{purcahseInvoiceData.no}</div></> : <>Invoice No.<input required type="text" name="invoiceno" placeholder="Enter Invoice No." className="inputHollow w-full" value={purcahseInvoiceData.no} onChange={e => setPurchaseInvoiceData(pre => { return { ...pre, no: e.target.value } })} /></>}
             </div>
             <div className="col-span-3">
-                Vendor Name <input type="text" name="vendorname" placeholder="Enter Vendor Name" className="border border-border p-2 bg-background w-full" value={purcahseInvoiceData.vendor} onChange={e => setPurchaseInvoiceData(pre => { return { ...pre, vendor: e.target.value || "" } })} />
+                Vendor Name <input type="text" name="vendorname" placeholder="Enter Vendor Name" className="inputHollow w-full" value={purcahseInvoiceData.vendor} onChange={e => setPurchaseInvoiceData(pre => { return { ...pre, vendor: e.target.value || "" } })} />
             </div>
             <div className="col-span-1">
                 Date
-                <input required id="date" type="date" color="white" name="date" pattern="\d{4}-\d{2}-\d{2}" placeholder="Date" className="border border-border h-10 bg-background w-full px-2" value={purcahseInvoiceData.date} onChange={e => setPurchaseInvoiceData(pre => { return { ...pre, date: e.target.value || "" } })} />
+                <input required id="date" type="date" color="white" name="date" pattern="\d{4}-\d{2}-\d{2}" placeholder="Date" className="inputHollow w-full" value={purcahseInvoiceData.date} onChange={e => setPurchaseInvoiceData(pre => { return { ...pre, date: e.target.value || "" } })} />
             </div>
             <div className="ml-auto mr-0">
                 <div>&nbsp;</div>
@@ -164,7 +164,7 @@ export default function CreatePurchaseInvoice() {
             </div>
             <div className="flex items-center">
                 <label htmlFor="tax" className="text-sm font-semibold mr-4">Tax (%)</label>
-                <input id="tax" type="number" placeholder="Enter Tax Percentage" className="border border-border p-2 w-25 bg-background" value={purcahseInvoiceData.tax} onChange={e => setPurchaseInvoiceData(pre => { return { ...pre, tax: parseFloat(e.target.value) } })} />
+                <input id="tax" type="number" placeholder="Enter Tax Percentage" className="inputHollow w-25" value={purcahseInvoiceData.tax} onChange={e => setPurchaseInvoiceData(pre => { return { ...pre, tax: parseFloat(e.target.value) } })} />
             </div>
             <div className="flex items-center">
                 <div className="text-sm font-semibold mr-4">Total:</div>

@@ -55,12 +55,12 @@ export default function InventoryCreation() {
                                 Group ID <div className="p-2 bg-headerBackground w-full border-0">1</div>
                             </div>
                             <div className="col-span-2">
-                                Group Name <input type="text" name="groupname" placeholder="Enter Group Name" className="border border-border p-2 bg-background w-full" onChange={(e) => {
+                                Group Name <input type="text" name="groupname" placeholder="Enter Group Name" className="inputHollow w-full" onChange={(e) => {
                                     setGroupsData(pre => { return { ...pre, name: e }; });
                                 }} />
                             </div>
                             <div className="col-span-2">
-                                Parent Group <input type="text" name="parentgroup" placeholder="Enter Parent Group" className="border border-border p-2 bg-background w-full" onChange={(e) => {
+                                Parent Group <input type="text" name="parentgroup" placeholder="Enter Parent Group" className="inputHollow w-full" onChange={(e) => {
                                     setGroupsData(pre => { return { ...pre, name: e }; });
                                 }} />
                             </div>

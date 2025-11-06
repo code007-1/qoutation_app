@@ -95,7 +95,7 @@ const TableUI: FC<TableProps> = ({
                 <div className="flex space-x-4 items-center align-middle">
                     <Listbox value={filterType} onChange={setFilterType}>
                         <div className="relative">
-                            <ListboxButton className="flex items-center hover:bg-buttonHover px-2 border border-border py-2">
+                            <ListboxButton className="flex items-center hover:bg-buttonHover inputHollow">
                                 <div className="text-textSecondary mr-2">{filterType}</div>
                                 <ChevronDown className="text-textPrimary" />
                             </ListboxButton>
@@ -125,7 +125,7 @@ const TableUI: FC<TableProps> = ({
                         onChange={(event) =>
                             getColumn(filterTypes[filterType])?.setFilterValue(event.target.value)
                         }
-                        className="border p-2 w-[20%] border-border bg-background text-textPrimary focus:outline-textPrimary"
+                        className="inputHollow w-[20%]"
                     />
                     {(advanceSearchOpen && advanceSearch) && <>
                         <button

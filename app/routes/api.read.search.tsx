@@ -48,6 +48,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
         }
         else
             return new Response(`invalid data type requested`, { status: 405 });
+
         result = await sortedSearch(dbName, collectionName, query, findOptions, limits, skips, sortDir, sortKey);
         let headers = new Headers({ "Content-Type": "application/json" });
         return Response.json(result, { status: 200, headers: headers });
