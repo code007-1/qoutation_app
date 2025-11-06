@@ -279,7 +279,7 @@ export default function CreateChallan() {
                     }
                     {
                         step === 1 && <>
-                            <div className="mt-2 gap-y-2 overflow-y-auto h-[calc(100vh-220px)] w-full">
+                            <div className="mt-2 space-y-2 overflow-y-auto h-[calc(100vh-220px)] w-full">
                                 <div className="w-full grid grid-cols-10 gap-x-2">
                                     <div className="col-span-3 p-2">Name</div>
                                     <div className="col-span-4 p-2">Serial Numbers</div>

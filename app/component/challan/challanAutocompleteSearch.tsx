@@ -12,9 +12,6 @@ export default function ChallanAutocompleteSearch({ index }: { index: number }) 
     const [serialfilter, setSerialFilter] = useState<string[]>([]);
     const [highlighted, setHighlighted] = useState<number>(-1);
 
-    const productInputRef = useRef<HTMLInputElement>(null);
-    const serialInputRef = useRef<HTMLTextAreaElement>(null);
-
     const [hasProductFocus, setProductFocus] = useState(false);
     const [hasSerialFocus, setSerialFocus] = useState(false);
 
@@ -49,11 +46,11 @@ export default function ChallanAutocompleteSearch({ index }: { index: number }) 
     useEffect(() => {
         if (hasSerialFocus) {
             if (serialInput === "") {
-                setProductFilter([]);
+                setSerialFilter([]);
                 setShowSerialSuggestions(false);
             }
 
-            else if (showSerialSuggestions || prouctfilter.length != 1 || serialfilter[0].toLowerCase() != serialInput.toLowerCase()) {
+            else if (showSerialSuggestions || serialfilter.length != 1 || serialfilter[0].toLowerCase() != serialInput.toLowerCase()) {
                 fetch(serialSearchAPIURL, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
@@ -61,7 +58,6 @@ export default function ChallanAutocompleteSearch({ index }: { index: number }) 
                 })
                     .then(async (res) => {
                         const filteredList: string[] = await res.json();
-                        console.log("asdj", filteredList);
                         setSerialFilter(filteredList);
                         setShowSerialSuggestions(filteredList.length > 0);
                         setHighlighted(-1);
@@ -73,7 +69,7 @@ export default function ChallanAutocompleteSearch({ index }: { index: number }) 
         }
     }, [serialInput]);
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleProductInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         //setInput(e.target.value);
         setChallanItems((pre) => {
             return pre.map((item, i) => i === index
@@ -93,10 +89,10 @@ export default function ChallanAutocompleteSearch({ index }: { index: number }) 
     };
 
     const handleSerialSuggestionClick = (suggestion: string) => {
-        //setInput(suggestion.label);
+        setSerialInput("");
         setChallanItems(pre => {
             return pre.map((item, i) => i == index
-                ? { ...item, sno: [suggestion] }
+                ? { ...item, sno: [...(item.sno ?? []), suggestion], quantity: Number(item.sno?.length || 0) + 1 }
                 : item)
         });
         setShowSerialSuggestions(false);
@@ -121,7 +117,7 @@ export default function ChallanAutocompleteSearch({ index }: { index: number }) 
     };
 
     const handleSerialFocus = () => {
-        if (prouctfilter.length > 0) setShowSerialSuggestions(true);
+        if (serialfilter.length > 0) setShowSerialSuggestions(true);
         setSerialFocus(true);
     };
 
@@ -149,28 +145,40 @@ export default function ChallanAutocompleteSearch({ index }: { index: number }) 
         }
     };
 
-    const handleSerialKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    const handleSerialKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === "Enter" && highlighted == -1) {
+            setSerialInput("");
+            //setSerialFilter([serialfilter[highlighted]]);
+            //setShowSerialSuggestions(false);
+            setChallanItems(pre => {
+                return pre.map((item, i) => i === index
+                    ? { ...item, sno: [...(item.sno ?? []), serialInput], quantity: Number(item.sno?.length || 0) + 1 }
+                    : item)
+            });
+        }
         if (!showSerialSuggestions) return;
         if (e.key === "ArrowDown") {
             setHighlighted(prev =>
-                prev < prouctfilter.length - 1 ? prev + 1 : 0
+                prev < serialfilter.length - 1 ? prev + 1 : 0
             );
         } else if (e.key === "ArrowUp") {
             setHighlighted(prev =>
-                prev > 0 ? prev - 1 : prouctfilter.length - 1
+                prev > 0 ? prev - 1 : serialfilter.length - 1
             );
         } else if (e.key === "Enter" && highlighted >= 0) {
-            //setInput(filtered[highlighted].label);
-            setProductFilter([prouctfilter[highlighted]]);
+            setSerialInput("");
+            setSerialFilter([serialfilter[highlighted]]);
             setShowSerialSuggestions(false);
             setChallanItems(pre => {
                 return pre.map((item, i) => i === index
-                    ? { ...item, sno: [serialfilter[highlighted]] }
+                    ? { ...item, sno: [...(item.sno ?? []), serialfilter[highlighted]], quantity: Number(item.sno?.length || 0) + 1 }
                     : item)
             });
-        } else if (e.key === "Escape") {
+        }
+        else if (e.key === "Escape") {
             setShowSerialSuggestions(false);
         }
+        console.log("highlighted", highlighted);
     };
 
 
@@ -178,10 +186,9 @@ export default function ChallanAutocompleteSearch({ index }: { index: number }) 
         <div className="grid grid-cols-10 w-auto relative gap-x-2">
             <div className="col-span-3 relative">
                 <input
-                    ref={productInputRef}
                     type="text"
                     value={challanItems[index].name}
-                    onChange={handleInputChange}
+                    onChange={handleProductInputChange}
                     onBlur={handleProductBlur}
                     onFocus={handleProductFocus}
                     onKeyDown={handleProductKeyDown}
@@ -210,22 +217,22 @@ export default function ChallanAutocompleteSearch({ index }: { index: number }) 
                     <input
                         placeholder="Serial Numbers separated by commas..."
                         className="p-2 border-none bg-background focus:outline-none flex-grow"
-                        value={serialInput/*challanItems[index].sno?.join(",")*/}
-                        rows={1}
+                        value={serialInput}
                         onFocus={handleSerialFocus}
                         onKeyDown={handleSerialKeyDown}
-                        onChange={(e) => {
-                            setSerialInput(e.target.value);
-                            /*setChallanItems(pre => {
-                                const snos = e.target.value.replace(/[\s,]+/g, ",").trim().split(",");
-                                return pre.map((item, i) => i === index
-                                    ? { ...challanItems[index], sno: snos, quantity: snos.length }
-                                    : item);
-                            })*/
-                        }}
+                        onChange={(e) => { setSerialInput(e.target.value); }}
                     />
                     <div className="flex-wrap flex items-center gap-2">
-                        {["123", "456", "789123"].map(e => { return <div className="p-1 bg-headerBackground">{e}<button className="ml-2 px-1 hover:bg-buttonHover">X</button></div> })}
+                        {challanItems[index]?.sno?.map(serial => {
+                            return <div className="p-1 bg-headerBackground">{serial}<button className="ml-2 px-1 hover:bg-buttonHover"
+                                onClick={() => {
+                                    setChallanItems(pre => {
+                                        return pre.map((item, i) => i == index
+                                            ? { ...item, sno: item.sno?.filter(s => s !== serial), quantity: Number(item.sno?.length || 2) - 1 }
+                                            : item)
+                                    })
+                                }}>X</button></div>
+                        })}
                     </div>
                 </div>
                 {showSerialSuggestions && (
