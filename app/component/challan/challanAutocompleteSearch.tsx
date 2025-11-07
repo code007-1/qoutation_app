@@ -57,7 +57,8 @@ export default function ChallanAutocompleteSearch({ index }: { index: number }) 
                     body: JSON.stringify({ "query": serialInput, no: challanItems[index].no })
                 })
                     .then(async (res) => {
-                        const filteredList: string[] = await res.json();
+                        let filteredList: string[] = await res.json();
+                        filteredList = filteredList.filter(fl => !challanItems[index].sno?.includes(fl));
                         setSerialFilter(filteredList);
                         setShowSerialSuggestions(filteredList.length > 0);
                         setHighlighted(-1);
