@@ -31,7 +31,7 @@ export function useFullQuotationsColumns() {
     const { addNotifications } = useNotification();
 
     async function getQoutations(no: string) {
-        const response = await fetcher(`${fullQuotationReadAPIURL}&no=${no}`);
+        const response = await fetcher(`${fullQuotationReadAPIURL}&no=${no}&full=true`);
         if (response.status === 200) {
             const data = await response.json()
             return data;

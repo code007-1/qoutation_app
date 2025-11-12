@@ -20,10 +20,10 @@ interface TableProps {
     page?: (page: number) => void;
 
     // filters and search
-    filterTypes: {}
+    filterTypes?: {}
     advanceSearch?: (query?: {}) => Promise<void>;
     advanceSearchOpen?: React.Dispatch<React.SetStateAction<boolean>>;
-    refresh: () => void,
+    refresh?: () => void,
 
     EmptyText?: string;
 
@@ -62,7 +62,9 @@ const TableUI: FC<TableProps> = ({
 
     // for filtering and serching
     type FilterKey = keyof typeof filterTypes;
-    const [filterType, setFilterType] = useState<FilterKey>(Object.keys(filterTypes)[0] as FilterKey);
+    const [filterType, setFilterType] = useState<FilterKey>(
+        Object.keys(filterTypes ?? {})[0] as FilterKey
+    );
 
     // for pagination
     const [pagination, setPagination] = useState<PaginationState>({ pageIndex: 0, pageSize: 10 })
@@ -93,40 +95,41 @@ const TableUI: FC<TableProps> = ({
         <>
             <div className="">
                 <div className="flex space-x-4 items-center align-middle">
-                    <Listbox value={filterType} onChange={setFilterType}>
-                        <div className="relative">
-                            <ListboxButton className="flex items-center hover:bg-buttonHover inputHollow">
-                                <div className="text-textSecondary mr-2">{filterType}</div>
-                                <ChevronDown className="text-textPrimary" />
-                            </ListboxButton>
-                            <ListboxOptions
-                                transition
-                                className="absolute -right-34 z-10 mt-2 w-[136px] origin-top-right rounded-sm bg-background shadow-lg ring-1 ring-black/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
-                            >
-                                <div className="p-1">
-                                    {Object.keys(filterTypes).map((filterType) => {
-                                        return (
-                                            <ListboxOption
-                                                key={filterType}
-                                                value={filterType}
-                                                className="block px-4 py-2 text-sm text-textSecondary data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
-                                            >
-                                                {filterType}
-                                            </ListboxOption>
-                                        );
-                                    })}
-                                </div>
-                            </ListboxOptions>
-                        </div>
-                    </Listbox>
-                    <input
-                        placeholder="Filter....."
-                        value={(getColumn(filterTypes[filterType])?.getFilterValue() as string) ?? ""}
-                        onChange={(event) =>
-                            getColumn(filterTypes[filterType])?.setFilterValue(event.target.value)
-                        }
-                        className="inputHollow w-[20%]"
-                    />
+                    {filterTypes && <>
+                        <Listbox value={filterType} onChange={setFilterType}>
+                            <div className="relative">
+                                <ListboxButton className="flex items-center hover:bg-buttonHover inputHollow">
+                                    <div className="text-textSecondary mr-2">{filterType}</div>
+                                    <ChevronDown className="text-textPrimary" />
+                                </ListboxButton>
+                                <ListboxOptions
+                                    transition
+                                    className="absolute -right-34 z-10 mt-2 w-[136px] origin-top-right rounded-sm bg-background shadow-lg ring-1 ring-black/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
+                                >
+                                    <div className="p-1">
+                                        {Object.keys(filterTypes).map((filterType) => {
+                                            return (
+                                                <ListboxOption
+                                                    key={filterType}
+                                                    value={filterType}
+                                                    className="block px-4 py-2 text-sm text-textSecondary data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
+                                                >
+                                                    {filterType}
+                                                </ListboxOption>
+                                            );
+                                        })}
+                                    </div>
+                                </ListboxOptions>
+                            </div>
+                        </Listbox>
+                        <input
+                            placeholder="Filter....."
+                            value={(getColumn(filterTypes[filterType])?.getFilterValue() as string) ?? ""}
+                            onChange={(event) =>
+                                getColumn(filterTypes[filterType])?.setFilterValue(event.target.value)
+                            }
+                            className="inputHollow w-[20%]"
+                        /></>}
                     {(advanceSearchOpen && advanceSearch) && <>
                         <button
                             onClick={() => advanceSearchOpen(true)}
@@ -142,18 +145,20 @@ const TableUI: FC<TableProps> = ({
                         </button>
                     </>
                     }
-                    <button
-                        onClick={() => { refresh() }}
-                        className="button p-2"
-                    >
-                        Refresh Data
-                    </button>
-                    {exportCSV && <button
-                        onClick={() => { exportCSV(getRowModel().rows) }}
-                        className="button p-2"
-                    >
-                        Export
-                    </button>}
+                    {refresh &&
+                        <button
+                            onClick={() => { refresh() }}
+                            className="button p-2"
+                        >
+                            Refresh Data
+                        </button>}
+                    {exportCSV &&
+                        <button
+                            onClick={() => { exportCSV(getRowModel().rows) }}
+                            className="button p-2"
+                        >
+                            Export
+                        </button>}
                     {advanceSearch && <div className="flex-1">
                         <div className="w-full flex justify-end">
                             <button
@@ -166,7 +171,7 @@ const TableUI: FC<TableProps> = ({
                     </div>}
                 </div>
 
-                <div className="p-4">
+                <div className="p-2">
                     {memoisedHeaderComponent && <div>{memoisedHeaderComponent}</div>}
                 </div>
 
@@ -191,7 +196,7 @@ const TableUI: FC<TableProps> = ({
                         <tbody className="p-2">
                             {!isFetching ? (
                                 getRowModel()?.rows.map((row) => (
-                                    <tr key={row.id} className="bg-header hover:bg-buttonHover" tabIndex={0}>
+                                    <tr key={row.id} className="bg-background hover:bg-buttonHover" tabIndex={0}>
                                         {row.getVisibleCells().map((cell) => (
                                             <td
                                                 key={cell.id}
@@ -227,14 +232,14 @@ const TableUI: FC<TableProps> = ({
                 </div>
                 <div className="flex items-center gap-2 text-textSecondary mt-4">
                     <button
-                        className="border rounded p-1 border-border"
+                        className="border rounded p-1 border-border bg-headerBackground"
                         onClick={() => setPagination({ pageIndex: pagination.pageIndex - 1, pageSize: pagination.pageSize })}
                         disabled={!getCanPreviousPage()}
                     >
                         <ChevronLeft />
                     </button>
                     <button
-                        className="border rounded p-1 border-border"
+                        className="border rounded p-1 border-border bg-headerBackground"
                         onClick={(e) => setPagination({ pageIndex: pagination.pageIndex + 1, pageSize: pagination.pageSize })}
                         disabled={!getCanNextPage()}
                     >
@@ -258,10 +263,10 @@ const TableUI: FC<TableProps> = ({
                                 const page = e.target.value ? Number(e.target.value) - 1 : 0;
                                 setPagination(pre => { return { ...pre, pageIndex: page } })
                             }}
-                            className="border border-border bg-header p-1 w-16"
+                            className="border border-border bg-headerBackground p-1 w-16"
                         />
                     </span>
-                    <select className="p-2 bg-header border border-border"
+                    <select className="p-2 bg-headerBackground border border-border"
                         value={getState().pagination.pageSize}
                         onChange={e => {
                             setPageSize(Number(e.target.value))

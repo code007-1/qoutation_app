@@ -1,7 +1,7 @@
 import { Minus } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { useGlobalContext } from "~/modules/gcontext";
-import { ChallanItems } from "~/routes/dashboard.challan.create";
+import { ChallanItems } from "../statics";
 import { productsSearchAPIURL, serialSearchAPIURL } from "../statics";
 
 export default function ChallanAutocompleteSearch({ index }: { index: number }) {
@@ -182,7 +182,6 @@ export default function ChallanAutocompleteSearch({ index }: { index: number }) 
         console.log("highlighted", highlighted);
     };
 
-
     return (
         <div className="grid grid-cols-10 w-auto relative gap-x-2">
             <div className="col-span-3 relative">
@@ -207,7 +206,7 @@ export default function ChallanAutocompleteSearch({ index }: { index: number }) 
                                 className={`${idx === highlighted ? "bg-buttonHover" : "bg-background"} p-2 cursor-pointer text-textSecondary`}
                                 onMouseEnter={() => setHighlighted(idx)}
                             >
-                                {s.name}
+                                {`[${s.no}] ${s.name} - ${s.quantity}`}
                             </li>
                         ))}
                     </ul>
@@ -216,7 +215,7 @@ export default function ChallanAutocompleteSearch({ index }: { index: number }) 
             <div className="col-span-4 relative border border-border h-min">
                 <div className=" flex flex-wrap w-full h-full p-0 justify-between">
                     <input
-                        placeholder="Serial Numbers separated by commas..."
+                        placeholder="Enter Serial Numbers"
                         className="p-2 border-none bg-background focus:outline-none flex-grow"
                         value={serialInput}
                         onFocus={handleSerialFocus}

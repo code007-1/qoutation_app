@@ -5,48 +5,8 @@ import QuotationAutocompleteSearch from "~/component/quotation/quotationAutocomp
 import { AnimatePresence, motion } from "framer-motion";
 import { useCentralFetcher } from "~/component/centralFetcher";
 import { Listbox, ListboxButton, ListboxOption, ListboxOptions, Switch } from "@headlessui/react";
-import { ChallanData } from "./dashboard.challan.create";
 import { ChevronDown, Minus } from "lucide-react";
-import { challans, quotations, saveAndCreatequotationAndChallanPDF } from "~/component/statics";
-
-export type QuotationItems = {
-    id: number;
-    hsn: string;
-    name: string;
-    price: number;
-    addon: number;
-    discount: number;
-    quantity: number;
-    description?: string;
-    link?: string;
-    showLink?: boolean;
-};
-
-export type QuotationData = {
-    no: string;
-    date: string;
-    items: QuotationItems[];
-    intro: string;
-    terms: string;
-    additionalInfo: string;
-    from: string;
-    fromAddress: string;
-    to: string;
-    toAddress: string;
-    tax: number;
-    amount: number;
-    madeby: string;
-    email?: string;
-    contact?: string;
-    bankInfo?: string;
-    website?: string;
-    pdfColor?: string;
-    showLinks?: boolean;
-    todealer?: boolean
-    madeByInfo?: string
-    avgdiscount: number,
-    avgaddon: number
-};
+import { ChallanData, challans, QuotationData, quotations, saveAndCreatequotationAndChallanPDF } from "~/component/statics";
 
 export async function createPdf(data: QuotationData | ChallanData, fetcher: any, showCustomerList?: boolean, save: boolean = true, type: string = quotations) {
     let filteredItems;

@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useGlobalContext } from "~/modules/gcontext";
 import { AlignLeft, BadgeAlert, FilePenLine, ScrollText } from "lucide-react";
 import { Link } from "@remix-run/react";
+import SerialSearchPage from "./dashboard.inventory.search";
 
 export default function Inventory() {
     const [selectedTabIndex, setSelectedTabIndex] = useState(-1);
@@ -72,7 +73,7 @@ export default function Inventory() {
                 <TabGroup className="" selectedIndex={selectedTabIndex} onChange={e => setSelectedTabIndex(e)}>
                     <TabList className="flex justify-center w-full">
                         <div className="flex bg-headerBackground w-[25%] justify-evenly" tabIndex={0}>
-                            {["Products", "Groups", "Invoices"].map((name: string, index: number) => (
+                            {["Products", "Groups", "Invoices", "Serials"].map((name: string, index: number) => (
                                 <Tab
                                     key={name}
                                     className={`w-full py-2 px-4 font-semibold text-textSecondary focus:outline-none hover:bg-buttonHover
@@ -89,10 +90,13 @@ export default function Inventory() {
                             <ProductShow />
                         </TabPanel>
                         <TabPanel key={"Groups"} className="">
-                            Groups
+                            <div className="text-textPrimary flex justify-center text-3xl">Not Ready Yet</div>
                         </TabPanel>
                         <TabPanel key={"Invoices"} className="">
                             <PurchaseInvoiceShow />
+                        </TabPanel>
+                        <TabPanel key={"Serials"} className="">
+                            <SerialSearchPage />
                         </TabPanel>
                     </TabPanels>
                 </TabGroup>

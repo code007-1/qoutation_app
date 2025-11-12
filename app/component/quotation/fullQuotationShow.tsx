@@ -81,7 +81,7 @@ const QuotationsShowFull = () => {
         if (rows.length === 0) {
             alert('No data to export');
         } else {
-            let csvData = "Quotation No, Order No, From, To, Date, Category, Type, Made By, Items and Serial Numbers\n";
+            let csvData = "Quotation No, From, FromAddress, To, ToAddress, Date, Made By, Items and Serial Numbers\n";
 
             rows.map((item: any) => {
                 csvData += item.original.no.toString() + "," + item.original.orderno + "," + item.original.from +

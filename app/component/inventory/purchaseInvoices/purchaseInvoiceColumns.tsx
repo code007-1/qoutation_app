@@ -6,7 +6,7 @@ import { useCentralFetcher } from "~/component/centralFetcher";
 import { documentDeleteAPIURL, purchaseInvoice, purchaseInvoiceReadAPIURL } from "~/component/statics";
 import { useGlobalContext } from "~/modules/gcontext";
 import { useNotification } from "~/modules/notificationContext";
-import { PurchaseInvoiceData, PurchaseInvoiceItem } from "~/routes/dashboard.inventory.purchaseinvoices.create";
+import { PurchaseInvoiceData, PurchaseInvoiceItem } from "~/component/statics";
 
 export const sortButton = (column: any, name: string) => {
     return (

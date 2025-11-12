@@ -3,7 +3,7 @@ import { useNavigate } from "@remix-run/react";
 import { ColumnDef } from "@tanstack/react-table";
 import { Copy, Ellipsis, Pencil, Trash2 } from "lucide-react";
 import { useGlobalContext } from "~/modules/gcontext";
-import { ComplaintsData } from "~/routes/dashboard.complaints.create";
+import { ComplaintsData } from "../statics";
 import { useCentralFetcher } from "../centralFetcher";
 import { useNotification } from "~/modules/notificationContext";
 import { compalints, complaintReadAPIURL } from "../statics";

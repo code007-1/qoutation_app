@@ -8,7 +8,7 @@ export const action: ActionFunction = async ({ request }) => {
 
         if (serials.length > 0) {
             // Filter rows based on the query
-            const filteredRows = serials[0].filter((row: any) => {
+            const filteredRows = serials.filter((row: any) => {
                 try { return row.toLowerCase().includes(query.toLowerCase()); }
                 catch (error) { console.log("error while searching in through serials", row); }
             });

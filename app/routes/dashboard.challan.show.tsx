@@ -32,26 +32,37 @@ const ChallanShow = () => {
     }
 
     // Function to initiate CSV download
-    function downloadCSV(rows: Row<any>[]) {
+    async function downloadCSV(rows: Row<any>[]) {
         if (rows.length === 0) {
             alert('No data to export');
         } else {
-            let csvData = "Challan No, Bill No, Order No, From, To, Date, Category, Type, Made By, Items and Serial Numbers\n";
+            const response = await fetcher(`${challanReadAPIURL}&limit=${rows.length}&full=true`);
+            if (response.status === 200) {
+                const data = await response.json();
 
-            rows.map((item: any) => {
-                csvData += item.original.no.toString() + "," + item.original.billno + ", " + item.original.orderno + "," + item.original.from +
-                    "," + item.original.to + "," + item.original.date + "," + item.original.category + "," + item.original.type + "," + item.original.madeby + "," +
-                    "\"" + item.original.items.map((singleItem: any) => { return singleItem.name + " - " + singleItem.sno?.join(" & ") }).join("\n") + "\"\n";
-            })
-            csvData.trimEnd();
+                let csvData = "Challan No,Bill No,Order No,From,To,Date,Category,Type,Made By,Items and Serial Numbers\n";
 
-            const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.setAttribute('download', `challan-${new Date().toISOString().split("T")[0]}.csv`);
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+                data.map((item: any) => {
+                    csvData += item.no + "," + item.billno + ", " + item.orderno + "," + item.from +
+                        "," + item.to + "," + item.date + "," + item.category + "," + item.type + "," + item.madeby + "," +
+                        "\"" + item.items.map((singleItem: any) => { return singleItem.name + " - " + singleItem.sno?.join(" & ") }).join("\n") + "\"\n";
+                })
+                csvData.trimEnd();
+
+                const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.setAttribute('download', `challan-${new Date().toISOString().split("T")[0]}.csv`);
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+
+                //setOldChallanData(data);
+                //setChallanDataCount(data.length);
+            }
+            else {
+                console.log("error", response);
+            }
         }
     }
 

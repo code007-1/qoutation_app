@@ -3,8 +3,7 @@ import csv from "csv-parser";
 import { search } from "./dbOnline";
 import { dbName, metaCollectionName, productCollectionName } from "./utils";
 import { readFile, writeFile } from "fs/promises";
-import { ProductsData } from "~/routes/dashboard.inventory.products.create";
-
+import { ProductsData } from "~/component/statics";
 export let products: Record<string, ProductsData> = {};
 export let productsCount: number = 0;
 
@@ -45,7 +44,7 @@ async function loadProductJson() {
     products = JSON.parse(raw);
     productsCount = Object.keys(products).length;
 }
-async function saveToJson(version: string) {
+async function saveProductJson(version: string) {
     const jsonString = JSON.stringify(products, null, 2);
     await writeFile("./assets/products.json", jsonString, "utf-8");
     await writeFile("./assets/product_catelog_version.txt", version);
@@ -88,7 +87,7 @@ export async function loadProductsDataPromise() {
                 productsCount = Object.keys(products).length;
 
                 // save products data to json file
-                await saveToJson(String(version[0]["product_catelog_version"]));
+                await saveProductJson(String(version[0]["product_catelog_version"]));
             }
         }
 

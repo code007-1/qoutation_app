@@ -1,7 +1,7 @@
 import { Minus } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { useGlobalContext } from "~/modules/gcontext";
-import { QuotationItems } from "~/routes/dashboard.quotations.create.full";
+import { QuotationItems } from "../statics";
 import { productsSearchAPIURL } from "../statics";
 
 //- done - advance show hide for better ui - optimized little bit, ok for now
@@ -135,7 +135,7 @@ export default function QuotationAutocompleteSearch({ index }: { index: number }
                                     className={`${idx === highlighted ? "bg-buttonHover" : "bg-background"} p-2 cursor-pointer text-textSecondary`}
                                     onMouseEnter={() => setHighlighted(idx)}
                                 >
-                                    {s.name}
+                                    {`${s.name} - ${s.quantity}`}
                                 </li>
                             ))}
                         </ul>

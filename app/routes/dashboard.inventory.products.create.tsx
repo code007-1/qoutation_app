@@ -3,21 +3,9 @@ import { ObjectId } from "mongodb";
 import { useEffect } from "react";
 import { useCentralFetcher } from "~/component/centralFetcher";
 import { productCreateAPIURL, productReadSingleAPIURL, products } from "~/component/statics";
-import { useGlobalContext } from "~/modules/gcontext";
+import { initialProductData, useGlobalContext } from "~/modules/gcontext";
 import { useNotification } from "~/modules/notificationContext";
 
-export interface ProductsData {
-    _id?: ObjectId,
-    no: number,
-    name: string,
-    description?: string,
-    hsn?: string,
-    link?: string,
-    group?: string
-    quantity: number,
-    price: number,
-    version?: number
-}
 
 export default function CreateProduct() {
     const { productsData, setProductsData, setHeaderText } = useGlobalContext();
@@ -28,7 +16,6 @@ export default function CreateProduct() {
         const response = await fetcher(`${productReadSingleAPIURL}&limit=1&sortString=no`);
         if (response.status === 200) {
             const product = await response.json();
-            console.log("jsahdjkas", product);
             //return Number(product[0]?.no || 0) + 1;
             setProductsData(pre => { return { ...pre, no: Number(product[0]?.no || 0) + 1 } });
         }
@@ -52,12 +39,13 @@ export default function CreateProduct() {
         // new product
         else {
             getProductsID();
+            setProductsData(initialProductData());
         }
     }, []);
 
     async function save() {
         const payload = { ...productsData, group: productsData.group || "Default" };
-        console.log("kajsdklasjd", payload);
+
         const response = await fetcher(`${productCreateAPIURL}`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -87,7 +75,7 @@ export default function CreateProduct() {
                     }} />
                 </div>
                 <div>
-                    Product Quantity <div className="inputFilled w-full border-0 ">{productsData.quantity}</div>
+                    Product Quantity <div className="inputFilled w-full border-0 ">{productsData.availableQuantity}</div>
                 </div>
                 <div>
                     Product Price <input type="text" name="productprice" placeholder="Enter Product Price" className="inputHollow w-full" value={productsData.price} onChange={(e) => {
@@ -95,7 +83,7 @@ export default function CreateProduct() {
                     }} />
                 </div>
                 <div>
-                    Product Group <textarea rows={3} name="productgroup" placeholder="Product Group" className="inputHollow w-full" value={productsData.group} onChange={(e) => {
+                    Product Group <textarea readOnly rows={3} name="productgroup" placeholder="Product Group" className="inputHollow w-full" value={productsData.group} onChange={(e) => {
                         setProductsData(pre => { return { ...pre, group: e.target.value } });
                     }} />
                 </div>

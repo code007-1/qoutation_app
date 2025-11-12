@@ -1,12 +1,12 @@
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { useNavigate } from "@remix-run/react";
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown, Copy, Ellipsis, MoveDown, MoveUp, Pencil, Trash2 } from "lucide-react";
+import { ArrowUpDown, Copy, Ellipsis, MoveDown, MoveUp, Pencil, Trash2, History } from "lucide-react";
 import { useCentralFetcher } from "~/component/centralFetcher";
 import { products } from "~/component/statics";
 import { useGlobalContext } from "~/modules/gcontext";
 import { useNotification } from "~/modules/notificationContext";
-import { ProductsData } from "../../../routes/dashboard.inventory.products.create";
+import { ProductsData } from "~/component/statics";
 
 export const sortButton = (column: any, name: string) => {
 
@@ -49,6 +49,10 @@ export function useProductsColumn() {
         else {
             setOldProductsData((pre: any) => { return pre.filter(({ no }: { no: number }) => no != productno) });
         }
+    }
+
+    function handleSummary(row: ProductsData) {
+        navigate("/dashboard/inventory/product/summary", { state: { product: row } });
     }
 
     const column: ColumnDef<any, any>[] = [
@@ -97,8 +101,15 @@ export function useProductsColumn() {
             },
         },
         {
-            accessorKey: "quantity",
-            header: "Quantity",
+            accessorKey: "quantity",// change here
+            header: "Available",
+            filterFn: (row, columnId, filterValue) => {
+                return row.original[columnId].toString().toLowerCase().includes(filterValue);
+            },
+        },
+        {
+            accessorKey: "quantity",// change here
+            header: "Sold",
             filterFn: (row, columnId, filterValue) => {
                 return row.original[columnId].toString().toLowerCase().includes(filterValue);
             },
@@ -150,6 +161,13 @@ export function useProductsColumn() {
                                             <div className="text-textPrimary">Delete</div>
                                         </div>
                                     </MenuItem>}
+                                <MenuItem>
+                                    <div className="flex px-6 py-1 data-[focus]:bg-buttonHover"
+                                        onClick={() => handleSummary(user.row.original)}>
+                                        <div className="text-textSecondary mr-4"><History size={20} /></div>
+                                        <div className="text-textPrimary">Summary</div>
+                                    </div>
+                                </MenuItem>
                             </div>
                         </MenuItems >
                     </Menu >

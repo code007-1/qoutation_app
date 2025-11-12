@@ -3,11 +3,10 @@ import { useNavigate } from "@remix-run/react";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowDownToLine, ArrowUpDown, Copy, Ellipsis, Pencil, Trash2 } from "lucide-react";
 import { useGlobalContext } from "~/modules/gcontext";
-import { createPdf } from "~/routes/dashboard.quotations.create.full";
-import { useCentralFetcher } from "../centralFetcher";
 import { documentDeleteAPIURL, shortQuotationReadAPIURL, shortQuotations } from "../statics";
 import { useNotification } from "~/modules/notificationContext";
 import { SaveQuotation } from "~/routes/dashboard.quotations.create.short";
+import { useCentralFetcher } from "../centralFetcher";
 
 export const sortButton = (column: any, name: string) => {
     return (
@@ -32,7 +31,7 @@ export function useShortQuotationsColumns() {
     const { addNotifications } = useNotification();
 
     async function getQoutations(no: string) {
-        const response = await fetcher(`${shortQuotationReadAPIURL}&no=${no}`);
+        const response = await fetcher(`${shortQuotationReadAPIURL}&no=${no}&full=true`);
         if (response.status === 200) {
             const data = await response.json()
             return data;
@@ -210,7 +209,6 @@ export function useShortQuotationsColumns() {
                                         <div className="text-textPrimary">Convert</div>
                                     </div>
                                 </MenuItem>
-
                                 <MenuItem>
                                     <div
                                         className="flex px-6 py-1 data-[focus]:bg-buttonHover"

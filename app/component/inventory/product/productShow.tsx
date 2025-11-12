@@ -3,7 +3,7 @@ import { initialProductData, useGlobalContext } from "~/modules/gcontext";
 import { useCentralFetcher } from "~/component/centralFetcher";
 import { useNotification } from "~/modules/notificationContext";
 import { productReadAPIURL } from "~/component/statics";
-import { useProductsColumn as useProductsColumn } from "~/component/inventory/product/productColumns";
+import { useProductsColumn } from "~/component/inventory/product/productColumns";
 import TableUI from "~/component/tableUI";
 
 export default function ProductShow() {

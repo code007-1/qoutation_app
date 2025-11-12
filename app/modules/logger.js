@@ -169,11 +169,11 @@ async function find(params) {
     await client.connect();
     // Send a ping to confirm a successful connection
     await client.db("unnamed").command({ ping: 1 });
-    const result = await client.db("unnamed").collection("products").find({}, {}).sort("no", -1).skip(0).limit(10).toArray();
+    const result = await client.db("unnamed").collection("products").find({ no: "1" }, {}).sort("no", -1).skip(0).limit(10).toArray();
     console.log(result);
     client.close();
 }
-//find();
+find();
 import { Redis } from '@upstash/redis';
 
 export const redis = new Redis({
@@ -185,9 +185,9 @@ export const redis = new Redis({
 //await redis.sadd("no:123:serials", "456", "546");
 //await redis.srem("no:123:serials", "456");
 //await redis.srem("no:123:serials", "444");
-const result = await redis.smembers("product:125:serial");
+//const result = await redis.smembers("product:125:serial");
 
-console.log("result is : ", result);
+//console.log("result is : ", result);
 
 
 //find();
@@ -195,3 +195,9 @@ console.log("result is : ", result);
 // which are being showed in table, when editing copying or downliding, load full version of that document.
 // implement each product versioning instead of whole collection versioning
 //fix data type in api.create
+function test() {
+    return {
+        key: "value"
+    }
+}
+console.log(test())

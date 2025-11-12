@@ -1,7 +1,7 @@
 import { insertOnetoDb, insertOrUpdateOnetoDb } from "~/modules/dbOnline";
 import { ActionFunction } from "@remix-run/node";
 import { complaintCollectionName, dbName, logsCollectionName, verifyAccessToken } from "~/modules/utils";
-import { ComplaintsData } from "./dashboard.complaints.create";
+import { ComplaintsData } from "~/component/statics";
 
 //export let loader: LoaderFunction = async ({ request, params }) => {
 export const action: ActionFunction = async ({ request, params }) => {

@@ -5,31 +5,6 @@ import { useNotification } from "~/modules/notificationContext";
 import { Tab, TabGroup, TabList, TabPanel, TabPanels, Switch, RadioGroup, Radio } from "@headlessui/react";
 import { Trash2 } from "lucide-react";
 
-export type generalInfo = {
-    contact?: string,
-    email?: string,
-    website?: string,
-    company: string,
-    address?: string,
-    madeByInfo?: string;
-    bankInfo?: string[];
-}
-
-export type quotationInfo = {
-    pdfColor: string,
-    showCustomerList?: boolean,
-    terms?: string,
-    additionalInfo?: string,
-    intro?: string,
-}
-
-export type profile = {
-    username?: string,
-    password?: string,
-    generalInfo: generalInfo[],
-    quotationInfo: quotationInfo[],
-}
-
 export default function SettingsProfile() {
     const { setHeaderText, profile, setProfile, selectedProfile, setSelectedProfile } = useGlobalContext();
     const { addNotifications } = useNotification();

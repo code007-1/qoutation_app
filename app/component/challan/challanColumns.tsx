@@ -2,7 +2,7 @@ import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowBigDownDash, ArrowDownToLine, ArrowUpDown, Copy, Ellipsis, Pencil, Trash2 } from "lucide-react";
 import { useGlobalContext } from "~/modules/gcontext";
-import { ChallanData, ChallanItems } from "~/routes/dashboard.challan.create";
+import { ChallanData, ChallanItems } from "../statics";
 import { createPdf } from "~/routes/dashboard.quotations.create.full";
 import { useCentralFetcher } from "../centralFetcher";
 import { challanReadAPIURL, challans, documentDeleteAPIURL } from "../statics";
@@ -30,7 +30,7 @@ export function useChallanColumns() {
 
 
     async function getChallans(no: string) {
-        const response = await fetcher(`${challanReadAPIURL}&no=${no}`);
+        const response = await fetcher(`${challanReadAPIURL}&no=${no}&full=true`);
         if (response.status === 200) {
             const data = await response.json()
             return data;

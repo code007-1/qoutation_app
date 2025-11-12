@@ -3,7 +3,6 @@ import { initialPurchaseInvoiceData, useGlobalContext } from "~/modules/gcontext
 import PurchaseInvoiceAutocompleteSearch from "../component/inventory/purchaseInvoices/purchaseInvoiceAutocompleteSearch";
 import { useCentralFetcher } from "../component/centralFetcher";
 import { purchaseInvoiceCreateAPIURL } from "../component/statics";
-import { ObjectId } from "mongodb";
 import { useLocation } from "@remix-run/react";
 
 /*
@@ -48,23 +47,6 @@ and update quantity for all products of that invoice
 bug - form causing first item to disapper
          */
 
-export interface PurchaseInvoiceItem {
-    no: number, // product id
-    name: string, // product name
-    quantity: number, // product name
-    price: number, // purchase price
-    discount: number, // is there any discount on purchase price
-    sno: string[]
-}
-export interface PurchaseInvoiceData {
-    _id?: ObjectId,
-    no: string,
-    vendor: string,
-    date: string,
-    items: PurchaseInvoiceItem[]
-    amount: number,
-    tax: number
-}
 
 export default function CreatePurchaseInvoice() {
     const { purcahseInvoiceData, setPurchaseInvoiceData, purchaseInvoiceItems, setPurchaseInvoiceItems, setHeaderText } = useGlobalContext();
@@ -98,7 +80,7 @@ export default function CreatePurchaseInvoice() {
     }, [purchaseInvoiceItems]);
 
     useEffect(() => {
-        //setHeaderText("Purchase Invoice");
+        setHeaderText("Purchase Invoice");
         // copying existing product
         if (passedData && passedData?.editing === false) {
             setPurchaseInvoiceData(pre => { return { ...pre, date: new Date().toISOString().split("T")[0] } });
@@ -115,10 +97,6 @@ export default function CreatePurchaseInvoice() {
     }, []);
 
     return (<>
-        <div className="w-full flex justify-end items-center font-semibold text-textSecondary text-center">
-
-
-        </div>
         <div className="grid grid-cols-6 gap-4 text-textPrimary mt-4">
             <div className="col-span-1">
                 {(passedData && passedData?.editing === true) ? <>Invoice No.<div className="border-0 p-2 bg-buttonHover w-full">{purcahseInvoiceData.no}</div></> : <>Invoice No.<input required type="text" name="invoiceno" placeholder="Enter Invoice No." className="inputHollow w-full" value={purcahseInvoiceData.no} onChange={e => setPurchaseInvoiceData(pre => { return { ...pre, no: e.target.value } })} /></>}

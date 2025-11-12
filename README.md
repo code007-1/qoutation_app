@@ -38,3 +38,9 @@ Make sure to deploy the output of `npm run build`
 ## Styling
 
 This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever css framework you prefer. See the [Vite docs on css](https://vitejs.dev/guide/features.html#css) for more information.
+
+TODO:
+add form validations, use React hook forms, implement backend pagination
+# most important 
+inventory management
+download csv data

@@ -1,15 +1,8 @@
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
-import { ObjectId } from "mongodb";
 import { useEffect, useState } from "react";
 import CreateProduct from "~/routes/dashboard.inventory.products.create";
 import CreatePurchaseInvoice from "~/routes/dashboard.inventory.purchaseinvoices.create";
 import { useGlobalContext } from "~/modules/gcontext";
-
-export interface GroupsData {
-    _id?: ObjectId,
-    name: string,
-    parent?: string,
-}
 
 export default function InventoryCreation() {
     const { setHeaderText, setGroupsData } = useGlobalContext();

@@ -5,12 +5,12 @@ import QuotationAutocompleteSearch from "~/component/quotation/quotationAutocomp
 import { useCentralFetcher } from "~/component/centralFetcher";
 import { ChevronDown, Minus } from "lucide-react";
 import { useNotification } from "~/modules/notificationContext";
-import { QuotationData, QuotationItems } from "./dashboard.quotations.create.full";
+import { QuotationData, QuotationItems } from "~/component/statics";
 import { shortQuotationCreateAPIURL } from "~/component/statics";
 import { Listbox, ListboxButton, ListboxOption, ListboxOptions, Switch } from "@headlessui/react";
 import { FormatAmountToINR } from "~/component/quotation/fullQuotationColumns";
 
-export async function SaveQuotation(quotationData: QuotationData, quotationItems: QuotationItems[], addNotifications: any, fetcher: any, navigate: any) {
+export async function SaveQuotation(quotationData: QuotationData, quotationItems: QuotationItems[], addNotifications: any, fetcher: any, navigate: any, save: boolean = false) {
     let filteredItems;
     filteredItems = quotationItems.filter((item: any) => {
         if (!isFinite(item.price) || !isFinite(item.quantity)) return false;
@@ -49,17 +49,19 @@ export async function SaveQuotation(quotationData: QuotationData, quotationItems
         console.error("Failed to copy: ", err);
     });
 
-    const response = await fetcher(`${shortQuotationCreateAPIURL}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...quotationData, items: filteredItems })
-    });
+    if (save) {
+        const response = await fetcher(`${shortQuotationCreateAPIURL}`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ ...quotationData, items: filteredItems })
+        });
 
-    if (response.status !== 200) {
-        addNotifications({ title: "Error", message: "Some error occured while saving quotation" });
-    }
-    else {
-        navigate("/dashboard/quotations/show");
+        if (response.status !== 200) {
+            addNotifications({ title: "Error", message: "Some error occured while saving quotation" });
+        }
+        else {
+            navigate("/dashboard/quotations/show");
+        }
     }
 }
 
@@ -240,7 +242,7 @@ export default function ShortQuotationsCreate() {
                     </div>
                 </div>
                 <div className="flex justify-center space-x-4">
-                    <form onSubmit={(e) => { e.preventDefault(); SaveQuotation(quotationData, quotationItems, addNotifications, fetcher, navigate); }}>
+                    <form onSubmit={(e) => { e.preventDefault(); SaveQuotation(quotationData, quotationItems, addNotifications, fetcher, navigate, true); }}>
                         <button className="button px-4 py-1 mt-4 text-lg" type="submit">Save Quotation</button>
                     </form>
                 </div>

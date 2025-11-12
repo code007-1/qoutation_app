@@ -2,14 +2,15 @@ import { insertOnetoDb, insertOrUpdateOnetoDb, update } from "~/modules/dbOnline
 import { ActionFunction } from "@remix-run/node";
 import { dbName, logsCollectionName, metaCollectionName, productCollectionName, verifyAccessToken } from "~/modules/utils";
 import { products } from "~/modules/loadProducts";
-import { ProductsData } from "./dashboard.inventory.products.create";
+import { ProductsData } from "~/component/statics";
 
 function parseProduct(product: ProductsData): ProductsData {
     return {
         ...product,
         no: Number(product.no),
         price: Number(product.price),
-        quantity: Number(product.quantity),
+        availableQuantity: Number(product.availableQuantity),
+        soldQuantity: Number(product.soldQuantity),
         version: Number(products[product.no].version || 0) + 1
     };
 }

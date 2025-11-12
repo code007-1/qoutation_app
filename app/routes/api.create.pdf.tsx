@@ -2,8 +2,8 @@ import { renderToStream } from "@react-pdf/renderer";
 import { ActionFunction } from "@remix-run/node";
 import ChallanPDFDocument from "~/component/PDF/ChallanPDFDcoument";
 import QuotationPDFDocument from "~/component/PDF/QuotationPDFDcoument";
-//import { SaveOrUpdate } from "~/modules/dbOffline";
 import { insertOnetoDb, insertOrUpdateOnetoDb } from "~/modules/dbOnline";
+import SaveChallan from "~/modules/saveChallan";
 import { challanCollectionName, dbName, logsCollectionName, fullQuotationCollectionName, verifyAccessToken } from "~/modules/utils";
 
 export const action: ActionFunction = async ({ request, params }) => {
@@ -23,7 +23,7 @@ export const action: ActionFunction = async ({ request, params }) => {
             if (type === fullQuotationCollectionName)
                 await insertOrUpdateOnetoDb(data, dbName, fullQuotationCollectionName, { "no": data.no }, true);
             else if (type === challanCollectionName)
-                await insertOrUpdateOnetoDb(data, dbName, challanCollectionName, { "no": data.no }, true);
+                await SaveChallan(data);
             else {
                 console.error("unknown data type while saving to db");
                 throw new Response("Internal server error", { status: 500 });

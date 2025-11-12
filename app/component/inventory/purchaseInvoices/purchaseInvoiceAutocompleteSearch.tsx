@@ -1,8 +1,7 @@
 import { Minus } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { useGlobalContext } from "~/modules/gcontext";
-import { productsSearchAPIURL } from "../../statics";
-import { PurchaseInvoiceItem } from "~/routes/dashboard.inventory.purchaseinvoices.create";
+import { PurchaseInvoiceItem, productsSearchAPIURL } from "../../statics";
 
 export default function PurchaseInvoiceAutocompleteSearch({ index }: { index: number }) {
     const [showSuggestions, setShowSuggestions] = useState(false);
@@ -10,6 +9,7 @@ export default function PurchaseInvoiceAutocompleteSearch({ index }: { index: nu
     const [highlighted, setHighlighted] = useState<number>(-1);
     const inputRef = useRef<HTMLInputElement>(null);
     const [hasFocus, setFocus] = useState(false);
+    const [serialInput, setSerialInput] = useState("");
 
     const { purchaseInvoiceItems, setPurchaseInvoiceItems } = useGlobalContext();
 
@@ -91,6 +91,17 @@ export default function PurchaseInvoiceAutocompleteSearch({ index }: { index: nu
         }
     };
 
+    const handleSerialKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === "Enter" && highlighted == -1) {
+            setSerialInput("");
+            setPurchaseInvoiceItems(pre => {
+                return pre.map((item, i) => i === index
+                    ? { ...item, sno: [...(item.sno ?? []), serialInput], quantity: Number(item.sno?.length || 0) + 1 }
+                    : item)
+            });
+        }
+    }
+
     return (
         <div className="grid grid-cols-12 relative w-full gap-x-2">
             <div className="col-span-4 flex gap-x-2">
@@ -120,27 +131,36 @@ export default function PurchaseInvoiceAutocompleteSearch({ index }: { index: nu
                                     className={`${idx === highlighted ? "bg-buttonHover" : "bg-background"} p-2 cursor-pointer text-textSecondary`}
                                     onMouseEnter={() => setHighlighted(idx)}
                                 >
-                                    {s.name}
+                                    {`[${s.no}] ${s.name} - ${s.quantity}`}
                                 </li>
                             ))}
                         </ul>
                     )}
                 </div>
             </div>
-            <textarea
-                placeholder="Serial Numbers separated by commas..."
-                className="col-span-4 inputHollow"
-                rows={1}
-                value={purchaseInvoiceItems[index].sno.join(",")}
-                onChange={(e) => {
-                    setPurchaseInvoiceItems(pre => {
-                        const snos = e.target.value.replace(/[\s,]+/g, ",").trim().split(",");
-                        return pre.map((item, i) => i === index
-                            ? { ...purchaseInvoiceItems[index], sno: snos, quantity: snos.length }
-                            : item);
-                    })
-                }}
-            />
+            <div className="col-span-4 relative border border-border h-min">
+                <div className=" flex flex-wrap w-full h-full p-0 justify-between">
+                    <input
+                        placeholder="Enter Serial Numbers"
+                        className="p-2 border-none bg-background focus:outline-none flex-grow"
+                        value={serialInput}
+                        onKeyDown={handleSerialKeyDown}
+                        onChange={(e) => { setSerialInput(e.target.value); }}
+                    />
+                    <div className="flex-wrap flex items-center gap-2">
+                        {purchaseInvoiceItems[index]?.sno?.map(serial => {
+                            return <div className="p-1 bg-headerBackground">{serial}<button className="ml-2 px-1 hover:bg-buttonHover"
+                                onClick={() => {
+                                    setPurchaseInvoiceItems(pre => {
+                                        return pre.map((item, i) => i == index
+                                            ? { ...item, sno: item.sno?.filter(s => s !== serial), quantity: Number(item.sno?.length || 2) - 1 }
+                                            : item)
+                                    })
+                                }}>X</button></div>
+                        })}
+                    </div>
+                </div>
+            </div>
             <input
                 type="number"
                 placeholder="Quantity"

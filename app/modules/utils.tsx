@@ -2,7 +2,7 @@ import pkg from "jsonwebtoken";
 const { verify } = pkg;
 
 import { count, redis, search } from "./dbOnline";
-import { profile } from "~/routes/dashboard.settings.profile";
+import { profile } from "~/component/statics";
 
 export const JWT_REFRESH_KEY = "123!@#$@SDFASDAD";
 export const JWT_ACCESS_KEY = "!#SDAS@#!!@XZZXC";
@@ -27,6 +27,17 @@ export const reddisUrl = "https://daring-seasnail-19305.upstash.io";
 export const reddisToken = "AUtpAAIncDI1MTcwODVkNTM3NTU0NzM4ODYxMTJlZGEwMjAwZDFkMnAyMTkzMDU";
 
 const serialsCache = new Map<string, { data: string[]; expiresAt: number }>();
+
+export type loginData = {
+    token?: string,
+    quote?: string
+    profile: profile
+    permissions: string
+};
+
+export type logoutData = {
+    success: boolean | undefined,
+};
 
 export async function getCachedSerials(productId: string) {
     const entry = serialsCache.get(productId);
@@ -55,26 +66,6 @@ export function getUserProfile(result: any) {
         return { generalInfo: [{ contact: "+91 7065577059/60", address: "G-57, Vikas Marg, Near Metro Pillar No.41, \nDelhi - 110092", company: "Teen Telecommunication Pvt. Ltd.", website: "https://teentelecommunication.com", email: "sales@teentelecommunication.com" }], quotationInfo: [{ pdfColor: "222", showCustomerList: true }] };
     }
 }
-
-export type serials = {
-    sno: string,
-    productid: string,
-    purchaseInvoice?: string,
-    purchaseDate?: string,
-    saleInvoice?: string,
-    saleDate?: string,
-}
-
-export type loginData = {
-    token?: string,
-    quote?: string
-    profile: profile
-    permissions: string
-};
-
-export type logoutData = {
-    success: boolean | undefined,
-};
 
 export function prefixSerial(productId: string, serial: string) {
     return `${productId}-${serial}`;

@@ -1,19 +1,21 @@
 import { ActionFunction } from "@remix-run/node";
 import { ObjectId } from "mongodb"
 import { bulkWriteToDb, insertOnetoDb, insertOrUpdateOnetoDb, redis, search, } from "~/modules/dbOnline";
-import { dbName, prefixPurchaseInvoice, productCollectionName, pruchaseInvoicePrefix as purchaseInvoicePrefix, purchaseInvoiceCollectionName, serialsCollectionName, verifyAccessToken } from "~/modules/utils";
+import { dbName, prefixPurchaseInvoice, productCollectionName, pruchaseInvoicePrefix as purchaseInvoicePrefix, purchaseInvoiceCollectionName, serialsCollectionName, verifyAccessToken, challanCollectionName, logsCollectionName } from "~/modules/utils";
+import { PurchaseInvoiceData } from "~/component/statics";
 
+//right now id doesn't handle duplication of serial numbers when, in same challan or purchase invoice there are two products with same serial number
 export const action: ActionFunction = async ({ request, params }) => {
     try {
-        const { permissions } = await verifyAccessToken(request);
+        const { permissions, username } = await verifyAccessToken(request);
         if (!permissions?.includes("write"))
             return new Response("user not authorized to create", { status: 405 });
 
         const { _id, ...data } = await request.json();
 
-        let result: any[] = [];
+        let result: PurchaseInvoiceData[] = [];
         if (_id && _id != "")
-            result = await search(dbName, purchaseInvoiceCollectionName, { "_id": new ObjectId(_id) }, { items: 1 }, 1, 0);
+            result = await search(dbName, purchaseInvoiceCollectionName, { "_id": new ObjectId(_id) }, { "projection": { items: 1 } }, 1, 0) as PurchaseInvoiceData[];
 
         const serialBulkOps: any[] = [];
         let editedProducts: Set<string> = new Set();
@@ -22,50 +24,71 @@ export const action: ActionFunction = async ({ request, params }) => {
         // if invoice number is already present
         if (result.length > 0 && result[0].items) {
             const oldData = Object.fromEntries(result[0].items.flatMap((e: any) => { return e.sno.map((k: any) => [k, e.no]) }));
-            const current = new Set(Object.keys(currentData));
-            const old = new Set(Object.keys(oldData));//result.map((e: any) => e.items.sno).flat()
-            editedProducts = new Set([...current, ...old]);
 
-            const added = [...current].filter(x => !old.has(x)) as string[];
-            const removed = [...old].filter(x => !current.has(x)) as string[];
-
-            // for new added serial numbers
-            added.forEach(element => {
-                serialBulkOps.push({ "insertOne": { sno: element, productid: currentData[element], purchaseInvoice: prefixPurchaseInvoice(data["vendor"], data.no), purchaseDate: data.date } })
+            /*const allEditedSerials: Record<string, {}> = {};
+            [...Object.keys(currentData), ...Object.keys(currentData)].forEach(e => {
+                allEditedSerials[e[0] + e[1]] = { productId: e[1], no: e[0] };
             });
 
-            // for updating duplicates serial numbers
-            if (purchaseInvoicePrefix + data.no != result[0].invoiceno || data.date != result[0].date || data.vendor != result[0].vendor) {
-                const duplicates = [...old].filter(x => current.has(x)) as string[];
-                duplicates.forEach((element) => {
-                    serialBulkOps.push({ "updateOne": { "filter": { "sno": element }, "update": { "$set": { "productid": currentData[element], "purchaseInvoice": data.no, "purchaseDate": data.date } } } });
-                });
-            }
-
-            // would check this functionality after attaching challan serials collection
-            // for removed serial numbers
-            const existing = await search(dbName, serialsCollectionName, { "sno": { "$in": removed } }, {}, removed.length, 0);
-            existing.forEach((element: any) => {
-                // this serialno product sold already, so just update purchase info, but keep this serialno document
-                if (("saleInvoice" in element) && element.saleInvoice != "") {
-                    serialBulkOps.push({ "updateOne": { "filter": { "sno": element.sno }, "update": { "$set": { purchaseInvoice: "", purchaseDate: "" } } } });
-                }
-
-                // this serialno product not sold yet, so remove this document
-                else //(!("saleInvoice" in element) || element.saleInvoice == "") 
+            use it - let allEditedSerialsData = await search(dbName, serialsCollectionName, { no: { "$or": Object.values(allEditedSerials) } }, { "projection": { "status": 1, "no": 1, "productId": 1 } });
+*/
+            // serial number - productid
+            Object.entries(currentData).forEach((element) => {
+                editedProducts.add(element[1]);
+                if (!(element[0] in oldData)) // for new added serial number
                 {
-                    serialBulkOps.push({ "deleteOne": { "filter": { "sno": element.sno } } });
+                    serialBulkOps.push({
+                        "updateOne": {
+                            "filter": { productId: element[1], no: element[0] },
+                            "update": { "$set": { no: element[0], productid: element[1], purchaseInvoice: data.no, purchaseDate: data.date, status: "purchased" } },
+                            "upsert": true, // This will insert if no match is found, but we are updating for case where it's been sold already but later purcahsed entry is being done
+                        }
+                    })
+                }
+                else { // in both current data and old data
+                    if (data.date != result[0].date) { // date field has been changed, because no other data we are saving that could change 
+                        serialBulkOps.push({
+                            "updateOne": {
+                                "filter": { productId: element[1], no: element[0] },
+                                "update": { "$set": { purchaseInvoiceNo: data.date, purchaseDate: data.date } },
+                            }
+                        })
+                    }
                 }
             });
 
-            // for quantity changes tracking
-            //const quantityChange: Record<string, number> = {};
-            //added.forEach(element => { quantityChange[element] = (quantityChange[element] || 0) + 1; });
-            //removed.forEach(element => { quantityChange[element] = (quantityChange[element] || 0) - 1; });
-            //console.log("bulk operations", bulkOps, "current : ", current, "old : ", old, "currentData : ", currentData, "oldData : ", oldData, "added : ", added, "removed : ", removed);
+            const removedSerials: Set<string> = new Set();
+            Object.entries(oldData).forEach((element) => {
+                editedProducts.add(element[1]);
+                removedSerials.add(element[0]);
+            });
+
+            const removedSerialsData = await search(dbName, serialsCollectionName, { "no": { "$in": [...removedSerials] } }, { "projection": { "status": 1, "no": 1, "productId": 1 } });
+            removedSerialsData.forEach((element) => {
+                if (element.no in oldData && element.productId === oldData[element.no]) { // this serial number has been removed, i.e., not purchased now
+                    if (element.status === "sold")
+                    // but if we have only keeps sold and purchased status, what happens when a product sold and never pruchased, how do we track that,
+                    // possible answer to have more status, wopSold - without purchased sold
+                    {
+                        serialBulkOps.push({
+                            "updateOne": {
+                                "filter": { productId: element.productId, no: element.no },
+                                "update": { "$set": { status: "swop", purchaseDate: data.date } },
+                            }
+                        });
+                    }
+                    else { // it must be element.status === "purchased"
+                        serialBulkOps.push({
+                            "deleteOne": {
+                                "filter": { productId: element.productId, no: element.no }
+                            }
+                        });
+                    }
+                }
+            });
         }
 
-        // if invoice number is new
+        // if invoice number is new i.e., each serial number is new 
         else {
             // for new added serial numbers - here everything is new
             serialBulkOps.push(
@@ -78,40 +101,41 @@ export const action: ActionFunction = async ({ request, params }) => {
             );
         }
 
-        //console.log("bulk ops : ", JSON.stringify(bulkOps));
-        //console.log("bulk ops : ", data, JSON.stringify(bulkOps));
-
-        //wrties to purchase invoice collection
-        if (result.length > 0) await insertOrUpdateOnetoDb(data, dbName, purchaseInvoiceCollectionName, { _id: new ObjectId(_id) }, false);
-        else await insertOnetoDb(data, dbName, purchaseInvoiceCollectionName);
+        //wrties to purchase invoice collection collection
+        if (result.length > 0) await insertOrUpdateOnetoDb(data, dbName, purchaseInvoiceCollectionName, { "_id": new ObjectId(_id) }, false);
+        else await insertOnetoDb(data, dbName, challanCollectionName);
 
         // writes to serials collection
         if (serialBulkOps.length > 0)
             await bulkWriteToDb(serialBulkOps, dbName, serialsCollectionName);
 
-        // writes to products collection
+        // for calculating products quantity
         if (editedProducts.size > 0) {
-            const products = await search(dbName, serialsCollectionName, { "productid": { "$in": [...editedProducts] } }, { "projection": { "purchaseInvoice": 1, "salesInvoice": 1, "productid": 1, "sno": 1 } }, 1e7, 0);
+            const products = await search(dbName, serialsCollectionName, { "productId": { "$in": [...editedProducts] } }, { "projection": { "status": 1, "productId": 1 } }, 1e7, 0);
             const currentStocks: Record<string, number> = {};
             const currentSerials: Record<string, [string]> = {};
             const productsBulkOps: { updateOne: { filter: { no: string; }; }; update: { $set: { quantity: number; }; }; }[] = [];
 
             products.forEach(element => {
-                currentStocks[element["productid"]] = (currentStocks[element["productid"]] || 0) + (element["purchaseInvoice"] ? 1 : 0);
-                currentStocks[element["productid"]] = (currentStocks[element["productid"]] || 0) + (element["salesInvoice"] ? -1 : 0);
+                if (element["status"] === "purchased") {
+                    currentStocks[element["productId"]] = (currentStocks[element["productId"]] || 0) + 1;
 
-                if (!("salesInvoice" in element) || element["salesInvoice"] === "")
-                    if (element["productid"] in currentSerials)
-                        currentSerials[element["productid"]].push(String(element["sno"]));
+                    if (element["productId"] in currentSerials)
+                        currentSerials[element["productId"]].push(String(element["no"]));
                     else
-                        currentSerials[element["productid"]] = [String(element["sno"])];
+                        currentSerials[element["productId"]] = [String(element["no"])];
+                }
+                else if (element["status"] == "swop")
+                    currentStocks[element["productId"]] = (currentStocks[element["productId"]] || 0) - 1;
+                else
+                    currentStocks[element["productId"]] = (currentStocks[element["productId"]] || 0);
             });
 
+            // writes quantity to products collection
             Object.entries(currentStocks).forEach(element => {
                 productsBulkOps.push({ "updateOne": { "filter": { "no": element[0] } }, "update": { "$set": { "quantity": element[1] } } });
             });
 
-            // writes quantity to products collection
             await bulkWriteToDb(productsBulkOps, dbName, productCollectionName);
 
             // writes serials to redis set for fast cache
@@ -122,7 +146,7 @@ export const action: ActionFunction = async ({ request, params }) => {
         }
 
         // writes to logs collection
-        //await insertOnetoDb({ "by": username, "action": `purchase invoice entry`, "result": "succeded", "when": new Date().toISOString() }, dbName, logsCollectionName);
+        await insertOnetoDb({ "by": username, "action": `challan edited or created`, "result": "succeded", "when": new Date().toISOString() }, dbName, logsCollectionName);
         return new Response("purchase invoice saved succefully", { status: 200 });
     }
     catch (error) {

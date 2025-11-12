@@ -1,13 +1,7 @@
 import { Link } from "@remix-run/react";
 import React, { createContext, useState, useContext, ReactNode } from "react";
-import { profile } from "~/routes/dashboard.settings.profile";
-import { QuotationData, QuotationItems } from "~/routes/dashboard.quotations.create.full";
+import { PurchaseInvoiceItem, PurchaseInvoiceData, profile, QuotationData, QuotationItems, ChallanData, ChallanItems, ProductsData, ComplaintsData, GroupsData } from "~/component/statics";
 import packageJson from "../../package.json";
-import { ChallanData, ChallanItems } from "~/routes/dashboard.challan.create";
-import { ComplaintsData } from "~/routes/dashboard.complaints.create";
-import { GroupsData } from "~/routes/dashboard.inventory.create";
-import { ProductsData } from "~/routes/dashboard.inventory.products.create";
-import { PurchaseInvoiceItem, PurchaseInvoiceData } from "~/routes/dashboard.inventory.purchaseinvoices.create";
 
 interface AppContextType {
     // app related variables
@@ -157,15 +151,16 @@ export const initialComplaintsData = () => {
     }
 }
 
-export const initialProductData = () => {
+export const initialProductData = (overrides: Partial<ProductsData> = {}): ProductsData => {
     return {
         no: -1,
         name: "",
         description: "",
         hsn: "",
         price: 0,
-        group: "",
-        quantity: 0
+        group: "Default",
+        availableQuantity: 0,
+        soldQuantity: 0
     };
 }
 

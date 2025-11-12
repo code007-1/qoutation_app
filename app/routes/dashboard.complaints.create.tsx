@@ -8,21 +8,6 @@ import { ChevronDown } from "lucide-react";
 import constData from "../../assets/data.json";
 import { useNotification } from "~/modules/notificationContext";
 
-export type ComplaintsData = {
-    no: string;
-    type: string;
-    date: string;
-    time: string;
-    contactPerson: string;
-    contactNumber: string;
-    complaint: string;
-    nameOrAddress: string;
-    attendingEngineer: string;
-    recordedby: string;
-    remarks: string;
-    status: string;
-};
-
 export default function ComplaintsCreate() {
     const location = useLocation();
     const passedData = location.state;

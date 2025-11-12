@@ -10,34 +10,6 @@ import { useCentralFetcher } from "~/component/centralFetcher";
 import constData from "../../assets/data.json";
 import { challans } from "~/component/statics";
 
-export type ChallanItems = {
-    no: number;
-    name: string;
-    quantity: number;
-    sno?: string[];
-    unit?: string;
-};
-
-export type ChallanData = {
-    no: string;
-    date: string;
-    items: ChallanItems[];
-    type: string;
-    category: string;
-    from: string;
-    fromAddress: string;
-    to: string;
-    toAddress: string;
-    orderno?: string;
-    billno?: string;
-    modeofdispatch?: string;
-    madeby: string;
-    email?: string;
-    contact?: string;
-    website?: string;
-    pdfColor?: string;
-};
-
 export default function CreateChallan() {
     const location = useLocation();
     const passedData = location.state;
@@ -308,12 +280,27 @@ export default function CreateChallan() {
                                 <button onClick={() => setStep(0)} className="button px-4 py-1 mt-4 text-lg">
                                     Back
                                 </button>
-
-                                <form onSubmit={(e) => { const updatedChallanData = { ...challanData, items: challanItems }; setChallanData(pre => { return { ...pre, items: challanItems } }); createPdf(updatedChallanData, fetcher, false, true, challans); e.preventDefault(); navigate("/dashboard/challan/show"); }}>
-                                    <button className="button px-4 py-1 mt-4 text-lg" type="submit">Generate Challan PDF</button>
-                                </form>
+                                <button onClick={() => setStep(2)} className="button px-4 py-1 mt-4 text-lg">
+                                    Next
+                                </button>
                             </div>
                         </>
+                    }
+                    {step === 2 && <>
+                        <div className="mt-2 w-full">
+                            <label htmlFor="Remarks" className="text-sm font-semibold">Remarks</label>
+                            <textarea id="Remarks" rows={5} placeholder="Enter any Remarks" className="inputHollow w-full" value={challanData.remarks} onChange={e => setChallanData(pre => { return { ...pre, remarks: e.target.value } })} />
+                        </div>
+
+                        <div className="flex justify-center space-x-4">
+                            <button onClick={() => setStep(1)} className="button px-4 py-1 mt-4 text-lg">
+                                Back
+                            </button>
+                            <form onSubmit={(e) => { const updatedChallanData = { ...challanData, items: challanItems }; setChallanData(pre => { return { ...pre, items: challanItems } }); createPdf(updatedChallanData, fetcher, false, true, challans); e.preventDefault(); navigate("/dashboard/challan/show"); }}>
+                                <button className="button px-4 py-1 mt-4 text-lg" type="submit">Generate Challan PDF</button>
+                            </form>
+                        </div>
+                    </>
                     }
                 </div>
             </motion.div>
