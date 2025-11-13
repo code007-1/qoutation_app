@@ -41,7 +41,7 @@ export default function ProductShow() {
                 <TableUI
                     data={oldProductsData}
                     columns={useProductsColumn()}
-                    EmptyText="No Complaints Data Found!"
+                    EmptyText="No Products Data Found!"
                     isFetching={loading}
                     refresh={getProducts}
                     filterTypes={{ "ID": "no", "Name": "name", "HSN Code": "hsn", "Description": "description", "Quantity": "quantity", "Price": "price" }}

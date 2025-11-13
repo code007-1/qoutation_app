@@ -40,17 +40,27 @@ async function loadCSV() {
 }
 
 async function loadProductJson() {
-    const raw = await readFile("./assets/products.json", "utf-8");
-    products = JSON.parse(raw);
-    productsCount = Object.keys(products).length;
+    try {
+        const raw = await readFile("./assets/products.json", "utf-8");
+        products = JSON.parse(raw);
+        productsCount = Object.keys(products).length;
+    }
+    catch (error) {
+        console.log("error while loading products file", error);
+    }
 }
 async function saveProductJson(version: string) {
-    const jsonString = JSON.stringify(products, null, 2);
-    await writeFile("./assets/products.json", jsonString, "utf-8");
-    await writeFile("./assets/product_catelog_version.txt", version);
+    try {
+        const jsonString = JSON.stringify(products, null, 2);
+        await writeFile("./assets/products.json", jsonString, "utf-8");
+        await writeFile("./assets/product_catelog_version.txt", version);
+    }
+    catch (error) {
+        console.log("error while saving products file")
+    }
 }
 
-//loads data from either csv file or from database, if local data is old
+//loads data from either json file or from database, if local data is old
 export async function loadProductsDataPromise() {
     try {
         const version = await search(dbName, metaCollectionName);
@@ -73,22 +83,24 @@ export async function loadProductsDataPromise() {
                     difference.push(element.no);
             });
 
-            // load products whose version changed from db
-            const loadedProducts = await search(dbName, productCollectionName, { "no": { "$in": difference } }, {}, 100000);
-            if (loadedProducts.length > 0) {
+            if (difference.length > 0) {
+                // load products whose version changed from db
+                const loadedProducts = await search(dbName, productCollectionName, { "no": { "$in": difference } }, {}, 100000);
+                if (loadedProducts.length > 0) {
 
-                // update with new loaded products information
-                loadedProducts.map((product: any) => {
-                    products[product.no] = { ...product };
-                })
-
-                // remove those products which have been deleted
-                products = Object.fromEntries(Object.entries(products).filter(([key]) => (key in versions)));
-                productsCount = Object.keys(products).length;
-
-                // save products data to json file
-                await saveProductJson(String(version[0]["product_catelog_version"]));
+                    // update with new loaded products information
+                    loadedProducts.map((product: any) => {
+                        products[product.no] = { ...product };
+                    })
+                }
             }
+            // remove those products which have been deleted
+            const vKeys = new Set(versions.map(e => e.no.toString()));
+            products = Object.fromEntries(Object.entries(products).filter((entry) => vKeys.has(entry[0])));
+            productsCount = Object.keys(products).length;
+
+            // save products data to json file
+            await saveProductJson(String(version[0]["product_catelog_version"]));
         }
 
         if (productsCount > 0) {

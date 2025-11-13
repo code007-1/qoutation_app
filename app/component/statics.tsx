@@ -118,8 +118,8 @@ export type ProductsData = {
     hsn?: string,
     link?: string,
     group?: string
-    availableQuantity: number,
-    soldQuantity: number,
+    available: number,
+    sold: number,
     price: number,
     version?: number
 }
@@ -194,7 +194,7 @@ export type SerialsData = {
     _id?: ObjectId,
     no: string,
     productId: number,
-    status: string, // "purchased = +1 stock or sold = this stock doesn't count for current quantity so 0, "soldwithoutpurchasing -1 stock
+    status: string, // "purchased/available = +1 stock or sold = this stock doesn't count for current quantity so 0, "invalid -1 stock
     purchaseInvoiceNo?: string, //
     challanNo?: string, // "" if unsold
     purchaseDate?: string // 

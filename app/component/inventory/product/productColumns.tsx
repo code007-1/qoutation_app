@@ -101,14 +101,14 @@ export function useProductsColumn() {
             },
         },
         {
-            accessorKey: "quantity",// change here
+            accessorKey: "available",// change here
             header: "Available",
             filterFn: (row, columnId, filterValue) => {
                 return row.original[columnId].toString().toLowerCase().includes(filterValue);
             },
         },
         {
-            accessorKey: "quantity",// change here
+            accessorKey: "sold",// change here
             header: "Sold",
             filterFn: (row, columnId, filterValue) => {
                 return row.original[columnId].toString().toLowerCase().includes(filterValue);
@@ -134,7 +134,7 @@ export function useProductsColumn() {
                         </div>
                         <MenuItems
                             transition
-                            className="absolute right-8 z-10 mt-2 w-36 origin-top-right divide-y divide-border rounded-sm bg-background shadow-lg ring-1 ring-black/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
+                            className="absolute right-8 z-10 mt-2 w-40 origin-top-right divide-y divide-border rounded-sm bg-background shadow-lg ring-1 ring-black/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
                         >
                             <div className="flex flex-col gap-y-1 p-1 cursor-pointer text-base">
                                 <MenuItem>

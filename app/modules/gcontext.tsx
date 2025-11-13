@@ -159,8 +159,8 @@ export const initialProductData = (overrides: Partial<ProductsData> = {}): Produ
         hsn: "",
         price: 0,
         group: "Default",
-        availableQuantity: 0,
-        soldQuantity: 0
+        available: 0,
+        sold: 0
     };
 }
 

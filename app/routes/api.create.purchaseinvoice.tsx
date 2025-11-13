@@ -40,7 +40,7 @@ export const action: ActionFunction = async ({ request, params }) => {
                     serialBulkOps.push({
                         "updateOne": {
                             "filter": { productId: element[1], no: element[0] },
-                            "update": { "$set": { no: element[0], productid: element[1], purchaseInvoice: data.no, purchaseDate: data.date, status: "purchased" } },
+                            "update": { "$set": { no: element[0], productid: element[1], purchaseInvoice: data.no, purchaseDate: data.date, status: "available" } },
                             "upsert": true, // This will insert if no match is found, but we are updating for case where it's been sold already but later purcahsed entry is being done
                         }
                     })
@@ -73,7 +73,7 @@ export const action: ActionFunction = async ({ request, params }) => {
                         serialBulkOps.push({
                             "updateOne": {
                                 "filter": { productId: element.productId, no: element.no },
-                                "update": { "$set": { status: "swop", purchaseDate: data.date } },
+                                "update": { "$set": { status: "invalid", purchaseDate: data.date } },
                             }
                         });
                     }
@@ -117,7 +117,7 @@ export const action: ActionFunction = async ({ request, params }) => {
             const productsBulkOps: { updateOne: { filter: { no: string; }; }; update: { $set: { quantity: number; }; }; }[] = [];
 
             products.forEach(element => {
-                if (element["status"] === "purchased") {
+                if (element["status"] === "available") {
                     currentStocks[element["productId"]] = (currentStocks[element["productId"]] || 0) + 1;
 
                     if (element["productId"] in currentSerials)
@@ -125,7 +125,7 @@ export const action: ActionFunction = async ({ request, params }) => {
                     else
                         currentSerials[element["productId"]] = [String(element["no"])];
                 }
-                else if (element["status"] == "swop")
+                else if (element["status"] == "invalid")
                     currentStocks[element["productId"]] = (currentStocks[element["productId"]] || 0) - 1;
                 else
                     currentStocks[element["productId"]] = (currentStocks[element["productId"]] || 0);

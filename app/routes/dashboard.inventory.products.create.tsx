@@ -75,7 +75,7 @@ export default function CreateProduct() {
                     }} />
                 </div>
                 <div>
-                    Product Quantity <div className="inputFilled w-full border-0 ">{productsData.availableQuantity}</div>
+                    Product Quantity <div className="inputFilled w-full border-0 ">{productsData.available}</div>
                 </div>
                 <div>
                     Product Price <input type="text" name="productprice" placeholder="Enter Product Price" className="inputHollow w-full" value={productsData.price} onChange={(e) => {

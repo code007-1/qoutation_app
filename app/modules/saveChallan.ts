@@ -8,7 +8,7 @@ export function getStats(serialData: SerialsData) {
         if ("challanNo" in serialData && serialData.challanNo !== "") {
             return "sold"
         }
-        else return "purchased"
+        else return "available"
     }
 }
 
@@ -44,7 +44,7 @@ export default async function SaveChallan(challandData: ChallanData) {
 
                 if (!(element[0] in oldData)) // for new added serial number
                 {
-                    if (allEditedSerialsData[element[0]].status == "purchased") {
+                    if (allEditedSerialsData[element[0]].status == "available") {
                         serialBulkOps.push({
                             "updateOne": {
                                 "filter": { productId: element[1], no: element[0] },
@@ -54,7 +54,7 @@ export default async function SaveChallan(challandData: ChallanData) {
                     }
                     else if (!(element[0] in allEditedSerialsData)) {// no purchase entry found at all
                         serialBulkOps.push({
-                            "insertOne": { productId: element[1], no: element[0], challanNo: data.no, challanDate: data.date, status: "swop" }
+                            "insertOne": { productId: element[1], no: element[0], challanNo: data.no, challanDate: data.date, status: "invalid" }
                         })
                     }
                 }
@@ -76,7 +76,7 @@ export default async function SaveChallan(challandData: ChallanData) {
                     serialBulkOps.push({
                         "updateOne": {
                             "filter": { productId: element[1], "no": element[0] },
-                            "update": { "$set": { status: "purchased", challanDate: data.date } },
+                            "update": { "$set": { status: "available", challanDate: data.date } },
                         }
                     });
                 }
@@ -102,7 +102,7 @@ export default async function SaveChallan(challandData: ChallanData) {
                         editedProducts.add(element.no.toString());
                         // we are doing updateOne instead of insertOne with upsert true here, 
                         // just in case for a serial number never purchased but getting sold 
-                        if (allEditedSerialsData[e].status == "purchased") {
+                        if (allEditedSerialsData[e].status == "available") {
                             return {
                                 "updateOne": {
                                     "filter": { no: e, productId: element.no },
@@ -112,7 +112,7 @@ export default async function SaveChallan(challandData: ChallanData) {
                         }
                         else if (!(e in allEditedSerialsData)) {// no purchase entry found at all
                             serialBulkOps.push({
-                                "insertOne": { productId: element.no, no: e, challanNo: data.no, challanDate: data.date, status: "swop" }
+                                "insertOne": { productId: element.no, no: e, challanNo: data.no, challanDate: data.date, status: "invalid" }
                             })
                         }
                     })
@@ -135,7 +135,7 @@ export default async function SaveChallan(challandData: ChallanData) {
             const productsBulkOps: { updateOne: { filter: { no: string; }; }; update: { $set: { quantity: number; }; }; }[] = [];
 
             products.forEach(element => {
-                if (element["status"] === "purchased") {
+                if (element["status"] === "available") {
                     currentStocks[element["productId"]] = (currentStocks[element["productId"]] || 0) + 1;
 
                     if (element["productId"] in currentSerials)
@@ -143,7 +143,7 @@ export default async function SaveChallan(challandData: ChallanData) {
                     else
                         currentSerials[element["productId"]] = [String(element["no"])];
                 }
-                else if (element["status"] === "swop") //soldwithoutpurchasing
+                else if (element["status"] === "invalid") //soldwithoutpurchasing
                     currentStocks[element["productId"]] = (currentStocks[element["productId"]] || 0) - 1;
                 else
                     currentStocks[element["productId"]] = (currentStocks[element["productId"]] || 0);

@@ -120,9 +120,6 @@ const client = new MongoClient(uri, {
 });
 
 async function UploadProducts() {
-    await client.connect();
-    // Send a ping to confirm a successful connection
-    await client.db("unnamed").command({ ping: 1 });
 
     const rows = [];
 
@@ -139,7 +136,9 @@ async function UploadProducts() {
                 row["no"] = Number(row.no);
                 row["version"] = Number(row.version);
                 row["price"] = Number(row.price);
-                row["quantity"] = Number(row.quantity);
+                row["available"] = Number(row.available);
+                row["sold"] = Number(row.available);
+
                 rows.push(row);
             })
             .on("end", () => {
@@ -154,6 +153,10 @@ async function UploadProducts() {
 
     loadDataPromise.then(async () => {
         if (rows.length > 0) {
+            await client.connect();
+            // Send a ping to confirm a successful connection
+            await client.db("unnamed").command({ ping: 1 });
+
             const result = await client.db("unnamed").collection("products").insertMany(rows);
             console.log("Bulk operation result:", result);
         }
@@ -162,7 +165,7 @@ async function UploadProducts() {
     })
 }
 
-//UploadProducts();
+UploadProducts();
 
 
 async function find(params) {
@@ -173,7 +176,7 @@ async function find(params) {
     console.log(result);
     client.close();
 }
-find();
+//find();
 import { Redis } from '@upstash/redis';
 
 export const redis = new Redis({

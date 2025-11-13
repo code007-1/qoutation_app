@@ -9,9 +9,9 @@ function parseProduct(product: ProductsData): ProductsData {
         ...product,
         no: Number(product.no),
         price: Number(product.price),
-        availableQuantity: Number(product.availableQuantity),
-        soldQuantity: Number(product.soldQuantity),
-        version: Number(products[product.no].version || 0) + 1
+        available: Number(product.available),
+        sold: Number(product.sold),
+        version: Number(products[product.no]?.version || 0) + 1
     };
 }
 
