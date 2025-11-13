@@ -19,10 +19,6 @@ export default function DashboardSettings() {
                 <Header />
 
                 <div className="m-5 grid grid-cols-3 gap-x-20">
-                    <button className="flex flex-col items-center cursor-pointer hover:bg-buttonHover/75 py-10 mx-20 my-4" onClick={() => navigate("/dashboard/quotations/show")}>
-                        <ScrollText size={100} className="text-textSecondary" />
-                        <div className="text-textSecondary font-bold text-center text-2xl">Quotation</div>
-                    </button>
                     <button className="flex flex-col items-center cursor-pointer hover:bg-buttonHover/50 py-10 mx-20 my-4" onClick={() => navigate("/dashboard/challan/show")}>
                         <FilePenLine size={100} className="text-textSecondary" />
                         <div className="text-textSecondary font-bold text-center text-2xl">Challan</div>
@@ -34,6 +30,10 @@ export default function DashboardSettings() {
                     <button className="flex flex-col items-center cursor-pointer hover:bg-buttonHover/50 py-10 mx-20 my-4" onClick={() => navigate("/dashboard/inventory/show")}>
                         <Layers size={100} className="text-textSecondary" />
                         <div className="text-textSecondary font-bold text-center text-2xl">Inventory</div>
+                    </button>
+                    <button className="flex flex-col items-center cursor-pointer hover:bg-buttonHover/75 py-10 mx-20 my-4" onClick={() => navigate("/dashboard/quotations/show")}>
+                        <ScrollText size={100} className="text-textSecondary" />
+                        <div className="text-textSecondary font-bold text-center text-2xl">Quotation</div>
                     </button>
                 </div>
             </div>

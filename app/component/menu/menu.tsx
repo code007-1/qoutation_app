@@ -93,15 +93,6 @@ export default function MainMenu() {
                     <div className="p-1">
                         <MenuItem>
                             <Link
-                                to="/dashboard/quotations/show"
-                                className="flex px-4 py-2 data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
-                            >
-                                <ScrollText size={20} className="mr-2 " />
-                                Quotation Home
-                            </Link>
-                        </MenuItem>
-                        <MenuItem>
-                            <Link
                                 to="/dashboard/challan/show"
                                 className="flex px-4 py-2 data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
                             >
@@ -127,6 +118,16 @@ export default function MainMenu() {
                                 Inventory Home
                             </Link>
                         </MenuItem>
+                        <MenuItem>
+                            <Link
+                                to="/dashboard/quotations/show"
+                                className="flex px-4 py-2 data-[focus]:bg-buttonHover data-[focus]:text-textSecondary data-[focus]:outline-none"
+                            >
+                                <ScrollText size={20} className="mr-2 " />
+                                Quotation Home
+                            </Link>
+                        </MenuItem>
+
                     </div>
 
                     <div className="p-1">
