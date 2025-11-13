@@ -4,11 +4,11 @@ import { useCentralFetcher } from "~/component/centralFetcher";
 import { productReadAPIURL, productReadSingleAPIURL, ProductsData, serialNumberSearchAPIURL } from "~/component/statics";
 import { useGlobalContext } from "~/modules/gcontext";
 import { SerialsData } from "~/component/statics";
+import { FormatAmountToINR } from "~/component/quotation/fullQuotationColumns";
 export default function ProductSummary() {
     const { setHeaderText, setGroupsData } = useGlobalContext();
     const location = useLocation();
     const product = location.state?.product as ProductsData;
-    const { productsData } = useGlobalContext();
     const fetcher = useCentralFetcher();
 
     const [productData, setProductData] = useState<ProductsData>();
@@ -43,52 +43,108 @@ export default function ProductSummary() {
         console.log(productData, serialsData)
     }, []);
 
-    const serialCard = () => <>
-        <div className="bg-headerBackground">
+    const dummyData: SerialsData[] = [{ no: "123", productId: 1, status: "purchased", purchaseDate: "2025-11-12", purchaseInvoiceNo: "12324" }, { no: "123", productId: 1, status: "sold", purchaseDate: "2025-11-12", purchaseInvoiceNo: "12324", challanDate: "2025-12-11", challanNo: "1232141" }, { no: "123", productId: 1, status: "swop", purchaseDate: "2025-11-12", purchaseInvoiceNo: "12324", challanDate: "2025-12-11", challanNo: "1232141" }, { no: "123", productId: 1, status: "purchased", purchaseDate: "2025-11-12", purchaseInvoiceNo: "12324" }, { no: "123", productId: 1, status: "sold", purchaseDate: "2025-11-12", purchaseInvoiceNo: "12324", challanDate: "2025-12-11", challanNo: "1232141" }, { no: "123", productId: 1, status: "swop", purchaseDate: "2025-11-12", purchaseInvoiceNo: "12324", challanDate: "2025-12-11", challanNo: "1232141" }];
 
+    const serialCard = (serial: SerialsData) => (
+        <div className="bg-headerBackground rounded-lg p-4 min-w-[260px] max-w-xs mb-6 flex flex-col gap-2 transition-transform hover:scale-105">
+            <div className="flex items-center gap-2 mb-2">
+                <span className="inline-block bg-blue-100 text-blue-700 text-xs font-bold px-2 py-1 rounded">
+                    Serial No
+                </span>
+                <span className="text-lg font-semibold text-textPrimary">{serial.no}</span>
+            </div>
+            <div className="flex items-center gap-2">
+                <span className={`inline-block px-2 py-1 rounded text-xs font-semibold ${serial.status === "purchased"
+                    ? "bg-green-100 text-green-700"
+                    : serial.status === "sold"
+                        ? "bg-red-100 text-red-700"
+                        : "bg-yellow-100 text-yellow-700"
+                    }`}>
+                    {serial.status === "purchased"
+                        ? "Available"
+                        : serial.status === "sold"
+                            ? "Sold"
+                            : "Sold w/o Purchase"}
+                </span>
+            </div>
+            <div className="text-sm text-textSecondary flex flex-col gap-1 mt-2">
+                <div>
+                    <span className="font-medium">Purchase Invoice No:</span>{" "}
+                    <span className="italic">{serial.purchaseInvoiceNo || "-"}</span>
+                </div>
+                <div>
+                    <span className="font-medium">Purchase Date:</span>{" "}
+                    <span className="italic">{serial.purchaseDate || "-"}</span>
+                </div>
+                <div>
+                    <span className="font-medium">Challan No:</span>{" "}
+                    <span className="italic">{serial.challanNo || "-"}</span>
+                </div>
+                <div>
+                    <span className="font-medium">Challan Date:</span>{" "}
+                    <span className="italic">{serial.challanDate || "-"}</span>
+                </div>
+            </div>
         </div>
-    </>;
+    );
 
     return (
         <>
-            <div className="">
-                <div className="mt-4 flex justify-between text-textPrimary">
-                    <div>
-                        <div>ID</div>
-                        <div className="text-textSecondary">{product?.no}</div>
+            <div className="bg-background mt-6">
+                {/* Product Info Grid */}
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
+                    <div className="flex flex-col items-start">
+                        <span className="text-xs text-textSecondary uppercase tracking-wide">ID</span>
+                        <span className="text-lg font-semibold text-textPrimary">{product?.no}</span>
                     </div>
-                    <div>
-                        <div>Name</div>
-                        <div className="text-textSecondary">{product?.name}</div>
+                    <div className="flex flex-col items-start">
+                        <span className="text-xs text-textSecondary uppercase tracking-wide">Name</span>
+                        <span className="text-lg font-semibold text-textPrimary">{product?.name}</span>
                     </div>
-                    <div>
-                        <div>HSN</div>
-                        <div className="text-textSecondary">{product?.hsn}</div>
+                    <div className="flex flex-col items-start">
+                        <span className="text-xs text-textSecondary uppercase tracking-wide">HSN</span>
+                        <span className="text-lg font-semibold text-textPrimary">{product?.hsn}</span>
                     </div>
-                    <div>
-                        <div>Group</div>
-                        <div className="text-textSecondary">{product?.group}</div>
+                    <div className="flex flex-col items-start">
+                        <span className="text-xs text-textSecondary uppercase tracking-wide">Group</span>
+                        <span className="text-lg font-semibold text-textPrimary">{product?.group}</span>
                     </div>
-                    <div>
-                        <div>Available</div>
-                        <div className="text-textSecondary">{product?.availableQuantity}</div>
+                    <div className="flex flex-col items-start">
+                        <span className="text-xs text-textSecondary uppercase tracking-wide">Available</span>
+                        <span className="text-lg font-semibold text-green-700">{product?.availableQuantity}</span>
                     </div>
-
-                    <div>
-                        <div>Sold</div>
-                        <div className="text-textSecondary">{product?.soldQuantity}</div>
+                    <div className="flex flex-col items-start">
+                        <span className="text-xs text-textSecondary uppercase tracking-wide">Sold</span>
+                        <span className="text-lg font-semibold text-red-700">{product?.soldQuantity}</span>
                     </div>
-
-                    <div>
-                        <div>Price</div>
-                        <div className="text-textSecondary">{product?.price}</div>
+                    <div className="flex flex-col items-start">
+                        <span className="text-xs text-textSecondary uppercase tracking-wide">Price</span>
+                        <span className="text-lg font-semibold text-textPrimary">
+                            {product?.price ? `Rs.${FormatAmountToINR(product.price)}` : "-"}
+                        </span>
                     </div>
                 </div>
-                <div className="mt-4">
-                    <div>Description</div>
-                    <div className="text-textSecondary">{product?.description}</div>
+
+                {/* Description */}
+                <div className="mb-10">
+                    <div className="text-xs text-textSecondary uppercase tracking-wide mb-1">Description</div>
+                    <div className="text-base text-textPrimary font-medium italic bg-headerBackground rounded p-3">
+                        {product?.description || <span className="text-gray-400">No description provided.</span>}
+                    </div>
                 </div>
-            </div>
-        </>
+
+                {/* Serials */}
+                <div>
+                    <div className="flex items-center mb-4">
+                        <span className="text-lg font-bold text-textPrimary mr-2">Serial Numbers</span>
+                        <span className="bg-headerBackground text-textPrimary text-xs font-semibold px-2 py-1 rounded-full">
+                            {dummyData?.length}
+                        </span>
+                    </div>
+                    <div className="flex flex-wrap gap-6">
+                        {dummyData?.map(element => serialCard(element))}
+                    </div>
+                </div>
+            </div></>
     );
 }
